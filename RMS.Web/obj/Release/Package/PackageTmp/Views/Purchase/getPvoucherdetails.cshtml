@@ -1,0 +1,87 @@
+﻿@model RMS.Web.Models.ViewModels.VoucherMasterViewModel
+
+@{
+    ViewBag.Title = "getPvoucherdetails";
+}
+
+<h2>getPvoucherdetails</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.VoucherNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VoucherCreateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Partyid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Narration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BillSundryId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BillSundryAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BillSundryAmount2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FinalTotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VoucherTypeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VoucherchildID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.VoucherNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VoucherCreateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Partyid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Narration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BillSundryId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BillSundryAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BillSundryAmount2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FinalTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VoucherTypeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VoucherchildID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

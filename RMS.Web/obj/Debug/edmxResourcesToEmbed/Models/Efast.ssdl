@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="currencyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'currency.dbo.users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="sn" />
+      <PropertyRef Name="id" />
+      <PropertyRef Name="pwd" />
+      <PropertyRef Name="company" />
+      <PropertyRef Name="sdate" />
+      <PropertyRef Name="days" />
+      <PropertyRef Name="multi" />
+      <PropertyRef Name="automonth" />
+      <PropertyRef Name="newblock" />
+      <PropertyRef Name="package" />
+      <PropertyRef Name="AgentId" />
+      <PropertyRef Name="AgentUserID" />
+      <PropertyRef Name="IsWebUser" />
+      <PropertyRef Name="IsSMSCountry" />
+      <PropertyRef Name="IsUpdatedProfile" />
+      <PropertyRef Name="IsOldBlocked" />
+      <PropertyRef Name="IsMobileUser" />
+      <PropertyRef Name="UserGuidExpired" />
+    </Key>
+    <Property Name="sn" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="pwd" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="BusyAccount" Type="varchar" MaxLength="100" />
+    <Property Name="name" Type="varchar" MaxLength="60" />
+    <Property Name="company" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="address" Type="varchar" MaxLength="200" />
+    <Property Name="phone" Type="varchar" MaxLength="20" />
+    <Property Name="cell" Type="varchar" MaxLength="20" />
+    <Property Name="email" Type="varchar" MaxLength="60" />
+    <Property Name="sdate" Type="datetime" Nullable="false" />
+    <Property Name="days" Type="int" Nullable="false" />
+    <Property Name="multi" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+    <Property Name="block" Type="varchar" MaxLength="1" />
+    <Property Name="FcAmount" Type="numeric" Precision="19" Scale="4" />
+    <Property Name="LcAmount" Type="numeric" Precision="19" Scale="4" />
+    <Property Name="rate" Type="numeric" Precision="19" Scale="4" />
+    <Property Name="releif" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="autoref" Type="varchar" MaxLength="1" />
+    <Property Name="automonth" Type="tinyint" Nullable="false" />
+    <Property Name="newblock" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="package" Type="tinyint" Nullable="false" />
+    <Property Name="AgentId" Type="int" Nullable="false" />
+    <Property Name="AgentUserID" Type="int" Nullable="false" />
+    <Property Name="IsWebUser" Type="bit" Nullable="false" />
+    <Property Name="SMSMobileNo" Type="varchar" MaxLength="15" />
+    <Property Name="IsSMSCountry" Type="bit" Nullable="false" />
+    <Property Name="MobileNetworkId" Type="int" />
+    <Property Name="IsSMSSend" Type="bit" />
+    <Property Name="CountryId" Type="int" />
+    <Property Name="CountryCode" Type="varchar" MaxLength="3" />
+    <Property Name="StartingDate" Type="datetime" />
+    <Property Name="EndingDate" Type="datetime" />
+    <Property Name="IsUpdatedProfile" Type="bit" Nullable="false" />
+    <Property Name="IsOldBlocked" Type="bit" Nullable="false" />
+    <Property Name="IsMobileUser" Type="bit" Nullable="false" />
+    <Property Name="UserGuid" Type="varchar" MaxLength="50" />
+    <Property Name="LastGuidDate" Type="datetime" />
+    <Property Name="LastGuidAccessDate" Type="datetime" />
+    <Property Name="UserGuidExpired" Type="bit" Nullable="false" />
+    <Property Name="FirebaseToken" Type="varchar" MaxLength="200" />
+    <Property Name="FirebaseTokenUpdatedOn" Type="datetime" />
+    <Property Name="SellingPrice" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="RateUpdate" Type="bit" />
+  </EntityType>
+  <Function Name="Getusers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="sn" Type="numeric" Mode="In" />
+    <Parameter Name="id" Type="varchar" Mode="In" />
+    <Parameter Name="pwd" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="company" Type="varchar" Mode="In" />
+    <Parameter Name="address" Type="varchar" Mode="In" />
+    <Parameter Name="phone" Type="varchar" Mode="In" />
+    <Parameter Name="cell" Type="varchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="sdate" Type="datetime" Mode="In" />
+    <Parameter Name="days" Type="int" Mode="In" />
+    <Parameter Name="multi" Type="int" Mode="In" />
+    <Parameter Name="block" Type="varchar" Mode="In" />
+    <Parameter Name="rate" Type="numeric" Mode="In" />
+    <Parameter Name="releif" Type="numeric" Mode="In" />
+    <Parameter Name="autoref" Type="varchar" Mode="In" />
+    <Parameter Name="automonth" Type="tinyint" Mode="In" />
+    <Parameter Name="newblock" Type="varchar" Mode="In" />
+    <Parameter Name="package" Type="tinyint" Mode="In" />
+    <Parameter Name="AgentId" Type="int" Mode="In" />
+    <Parameter Name="AgentUserId" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="currencyModelStoreContainer">
+    <EntitySet Name="users" EntityType="Self.users" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [users].[sn] AS [sn], 
+    [users].[id] AS [id], 
+    [users].[pwd] AS [pwd], 
+    [users].[BusyAccount] AS [BusyAccount], 
+    [users].[name] AS [name], 
+    [users].[company] AS [company], 
+    [users].[address] AS [address], 
+    [users].[phone] AS [phone], 
+    [users].[cell] AS [cell], 
+    [users].[email] AS [email], 
+    [users].[sdate] AS [sdate], 
+    [users].[days] AS [days], 
+    [users].[multi] AS [multi], 
+    [users].[block] AS [block], 
+    [users].[FcAmount] AS [FcAmount], 
+    [users].[LcAmount] AS [LcAmount], 
+    [users].[rate] AS [rate], 
+    [users].[releif] AS [releif], 
+    [users].[autoref] AS [autoref], 
+    [users].[automonth] AS [automonth], 
+    [users].[newblock] AS [newblock], 
+    [users].[package] AS [package], 
+    [users].[AgentId] AS [AgentId], 
+    [users].[AgentUserID] AS [AgentUserID], 
+    [users].[IsWebUser] AS [IsWebUser], 
+    [users].[SMSMobileNo] AS [SMSMobileNo], 
+    [users].[IsSMSCountry] AS [IsSMSCountry], 
+    [users].[MobileNetworkId] AS [MobileNetworkId], 
+    [users].[IsSMSSend] AS [IsSMSSend], 
+    [users].[CountryId] AS [CountryId], 
+    [users].[CountryCode] AS [CountryCode], 
+    [users].[StartingDate] AS [StartingDate], 
+    [users].[EndingDate] AS [EndingDate], 
+    [users].[IsUpdatedProfile] AS [IsUpdatedProfile], 
+    [users].[IsOldBlocked] AS [IsOldBlocked], 
+    [users].[IsMobileUser] AS [IsMobileUser], 
+    [users].[UserGuid] AS [UserGuid], 
+    [users].[LastGuidDate] AS [LastGuidDate], 
+    [users].[LastGuidAccessDate] AS [LastGuidAccessDate], 
+    [users].[UserGuidExpired] AS [UserGuidExpired], 
+    [users].[FirebaseToken] AS [FirebaseToken], 
+    [users].[FirebaseTokenUpdatedOn] AS [FirebaseTokenUpdatedOn], 
+    [users].[SellingPrice] AS [SellingPrice], 
+    [users].[RateUpdate] AS [RateUpdate]
+    FROM [dbo].[users] AS [users]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

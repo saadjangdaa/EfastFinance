@@ -1,0 +1,139 @@
+﻿@model RMS.Web.Models.ordermaster
+
+@{
+    ViewBag.Title = "Practice";
+}
+
+
+
+<div class="container">
+    <h2>Order</h2>
+    <div class="jumbotron" style="background-color:palegoldenrod">
+        <label class="col-md-1 ">Customers</label>
+        <div class="col-md-3">
+            @Html.DropDownList("customers", (IEnumerable<SelectListItem>)ViewBag.customers, htmlAttributes: new { @class = "form-control" })
+
+
+        </div>
+
+        <label class="col-md-1">OrderID</label>
+        <div class="col-md-3">
+            <input class="form-control" type="text" value="@ViewBag.ordernum" readonly="readonly" disabled required min="" />
+        </div>
+
+        <label class=" col-md-1">OrderDate</label>
+        <div class="col-md-3">
+            <input type="text" class="form-control" value="@DateTime.Now" readonly="readonly" />
+
+        </div>
+
+        <br />
+
+    </div>
+
+    <h2>Product Details</h2>
+    <div class="jumbotron" style="background-color:palegoldenrod">
+        <table class="table table-bordered table-condensed table-striped" style="background-color:aqua">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+                <tr>
+                    <th>
+                    @Html.DropDownList("getitems", (IEnumerable<SelectListItem>)ViewBag.getitems, "---Select Item---", htmlAttributes: new { @class = "form-control" })
+                    </th>
+                    <th>@Html.TextBox("txtunitprice", "0.00", htmlAttributes: new { @class = "form-control", @readonly = "readonly" })</th>
+                    <th>@Html.TextBox("txtquantity", "0", htmlAttributes: new { @class = "form-control" })</th>
+                    <th>@Html.TextBox("txttotal", "0.00", htmlAttributes: new { @class = "form-control", @readonly = "readonly" })</th>
+                    <th><button  id="btnadd" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i></button></th>
+                  
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    
+                </tr>
+            </tbody>
+
+        </table>
+
+
+        
+
+
+    </div>
+
+
+
+
+
+
+</div>
+<script>
+
+
+    $('#getitems').change(function () {
+        debugger;
+        var itemid = $('#getitems option:selected').val();
+
+    $.ajax({
+        type: 'GET',
+        data: { ItemID: itemid },
+        url: "@Url.Action("Getpricebyitem","Employee")",
+
+
+    }).done(function (data) {
+
+        $('#txtunitprice').val(data);
+
+    }).fail(function (jqXHR, textStatus) {
+
+        alert("Your order cant be Placed,Contact Admin");
+    });
+
+
+    });
+
+    $('#txtquantity').change(function () {
+        var itemprice = $('#txtunitprice').val();
+        var quantity = $('#txtquantity').val();
+        var total = parseFloat(itemprice) * parseFloat(quantity);
+        $('#txttotal').val(total);
+
+    
+    });
+
+    $('#btnadd').click(function () {
+        var itemid = $('#getitems option:selected').val();
+        var itemname = $('#getitems option:selected').text();
+        var itemprice = $('#txtunitprice').val();
+        var quantity = $('#txtquantity').val();
+        var total = $('#txttotal').val();
+
+        if (itemname == "" || quantity == "0" || total == "0.00") {
+            alert("please make an order");
+        }
+        else {
+            var row = "<tr><td><input value=" + itemname + " name='itemname' class='form-control' /></td><td><input  value=" + itemprice + " name='unitprice' class='form-control' /></td><td><input value=" + quantity + " name='txtquantity' class='form-control' /></td><td><input value=" + total + " name='txttotal' class='form-control' /></td><td><button id='btnremove'  class='btn btn-danger btnedit'><i class='glyphicon glyphicon-remove'></i></button></td></tr>";
+
+            $('table tbody ').append(row);
+
+
+
+        }
+    });
+
+    $('#btnremove').click(function () {
+        debugger;
+        $(this).parent().parent().remove();
+
+
+
+    });
+
+
+</script>

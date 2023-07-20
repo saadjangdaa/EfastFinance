@@ -1,0 +1,354 @@
+﻿@model RMS.Web.Models.ordermaster
+
+@{
+    ViewBag.Title = "Purchase";
+}
+
+
+<br />
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+
+            <h1 class="m-0 font-weight-bold text-primary text-center">Purchase</h1>
+        </div>
+        <div class="card-body">
+
+            <form id="orderForm">
+                <div class="jumbotron" style="background-color:#4e73df;background-image:linear-gradient(180deg,#4e73df 10%,#224abe 300%)">
+
+                    <div class="">
+                        <div class="form-group">
+                            <label class=" col-md-2" style="color:white;">Suppliers</label>
+                            <div class="col-md-4">
+                                @*@Html.DropDownListFor(a => a.CustomerID, (IEnumerable<SelectListItem>)ViewData["CustomerID"], "---Select Customers---", htmlAttributes: new { @class = "form-control", @Name="CustomerID" })*@
+                                @Html.DropDownListFor(a => a.CustomerID, (IEnumerable<SelectListItem>)ViewData["SupplierID"], "---Select Suppliers---", htmlAttributes: new { @class = "form-control", @Name = "CustomerID" })
+
+                            </div>
+
+                            <label class="control-label col-md-2"  style="color:white;">Payment Types</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(m => m.PaymentID, (IEnumerable<SelectListItem>)ViewBag.GetPayTypes, "---Select PaymentType---", htmlAttributes: new { @class = "form-control", @Id = "txtpaytypes", @name = "PaymentID" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="">
+                        <div class="form-group">
+                            <label class="control-label col-md-2"  style="color:white;">Final Total</label>
+                            <div class="col-md-4">
+                                @Html.TextBox("FinalTotal", "0.00", new { @class = "form-control", @readonly = "readonly", @value = "0.00", @Id = "txtfinaltotal", @name = "FinalTotal" })
+                            </div>
+
+                            <label class="control-label col-md-2"  style="color:white;"> Order Number</label>
+                            <div class="col-md-4">
+                                <input type="number" class="form-control" readonly="readonly" value="@ViewBag.OrderNumbr" name="OrderNumber" id="OrderNumber" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <br />
+                    <br />
+                    <div class="">
+                        <div class="form-group">
+                            <label class="control-label col-md-2"  style="color:white;">Order Date</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" id="txtorderdate" name="OrderDate" value="@DateTime.Now" readonly="readonly" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+
+                </div>
+                <br />
+                <div class="jumbotron" style="background-color:#4e73df;background-image:linear-gradient(180deg,#4e73df 10%,#224abe 300%)">
+                    <div class="">
+                        <div class="form-group">
+                            <label class="control-label col-md-2"  style="color:white;">Items</label>
+                            <div class="col-md-4">
+                                @Html.DropDownList("GetItems", null, "---Select Items---", htmlAttributes: new { @class = "form-control" })
+                            </div>
+
+                            <label class="control-label col-md-2"  style="color:white;">Unit Price</label>
+                            <div class="col-md-4">
+                                @Html.TextBox("txtUnitPrice", "0.00", new { @class = "form-control", @Id = "txtprice", @readonly = "readonly" })
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <br />
+                    <br />
+                    <div class="">
+                        <div class="form-group">
+                            <label class="col-md-2"  style="color:white;">Quantity</label>
+                            <div class="col-md-4">
+                                @Html.TextBox("txtQuantity", "0", new { @class = "form-control", @Id = "txtQuantity" })
+                            </div>
+
+                            <label class="col-md-2"  style="color:white;">Discount</label>
+                            <div class="col-md-4">
+                                @Html.TextBox("txtdiscount", "0.00", new { @class = "form-control", @Id = "txtdiscount" })
+                            </div>
+                            <br />
+                            <br />
+                            <label class="col-md-2 offset-6"  style="color:white;">Available Stock</label>
+                            <div class="col-md-4">
+                                <input class="form-control" readonly="readonly" placeholder="Available Stock" id="txtavstock" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <hr />
+                    <div class="">
+                        <div class="form-group">
+                            <label class="col-md-2 col-md-offset-3"  style="color:white;">Total</label>
+                            <div class="col-md-4">
+                                @Html.TextBox("txttotal", "0.00", new { @class = "form-control", @Id = "txttotal", @readonly = "readonly" })
+                            </div>
+                            <button type="button" class="btn btn-danger " id="btnadd">Add To Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="jumbotron" style="background-color:#4e73df;background-image:linear-gradient(180deg,#4e73df 10%,#224abe 300%)">
+
+                    <table style="background-color:lightgoldenrodyellow" class="table  container jumbotron">
+                        <thead style="">
+                            <tr>
+                                <td hidden>
+                                    ItemID
+                                </td>
+                                <td>
+                                    <strong>Item Name</strong>
+                                </td>
+                                <td>
+                                    <strong>Unit Price</strong>
+                                </td>
+                                <td>
+                                    <strong> Quantity</strong>
+                                </td>
+                                <td>
+                                    <strong> Discount</strong>
+                                </td>
+                                <td>
+                                    <strong> Total</strong>
+                                </td>
+                                <td>
+                                    <strong> Actions</strong>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+
+                    </table>
+
+                </div>
+
+
+
+
+
+                <div class="btn-block"><button type="button" class="btn btn-primary btn-block" id="btncheckout"><h5>Checkout</h5></button></div>
+
+            </form>
+        </div>
+        </div>
+    </div>
+
+
+        <script>
+
+    $('#GetItems').change(function () {
+        var itemid = $('#GetItems option:selected').val();
+        //alert("item is : " + itemid);
+
+        //var quantity = $('#txtQuantity').val();
+        //alert("it is" + quantity);
+
+        $.ajax({
+            type: 'GET',
+            datatype: 'JSON',
+            data: { ItemID: itemid },
+            url: "@Url.Action("GetItemprice","Order")"
+        }).done(function (data) {
+
+            $('#txtprice').val(data);
+        }).fail(function (jqXHR, textStatus) {
+
+            if (itemid == null || itemid == "") {
+                alert("Please Select an Item");
+            }
+            else {
+
+                alert("CANT GET ITEM PRICE, CONTACT ADMIN");
+            }
+
+            });
+
+     $.ajax({
+            type: 'GET',
+            data: { ItemID: itemid },
+            url: "@Url.Action("Getquantitybyitem","Purchase")"
+        }).done(function (data) {
+            $('#txtavstock').val(data);
+
+
+        }).fail(function (jqXHR, textStatus) {
+
+            alert("CANT GET ITEM Quantity, CONTACT ADMIN");
+
+        });
+
+
+    });
+
+
+
+
+    $('#txtQuantity,#txtdiscount').change(function () {
+        var itemprice = $('#txtprice').val();
+        var quantity = $('#txtQuantity').val();
+        var discount = $('#txtdiscount').val();
+
+        var result = parseFloat(quantity).toFixed(2) * parseFloat(itemprice).toFixed(2) - parseFloat(discount).toFixed(2);
+
+        $('#txttotal').val(result);
+    });
+
+    $('#btnadd').click(function () {
+
+        var itemid = $('#GetItems option:selected').val();
+        var itemname = $('#GetItems option:selected').text();
+        var unitprice = $('#txtprice').val();
+        var quantity = $('#txtQuantity').val();
+        var discount = $('#txtdiscount').val();
+        var total = $('#txttotal').val();
+        if (itemid == "" || itemname == "" || unitprice == "" || quantity == "" || discount == "" || quantity == 0)
+        {
+            alert("Please select an order");
+        }
+
+        else {
+            var removebtn = "<input type='button' class='btn btn-danger'   value=remove id=btnremove onclick=remove() />";
+
+           // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
+            var row = ` <tr>
+            <td hidden><input type="hidden" name="ItemID" value="`+ itemid+`" /></td>
+            <td><input readonly class='form-control'  value="`+ itemname +`" /></td>
+            <td><input readonly class='form-control'  value="`+ unitprice +`" name="UnitPrice" /></td>
+            <td><input readonly class='form-control' value="`+ quantity + `" name="Quantity" /></td>
+            <td><input readonly  class='form-control' value="`+ discount + `" name="Discount" /></td>
+            <td><input readonly class='form-control'    value="`+ total +`" name="Total" /></td>
+            <td>`+ removebtn + `</td>
+            <td hidden>`+ total +`</td>
+            </tr>`;
+
+            $('table tbody').append(row);
+            debugger;
+            var ftotal = 0;//+ $('#txttotal').val();
+
+
+            if ($("table > tbody > tr").length > 0) {
+                $("table > tbody > tr").each(function () {
+
+                    ftotal += parseFloat($(this).find('td:eq(7)').html());
+
+                    //ftotal += $(t).find('input[name=Total]').val();a
+
+                })
+            }
+
+            $('#txtfinaltotal').val(ftotal);
+
+            $('#GetItems ').val("");
+            $('#txtprice').val("");
+            $('#txtQuantity').val("");
+            $('#txtdiscount').val("0.00");
+            $('#txttotal').val("");
+
+
+        }
+
+    });
+
+            function remove() {
+                debugger;
+        $('#btnremove').parent().parent().remove();
+
+        var ftotal = 0.00;//+ $('#txttotal').val();
+        var pt = 0.00;
+
+            if ($("table > tbody > tr").length > 0) {
+                $("table > tbody > tr").each(function () {
+                    var ot = parseFloat($(this).find('td:eq(7)').html());
+                    pt = ot - parseFloat(ftotal);
+                    //var ototal = ftotal;
+                    //ototal += ftotal;
+
+                })
+            }
+
+
+        $('#txtfinaltotal').val(parseFloat(pt));
+
+
+    }
+    //$('#btnremove').click(function () {
+    //    debugger;
+    //    $(this).parent().parent().remove();
+
+    //});
+
+    $('#btncheckout').click(function () {
+        var OrderMasterViewModel = {}
+
+
+        OrderMasterViewModel.CustomerID = $('#txtcustomers option:selected').val();
+        OrderMasterViewModel.PaymentID = $('#txtpaytypes option:selected').val();
+        OrderMasterViewModel.FinalTotal = $('#txtfinaltotal ').val();
+
+
+        if (OrderMasterViewModel.CustomerID == 0 || OrderMasterViewModel.PaymentID == 0 || OrderMasterViewModel.FinalTotal == 0 ) {
+            alert("Please select Customer and Payment Type or make an order");
+
+        }
+
+        else {
+            @*$.ajax({
+
+                type: 'POST',
+                //dataType: 'JSON',
+                //contentType: 'application/json, charset=utf-8',
+                data: /*JSON.stringify(OrderMasterViewModel) + */ $('#orderForm').serialize(),
+                url: "@Url.Action("PurchaseItem","Purchase")"
+
+            }).done(function (data) {
+
+                alert("Your Items has been Successfully Purchased");
+
+            }).fail(function (jqXHR, textStatus) {
+
+                alert("Your Items cant be Purchased,Contact Admin");
+            });*@
+        }
+
+    });
+
+
+
+
+
+
+
+        </script>
+
+

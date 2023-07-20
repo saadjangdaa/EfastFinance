@@ -1,0 +1,467 @@
+﻿@model RMS.Web.Models.ViewModels.VoucherMasterViewModel
+
+@{
+    ViewBag.Title = "EditPVoucher";
+}
+
+<form id="SaleVoucher">
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:gray">
+                <a class="btn btn-success" href="~/Purchase/ModifyPvoucher">Back To List</a>
+                <h4 class="m-0 font-weight-bold text-center"><strong style="color:white;">Modify Purchase Voucher </strong></h4>
+
+            </div>
+            <div class="card-body">
+
+                <lablel class="col-md-2" style="color:black">Voucher Number</lablel>
+                <div class="col-md-4">
+                    <input class="form-control" name="VoucherNumber" readonly="readonly" type="number" value="@ViewBag.vouchernumber" />
+                </div>
+
+                <lablel class="col-md-2" style="color:black">Voucher Date</lablel>
+                <div class="col-md-4">
+                    <input class="form-control" id="VoucherCreateDate" value="@ViewBag.VoucherCreateDate" name="VoucherCreateDate" readonly="readonly" />
+                </div>
+
+                <!---->
+                <br />
+                <br />
+                <lablel class="col-md-2" style="color:black">Party Name</lablel>
+                <div class="col-md-4">
+                    @Html.DropDownList("Partyid", (IEnumerable<SelectListItem>)ViewBag.Accountname, "---Select PartyName---", htmlAttributes: new { @class = "form-control", @Id = "Partyid_Accountid", @Name = "Partyid" })
+                </div>
+
+
+                <lablel class="col-md-2" style="color:black">Material Centre</lablel>
+                <div class="col-md-4">
+
+                    @Html.DropDownList("LocationID", (IEnumerable<SelectListItem>)ViewBag.MaterialCentres, "---Select Location---", htmlAttributes: new { @class = " form-control ", @Id = "LocationID" })
+
+
+
+                </div>
+                <br />
+                <br />
+                <lablel class="col-md-2" style="color:black">
+                    Curr Balance:
+                    @*<em style="color:blue" id="balance"></em>*@
+                </lablel>
+                <div class="col-md-4">
+
+                    <input type="text" style="color:blue" id="balance" disabled class="form-control" />
+                </div>
+                <lablel class="col-md-2" style="color:black">Narration</lablel>
+                <div class="col-md-4">
+                    <input class="form-control" id="Narration" name="Narration" value="@ViewBag.Narration" placeholder="Enter Voucher Narration" />
+
+                </div>
+
+
+                <br />
+                <br />
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:gray">
+
+                <h4 class="m-0 font-weight-bold"><strong style="color:white;">Item Details </strong></h4>
+
+                @*<h6 class="m-0 font-weight-bold"><strong style="color:white;">Bill Sundry</strong></h6>*@
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead class="thead-dark" style="background-color:lightgreen">
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Quantity</th>
+                                <th>Unit</th>
+                                <th>Price</th>
+                                <th>Amount</th>
+                                <th>Actions</th>
+                            </tr>
+
+                        </thead>
+                        <tfoot style="background-color:lightgreen">
+                            <tr>
+                                <th>@Html.DropDownList("itemname", (IEnumerable<SelectListItem>)ViewBag.Items, "---Select Item---", htmlAttributes: new { @class = "form-control", @Id = "itemname" })</th>
+                                <th><input class="form-control" type="number" id="Quantity" placeholder="Enter Quantity" /></th>
+                                <th>@Html.DropDownList("unitname", (IEnumerable<SelectListItem>)ViewBag.Units, "---Select Unit---", htmlAttributes: new { @class = "form-control", @Id = "unitname", })</th>
+                                <th><input class="form-control" type="number" placeholder="item Price" id="ItemPrice" /></th>
+                                <th><input class="form-control" readonly="readonly" placeholder="total Amount" id="txttotal" /></th>
+                                <th><button type="button" class="btn btn-success " id="btnadd"><i class="glyphicon glyphicon-plus"></i></button></th>
+                            </tr>
+                        </tfoot>
+
+
+                        <tbody style="">
+                            @foreach (var item in Model.VoucherChildlist)
+                            {
+                                <tr>
+                                    <td>@item.Items.ItemName</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.Units.UnitName</td>
+                                    <td>@item.Items.ItemPrice</td>
+                                    <td>@item.TotalAmount</td>
+                                    <td><button type='button' class='btn btn-danger' id='btnremove' onclick="remove()"><i class='glyphicon glyphicon-minus'></i></button></td>
+                                </tr>
+
+
+                            }
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row container-fluid">
+        <div class="col-md-6">
+
+            <div class="card shadow mb-4">
+                <div class="card-header py-3" style="background-color:gray">
+
+                    <h6 class="m-0 font-weight-bold"><strong style="color:white;">Bill Sundry</strong></h6>
+                </div>
+                <div class="card-body" style="background-color:white">
+                    <label class="col-md-4" style="color:black;">BillSundry Name</label>
+                    <div class="col-md-8">
+                        @Html.DropDownList("BillSundryId", (IEnumerable<SelectListItem>)ViewBag.BillSundry, "---Select BillSundry---", htmlAttributes: new { @class = "form-control", @Id = "txbillsundry", @Name = "BillSundryId", @value = Model.BillSundryId })
+                        <br />
+                        <br />
+                    </div>
+
+                    <div id="append">
+
+                        <div style="display:none;" id='child'>
+                            <label class='col-md-4' style='color:black;'> Discount Value</label>
+                            <div class='col-md-8'>
+                                <input type="number" value="@Model.BillSundryAmount" class='form-control' id='txtdiscount' name="BillSundryAmount" placeholder='Enter Discount Rate' />
+                            </div>
+                        </div>
+
+                        <div style="display:none;" id='child2'>
+                            <label class='col-md-4' style='color:black;'>Tax Percentage</label>
+                            <div class='col-md-8'>
+                                <input type="number" value="@Model.BillSundryAmount2" class='form-control' id='txttax' name="BillSundryAmount2" placeholder='Enter Tax Percentage' />
+                            </div>
+                        </div>
+
+                        <div style="display:normal;" id='child3'>
+                            <h5 class="text-center " style='color:black;'><strong>Select Bill Sundry</strong></h5>
+                            <label class='col-md-4' style='color:black;'></label>
+                            <div class='col-md-8'>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+                <br />
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <div class="card shadow mb-4">
+                <div class="card-header py-3" style="background-color:gray">
+
+                    <h6 class="m-0 font-weight-bold"><strong style="color:white;">Total</strong></h6>
+                </div>
+                <div class="card-body" style="background-color:white">
+                    <lablel class="col-md-4" style="color:black;">Final Total</lablel>
+                    <div class="col-md-8">
+                        @Html.TextBox("FinalTotal", Model.FinalTotal, new { @class = "form-control", @Id = "txtfinaltotal", @name = "FinalTotal", @readonly = "readonly" })
+                        <input type="hidden" value="@Model.DrCrType" name="DrCrType" />
+                        <input type="hidden" value="@Model.VoucherTypeID" name="VoucherTypeID" />
+
+                    </div>
+                    <br />
+                    <br />
+
+                    @*<label class="col-md-4" style="color:black;">Another Discount Value</label>
+                        <div class="col-md-8">
+                            <input class="form-control" id="txtdiscount2" placeholder="Enter second Discount Rate" value="0.00" />
+                        </div>*@
+
+                    <lablel class="col-md-4"></lablel>
+                    <div class="col-md-8">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" id="btnSaveVoucher" class="btn btn-success col-md-offset-8"><i class="glyphicon glyphicon-save-file"></i> Save Voucher</button>
+
+
+</form>
+<script>
+
+    $('#itemname').change(function () {
+        var itemid = $('#itemname option:selected').val();
+        var itemtext = $('#ItemPrice option:selected').val();
+        //alert("item is : " + itemid);
+        debugger;
+        //var quantity = $('#txtQuantity').val();
+        //alert("it is" + quantity);
+
+        $.ajax({
+            type: 'GET',
+            datatype: 'JSON',
+            data: { ItemID: itemid },
+            url: "@Url.Action("GetItemprice","Order")"
+        }).done(function (data) {
+
+            $('#ItemPrice').attr("placeholder", data);
+            if (itemtext=="0.00") {
+                $('#ItemPrice').attr("placeholder", data);
+
+            }
+
+
+
+        }).fail(function (jqXHR, textStatus) {
+
+            if (itemid == null || itemid == "") {
+                alert("Please Select an Item");
+            }
+            else {
+
+                alert("CANT GET ITEM PRICE, CONTACT ADMIN");
+            }
+
+        });
+    });
+
+
+
+
+
+
+    $('#ItemPrice').focusout(function () {
+        var quantt = parseInt($('#Quantity').val());
+        var itemprice = $('#ItemPrice').val();
+        //var avstock = parseInt($('#txtavstock').val());
+        if (quantt <= 0) {
+            alert("!uantity cannot be lesser than 1");
+            $('#Quantity').val(0);
+            $('#Quantity').focus();
+        }
+        else {
+
+        debugger;
+
+        var quantity = $('#Quantity').val();
+            //var discount = $('#txtdiscount').val();
+
+        var result = parseFloat(quantity).toFixed(2) * parseFloat(itemprice).toFixed(2); //- parseFloat(discount).toFixed(2)
+
+            $('#txttotal').val(result);
+        }
+
+        });
+
+        $('#txtdiscount,#txttax').change(function () {
+            var discount = $('#txtdiscount').val();
+            var tax = $('#txttax').val();
+            var total = $('#txtfinaltotal').val();
+            debugger;
+
+            if (total == "0.00") {
+                alert("Please select and item then add bill sundry ");
+                $('#txbillsundry').val(0);
+                $('#child').hide();
+                $('#child2').hide();
+                $('#child3').show();
+            }
+
+
+           else if (discount != "" && total != "0.00") {
+                var result = parseFloat(total) - parseFloat(discount);
+                $('#txtfinaltotal').val(result);
+            }
+            else if (tax != 0 && total != 0.00) {
+                //var percent = parseFloat(total) / 100 * parseFloat(tax);
+                var result2 = parseFloat(total) - (parseFloat(total) / 100 * parseFloat(tax));
+                $('#txtfinaltotal').val(parseFloat(result2));
+            }
+
+
+            $('#child').fadeOut(400);
+            $('#child2').fadeOut(400);
+            $('#child3').fadeIn(400);
+            $('#txbillsundry').val();
+        });
+
+    $('#btnadd').click(function () {
+
+        var itemid = $('#itemname option:selected').val();
+        var itemname = $('#itemname option:selected').text();
+        var unitprice = $('#ItemPrice').val();
+        var quantity = $('#Quantity').val();
+        var Unitid = $('#unitname option:selected').val();
+        var Unittext = $('#unitname option:selected').text();
+        //var discount = $('#txtdiscount').val();
+
+
+        var total = $('#txttotal').val();
+        //var btn = $('#btnadd').hasClass("disabled");
+        if (itemid == "" || itemname == "" || unitprice == "" || quantity == 0 || Unitid== 0) {
+            alert("Please Fill Item Details");
+        }
+
+        else {
+            var removebtn = "<button type='button' class='btn btn-danger ' id='btnremove' onclick='remove()'><i class='glyphicon glyphicon-minus'></i></button>'";
+
+            // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
+            var row = ` <tr>
+            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
+            <td><input readonly class='form-control'   value="`+ itemname + `" /></td>
+            <td><input readonly class='form-control'  value="`+ quantity + `" name="Quantity" /></td>
+            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
+            <td><input readonly class='form-control'  value="`+ Unittext + `"  /></td>
+            <td><input readonly  class='form-control' value="`+ unitprice + `" name="ItemPrice" /></td>
+            <td><input readonly class='form-control' value="`+ total + `" name="TotalAmount" id='total' /></td>
+            <td>`+ removebtn + `</td>
+            <td hidden>` + total + `</td>
+            </tr>`;
+
+            $('table tbody').append(row);
+            var ftotal = 0;//+ $('#txttotal').val();
+
+
+                if ($("table > tbody > tr").length > 0) {
+                $("table  tbody  tr").each(function () {
+
+
+
+                    var ffx = $(this).find('td:eq(5)').html();
+                    //var new = $('#total').attr('value');
+                    debugger;
+                    ftotal += parseFloat($(this).find('td:eq(8)').html());
+
+                    //ftotal += $(t).find('input[name=Total]').val();a
+
+                });
+            }
+            debugger;
+            $('#txtfinaltotal').val(ftotal);
+
+            $('#ItemID').text();
+            $('#ItemPrice').val("0.00");
+            $('#Quantity').val(0);
+            //$('#txtdiscount').val("0.00");
+            $('#txttotal').val("0.00");
+            $('#Unitid').val();
+            $('#itemname').focus();
+
+        }
+    });
+
+
+    function remove() {
+
+        $('#btnremove').parent().parent().remove();
+
+        var ftotal = 0.00;//+ $('#txttotal').val();
+        var pt = 0.00;
+        debugger;
+        if ($("table > tbody > tr").length > 0) {
+            $("table > tbody > tr").each(function () {
+                var ot = parseFloat($(this).find('td:eq(8)').html());
+                pt = ot - parseFloat(ftotal);
+                var ototal = ftotal;
+                ototal += ftotal;
+            })
+        }
+
+
+        $('#txtfinaltotal').val(parseFloat(pt));
+
+
+        }
+        $('#txbillsundry').change(function () {
+            debugger;
+            var sundryid = $('#txbillsundry option:selected').val();
+
+
+            if (sundryid == 1) {
+                //$('#append').html("");
+                //$('#append').append(div);
+                //$('#append').append(function () {
+                    //$('#child2').hide(800);
+                //$('#child').show(800);
+                $('#child2').fadeOut(400);
+                $('#child3').fadeOut(400);
+                //$('#child2').hide(800);
+                $('#child').fadeIn(400);
+                //$('#append').append(div);
+
+
+            }
+            else if (sundryid == 2) {
+                //$('#append').html("");
+                //$('#child').hide(div);
+                $('#child').fadeOut(300);
+                $('#child3').fadeOut(400);
+                $('#child2').fadeIn(400);
+                //$('#append').append(div2);
+                //$('#append').append(function () {
+            }
+            else {
+                $('#child').fadeOut(400);
+                $('#child2').fadeOut(400);
+
+                $('#child3').fadeIn(400);
+            }
+
+
+        });
+
+
+    @*$('#btnSaveVoucher').click(function () {
+        var form = $('#PurchaseVoucher').serialize();
+
+        debugger;
+        var con = confirm("Are u sure u want to Sale");
+        if (con == true) {
+
+            $.ajax({
+
+                type: 'POST',
+                data: $('#SaleVoucher').serialize(),
+                url: "@Url.Action("SaveSVoucher", "Sales")"
+
+            }).done(function (data) {
+                alert("Voucher Save Successfully ");
+            }).fail(function (jqXHR, textStatus) {
+                alert("Your Voucher cant be save,Contact Admin");
+
+            });
+
+        }
+        else {
+            alert("Ok");
+        }
+    });*@
+
+
+
+
+
+
+
+
+</script>

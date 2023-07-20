@@ -1,0 +1,316 @@
+﻿@model IEnumerable<RMS.Web.Models.MaterialCentreGroup>
+@{
+    ViewBag.Title = "MaterialGroup";
+}
+
+<div class="container-fluid">
+    <h1 class="col-lg-offset-5 " style="color:slategrey"></h1>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <button type="button" id="btnadd" class="btn btn-dark" data-target="#exampleModal" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i> Add Account Group</button>
+            <h1 class="m-0 font-weight-bold  text-center" style="color:black;">Material Group Center</h1>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="color:white">MaterialGroup ID</th>
+                            <th style="color:white">Material Group Name</th>
+                            <th style="color:white">Material Parent Group </th>
+                            <th style="color:white">Actions</th>
+                        </tr>
+                    </thead>
+                    <tfoot class="thead-dark">
+                        <tr>
+                            <th style="color:white">MaterialGroup ID</th>
+                            <th style="color:white">MaterialGroup Group Name</th>
+                            <th style="color:white">MaterialGroup Parent Group </th>
+                            <th style="color:white">Actions</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.MaterialGroupID</td>
+                                    <td>@item.MaterialGroupName</td>
+                                    <td> @item.MaterialGroupUndergroupName  </td>
+                                    <td>
+                                        <button class="btn btn-primary btnedit" data-id="@item.MaterialGroupID" data-target="#exampleModal" data-toggle="modal"><i class="glyphicon glyphicon-edit"></i>Edit</button>
+                                        <button data-id="@item.MaterialGroupID" class="btn btn-danger btndelete"><i class="glyphicon glyphicon-remove"></i>Delete</button>
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+
+
+
+
+                </table>
+
+
+
+
+
+            </div>
+
+            <form id="accgroupform">
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="exampleModalLabel"><strong>Add MaterialGroup</strong></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                <input type="hidden" class="form-control" name="MaterialGroupID" id="MaterialGroupID" />
+                                <div class="row">
+                                    <label class="col-md-6"> Group Name</label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control " id="MaterialGroupName" name="MaterialGroupName" />
+                                    </div>
+                                    <hr />
+                                    <br />
+                                    <br />
+                                    <label class="col-md-6"> Group Alias</label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control " id="Alias" name="Alias" />
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <label class="col-md-6">Primary Group</label>
+
+                                    <div class="col-md-6">
+                                        <select id="primarygroup" class="form-control">
+                                            <option value="0">---Select---</option>
+                                            <option value="1">Yes</option>
+                                            <option value="2">No</option>
+                                        </select>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <label class="col-md-6"> Under Group</label>
+
+                                    <div id="child" style="display:none;" class="col-md-6">
+                                        <input type="text" class="form-control " value="NULL" placeholder="enter Item under group" id="MaterialGroupUndergroupid" name="MaterialGroupUndergroupid" />
+                                    </div>
+
+                                    <div id="child2" style="display:none;" class="col-md-6">
+                                        @Html.DropDownList("materialgroupss", (IEnumerable<SelectListItem>)ViewBag.materialgroups, "NULL", htmlAttributes: new { @class = "form-control", @Id = "MaterialGroupUndergroupid2", @Name = "MaterialGroupUndergroupid2" })
+
+                                    </div>
+
+                                    <br />
+                                    <br />
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button id="btnSave" type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+    $('#btnadd').click(function () {
+        debugger;
+        $('#MaterialGroupID').val(0);
+        $('#MaterialGroupName').val("");
+        $('#Alias').val(" ");
+        $('#primarygroup').val(0);
+        $('#MaterialGroupUndergroupid2').val(0);
+
+
+    });
+
+    $('#btnSave').click(function () {
+        var itemgroupid = $(this).attr('data-id');
+
+        debugger;
+        var itemgroupid = $('#MaterialGroupID').val();
+        var itemgroupname = $('#MaterialGroupName').val();
+        var itemgroupalias = $('#Alias').val();
+        var itemgroupundergroup = $('#MaterialGroupUndergroupid').val();
+        var itemgroupnderprimarygroup2 = $('#MaterialGroupUndergroupid2 option:selected').text();
+        var itemgroupunderprimarygroupid2 = $('#MaterialGroupUndergroupid2 option:selected').val()
+
+
+        var optionid = $('#primarygroup').val();
+        if (optionid == 0) {
+            alert("Please select primary group type");
+
+        }
+        else if (optionid == 1) {
+
+            itemgroupundergroup = " ";
+            itemgroupnderprimarygroup2 = " ";
+            itemgroupunderprimarygroupid2 = 0;
+
+        }
+
+
+
+
+            $.ajax({
+                type: 'POST',
+                data: { itemgrupid: itemgroupid, itemgrupname: itemgroupname, itemgrupalias: itemgroupalias, itemgrupprimname: itemgroupnderprimarygroup2, itemgrupprimid: itemgroupunderprimarygroupid2 },
+                url: "@Url.Action("SaveMaterialGroup", "Masters")"
+
+            }).done(function (data) {
+                if (itemgroupid == 0) {
+                    alert("MaterialGroup added successdully");
+                    location.reload();
+
+
+                }
+                else {
+                    alert("MaterialGroup updated successdully");
+                    location.reload();
+                    $('#btnadd').focusin();
+                }
+                location.reload();
+
+
+            }).fail(function (jqxhr, textStatus) {
+
+                alert("Cant add MaterialGroup ");
+                location.reload();
+            });
+
+
+    });
+    $('.btnedit').click(function () {
+        var itemgrupid = $(this).attr('data-id');
+        debugger;
+
+
+       $.ajax({
+            type: 'GET',
+           data: { itemgid: itemgrupid },
+            url: "@Url.Action("GetMaterialGroup", "Masters")"
+        }).done(function (data) {
+            alert("data caught successfully");
+            $('#MaterialGroupID').val(data.MaterialGroupID);
+            $('#MaterialGroupName').val(data.MaterialGroupName);
+            $('#Alias').val(data.Alias);
+            $('#MaterialGroupUndergroupid2').val(parseInt(data.MaterialGroupUndergroupid));
+
+            //if (data.Accgroupalias == null) {
+            //    $('#Alias').val("no alias");
+            //}
+            //else {
+            //    $('#Alias').val(data.Alias);
+            //}
+
+
+            if (data.MaterialGroupUndergroupid != " ") {
+                $('#primarygroup').val(2);
+                $('#child2').show();
+                //$('#MaterialGroupUndergroupid2').val(data.Accunderprimarygroupid);
+                $('#MaterialGroupUndergroupid2 option:selected').val(data.MaterialGroupUndergroupid);
+
+            }
+            else {
+
+                $('#primarygroup').val(1);
+                $('#child2').hide();
+
+            }
+
+            $('#exampleModal').modal('show');
+
+        }).fail(function (jqxhr,textStatus)  {
+
+            alert("Cant get MaterialGroup details");
+
+        });
+
+
+
+    });
+
+    $('.btndelete').click(function () {
+        var accid = $(this).attr('data-id');
+
+
+        var con = confirm("Are u sure u want to delete");
+        $(this).parent().parent().remove();
+        if (con == true) {
+
+            $.ajax({
+                type: 'GET',
+                data: { itemgroupid: accid},
+                url: "@Url.Action("DeleteMaterialGroup", "Masters")"
+
+            }).done(function (data) {
+                alert("MaterialGroup Deleted  successfully");
+
+
+            }).fail(function (jqxhr, textStatus) {
+
+                alert("Cant Deleted  MaterialGroup ");
+
+            });
+
+
+
+
+        }
+        else {
+            alert("ok");
+        }
+
+
+    });
+
+    $('#primarygroup').change(function () {
+        debugger;
+        var pgval = $(this).val();
+
+        if (pgval == 2) {
+            $('#child').hide();
+            $('#child2').show();
+
+        }
+        else if (pgval == 1) {
+            $('#child2').hide();
+            $('#child').hide(400);
+        }
+        else {
+            $('#child2').hide();
+            $('#child').hide();
+        }
+
+    });
+
+
+
+
+
+
+
+
+
+</script>
+

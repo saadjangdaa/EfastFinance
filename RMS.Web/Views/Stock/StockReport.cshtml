@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "StockReport";
+}
+@using (Html.BeginForm("StockReport", "Stock", FormMethod.Post))
+{
+    <div class="card shadow mb-4">
+        <div class="card-header py-3" style="background-color:#5a5c69">
+            <h1 class="m-0 font-weight-bold  text-center" style="color:white;"> Item Ledger</h1>
+        </div>
+        <div class="card-body">
+            <div class="">
+
+                <label class="col-md-2">To Date</label>
+                <div class="col-md-4">
+                    <input type="date" name="todate" class="form-control" />
+                </div>
+
+                <label class="col-md-2">Display Type</label>
+                <div class="col-md-4">
+                    <select id="ddltype" class="form-control">
+                        <option value="0">---Select Display Type---</option>
+                        <option value="1"> Group Wise</option>
+                        <option value="2">Hierchal</option>
+                    </select>
+                </div>
+                <br />
+                <br />
+                <br />
+                <br />
+                <div class="">
+
+                    <button type="submit" id="btnshow" class="btn btn-success btn-block">Show</button>
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+}

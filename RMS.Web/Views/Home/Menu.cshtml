@@ -1,0 +1,53 @@
+﻿@model  IEnumerable<RMS.Web.Models.ViewModels.DynamicMenuviewmodel.Menu_List>
+
+
+@{
+    Layout = null;
+}
+<li class="nav-item">
+    @{
+        var menuid = 13424;
+        var menuidname = "#collapsePages";
+        var menuidname2 = "collapsePages";
+        foreach (var item in Model.Where(s => s.ParentID == 0 ).ToList())
+        {
+
+            <a class="nav-link collapsed" style="color:white" href="#" data-toggle="collapse" data-target="@menuidname@menuid"
+               aria-expanded="true" aria-controls="collapsePages">
+                <i class="@item.Icon"></i>
+                @item.MenuName
+            </a>
+            <div id="@menuidname2@menuid" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    @{
+                        foreach (var firstItem in (Model.Where(s => s.ParentID == item.ID ).ToList()))
+                        {
+                            <a class="collapse-item" href="@firstItem.Url"><i class="@firstItem.Icon"></i> @firstItem.MenuName</a>
+                        }
+                    }
+                </div>
+            </div>
+             menuid++;  
+          }
+    }
+</li>
+
+
+@*<li class="nav-item">GroupBy(Obj => new { Obj.ParentID }).Distinct().
+        <a class="nav-link collapsed" style="color:white" href="#" data-toggle="collapse" data-target="#collapsePages13"
+           aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-cog"></i>
+            Masters
+        </a>
+        <div id="collapsePages13" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="@Url.Action("AccountGroup","Masters")"><i class="fas fa-fw fa fa-cog"></i> Account Groups</a>
+                <a class="collapse-item" href="@Url.Action("Accounts","Masters")"><i class="fas fa-fw fa fa-cog"></i>  Accounts</a>
+                <a class="collapse-item" href="@Url.Action("ItemGroupIndex","Item")"><i class="fas fa-fw fa fa-cog"></i> Item Groups</a>
+                <a class="collapse-item" href="@Url.Action("Index","Item")"><i class="fas fa-fw fa fa-cog"></i> Items</a>
+                <a class="collapse-item" href="@Url.Action("MaterialGroup","Masters")"><i class="fas fa-fw fa fa-cog"></i> Material CentreGroups</a>
+                <a class="collapse-item" href="@Url.Action("MaterialCentre","Masters")"><i class="fas fa-fw fa fa-cog"></i> Material Centres</a>
+
+            </div>
+        </div>
+    </li>*@

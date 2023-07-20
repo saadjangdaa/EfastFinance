@@ -1,0 +1,195 @@
+﻿
+@model RMS.Web.Models.UserPrivilegeViewModel
+
+
+@*<script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
+
+
+@*<script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
+
+@*<script src="~/Custom_Components/bootstrap.min.js"></script>
+    <link href="~/Custom_Components/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Custom_Components/jquery.tree-multiselect.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+    <script src="~/Custom_Components/jquery.tree-multiselect.min.js"></script>*@
+
+@*<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.12/css/bootstrap-multiselect.css" rel="stylesheet" />*@
+
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.12/js/bootstrap-multiselect.min.js"></script>*@
+
+
+<script src="~/Scripts/jquery.tree-multiselect.min.js"></script>
+<link href="~/Content/jquery.tree-multiselect.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.12/js/bootstrap-multiselect.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+<div class="container">
+    @*<div class="panel" style="background-color:white;padding:20px;">
+            <div class="row">
+                <div class="col-md-6">
+                    <div style="padding: 30px;">
+                        <label>Select User :</label>
+                        <select id="selectUserId" class="form-control">
+                            <option hidden value="">Select User</option>
+                            @if (Model.UserDetails != null)
+                            {
+                                foreach (var r in Model.UserDetails)
+                                {
+                                    if (r.UserID == Model.SelectedUserId)
+                                    {
+                                        <option selected value="@r.UserID">@r.UserName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@r.UserID">@r.UserName</option>
+                                    }
+
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div style="padding-top: 55px;">
+                        <div class="btn-group">
+                            <button class="button btn btn-success waves-effect btnSaveUserPrivilege"><i class="fa fa-save"></i> Save</button>
+                            <button class="button btn btn-danger waves-effect btnReplaceUserPrivilege"><i class="fa fa-reply"></i> Replace Current Priviliges</button>
+                            <button class="button btn btn-primary waves-effect backBtn" id="backBtn"><i class="fa fa-reply"></i>Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+    <div class="panel">
+        <select name="MenuIds" id="userPrivilege" multiple="multiple">
+            @if (Model.MenuItems != null)
+            {
+                if (Model.ExistingAssignedMenuIds != null)
+                {
+                    foreach (var m in Model.MenuItems.Where(m => m.IsParent == true))
+                    {
+
+                        if (Model.MenuItems.Count > 0)
+                        {
+                            foreach (var sm in Model.MenuItems.Where(x => x.ParentID == m.ID && x.IsActive == true))
+                            {
+                                if (Model.ExistingAssignedMenuIds.Contains(sm.ID))
+                                {
+                                    <option value="@sm.ID" selected data-section="@m.MenuName">@sm.MenuName</option>
+                                }
+                                else
+                                {
+                                    <option value="@sm.ID" data-section="@m.MenuName">@sm.MenuName</option>
+                                }
+
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var m in Model.MenuItems.Where(m => m.IsParent == true))
+                    {
+
+                        if (Model.MenuItems.Count > 0)
+                        {
+                            foreach (var sm in Model.MenuItems.Where(x => x.ParentID == m.ID))
+                            {
+                                <option value="@sm.ID" data-section="@m.MenuName">@sm.MenuName</option>
+                            }
+                        }
+                    }
+                }
+
+            }
+        </select>
+    </div>
+</div>
+<script>
+
+    $('#backBtn').click(function () {
+        window.history.back();
+    });
+    var tree = $("#userPrivilege").treeMultiselect({
+        allowBatchSelection: true,
+        enableSelectAll: true,
+        searchable: true,
+        sortable: true,
+        startCollapsed: false
+    });
+
+    $('.btnSaveUserPrivilege').click(function () {
+
+        var menuIds = [];
+        $("#userPrivilege > option:selected").each(function () {
+            menuIds.push(this.value);
+        });
+
+        var userId = $('#selectUserId').val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/Account/UserPrivilege',
+            data: { MenuIds: menuIds, UserId: userId }
+        })
+            .done(function (data) {
+                if (data == "success") {
+
+                    alert("User Privileges Updated Successfully!");
+                }
+                else {
+                    toastr.warning(data, "Failed!");
+                }
+
+            })
+            .fail(function (XMLHttpRequest, txtStatus, errorThrown) {
+                alert("User Privilege Save Failed");
+            });
+
+    })
+
+    $('.btnReplaceUserPrivilege').click(function () {
+
+        var menuIds = [];
+        $("#userPrivilege > option:selected").each(function () {
+            menuIds.push(this.value);
+        });
+
+        var userId = $('#selectUserId').val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/Account/UserPrivilege',
+            data: { MenuIds: menuIds, UserId: userId, Replace: "True" }
+        })
+            .done(function (data) {
+                if (data == "success") {
+
+                    alert("User Privileges Updated Successfully!");
+                }
+                else {
+                    toastr.warning(data, "Failed!");
+                }
+
+            })
+            .fail(function (XMLHttpRequest, txtStatus, errorThrown) {
+                alert("User Privilege Save Failed");
+            });
+
+    })
+
+
+</script>
+
+
+
+
+
+
+
+
+
+

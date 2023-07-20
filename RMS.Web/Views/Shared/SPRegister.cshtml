@@ -1,0 +1,487 @@
+﻿@model RMS.Web.Models.ViewModels.VoucherMasterViewModel
+
+@if (Model.vouchertypeid == 12)
+{
+
+    <div>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:#5a5c69">
+
+                <h4 class="m-0 font-weight-bold">
+                    <strong style="color:white;">Account Name:  <em id="accname" style="color:yellow;"></em> </strong>
+                    <strong style="color:white; float:right;">Total Quantity  <em style="color:yellow;" id="totalqty"></em> </strong>
+                </h4>
+
+
+
+
+                <button type="button" onclick="printJS({
+            printable: 'printtable',
+            // properties: ['name', 'email', 'phone', 'hello'],
+            type: 'html',
+            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
+            gridStyle: 'border: 2px solid #3971A5;'})">
+                    Print  Data
+                </button>
+
+                @*<h6 class="m-0 font-weight-bold"><strong style="color:white;">Bill Sundry</strong></h6>*@
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div>
+                        <table id="printtable" style="width: 100%;max-width: 98%;margin-bottom: 1rem;background-color: #fff;border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th colspan="13"><h1 style="text-align: center;">STOCK TRANSFER</h1></th>
+                                </tr>
+                                <tr>
+                                    <th style="padding: 4px!important;font-size: 18px;text-align: left;vertical-align: bottom;font-weight: bold;" colspan="13">HBUET</th>
+                                </tr>
+                                <tr>
+                                    <th style="padding: 4px!important;font-size: 14px;text-align: left;vertical-align: bottom;" colspan="3">Date From: @ViewBag.sdate </th>
+                                    <th style="padding: 4px!important;font-size: 14px;text-align: right;vertical-align: bottom;" colspan="3">Date To: @ViewBag.edate </th>
+                                </tr>
+                                <tr>
+                                    <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">PARTY DESCR</th>
+                                    <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">V.NO</th>
+
+                                    <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">ITEM NAME.</th>
+                                    <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">QTY</th>
+                                    <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">DATE</th>
+                                    <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">LOCATION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.VoucherChildlist.Count != 0)
+                                {
+
+                                    foreach (var item in Model.Vouchermasterlist)
+                                    {
+                                        //if (item.vouchermasterid == Model.VoucherChildlist.FirstOrDefault().VoucherMasterID)
+                                        //{
+                                        //}
+                                        foreach (var item3 in Model.masterids)
+                                        {
+                                            if (item3 == item.vouchermasterid)
+                                            {
+                                                <tr>
+
+                                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item.Account.AccountName</td>
+                                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item.vouchermasterid</td>
+
+
+                                                    @foreach (var item2 in Model.VoucherChildlist.Where(m => m.VoucherMasterID == item3.Value))
+                                                    {
+                                                        <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item2.Items.ItemName</td>
+                                                        <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item2.Quantity</td>
+
+                                                    }
+                                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item.VoucherCreateDate</td>
+                                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item.MaterialCentre.MaterialCentreName</td>
+
+                                                    @*<td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;" id="@rowid"></td>*@
+                                                    @*<td hidden>@rowid</td>*@
+                                                    <td id="accountname" hidden>@item.Account.AccountName</td>
+
+                                                </tr>
+
+                                            }
+                                        }
+
+
+
+                                    }
+                                }
+                                else
+                                {
+
+                                }
+
+
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;font-weight: bold;">Total:</td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black; " class="qtytotal">0</td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;font-weight: bold;">GRAND TOTAL:</td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;" class="qtytotal">0</td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;" class="qtytotal">0</td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+    <script>
+        var acc = $('#accountname').text();
+        $('#accname').text(acc);
+
+        function numberWithCommas(number) {
+            var parts = number.toString().split(".");
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return parts.join(".");
+        }
+
+
+
+        var totalqty = 0;
+        if ($("table > tbody > tr").length > 0) {
+            $("table tbody  tr").each(function () {
+
+                var ffx = $(this).find('td:eq(3)').html();
+
+
+                totalqty += parseFloat($(this).find('td:eq(3)').html());
+
+            });
+        }
+
+        $('#totalqty').html(numberWithCommas(totalqty));
+        $('.qtytotal').html(numberWithCommas(totalqty));
+    </script>
+
+}
+else
+{
+    @*<table class="table table-bordered table-dark" id="datatable" width="100%" cellspacing="0">
+            <thead style="background-color:grey">
+
+                <tr>
+                    <th>VoucherDate</th>
+
+                    <th>VoucherNum/BillNum </th>
+                    <th>Voucher Type </th>
+                    <th>Narration</th>
+                    <th>Item Name </th>
+                    <th>Quantity </th>
+                    <th>Item Rate</th>
+                    <th>Total Amount</th>
+
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th> </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th style="background-color:gray"> Total Quantity : <strong style="color:yellow;" id="totalquant"></strong></th>
+                    <th></th>
+
+                    <th style="background-color:gray">Total Sales : <strong style="color:yellow;" id="totalsp"></strong> </th>
+                </tr>
+            </tfoot>
+            <tbody>
+
+                @if (Model.VoucherChildlist.Count != 0)
+                {
+                    int rowid = 1;
+
+                    foreach (var item in Model.Vouchermasterlist)
+                    {
+                        //if (item.vouchermasterid == Model.VoucherChildlist.FirstOrDefault().VoucherMasterID)
+                        //{
+                        //}
+                        foreach (var item3 in Model.masterids)
+                        {
+                            if (item3 == item.vouchermasterid)
+                            {
+                                <tr>
+                                    <td>@item.VoucherCreateDate</td>
+                                    <td>@item.VoucherTypeID </td>
+
+                                    <td>@item.vouchermasterid</td>
+                                    <td>@item.Narration</td>
+
+
+                                    @foreach (var item2 in Model.VoucherChildlist.Where(m => m.VoucherMasterID == item3.Value))
+                                    {
+                                        <td>@item2.Items.ItemName</td>
+                                        <td>@item2.Quantity</td>
+                                        <td>@item2.ItemPrice</td>
+
+                                    }
+                                    <td style="color:yellow;" id="@rowid"></td>
+                                    <td hidden>@rowid</td>
+                                    <td id="accountname" hidden>@item.Account.AccountName</td>
+
+                                </tr>
+                                rowid = rowid + 1;
+
+                            }
+                        }
+
+
+
+                    }
+                }
+                else
+                {
+
+                }
+
+
+
+            </tbody>
+
+
+        </table>*@
+    <div>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:#5a5c69">
+
+                <h4 class="m-0 font-weight-bold">
+                    <strong style="color:white;">Account Name:  <em id="accname" style="color:yellow;"></em> </strong>
+                    <strong style="color:white; float:right;">Total Quantity  <em style="color:yellow;" class="totalqty"></em> </strong>
+                    <br />
+                    <strong style="color:white; float:right;">Total Sales  <em style="color:yellow;" class="totamount"></em> </strong>
+                </h4>
+
+
+
+
+                <button type="button" onclick="printJS({
+            printable: 'printtable',
+            // properties: ['name', 'email', 'phone', 'hello'],
+            type: 'html',
+            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
+            gridStyle: 'border: 2px solid #3971A5;'})">
+                    Print  Data
+                </button>
+
+                @*<h6 class="m-0 font-weight-bold"><strong style="color:white;">Bill Sundry</strong></h6>*@
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="printtable" style="width: 100%;max-width: 100%;margin-bottom: 1rem;background-color: #fff;border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th colspan="13"><h1 style="text-align: center;">SALES REPORT</h1></th>
+                            </tr>
+                            <tr>
+                                <th style="padding: 4px!important;font-size: 18px;text-align: left;vertical-align: bottom;font-weight: bold;" colspan="13">HBUET</th>
+                            </tr>
+                            <tr>
+                                <th style="padding: 4px!important;font-size: 14px;text-align: left;vertical-align: bottom;" colspan="3">Date From: @ViewBag.sdate</th>
+                                <th style="padding: 4px!important;font-size: 14px;text-align: right;vertical-align: bottom;" colspan="4">Date To:  @ViewBag.edate</th>
+                            </tr>
+                            <tr>
+                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">PARTY DESCR.</th>
+                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">V.NO</th>
+                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">DATE</th>
+                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">ITEM NAME</th>
+
+                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">QTY</th>
+                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">RATE</th>
+                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">AMOUNT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="7" style="height:25px;border-left:1px solid black;border-right:1px solid black;padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;">
+                                    <h5> @ViewBag.location</h5>
+                                </td>
+                                <td hidden>0</td>
+                                <td hidden>0</td>
+                                <td hidden>0</td>
+                                <td hidden>0</td>
+                                <td hidden>0</td>
+                                <td hidden>0</td>
+                                <td hidden>0</td>
+
+                            </tr>
+                            @if (Model.VoucherChildlist.Count != 0)
+                            {
+                                int rowid = 1;
+
+                                foreach (var item in Model.Vouchermasterlist)
+                                {
+                                    //if (item.vouchermasterid == Model.VoucherChildlist.FirstOrDefault().VoucherMasterID)
+                                    //{
+                                    //}
+                                    foreach (var item3 in Model.masterids)
+                                    {
+                                        if (item3 == item.vouchermasterid)
+                                        {
+                                            <tr>
+                                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item.Account.AccountName</td>
+                                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item.vouchermasterid </td>
+                                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item.VoucherCreateDate</td>
+
+
+                                                @foreach (var item2 in Model.VoucherChildlist.Where(m => m.VoucherMasterID == item3.Value))
+                                                {
+                                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item2.Items.ItemName</td>
+                                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item2.Quantity</td>
+                                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item2.ItemPrice</td>
+
+                                                }
+                                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;" id="@rowid"></td>
+                                                <td hidden>@rowid</td>
+
+                                            </tr>
+                                            rowid = rowid + 1;
+
+                                        }
+                                    }
+
+
+
+                                }
+                            }
+                            else
+                            {
+
+                            }
+                        </tbody>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;font-weight: bold;">Total:</td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;" class="totalqty">0</td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;" class="totamount">0</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;font-weight: bold;">GRAND Total:</td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;" class="totalqty"></td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;"></td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;" class="totamount"></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        //var acc = $('#accountname').text();
+        //$('#accname').text(acc);
+
+        function numberWithCommas(number) {
+            var parts = number.toString().split(".");
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return parts.join(".");
+        }
+
+
+        var rowid = 0;
+        var debit = 0;
+        var credit = 0;
+        var balane = 0;
+        var oldbalane = 0;
+        var numwihcom = 0;
+        if ($("table > tbody > tr").length > 0) {
+            $("table > tbody > tr").each(function () {
+                var rownum = parseFloat($(this).find('td:eq(7)').html());
+
+
+
+
+
+                if (rownum == rowid) {
+                    itemqty = parseFloat($(this).find('td:eq(4)').html());
+                    itemrate = parseFloat($(this).find('td:eq(5)').html());
+                    itemtotal = itemqty * itemrate;
+                    oldbalane = itemtotal;
+
+                    if (oldbalane > 0) {
+                        numwihcom = numberWithCommas(Math.abs(oldbalane));
+
+                        $('#' + rownum + '').html(numwihcom);
+
+                    }
+                    else {
+                        numwihcom = numberWithCommas(Math.abs(oldbalane));
+
+                        $('#' + rownum + '').html(numwihcom);
+
+                    }
+
+
+
+                    //debit1 = numberWithCommas(debit);
+                    //credit2 = numberWithCommas(credit);
+                    //oldbalane = balane;
+                    //var commaNum2 = numberWithCommas(num2);
+                    //$(this).find('td:eq(3)').html(debit1);
+                    //$(this).find('td:eq(4)').html(credit2);
+
+
+                }
+
+                rowid = rowid + 1;
+
+
+
+
+
+
+            })
+        }
+
+
+
+        var totalqty = 0;
+        var totalamount = 0;
+        if ($("table > tbody > tr").length > 0) {
+            $("table tbody  tr").each(function () {
+                debugger
+                var ffx = parseFloat($(this).find('td:eq(4)').html());
+
+                if (!isNaN(ffx)) {
+                    totalqty += parseFloat($(this).find('td:eq(4)').html());
+                    totalamount += parseFloat($(this).find('td:eq(6)').html());
+                }
+
+
+
+
+            });
+        }
+        $('.totalqty').html(numberWithCommas(totalqty));
+        $('.totamount').html(numberWithCommas(totalamount));
+    </script>
+
+
+}
+
+
+
+

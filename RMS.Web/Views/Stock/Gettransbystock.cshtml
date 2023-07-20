@@ -1,0 +1,128 @@
+﻿@model RMS.Web.Models.ViewModels.VoucherMasterViewModel
+
+@{
+    ViewBag.Title = "Gettransbystock";
+}
+
+
+<div class="container-fluid">
+    <h1 class="col-lg-offset-5 " style="color:slategrey"></h1>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a class="btn btn-success" href="@Url.Action("Index","Stock")">Back to Stock</a>
+
+            <h1 class="m-0 font-weight-bold  text-center" style="color:black;">Item Ledger</h1>
+
+            <h5 class="m-0 font-weight-bold " style="color:black;">Item Name : @ViewBag.name (@ViewBag.itemunit) <a class="col-md-offset-7" >Closing Balance : @ViewBag.balance (@ViewBag.itemunit)</a> </h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-dark" id="dataTable" width="100%" cellspacing="0">
+                    <thead style="background-color:grey">
+                        <tr>
+                            <th style="color:white;"> voucher date</th>
+                            <th style="color:white;">
+                                Type
+                            </th>
+                            <th style="color:white;">
+                                voucher number
+                            </th>
+                            <th style="color:white;">
+                                account name
+                            </th>
+                            <th style="color:white;">
+                                Quantity In Month
+                            </th>
+                            <th style="color:white;">
+                                Quantity Out Month
+                            </th>
+                            <th style="color:white;">
+                                Details
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tfoot style="background-color:grey">
+                        <tr>
+                            <th style="color:white;"> voucher date</th>
+                            <th style="color:white;">
+                                Type
+                            </th>
+                            <th style="color:white;">
+                                voucher number
+                            </th>
+                            <th style="color:white;">
+                                account name
+                            </th>
+                            <th style="color:white;">
+                                Quantity In Month
+                            </th>
+                            <th style="color:white;">
+                                Quantity Out Month
+                            </th>
+                            <th style="color:white;">
+                                Details
+                            </th>
+                        </tr>
+                    </tfoot>
+
+                    <tbody>
+                        @if (Model != null)
+                        {
+
+                            foreach (var item2 in Model.Vouchermasterlist)
+                            {
+                        <tr>
+
+                            <td>@item2.VoucherCreateDate</td>
+                            <td>@item2.VoucherType.VoucherTypeName</td>
+
+                            <td>@item2.vouchermasterid</td>
+                            <td>@item2.Account.AccountName</td>
+                            @foreach (var item in Model.VoucherChildlist.Where(m => m.VoucherMasterID == item2.vouchermasterid))
+                            {
+                                if (item2.DrCrType == 1)
+                                {
+                                    <td>@item.Quantity</td>
+                                    <td></td>
+
+                                }
+                                else if (item2.DrCrType == 2)
+                                {
+
+                                    <td></td>
+                                    <td>-@item.Quantity</td>
+
+                                }
+                            }
+                            <td><a class="btn btn-success" href="~/Sales/detailSVoucher/@item2.vouchermasterid"><i class="glyphicon glyphicon-info-sign"></i> Details</a></td>
+                        </tr>
+
+                            }
+
+                            @*@foreach (var item in Model.VoucherChildlist.Where(m=>m.VoucherMasterID==))
+            {
+
+                        @*if (item.Quantity > 0)
+                            {
+                                <td>Sale</td>
+                            }
+                            else
+                            {
+                                <td>Purchase</td>
+                            }
+                    <td>
+                        item.Quantity
+                    </td>
+
+
+            }*@
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

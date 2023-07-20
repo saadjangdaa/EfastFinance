@@ -1,0 +1,667 @@
+﻿@model RMS.Web.Models.ViewModels.trialbalanceviewmodel
+
+<style>
+    .tdclass {
+        padding: 4px !important;
+        font-size: 11px;
+        text-align: left;
+        vertical-align: bottom;
+        border: 1px solid black;
+    }
+</style>
+<div>
+    @*<div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:#5a5c69">
+
+                <h4 class="m-0 font-weight-bold"><strong style="color:white;">Account Name :  <em style="color:yellow;">@ViewBag.AccountName</em> </strong> <strong style="color:white; float:right;">Closing Balance :  <em style="color:yellow;" id="closing2"></em> </strong></h4>
+
+                @*<h6 class="m-0 font-weight-bold"><strong style="color:white;">Bill Sundry</strong></h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-dark" id="dataTable" width="100%" cellspacing="0">
+                        <thead style="background-color:grey">
+
+                            <tr>
+                                <th>VoucherDate</th>
+                                <th>VoucherType </th>
+                                <th>VoucherNum/BillNum </th>
+                                <th>Narration</th>
+                                <th>
+                                    Debit
+                                </th>
+                                <th>
+                                    Credit
+                                </th>
+                                <th>Closing Balance</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th> </th>
+                                <th></th>
+                                <th></th>
+                                <th style="background-color:gray">Debit Total : <strong style="color:yellow;" id="debittotal"></strong></th>
+                                <th style="background-color:gray">Credit Total : <strong style="color:yellow;" id="credittotal"></strong> </th>
+                                <th> </th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @if (ViewBag.accountledger != null)
+                            {
+                                int rowid = 1;
+                                foreach (System.Data.DataRow dr in ViewBag.accountledger.Rows)
+                                {
+                                    if (dr["VoucherTypeID"].ToString() != "13")
+                                    {
+                                        <tr>
+                                            <td>@dr["VoucherCreateDate"]</td>
+                                            <td>@dr["VoucherTypeName"]</td>
+                                            @{
+                                                if (dr["VoucherTypeID"].ToString() == "2")
+                                                {
+                                                    <td><a style="color:yellow;" href="/Purchase/detailPVoucher/@dr["vouchermasterid"]"><u>@dr["vouchermasterid"]</u></a></td>
+                                                }
+                                                else if (dr["VoucherTypeID"].ToString() == "1")
+                                                {
+                                                    <td><a style="color:yellow;" href="/Sales/detailSVoucher/@dr["vouchermasterid"]"><u>@dr["vouchermasterid"]</u></a></td>
+                                                }
+                                                else if (dr["VoucherTypeID"].ToString() == "9")
+                                                {
+                                                    <td><a style="color:yellow;" href="/Sales/detailSVoucher/@dr["vouchermasterid"]"><u>@dr["vouchermasterid"]</u></a></td>
+                                                }
+                                                else if (dr["VoucherTypeID"].ToString() == "10")
+                                                {
+                                                    <td><a style="color:yellow;" href="/Purchase/detailPVoucher/@dr["vouchermasterid"]"><u>@dr["vouchermasterid"]</u></a></td>
+                                                }
+                                                else if (dr["VoucherTypeID"].ToString() == "12")
+                                                {
+                                                    <td><a style="color:yellow;" href="/Purchase/detailPVoucher/@dr["vouchermasterid"]"><u>@dr["vouchermasterid"]</u></a></td>
+                                                }
+                                                else if (dr["VoucherTypeID"].ToString() == "13")
+                                                {
+                                                    <td><a style="color:yellow;" href="/Purchase/detailPVoucher/@dr["vouchermasterid"]"><u>@dr["vouchermasterid"]</u></a></td>
+                                                }
+                                                else if (dr["VoucherTypeID"].ToString() == "5")
+                                                {
+                                                    <td><a style="color:yellow;" href="/Vouchers/ModifyJV/@dr["vouchermasterid"]"><u>@dr["vouchermasterid"]</u></a></td>
+
+                                                }
+                                                else if (dr["VoucherTypeID"].ToString() == "8")
+                                                {
+                                                    <td><a style="color:yellow;" href="/Vouchers/ModifyRecieptVoucher/@dr["vouchermasterid"]"><u>@dr["vouchermasterid"]</u></a></td>
+
+                                                }
+                                                else if (dr["VoucherTypeID"].ToString() == "6")
+                                                {
+                                                    <td><a style="color:yellow;" href="/Sales/ModifyPaymentVoucher/@dr["vouchermasterid"]"><u>@dr["vouchermasterid"]</u></a></td>
+
+                                                }
+                                            }
+
+                                            <td>@dr["Narration"]</td>
+                                            <td>@dr["DebitTotal"]</td>
+                                            <td>@dr["CreditTotal"]</td>
+                                            <td style="color:yellow;" id="@rowid"></td>
+                                            <td hidden>@rowid</td>
+                                        </tr>
+                                    }
+
+
+
+
+
+                                    rowid = rowid + 1;
+                                }
+
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Select Account</td>
+                                    <td></td>
+                                    <td></td>
+
+
+                                </tr>
+                            }
+                        </tbody>
+
+
+                    </table>
+
+
+                </div>
+
+
+            </div>
+        </div>*@
+
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3" style="background-color:#5a5c69">
+
+            <h4 class="m-0 font-weight-bold">
+                <strong style="color:white;">Account Name :  <em style="color:yellow;">@Model.Account.AccountName</em> </strong>
+
+                <strong style="color:white; float:right;">Closing Balance :  <em style="color:yellow;" id="closing2"></em> </strong>
+                <br />
+                <button type="button" onclick="printJS({
+            printable: 'printtable',
+            // properties: ['name', 'email', 'phone', 'hello'],
+            type: 'html',
+            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
+            gridStyle: 'border: 2px solid #3971A5;'})">
+                    Print Report
+                </button>
+            </h4>
+
+            @*<h6 class="m-0 font-weight-bold"><strong style="color:white;">Bill Sundry</strong></h6>*@
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <div class="container" style="box-shadow: 5px 5px 2px 2px grey;min-height: 100vh;">
+                    <table id="printtable" style="width: 100%;max-width: 97%;margin-bottom: 1rem;background-color: #fff;border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th colspan="7"><h1 style="text-align: left;">HBUET</h1></th>
+                            </tr>
+                            <tr>
+                                <th style="padding: 4px!important;font-size: 14px;text-align: left;vertical-align: bottom;border: 1px solid black;border-top: 1px solid black;" colspan="7">@Model.Account.AccountID - @Model.Account.AccountName</th>
+                            </tr>
+                            <tr>
+                                <th style="padding: 4px!important;font-size: 14px;text-align: left;vertical-align: bottom;border: 1px solid black;" colspan="7">Statement From @Model.startdate2 To @Model.enddate3 </th>
+                            </tr>
+                            <tr>
+                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Date</th>
+                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">VoucherNumber</th>
+                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Description</th>
+                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Debit</th>
+                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Credit</th>
+                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Balace</th>
+                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Location</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="printtabletbody">
+                            @if (ViewBag.accountledger != null)
+                            {
+                                int rowid = 1;
+                                foreach (System.Data.DataRow dr in ViewBag.accountledger.Rows)
+                                {
+                                    if (dr["VoucherTypeID"].ToString() != "13")
+                                    {
+                            <tr id="printtabletr">
+                                <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@dr["VoucherCreateDate"]</td>
+                                @{
+                                    if (dr["VoucherTypeID"].ToString() == "2")
+                                    {
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;" class="tdclass"><a href="/Purchase/detailPVoucher/@dr["vouchermasterid"]"> PB <u>@dr["vouchermasterid"]</u></a></td>
+                                    }
+                                    else if (dr["VoucherTypeID"].ToString() == "1")
+                                    {
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;" class="tdclass"><a href="/Sales/detailSVoucher/@dr["vouchermasterid"]">SB <u>@dr["vouchermasterid"]</u></a></td>
+                                    }
+                                    else if (dr["VoucherTypeID"].ToString() == "9")
+                                    {
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;" class="tdclass"><a href="/Sales/detailSVoucher/@dr["vouchermasterid"]">SR <u>@dr["vouchermasterid"]</u></a></td>
+                                    }
+                                    else if (dr["VoucherTypeID"].ToString() == "10")
+                                    {
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;" class="tdclass"><a href="/Purchase/detailPVoucher/@dr["vouchermasterid"]">PR <u>@dr["vouchermasterid"]</u></a></td>
+                                    }
+                                    else if (dr["VoucherTypeID"].ToString() == "12")
+                                    {
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;" class="tdclass"><a href="/Purchase/detailPVoucher/@dr["vouchermasterid"]">ST <u>@dr["vouchermasterid"]</u></a></td>
+                                    }
+                                    else if (dr["VoucherTypeID"].ToString() == "13")
+                                    {
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;" class="tdclass"><a href="/Purchase/detailPVoucher/@dr["vouchermasterid"]">RF <u>@dr["vouchermasterid"]</u></a></td>
+                                    }
+                                    else if (dr["VoucherTypeID"].ToString() == "5")
+                                    {
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;" class="tdclass"><a href="/Vouchers/ModifyJV/@dr["vouchermasterid"]">JV <u>@dr["vouchermasterid"]</u></a></td>
+
+                                    }
+                                    else if (dr["VoucherTypeID"].ToString() == "8")
+                                    {
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;" class="tdclass"><a href="/Vouchers/ModifyRecieptVoucher/@dr["vouchermasterid"]">RV <u>@dr["vouchermasterid"]</u></a></td>
+
+                                    }
+                                    else if (dr["VoucherTypeID"].ToString() == "6")
+                                    {
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;" class="tdclass"><a href="/Vouchers/ModifyPaymentVoucher/@dr["vouchermasterid"]">PV <u>@dr["vouchermasterid"]</u></a></td>
+
+                                    }
+                                }
+
+                                <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@dr["Narration"]</td>
+                                <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@dr["DebitTotal"]</td>
+                                <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@dr["CreditTotal"]</td>
+                                <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;" id="@rowid"></td>
+                                <td hidden>@rowid</td>
+                                <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@dr["MaterialCentreName"]</td>
+
+                            </tr>
+                                    }
+
+
+
+
+
+                                    rowid = rowid + 1;
+                                }
+
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Select Account</td>
+                                    <td></td>
+                                    <td></td>
+
+
+                                </tr>
+                            }
+                        </tbody>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">Total Dr/Cr</td>
+                                <td id="debittotal" style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">0.00</td>
+                                <td id="credittotal" style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">0.00</td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                                <td  style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;border-bottom: none;">Closing Balace</td>
+                                <td id="closing3" style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;text-decoration-line: underline;text-decoration-style: double;border-bottom: none;">0.00</td>
+                                <td id="closing4" style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;text-decoration-line: underline;text-decoration-style: double;border-bottom: none;">0.00</td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    function numberWithCommas(number) {
+        var parts = number.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return parts.join(".");
+    }
+
+
+
+    var debittotal = 0;
+    if ($("table > tbody > tr").length > 0) {
+        $("table tbody  tr").each(function () {
+
+            var ffx = $(this).find('td:eq(3)').html();
+
+
+            debittotal += parseFloat($(this).find('td:eq(3)').html());
+
+        });
+    }
+
+    $('#debittotal').html(debittotal );
+
+
+    var creditotal = 0;
+    if ($(" table > tbody > tr").length > 0) {
+        $("table  tbody  tr").each(function () {
+            debugger;
+
+            var ffx = $(this).find('td:eq(4)').html();
+
+
+            creditotal += parseFloat($(this).find('td:eq(4)').html());
+
+        });
+    }
+    $('#credittotal').html( creditotal);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //$('#closing').html(balance);
+
+    var rowid3 = 1;
+    if ($("table > tbody > tr").length > 0) {
+        $("table  tbody  tr").each(function () {
+
+            //var ffx = $(this).find('td:eq(5)').html();
+            //var new = $('#total').attr('value');
+
+            var oldrow = parseInt($(this).find('td:eq(9)').html());
+
+
+            //ftotal += $(t).find('input[name=Total]').val();a
+            rowid3 = oldrow + 1;
+        });
+    }
+
+    var rowid = 1;
+    var debit = 0;
+    var credit = 0;
+    var balane = 0;
+    var oldbalane = 0;
+    var numwihcom = 0;
+    if ($("table > tbody > tr").length > 0) {
+        $("table > tbody > tr").each(function () {
+            var rownum = parseFloat($(this).find('td:eq(6)').html());
+
+
+
+
+            if (rownum == rowid) {
+                debit = parseFloat($(this).find('td:eq(3)').html());
+                credit = parseFloat($(this).find('td:eq(4)').html());
+                balane = debit - credit;
+                oldbalane += balane;
+
+                if (oldbalane > 0) {
+                    numwihcom = numberWithCommas(Math.abs(oldbalane));
+
+                    $('#' + rownum + '').html(numwihcom + " Dr");
+
+                }
+                else {
+                    numwihcom = numberWithCommas(Math.abs(oldbalane));
+
+                    $('#' + rownum + '').html(numwihcom + " Cr");
+
+                }
+
+
+
+                debit1 = numberWithCommas(debit);
+                credit2 = numberWithCommas(credit);
+                //oldbalane = balane;
+                //var commaNum2 = numberWithCommas(num2);
+                $(this).find('td:eq(3)').html(debit1);
+                $(this).find('td:eq(4)').html(credit2);
+
+
+            }
+
+            rowid = rowid + 1;
+
+
+
+
+
+
+        })
+    }
+
+
+
+    //if ($("table > tbody > tr").length > 0) {
+    //    $("table > tbody > tr").each(function () {
+    //        var rownum = parseInt($(this).find('td:eq(6)').html());
+
+
+    //        if (rownum == rowid) {
+    //            var num2 = parseFloat($('#' + rownum + '').html());
+    //            var commaNum2 = numberWithCommas(num2);
+    //            if (num2 > 0) {
+    //                $('#' + rownum + '').html(commaNum2 + "Dr");
+
+    //            } else if (num2 < 0) {
+    //                $('#' + rownum + '').html(commaNum2 + "Cr");
+
+    //            }
+
+
+
+
+
+    //        }
+
+    //        rowid = rowid + 1;
+
+
+
+
+
+
+    //    })
+    //}
+
+
+
+    //var balance = 0;
+    //if ($("table > tbody > tr").length > 0) {
+    //    $("table  tbody  tr").each(function () {
+
+    //        var balance2 = parseFloat($(this).find('td:eq(6)').html());
+
+    //        balance += parseFloat($(this).find('td:eq(6)').html());
+    //    });
+    //}
+    //$('#closing').html(balance);
+    //var num4 = parseInt($('#closing').html());
+    //var commaNum4 = numberWithCommas(num4);
+    //$('#closing').html("PKR " + commaNum4);
+
+
+    var totaldebit = parseFloat($('#debittotal').html());
+    var credittotal2 = parseFloat($('#credittotal').html());
+    $('#debittotal').html(numberWithCommas(totaldebit ));
+    $('#credittotal').html(numberWithCommas(credittotal2 ));
+    var closingbalance4 = totaldebit - credittotal2;
+    var num3 = parseFloat(closingbalance4);
+    //var commaNum3 = numberWithCommas(num3);
+    debugger;
+    //$('#closing2').html("PKR " + commaNum3 + " Debit");
+
+    var balance = parseFloat(num3);
+    debugger;
+    var commaNum3;
+    if (balance > 0) {
+        balance = Math.abs(balance);
+        commaNum3 = numberWithCommas(balance);
+        $('#closing2').html("PKR " + commaNum3 + " Debit");
+        $('#closing3').html("PKR " + commaNum3 + " Debit");
+
+    }
+    else if (balance < 0) {
+        balance = Math.abs(balance);
+        commaNum3 = numberWithCommas(balance);
+        $('#closing2').html("PKR " + commaNum3 + " Credit");
+        $('#closing4').html("PKR " + commaNum3 + " Credit");
+
+    }
+
+
+    //var num = parseInt($('#debittotal').html());
+    //var commaNum = numberWithCommas(num);
+    //$('#debittotal').html("PKR " + commaNum);
+
+    //var num2 = parseInt($('#credittotal').html());
+    //var commaNum2 = numberWithCommas(num2);
+    //$('#credittotal').html("PKR " + commaNum2);
+
+
+    $(document).on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                var accid = $('#Partyid_Accountid option:selected').text();
+                debugger;
+                if (accid == "---Select AccountName---") {
+                    $('#Partyid_Accountid').focus();
+
+                }
+
+            }
+        }
+    });
+
+
+    $('#Partyid_Accountid').change(function () {
+        debugger;
+        var accountid = parseInt($('#Partyid_Accountid option:selected').val());
+
+        $('#accountcode').val(accountid);
+
+
+    });
+
+    //$("#Partyid_Accountid").on({
+    //    keydown: function (ev) {
+    //        if (ev.which === 13) {   // enter button
+    //            var accid = $('#Partyid_Accountid option:selected').val();
+    //            debugger;
+    //            if (accid != "---Select AccountName---") {
+    //                $('#startdate').focus();
+    //            }
+    //            else {
+    //                $('#Partyid_Accountid').focus();
+    //            }
+    //        }
+    //    }
+    //});
+
+    $('#accountcode').change(function () {
+
+
+        debugger;
+
+        var accid = $('#accountcode').val();
+
+        $('#Partyid_Accountid option:selected').val(accid);
+
+
+
+
+
+
+    });
+
+    $("#Narration").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                var accid = $('#Partyid_Accountid option:selected').val();
+                debugger;
+                if (accid != 0) {
+                    $('#btnsubmit').focus();
+                }
+                else {
+                    $('#Partyid_Accountid').focus();
+
+
+                }
+
+            }
+        }
+    });
+
+    $("#btnsubmit").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                debugger;
+                btnsubmit();
+
+            }
+        }
+    });
+    $("#btnsubmit").focusin(function () {
+        $(this).css("background-color", "yellow")
+    })
+    $("#btnsubmit").focusout(function () {
+        $(this).css("background-color", "#1cc88a")
+        $(this).css("border-color", "#1cc88a")
+    })
+
+
+                //var num3 = parseInt($('#closing').html());
+                //var commaNum3 = numberWithCommas(num3);
+                //$('#closing').html(commaNum3);
+                //$('#closing2').html(commaNum3);
+
+
+
+
+
+</script>
+
+
+@*<script>
+        var rowid = 1;
+        var debit = 0;
+        var credit = 0;
+        var balane = 0;
+        var oldbalane = 0;
+        if ($("#printtable > #printtabletbody > #printtabletr").length > 0) {
+            $("#printtable > #printtabletbody > #printtabletr").each(function () {
+                var rownum = parseFloat($(this).find('td:eq(7)').html());
+
+
+
+
+                debugger;
+                if (rownum == rowid) {
+                    debit = parseInt($(this).find('td:eq(4)').html());
+                    credit = parseInt($(this).find('td:eq(5)').html());
+                    balane = debit - credit;
+                    oldbalane += balane
+                    //var commaNum2 = numberWithCommas(num2);
+                    if (oldbalane > 0) {
+                        $('.' + rownum + '').html(Math.abs(oldbalane) + " Dr");
+
+                    }
+                    else {
+                        $('.' + rownum + '').html(Math.abs(oldbalane) + " Cr");
+
+                    }
+
+                }
+
+                rowid = rowid + 1;
+
+
+
+
+
+
+            })
+        }
+
+
+
+    </script>*@

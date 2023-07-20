@@ -1,0 +1,111 @@
+﻿@model IEnumerable<RMS.Web.Models.users>
+
+@{
+    ViewBag.Title = "GetEUsers";
+}
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h1 class="m-0 font-weight-bold  text-center" style="color:black;"> Efast Users</h1>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead style="background-color:#5a5c69">
+                    
+                    <tr>
+                            <th style="color:white;">
+                                @Html.DisplayNameFor(model => model.id)
+                            </th>
+                            <th style="color:white;">
+                                @Html.DisplayNameFor(model => model.name)
+                            </th>
+                            <th style="color:white;">
+                                @Html.DisplayNameFor(model => model.company)
+                            </th>
+                            <th style="color:white;">
+                                @Html.DisplayNameFor(model => model.phone)
+                            </th>
+                            <th style="color:white;">
+                                @Html.DisplayNameFor(model => model.cell)
+                            </th>
+                            <th style="color:white;">
+                                @Html.DisplayNameFor(model => model.email)
+                            </th>
+                            <th style="color:white;">
+                                @Html.DisplayNameFor(model => model.address)
+                            </th>
+                            <th style="color:white;">
+                                @Html.DisplayNameFor(model => model.StartingDate)
+                            </th>
+                    </tr>
+                    
+                    </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                       
+                    <tr>
+                        
+                        <td>
+                            <a href="~/ManageEfast/EditUsers/@item.id">
+                                @Html.DisplayFor(modelItem => item.id)
+                            </a>
+                        </td>
+                        <td>
+                            <a href="~/ManageEfast/EditUsers/@item.id">
+                                @Html.DisplayFor(modelItem => item.name)
+                            </a>
+
+                        </td>
+                        <td>
+                            <a href="~/ManageEfast/EditUsers/@item.id">
+
+                                @Html.DisplayFor(modelItem => item.company)
+                            </a>
+
+                        </td>
+                        <td>
+                            <a href="~/ManageEfast/EditUsers/@item.id">
+
+                                @Html.DisplayFor(modelItem => item.phone)
+                            </a>
+
+                        </td>
+                        <td>
+                            <a href="~/ManageEfast/EditUsers/@item.id">
+
+                                @Html.DisplayFor(modelItem => item.cell)
+                            </a>
+
+                        </td>
+                        <td>
+                            <a href="~/ManageEfast/EditUsers/@item.id">
+
+                                @Html.DisplayFor(modelItem => item.email)
+                            </a>
+
+                        </td>
+                        <td>
+                            <a href="~/ManageEfast/EditUsers/@item.id">
+
+                                @Html.DisplayFor(modelItem => item.address)
+                            </a>
+
+                        </td>
+                        <td>
+                            <a href="~/ManageEfast/EditUsers/@item.id">
+                                @Html.DisplayFor(modelItem => item.StartingDate)
+                            </a>
+
+                        </td>
+                    </tr>
+                     
+
+                    }
+                </tbody>
+            </table>
+            </div>
+</div>
+</div>

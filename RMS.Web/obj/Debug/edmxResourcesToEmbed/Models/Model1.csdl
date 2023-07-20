@@ -1,0 +1,960 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MVCDBLiveModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AccGroup">
+    <Key>
+      <PropertyRef Name="AccgroupID" />
+    </Key>
+    <Property Name="AccgroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Accgroupname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Accgroupalias" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AccunderprimarygroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Accgroupbalance" Type="Double" />
+    <Property Name="Accunderprimarygroupid" Type="Int32" />
+    <Property Name="DebitAmount" Type="Double" />
+    <Property Name="CreditAmount" Type="Double" />
+    <NavigationProperty Name="Account" Relationship="Self.FK_Account_AccGroup" FromRole="AccGroup" ToRole="Account" />
+  </EntityType>
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="AccountID" />
+    </Key>
+    <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AccountName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Alias" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Print_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LedgerTypeid" Type="Int32" Nullable="false" />
+    <Property Name="SubledgeraccountID" Type="Int32" />
+    <Property Name="Accgroupid" Type="Int32" Nullable="false" />
+    <Property Name="CurrencyID" Type="Int32" Nullable="false" />
+    <Property Name="Opening_Balance" Type="Int64" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CountryID" Type="Int32" Nullable="false" />
+    <Property Name="CNIC" Type="Int64" />
+    <Property Name="Userid" Type="Int32" />
+    <Property Name="mobileNum" Type="Int64" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BeneficiaryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SubledgerGroupID" Type="Int32" />
+    <Property Name="SubledgerGroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ClosingBalance" Type="Double" />
+    <Property Name="CreditTotal" Type="Double" />
+    <Property Name="DebitTotal" Type="Double" />
+    <NavigationProperty Name="AccGroup" Relationship="Self.FK_Account_AccGroup" FromRole="Account" ToRole="AccGroup" />
+    <NavigationProperty Name="JournalVoucherChild" Relationship="Self.FK_JournalVoucherChild_Account" FromRole="Account" ToRole="JournalVoucherChild" />
+    <NavigationProperty Name="VoucherMaster" Relationship="Self.FK_VoucherMaster_Account" FromRole="Account" ToRole="VoucherMaster" />
+  </EntityType>
+  <EntityType Name="AccountMainHead">
+    <Key>
+      <PropertyRef Name="MainID" />
+    </Key>
+    <Property Name="MainID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MainAccGroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MainGroupID" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserID" Type="Int32" annotation:StoreGeneratedPattern="Identity" Nullable="false" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+    <Property Name="LocationID" Type="Int32" />
+    <NavigationProperty Name="MaterialCentre" Relationship="MVCDBLiveModel.FK_AspNetUsers_MaterialCentre" FromRole="AspNetUsers" ToRole="MaterialCentre" />
+    <Property Name="AllowUpdate" Type="Boolean" />
+    <Property Name="AllowDelete" Type="Boolean" />
+    <Property Name="AllowPrint" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="BillSundry">
+    <Key>
+      <PropertyRef Name="BiilSundryID" />
+    </Key>
+    <Property Name="BiilSundryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BillSundryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="BillSundryPrice" Type="Double" Nullable="false" />
+    <Property Name="BillSundryShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="BillSundryChild" Relationship="Self.FK_BillSundryChild_BillSundry" FromRole="BillSundry" ToRole="BillSundryChild" />
+  </EntityType>
+  <EntityType Name="BillSundryChild">
+    <Key>
+      <PropertyRef Name="BillSundryChildID" />
+    </Key>
+    <Property Name="BillSundryChildID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BillSundryID" Type="Int32" Nullable="false" />
+    <Property Name="Percentage" Type="Double" Nullable="false" />
+    <Property Name="Symbol" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="BillSundryAmount" Type="Double" Nullable="false" />
+    <Property Name="Vouchermasterid" Type="Int32" Nullable="false" />
+    <Property Name="BillSundryNumber" Type="Int32" />
+    <NavigationProperty Name="BillSundry" Relationship="Self.FK_BillSundryChild_BillSundry" FromRole="BillSundryChild" ToRole="BillSundry" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Currency">
+    <Key>
+      <PropertyRef Name="CurrencyID" />
+    </Key>
+    <Property Name="CurrencyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CurrencyCode" Type="Int32" />
+    <Property Name="CurrencyShortName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="CurrencyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LowRate" Type="Double" />
+    <Property Name="HighRate" Type="Double" />
+    <NavigationProperty Name="JournalVoucherChild" Relationship="MVCDBLiveModel.FK_JournalVoucherChild_Currency" FromRole="Currency" ToRole="JournalVoucherChild" />
+  </EntityType>
+  <EntityType Name="DrCr">
+    <Key>
+      <PropertyRef Name="DrCrID" />
+    </Key>
+    <Property Name="DrCrID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DrCrName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DrCrShortName" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="JournalVoucherChild" Relationship="Self.FK_JournalVoucherChild_DrCr" FromRole="DrCr" ToRole="JournalVoucherChild" />
+    <NavigationProperty Name="VoucherMaster" Relationship="Self.FK_VoucherMaster_DrCr" FromRole="DrCr" ToRole="VoucherMaster" />
+  </EntityType>
+  <EntityType Name="ItemGroup">
+    <Key>
+      <PropertyRef Name="ItemGroupId" />
+    </Key>
+    <Property Name="ItemGroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemGroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ItemGroupAlias" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ItemUndergroupid" Type="Int32" Nullable="false" />
+    <Property Name="Itemundergroupname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Items" Relationship="MVCDBLiveModel.FK_Items_ItemGroup" FromRole="ItemGroup" ToRole="Items" />
+  </EntityType>
+  <EntityType Name="JournalVoucherChild">
+    <Key>
+      <PropertyRef Name="JVchildID" />
+    </Key>
+    <Property Name="JVchildID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JVMasterID" Type="Int32" Nullable="false" />
+    <Property Name="DrCrID" Type="Int32" Nullable="false" />
+    <Property Name="AccountID" Type="Int32" Nullable="false" />
+    <Property Name="CreditAmount" Type="Double" Nullable="false" />
+    <Property Name="DebitAmount" Type="Double" Nullable="false" />
+    <Property Name="ShortNarration" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="JvDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Account" Relationship="Self.FK_JournalVoucherChild_Account" FromRole="JournalVoucherChild" ToRole="Account" />
+    <NavigationProperty Name="DrCr" Relationship="Self.FK_JournalVoucherChild_DrCr" FromRole="JournalVoucherChild" ToRole="DrCr" />
+    <Property Name="FcRate" Type="Double" />
+    <Property Name="CurrencyID" Type="Int32" />
+    <NavigationProperty Name="Currency" Relationship="MVCDBLiveModel.FK_JournalVoucherChild_Currency" FromRole="JournalVoucherChild" ToRole="Currency" />
+  </EntityType>
+  <EntityType Name="JournalVoucherMaster">
+    <Key>
+      <PropertyRef Name="JvID_VoucherNo" />
+    </Key>
+    <Property Name="JvID_VoucherNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VoucherDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LongNarration" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CurrencyID" Type="Int32" Nullable="false" />
+    <Property Name="DebitTotal" Type="Double" Nullable="false" />
+    <Property Name="CreditTotal" Type="Double" Nullable="false" />
+    <Property Name="VoucherOtherDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="VoucherTypeID" Type="Int32" />
+    <Property Name="jvmasterid" Type="Int32" />
+    <NavigationProperty Name="VoucherType" Relationship="Self.FK_JournalVoucherMaster_VoucherType" FromRole="JournalVoucherMaster" ToRole="VoucherType" />
+  </EntityType>
+  <EntityType Name="ledgertype">
+    <Key>
+      <PropertyRef Name="LegerID" />
+    </Key>
+    <Property Name="LegerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LedgerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MaterialCentreGroup">
+    <Key>
+      <PropertyRef Name="MaterialGroupID" />
+    </Key>
+    <Property Name="MaterialGroupID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+    <Property Name="MaterialGroupName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
+    <Property Name="Alias" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
+    <Property Name="PrintName" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
+    <Property Name="MaterialGroupUndergroupid" Type="Int32" />
+    <Property Name="MaterialGroupUndergroupName" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
+  </EntityType>
+  <EntityType Name="MenuItems">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MenuName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Icon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ParentID" Type="Int32" />
+    <Property Name="IsParent" Type="Boolean" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="CreationDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="UsersMenu" Relationship="Self.FK_UsersMenu_MenuItems" FromRole="MenuItems" ToRole="UsersMenu" />
+  </EntityType>
+  <EntityType Name="Purchase">
+    <Key>
+      <PropertyRef Name="PurchaseID" />
+    </Key>
+    <Property Name="PurchaseID" Type="Int32" Nullable="false" />
+    <Property Name="PaymentID" Type="Int32" Nullable="false" />
+    <Property Name="SupplierID" Type="Int32" Nullable="false" />
+    <Property Name="PurchaseNumber" Type="Int32" Nullable="false" />
+    <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="RecieveDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FinalTotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="OrderType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="PaymentTypes" Relationship="MVCDBLiveModel.FK_Purchase_PaymentTypes" FromRole="Purchase" ToRole="PaymentTypes" />
+  </EntityType>
+  <EntityType Name="Stock">
+    <Key>
+      <PropertyRef Name="stockID" />
+    </Key>
+    <Property Name="stockID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemID" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="stockref" Type="Int32" />
+  </EntityType>
+  <EntityType Name="StockTransferChild">
+    <Key>
+      <PropertyRef Name="StockTransferChildID" />
+    </Key>
+    <Property Name="StockTransferChildID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StockTransferMasterID" Type="Int32" Nullable="false" />
+    <Property Name="ItemID" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="UnitID" Type="Int32" Nullable="false" />
+    <Property Name="ItemPrice" Type="Double" Nullable="false" />
+    <Property Name="TotalAmount" Type="Double" Nullable="false" />
+    <Property Name="BillSundryID" Type="Int32" />
+    <Property Name="BillSundryAmount" Type="Double" />
+    <Property Name="StockTransferTypeID" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StockTransferMaster">
+    <Key>
+      <PropertyRef Name="StockTransferID" />
+    </Key>
+    <Property Name="StockTransferID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StockTransferNo" Type="Int64" Nullable="false" />
+    <Property Name="TransDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="MaterialCentreID" Type="Int32" Nullable="false" />
+    <Property Name="VoucherID" Type="Int32" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="Narration" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="StudentInfo">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StudentFatherName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StudentAge" Type="Int32" Nullable="false" />
+    <Property Name="StudentEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Fathercnic" Type="Int64" Nullable="false" />
+    <Property Name="FatherOcp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FatherEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FatherNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Course" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Branch" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Timings" Type="Time" Nullable="false" Precision="7" />
+  </EntityType>
+  <EntityType Name="Suppliers">
+    <Key>
+      <PropertyRef Name="SupplierID" />
+    </Key>
+    <Property Name="SupplierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SupplierName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SuplierNumber" Type="Int64" Nullable="false" />
+    <Property Name="SuplierCNIC" Type="Int64" Nullable="false" />
+    <Property Name="SupplierAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Units">
+    <Key>
+      <PropertyRef Name="UnitID" />
+    </Key>
+    <Property Name="UnitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UnitName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="VoucherChild" Relationship="Self.FK_SaleVoucherChild_Units" FromRole="Units" ToRole="VoucherChild" />
+  </EntityType>
+  <EntityType Name="UsersMenu">
+    <Key>
+      <PropertyRef Name="UserMenuID" />
+    </Key>
+    <Property Name="UserMenuID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="MenuItemID" Type="Int32" Nullable="false" />
+    <Property Name="AllowUpdate" Type="Boolean" Nullable="false" />
+    <Property Name="AllowRead" Type="Boolean" />
+    <Property Name="AllowDelete" Type="Boolean" />
+    <Property Name="AllowInsert" Type="Boolean" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="MenuItems" Relationship="Self.FK_UsersMenu_MenuItems" FromRole="UsersMenu" ToRole="MenuItems" />
+  </EntityType>
+  <EntityType Name="VoucherChild">
+    <Key>
+      <PropertyRef Name="VoucherchildID" />
+    </Key>
+    <Property Name="VoucherchildID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemID" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Unitid" Type="Int32" Nullable="false" />
+    <Property Name="ItemPrice" Type="Double" Nullable="false" />
+    <Property Name="TotalAmount" Type="Double" Nullable="false" />
+    <Property Name="BillsundryID" Type="Int32" Nullable="false" />
+    <Property Name="VoucherTypeID" Type="Int32" Nullable="false" />
+    <Property Name="VoucherMasterID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Units" Relationship="Self.FK_SaleVoucherChild_Units" FromRole="VoucherChild" ToRole="Units" />
+    <NavigationProperty Name="Items" Relationship="MVCDBLiveModel.FK_SaleVoucherChild_Items" FromRole="VoucherChild" ToRole="Items" />
+    <NavigationProperty Name="Items1" Relationship="MVCDBLiveModel.FK_VoucherChild_Items" FromRole="VoucherChild" ToRole="Items" />
+  </EntityType>
+  <EntityType Name="VoucherMaster">
+    <Key>
+      <PropertyRef Name="VoucherNum_BillNum" />
+    </Key>
+    <Property Name="VoucherNum_BillNum" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VoucherCreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Partyid_Accountid" Type="Int32" Nullable="false" />
+    <Property Name="Narration" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BillSundryId" Type="Int32" Nullable="false" />
+    <Property Name="BillSundryAmount" Type="Double" Nullable="false" />
+    <Property Name="VoucherFinalTotal" Type="Double" Nullable="false" />
+    <Property Name="VoucherTypeID" Type="Int32" Nullable="false" />
+    <Property Name="DrCrType" Type="Int32" Nullable="false" />
+    <Property Name="vouchermasterid" Type="Int32" />
+    <NavigationProperty Name="Account" Relationship="Self.FK_VoucherMaster_Account" FromRole="VoucherMaster" ToRole="Account" />
+    <NavigationProperty Name="DrCr" Relationship="Self.FK_VoucherMaster_DrCr" FromRole="VoucherMaster" ToRole="DrCr" />
+    <NavigationProperty Name="VoucherType" Relationship="Self.FK_VoucherMaster_VoucherType" FromRole="VoucherMaster" ToRole="VoucherType" />
+    <Property Name="LocationID" Type="Int32" />
+    <NavigationProperty Name="MaterialCentre" Relationship="MVCDBLiveModel.FK_VoucherMaster_MaterialCentre" FromRole="VoucherMaster" ToRole="MaterialCentre" />
+    <Property Name="LocationID2" Type="Int32" />
+    <NavigationProperty Name="MaterialCentre1" Relationship="MVCDBLiveModel.FK_VoucherMaster_MaterialCentre1" FromRole="VoucherMaster" ToRole="MaterialCentre" />
+  </EntityType>
+  <EntityType Name="VoucherType">
+    <Key>
+      <PropertyRef Name="VoucherTypeID" />
+    </Key>
+    <Property Name="VoucherTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VoucherTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="VoucherTypeShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="JournalVoucherMaster" Relationship="Self.FK_JournalVoucherMaster_VoucherType" FromRole="VoucherType" ToRole="JournalVoucherMaster" />
+    <NavigationProperty Name="VoucherMaster" Relationship="Self.FK_VoucherMaster_VoucherType" FromRole="VoucherType" ToRole="VoucherMaster" />
+  </EntityType>
+  <EntityType Name="Itemsnew">
+    <Key>
+      <PropertyRef Name="ItemID" />
+      <PropertyRef Name="ItemName" />
+      <PropertyRef Name="ItemPrice" />
+      <PropertyRef Name="ItemGroupID" />
+    </Key>
+    <Property Name="ItemID" Type="Int32" Nullable="false" />
+    <Property Name="ItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ItemPrice" Type="Double" Nullable="false" />
+    <Property Name="ItemUnitID" Type="Int32" />
+    <Property Name="ItemMaxDiscount" Type="Double" />
+    <Property Name="ItemMinDiscount" Type="Double" />
+    <Property Name="ItemGroupID" Type="Int32" Nullable="false" />
+    <Property Name="ItemDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="treetable">
+    <Key>
+      <PropertyRef Name="childId" />
+      <PropertyRef Name="parentId" />
+      <PropertyRef Name="level" />
+      <PropertyRef Name="orderSequence" />
+    </Key>
+    <Property Name="childId" Type="Int32" Nullable="false" />
+    <Property Name="parentId" Type="Int32" Nullable="false" />
+    <Property Name="childName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="level" Type="Int32" Nullable="false" />
+    <Property Name="orderSequence" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Account_AccGroup">
+    <End Role="AccGroup" Type="Self.AccGroup" Multiplicity="1" />
+    <End Role="Account" Type="Self.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AccGroup">
+        <PropertyRef Name="AccgroupID" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="Accgroupid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JournalVoucherChild_Account">
+    <End Role="Account" Type="Self.Account" Multiplicity="1" />
+    <End Role="JournalVoucherChild" Type="Self.JournalVoucherChild" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="AccountID" />
+      </Principal>
+      <Dependent Role="JournalVoucherChild">
+        <PropertyRef Name="AccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VoucherMaster_Account">
+    <End Role="Account" Type="Self.Account" Multiplicity="1" />
+    <End Role="VoucherMaster" Type="Self.VoucherMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="AccountID" />
+      </Principal>
+      <Dependent Role="VoucherMaster">
+        <PropertyRef Name="Partyid_Accountid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BillSundryChild_BillSundry">
+    <End Role="BillSundry" Type="Self.BillSundry" Multiplicity="1" />
+    <End Role="BillSundryChild" Type="Self.BillSundryChild" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BillSundry">
+        <PropertyRef Name="BiilSundryID" />
+      </Principal>
+      <Dependent Role="BillSundryChild">
+        <PropertyRef Name="BillSundryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JournalVoucherChild_DrCr">
+    <End Role="DrCr" Type="Self.DrCr" Multiplicity="1" />
+    <End Role="JournalVoucherChild" Type="Self.JournalVoucherChild" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DrCr">
+        <PropertyRef Name="DrCrID" />
+      </Principal>
+      <Dependent Role="JournalVoucherChild">
+        <PropertyRef Name="DrCrID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VoucherMaster_DrCr">
+    <End Role="DrCr" Type="Self.DrCr" Multiplicity="1" />
+    <End Role="VoucherMaster" Type="Self.VoucherMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DrCr">
+        <PropertyRef Name="DrCrID" />
+      </Principal>
+      <Dependent Role="VoucherMaster">
+        <PropertyRef Name="DrCrType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JournalVoucherMaster_VoucherType">
+    <End Role="VoucherType" Type="Self.VoucherType" Multiplicity="0..1" />
+    <End Role="JournalVoucherMaster" Type="Self.JournalVoucherMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VoucherType">
+        <PropertyRef Name="VoucherTypeID" />
+      </Principal>
+      <Dependent Role="JournalVoucherMaster">
+        <PropertyRef Name="VoucherTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsersMenu_MenuItems">
+    <End Role="MenuItems" Type="Self.MenuItems" Multiplicity="1" />
+    <End Role="UsersMenu" Type="Self.UsersMenu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MenuItems">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UsersMenu">
+        <PropertyRef Name="MenuItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SaleVoucherChild_Units">
+    <End Role="Units" Type="Self.Units" Multiplicity="1" />
+    <End Role="VoucherChild" Type="Self.VoucherChild" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Units">
+        <PropertyRef Name="UnitID" />
+      </Principal>
+      <Dependent Role="VoucherChild">
+        <PropertyRef Name="Unitid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VoucherMaster_VoucherType">
+    <End Role="VoucherType" Type="Self.VoucherType" Multiplicity="1" />
+    <End Role="VoucherMaster" Type="Self.VoucherMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VoucherType">
+        <PropertyRef Name="VoucherTypeID" />
+      </Principal>
+      <Dependent Role="VoucherMaster">
+        <PropertyRef Name="VoucherTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="MVCDBLiveEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="AccGroup" EntityType="Self.AccGroup" />
+    <EntitySet Name="Account" EntityType="Self.Account" />
+    <EntitySet Name="AccountMainHead" EntityType="Self.AccountMainHead" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
+    <EntitySet Name="BillSundry" EntityType="Self.BillSundry" />
+    <EntitySet Name="BillSundryChild" EntityType="Self.BillSundryChild" />
+    <EntitySet Name="Country" EntityType="Self.Country" />
+    <EntitySet Name="Currency" EntityType="Self.Currency" />
+    <EntitySet Name="DrCr" EntityType="Self.DrCr" />
+    <EntitySet Name="ItemGroup" EntityType="Self.ItemGroup" />
+    <EntitySet Name="JournalVoucherChild" EntityType="Self.JournalVoucherChild" />
+    <EntitySet Name="JournalVoucherMaster" EntityType="Self.JournalVoucherMaster" />
+    <EntitySet Name="ledgertype" EntityType="Self.ledgertype" />
+    <EntitySet Name="MaterialCentreGroup" EntityType="Self.MaterialCentreGroup" />
+    <EntitySet Name="MenuItems" EntityType="Self.MenuItems" />
+    <EntitySet Name="Purchase" EntityType="Self.Purchase" />
+    <EntitySet Name="Stock" EntityType="Self.Stock" />
+    <EntitySet Name="StockTransferChild" EntityType="Self.StockTransferChild" />
+    <EntitySet Name="StockTransferMaster" EntityType="Self.StockTransferMaster" />
+    <EntitySet Name="StudentInfo" EntityType="Self.StudentInfo" />
+    <EntitySet Name="Suppliers" EntityType="Self.Suppliers" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Units" EntityType="Self.Units" />
+    <EntitySet Name="UsersMenu" EntityType="Self.UsersMenu" />
+    <EntitySet Name="VoucherChild" EntityType="Self.VoucherChild" />
+    <EntitySet Name="VoucherMaster" EntityType="Self.VoucherMaster" />
+    <EntitySet Name="VoucherType" EntityType="Self.VoucherType" />
+    <EntitySet Name="Itemsnew" EntityType="Self.Itemsnew" />
+    <EntitySet Name="treetable" EntityType="Self.treetable" />
+    <AssociationSet Name="FK_Account_AccGroup" Association="Self.FK_Account_AccGroup">
+      <End Role="AccGroup" EntitySet="AccGroup" />
+      <End Role="Account" EntitySet="Account" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JournalVoucherChild_Account" Association="Self.FK_JournalVoucherChild_Account">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="JournalVoucherChild" EntitySet="JournalVoucherChild" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VoucherMaster_Account" Association="Self.FK_VoucherMaster_Account">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="VoucherMaster" EntitySet="VoucherMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillSundryChild_BillSundry" Association="Self.FK_BillSundryChild_BillSundry">
+      <End Role="BillSundry" EntitySet="BillSundry" />
+      <End Role="BillSundryChild" EntitySet="BillSundryChild" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JournalVoucherChild_DrCr" Association="Self.FK_JournalVoucherChild_DrCr">
+      <End Role="DrCr" EntitySet="DrCr" />
+      <End Role="JournalVoucherChild" EntitySet="JournalVoucherChild" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VoucherMaster_DrCr" Association="Self.FK_VoucherMaster_DrCr">
+      <End Role="DrCr" EntitySet="DrCr" />
+      <End Role="VoucherMaster" EntitySet="VoucherMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JournalVoucherMaster_VoucherType" Association="Self.FK_JournalVoucherMaster_VoucherType">
+      <End Role="VoucherType" EntitySet="VoucherType" />
+      <End Role="JournalVoucherMaster" EntitySet="JournalVoucherMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsersMenu_MenuItems" Association="Self.FK_UsersMenu_MenuItems">
+      <End Role="MenuItems" EntitySet="MenuItems" />
+      <End Role="UsersMenu" EntitySet="UsersMenu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SaleVoucherChild_Units" Association="Self.FK_SaleVoucherChild_Units">
+      <End Role="Units" EntitySet="Units" />
+      <End Role="VoucherChild" EntitySet="VoucherChild" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VoucherMaster_VoucherType" Association="Self.FK_VoucherMaster_VoucherType">
+      <End Role="VoucherType" EntitySet="VoucherType" />
+      <End Role="VoucherMaster" EntitySet="VoucherMaster" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <EntitySet Name="Customers" EntityType="MVCDBLiveModel.Customers" />
+    <EntitySet Name="Items" EntityType="MVCDBLiveModel.Items" />
+    <EntitySet Name="PaymentTypes" EntityType="MVCDBLiveModel.PaymentTypes" />
+    <AssociationSet Name="FK_Items_ItemGroup" Association="MVCDBLiveModel.FK_Items_ItemGroup">
+      <End Role="ItemGroup" EntitySet="ItemGroup" />
+      <End Role="Items" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Purchase_PaymentTypes" Association="MVCDBLiveModel.FK_Purchase_PaymentTypes">
+      <End Role="PaymentTypes" EntitySet="PaymentTypes" />
+      <End Role="Purchase" EntitySet="Purchase" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SaleVoucherChild_Items" Association="MVCDBLiveModel.FK_SaleVoucherChild_Items">
+      <End Role="Items" EntitySet="Items" />
+      <End Role="VoucherChild" EntitySet="VoucherChild" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VoucherChild_Items" Association="MVCDBLiveModel.FK_VoucherChild_Items">
+      <End Role="Items" EntitySet="Items" />
+      <End Role="VoucherChild" EntitySet="VoucherChild" />
+    </AssociationSet>
+    <EntitySet Name="Transactions" EntityType="MVCDBLiveModel.Transactions" />
+    <AssociationSet Name="FK_Transactions_PaymentTypes" Association="MVCDBLiveModel.FK_Transactions_PaymentTypes">
+      <End Role="PaymentTypes" EntitySet="PaymentTypes" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+    <EntitySet Name="OrderChild" EntityType="MVCDBLiveModel.OrderChild" />
+    <EntitySet Name="ordermaster" EntityType="MVCDBLiveModel.ordermaster" />
+    <AssociationSet Name="FK_ordermaster_Customers" Association="MVCDBLiveModel.FK_ordermaster_Customers">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="ordermaster" EntitySet="ordermaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ordermaster_PaymentTypes" Association="MVCDBLiveModel.FK_ordermaster_PaymentTypes">
+      <End Role="PaymentTypes" EntitySet="PaymentTypes" />
+      <End Role="ordermaster" EntitySet="ordermaster" />
+    </AssociationSet>
+    <EntitySet Name="MaterialCentre" EntityType="MVCDBLiveModel.MaterialCentre" />
+    <AssociationSet Name="FK_VoucherMaster_MaterialCentre" Association="MVCDBLiveModel.FK_VoucherMaster_MaterialCentre">
+      <End Role="MaterialCentre" EntitySet="MaterialCentre" />
+      <End Role="VoucherMaster" EntitySet="VoucherMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VoucherMaster_MaterialCentre1" Association="MVCDBLiveModel.FK_VoucherMaster_MaterialCentre1">
+      <End Role="MaterialCentre" EntitySet="MaterialCentre" />
+      <End Role="VoucherMaster" EntitySet="VoucherMaster" />
+    </AssociationSet>
+    <EntitySet Name="Preferences" EntityType="MVCDBLiveModel.Preferences" />
+    <AssociationSet Name="FK_JournalVoucherChild_Currency" Association="MVCDBLiveModel.FK_JournalVoucherChild_Currency">
+      <End Role="Currency" EntitySet="Currency" />
+      <End Role="JournalVoucherChild" EntitySet="JournalVoucherChild" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AspNetUsers_MaterialCentre" Association="MVCDBLiveModel.FK_AspNetUsers_MaterialCentre">
+      <End Role="MaterialCentre" EntitySet="MaterialCentre" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ordermaster" Relationship="MVCDBLiveModel.FK_ordermaster_Customers" FromRole="Customers" ToRole="ordermaster" />
+  </EntityType>
+  <EntityType Name="Items">
+    <Key>
+      <PropertyRef Name="ItemID" />
+    </Key>
+    <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ItemPrice" Type="Double" Nullable="false" />
+    <Property Name="ItemGroupID" Type="Int32" Nullable="false" />
+    <Property Name="ItemDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ItemUnitID" Type="Int32" />
+    <Property Name="ItemMaxDiscount" Type="Double" />
+    <Property Name="ItemMinDiscount" Type="Double" />
+    <NavigationProperty Name="ItemGroup" Relationship="MVCDBLiveModel.FK_Items_ItemGroup" FromRole="Items" ToRole="ItemGroup" />
+    <NavigationProperty Name="VoucherChild" Relationship="MVCDBLiveModel.FK_SaleVoucherChild_Items" FromRole="Items" ToRole="VoucherChild" />
+    <NavigationProperty Name="VoucherChild1" Relationship="MVCDBLiveModel.FK_VoucherChild_Items" FromRole="Items" ToRole="VoucherChild" />
+  </EntityType>
+  <EntityType Name="PaymentTypes">
+    <Key>
+      <PropertyRef Name="PaymentTypeID" />
+    </Key>
+    <Property Name="PaymentTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PaymentTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Purchase" Relationship="MVCDBLiveModel.FK_Purchase_PaymentTypes" FromRole="PaymentTypes" ToRole="Purchase" />
+    <NavigationProperty Name="Transactions" Relationship="MVCDBLiveModel.FK_Transactions_PaymentTypes" FromRole="PaymentTypes" ToRole="Transactions" />
+    <NavigationProperty Name="ordermaster" Relationship="MVCDBLiveModel.FK_ordermaster_PaymentTypes" FromRole="PaymentTypes" ToRole="ordermaster" />
+  </EntityType>
+  <Association Name="FK_Items_ItemGroup">
+    <End Type="MVCDBLiveModel.ItemGroup" Role="ItemGroup" Multiplicity="1" />
+    <End Type="MVCDBLiveModel.Items" Role="Items" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemGroup">
+        <PropertyRef Name="ItemGroupId" />
+      </Principal>
+      <Dependent Role="Items">
+        <PropertyRef Name="ItemGroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Purchase_PaymentTypes">
+    <End Type="MVCDBLiveModel.PaymentTypes" Role="PaymentTypes" Multiplicity="1" />
+    <End Type="MVCDBLiveModel.Purchase" Role="Purchase" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentTypes">
+        <PropertyRef Name="PaymentTypeID" />
+      </Principal>
+      <Dependent Role="Purchase">
+        <PropertyRef Name="PaymentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SaleVoucherChild_Items">
+    <End Type="MVCDBLiveModel.Items" Role="Items" Multiplicity="1" />
+    <End Type="MVCDBLiveModel.VoucherChild" Role="VoucherChild" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Items">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="VoucherChild">
+        <PropertyRef Name="ItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VoucherChild_Items">
+    <End Type="MVCDBLiveModel.Items" Role="Items" Multiplicity="1" />
+    <End Type="MVCDBLiveModel.VoucherChild" Role="VoucherChild" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Items">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="VoucherChild">
+        <PropertyRef Name="ItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Transactions">
+    <Key>
+      <PropertyRef Name="TransactionID" />
+    </Key>
+    <Property Name="TransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemID" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="TransDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PayTypeID" Type="Int32" />
+    <Property Name="ItemPrice" Type="Double" />
+    <Property Name="TransType" Type="Int32" />
+    <NavigationProperty Name="PaymentTypes" Relationship="MVCDBLiveModel.FK_Transactions_PaymentTypes" FromRole="Transactions" ToRole="PaymentTypes" />
+  </EntityType>
+  <Association Name="FK_Transactions_PaymentTypes">
+    <End Type="MVCDBLiveModel.PaymentTypes" Role="PaymentTypes" Multiplicity="0..1" />
+    <End Type="MVCDBLiveModel.Transactions" Role="Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentTypes">
+        <PropertyRef Name="PaymentTypeID" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="PayTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="OrderChild">
+    <Key>
+      <PropertyRef Name="OrderChildID" />
+    </Key>
+    <Property Name="OrderChildID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderMasterID" Type="Int32" Nullable="false" />
+    <Property Name="ItemID" Type="Int32" Nullable="false" />
+    <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="ordermaster">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PaymentID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerID" Type="Int32" Nullable="false" />
+    <Property Name="OrderNumber" Type="Int32" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FinalTotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="OrderType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SupplierID" Type="Int32" />
+    <NavigationProperty Name="Customers" Relationship="MVCDBLiveModel.FK_ordermaster_Customers" FromRole="ordermaster" ToRole="Customers" />
+    <NavigationProperty Name="PaymentTypes" Relationship="MVCDBLiveModel.FK_ordermaster_PaymentTypes" FromRole="ordermaster" ToRole="PaymentTypes" />
+  </EntityType>
+  <Association Name="FK_ordermaster_Customers">
+    <End Type="MVCDBLiveModel.Customers" Role="Customers" Multiplicity="1" />
+    <End Type="MVCDBLiveModel.ordermaster" Role="ordermaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="ordermaster">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ordermaster_PaymentTypes">
+    <End Type="MVCDBLiveModel.PaymentTypes" Role="PaymentTypes" Multiplicity="1" />
+    <End Type="MVCDBLiveModel.ordermaster" Role="ordermaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentTypes">
+        <PropertyRef Name="PaymentTypeID" />
+      </Principal>
+      <Dependent Role="ordermaster">
+        <PropertyRef Name="PaymentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="MaterialCentre">
+    <Key>
+      <PropertyRef Name="MaterialcentreID" />
+    </Key>
+    <Property Name="MaterialcentreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaterialCentreName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Alias" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PrintName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SalesAccountid" Type="Int32" />
+    <Property Name="PurchaseAccountid" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="VoucherMaster" Relationship="MVCDBLiveModel.FK_VoucherMaster_MaterialCentre" FromRole="MaterialCentre" ToRole="VoucherMaster" />
+    <NavigationProperty Name="VoucherMaster1" Relationship="MVCDBLiveModel.FK_VoucherMaster_MaterialCentre1" FromRole="MaterialCentre" ToRole="VoucherMaster" />
+    <NavigationProperty Name="AspNetUsers" Relationship="MVCDBLiveModel.FK_AspNetUsers_MaterialCentre" FromRole="MaterialCentre" ToRole="AspNetUsers" />
+  </EntityType>
+  <Association Name="FK_VoucherMaster_MaterialCentre">
+    <End Type="MVCDBLiveModel.MaterialCentre" Role="MaterialCentre" Multiplicity="0..1" />
+    <End Type="MVCDBLiveModel.VoucherMaster" Role="VoucherMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MaterialCentre">
+        <PropertyRef Name="MaterialcentreID" />
+      </Principal>
+      <Dependent Role="VoucherMaster">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VoucherMaster_MaterialCentre1">
+    <End Type="MVCDBLiveModel.MaterialCentre" Role="MaterialCentre" Multiplicity="0..1" />
+    <End Type="MVCDBLiveModel.VoucherMaster" Role="VoucherMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MaterialCentre">
+        <PropertyRef Name="MaterialcentreID" />
+      </Principal>
+      <Dependent Role="VoucherMaster">
+        <PropertyRef Name="LocationID2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Preferences">
+    <Key>
+      <PropertyRef Name="PreferenceID" />
+      <PropertyRef Name="Preferencevalue" />
+      <PropertyRef Name="PreferenceNarration" />
+    </Key>
+    <Property Name="PreferenceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Preferencevalue" Type="Int32" Nullable="false" />
+    <Property Name="PreferenceNarration" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PreferencetypeID" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_JournalVoucherChild_Currency">
+    <End Type="MVCDBLiveModel.Currency" Role="Currency" Multiplicity="0..1" />
+    <End Type="MVCDBLiveModel.JournalVoucherChild" Role="JournalVoucherChild" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Currency">
+        <PropertyRef Name="CurrencyID" />
+      </Principal>
+      <Dependent Role="JournalVoucherChild">
+        <PropertyRef Name="CurrencyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AspNetUsers_MaterialCentre">
+    <End Type="MVCDBLiveModel.MaterialCentre" Role="MaterialCentre" Multiplicity="0..1" />
+    <End Type="MVCDBLiveModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MaterialCentre">
+        <PropertyRef Name="MaterialcentreID" />
+      </Principal>
+      <Dependent Role="AspNetUsers">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

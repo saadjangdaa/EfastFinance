@@ -1,0 +1,241 @@
+﻿@model List<RMS.Web.Models.Currency>
+@{
+    ViewBag.Title = "Currency";
+}
+
+<div class="container-fluid">
+    <h1 class="col-lg-offset-5 " style="color:slategrey"></h1>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <button type="button" id="btnadd" class="btn btn-dark" data-target="#exampleModal" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i> Add Currency</button>
+
+            <h1 class="m-0 font-weight-bold  text-center" style="color:black;">Currency Form</h1>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th >CurrencyID</th>
+                            <th >Currency Name</th>
+                            <th >HighRate </th>
+                            <th >LowRate </th>
+                            <th >Actions</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.CurrencyID</td>
+                                    <td>@item.CurrencyName</td>
+                                    <td>@item.HighRate</td>
+                                    <td>@item.LowRate</td>
+                                    <td>
+                                        <button data-id="@item.CurrencyID" data-target="#exampleModal" data-toggle="modal" class="btn btn-success btnedit"><i class="glyphicon glyphicon-edit"></i>Edit</button>
+                                    </td>
+
+
+                                </tr>
+                            }
+                        }
+                    </tbody>
+
+
+
+
+                </table>
+
+
+
+
+
+            </div>
+
+            <form id="currencyform">
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="exampleModalLabel"><strong>Add Currency Form</strong></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" class="form-control" name="CurrencyID" id="CurrencyID" />
+                                <div class="row">
+                                    <label class="col-sm-5">Currency Name</label>
+                                    <div class="col-md-6">
+                                        <input required type="text" class="form-control" id="CurrencyName" name="CurrencyName" />
+                                        <br />
+
+                                    </div>
+
+
+                                    <br />
+                                    <br />
+                                    <label class="col-sm-5">Currency Short Name</label>
+                                    <div class="col-md-6">
+                                        <input required type="text" class="form-control" id="CurrencyShortName" name="CurrencyShortName" />
+                                        <br />
+
+                                    </div>
+
+                                    <br />
+                                    <br />
+                                    <label class="col-sm-5">Low Rate</label>
+                                    <div class="col-md-6">
+
+                                        <input required type="number" class="form-control" id="LowRate" name="LowRate" />
+                                        <br />
+
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <label class="col-sm-5">High Rate</label>
+                                    <div class="col-md-6">  
+
+                                        <input required type="number" class="form-control" id="HighRate" name="HighRate" />
+                                        <br />
+
+                                    </div>
+
+
+
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button id="btnSave" type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+
+
+                            $('#btnadd').click(function () {
+                                debugger;
+
+
+                                $('#CurrencyID').val();
+                                $('#CurrencyName').val("");
+                                $('#CurrencyShortName').val("");
+                                $('#LowRate').val("");
+                                $('#HighRate').val("");
+
+                            });
+
+
+    $('#btnSave').click(function () {
+
+        var currencyid = $('#CurrencyID').val();
+        var currname = $('#CurrencyName').val();
+        //var form = $('#materialcentre').serialize();
+        debugger;
+        //var itemid = $('#itemid').val();
+        //var itemname = $('#ItemName').val();
+        //var itemprice = $('#ItemPrice').val();
+        //if (itemname == null || itemprice == null) {
+        //    $('#ItemName').css("border", "1px solid red");
+        //    $('#ItemPrice').css("border", "1px solid red")
+        //    return false;
+        //}
+        //else {
+        //    $('#ItemPrice').css("border", "1px solid black")
+        //    $('#ItemPrice').css("border", "1px solid black");
+        //}
+
+        if (currname != "") {
+
+            $.ajax({
+                type: 'POST',
+                data: $('#currencyform').serialize(),
+                url: "@Url.Action("SaveCurrency", "Masters")"
+
+            }).done(function (data) {
+                if (currencyid > 0) {
+                    alert("CurrencyForm Updated Successfully");
+                    location.reload();
+                }
+                else {
+
+                    alert("CurrencyForm Added Successfully");
+                    location.reload();
+                }
+
+            }).fail(function (jqXHR, textStatus) {
+                alert("CurrencyForm  save Failed, Contact to Admin");
+            });
+
+
+        }
+        else {
+            alert("fill form details");
+        }
+    });
+
+                            $('.btnedit').click(function () {
+
+                                var itemid = $(this).attr('data-id');
+                                debugger;
+                                $.ajax({
+                                    type: 'GET',
+                                    url: "@Url.Action("GetCurrency", "Masters")",
+                                    data: { ItemID: itemid },
+                                }).done(function (data) {
+                                    $('#CurrencyID').val(data.CurrencyID);
+                                    $('#CurrencyName').val(data.CurrencyName);
+                                    $('#CurrencyShortName').val(data.CurrencyShortName);
+                                    $('#LowRate').val(data.LowRate);
+                                    $('#HighRate').val(data.HighRate);
+
+
+
+                                    $('#exampleModal').modal('show');
+
+                                }).fail(function (jqXHR, textStatus) {
+                                    alert("Cant get Currency details, Contact to Admin");
+                                });
+
+                            });
+                            $('.btndelete').click(function () {
+                                var itemid = $(this).attr("data-id");
+                                var Confirm = confirm("Do you want to delete this item");
+                                if (Confirm) {
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: "@Url.Action("DeleteMaterialCentre", "Masters")",
+                                        data: { ItemID: itemid }
+                                    }).done(function (data) {
+                                        alert("MaterialCentre has been Successfully Deleted");
+                                        $(this).parent().parent().remove();
+                                        location.reload();
+
+                                    }).fail(function (jqXHR, textStatus) {
+                                        alert("MaterialCentre delete Failed, Contact to Admin");
+                                    });
+
+                                }
+
+
+                            });
+
+
+
+
+</script>

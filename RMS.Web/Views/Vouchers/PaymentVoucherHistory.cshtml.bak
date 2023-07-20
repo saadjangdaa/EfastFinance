@@ -1,0 +1,256 @@
+﻿Q11) code in c#
+
+        
+        public static object turnnotbat(object stringgg) {
+            var stringnot = stringgg.find("not");
+            var stringbad = stringgg.find("bad");
+            if (stringbad  > stringnot && stringnot > 0 && stringbad  > 0) {
+                stringgg = stringgg.replace(stringgg[stringnot::(stringbad  +  4)], "good");
+                return stringgg;
+            }
+            else {
+                return stringgg;
+            }
+        }
+    
+
+
+
+Q10:
+function verbstring(stringg as string){
+
+declare stringlength,stringword as int
+
+stringlength <-- stringword.Length()
+stringword <-- MID(stringlength,-3,3)
+
+if stringlength > 3 THEN
+output stringlength & 'ing'
+endif 
+elseif stringword = 'ing' THEN
+output stringlength & 'ly'
+else 
+output stringlength 
+}
+
+
+
+Q09:	
+
+function mixstring(stringa:string , stringb:string){
+
+declare shortstringa,shortstringb,totalstring,longstringb,longstringa as string
+declare stringAlength,stringBlength, index,index2 as int
+
+shortstringa <-- MID(stringa,1,2)
+shortstringb <-- MID(stringb,1,2)
+
+stringAlength <-- Length(stringa)
+stringBlength <-- Length(stringb)
+
+for index <-- 3 to stringAlength
+longstringa <-- MID(stringa,index,1)
+next index
+
+for index2 <-- 3 to stringBlength
+longstringb <-- MID(stringb,index,1)
+next index2
+
+totalstring <-- shortstringa & longb & ' ' & shortstringb & longstringa
+output totalstring
+}
+
+
+Q8) = code in c#
+
+public static object changestart(object string) {
+            var char = string[0];
+            var stringlength = string.Count;
+            str = string.replace(char, "*");
+            str = char + str[1];
+            return str;
+        }
+
+Q7)
+
+function endboth(stringg as string){
+
+declare firststring,laststring as string
+
+firststring <--- MID(stringg ,1,2)
+laststring <--- MID(stringg ,-1,2)
+output firststring & laststring
+}
+
+Q6)
+function numberwithdonuts(numofdonuts as int){
+output "number of donuts",numofdonuts 
+
+}
+
+
+Q5)
+function checkvowels(stringgg as a string){
+
+declare stringlength,index,vowenlstringcount  as integer
+
+stringlength <-- stringgg.LENGTH
+for index <-- 0 to stringgg
+
+if stringgg[index] = 'a '|| stringgg[index] == 'e' || stringgg[index] == 'i' ||
+        stringgg[index] == 'o' || stringgg[index] == 'u' THEN
+vowenlstringcount <-- vowenlstringcount + 1
+end if
+next index 
+output vowenlstringcount  
+
+
+}
+
+Q4) code in c#
+
+class checkstring
+{
+    static int ascsize = 256;
+     
+    static char getsamecharacter(String stringgg)
+    {
+        
+        int []count = new int[ascsize];
+     
+       
+        int stringlen = stringgg.Length;
+        for (int i = 0; i < stringlen; i++)
+            count[stringgg[i]]++;
+     
+        int max = -1; 
+        char outputchar = ' '; 
+     
+        for (int i = 0; i < stringlen; i++) {
+            if (max < count[stringgg[i]]) {
+                max = count[stringgg[i]];
+                outputchar = stringgg[i];
+            }
+        }
+     
+        return outputchar;
+    }
+
+}
+
+Q3)
+function scount(stringg as string){
+
+declare stringlenth ,
+index,stringuppercase ,
+stringuppercase ,stringlowcase ,
+stringspecialcharac,number  as integer
+
+declare ASCvalue as string
+
+
+stringlenth <-- Length(stringg)
+ASCvalue <-- ASC(stringg)
+
+for index<--- 0 to strlen 
+
+if stringg[index] >= 65 AND stringg[index] <= 90 THEN
+stringuppercase <-- stringuppercase  + 1
+endif 
+if stringg[index] >= 97 AND stringg[index] <= 122 THEN
+stringlowcase <-- stringlowcase + 1
+endif
+if stringg[index] >= 48 AND stringg[index] <= 57 THEN
+number <-- number + 1
+endif
+else 
+stringspecialcharac <-- stringspecialcharac + 1
+end else
+
+output stringuppercase 
+output stringlowcase  
+output stringspecialcharac 
+output number 
+output stringlenth 
+}
+
+
+
+Q2) == code in c#
+
+
+public class changestr {
+  
+   
+    static void stringchan(String string)
+    {
+  
+        char[] stringarr = string.ToCharArray();
+          
+     
+     for (int i = 0; i < string.Length; i++) {
+  
+         
+           
+         int chartoasc = stringarr[i];
+         
+        
+         int ree = chartoasc - (26 - (stringarr[i] - 97));
+  
+        
+         int smal = ree % 26;
+          
+        
+         stringarr[i] = (char)(smal + 'b');
+              
+     }
+      
+     String strarr2 = String.Join("",stringarr);
+     Console.WriteLine(strarr2);
+       
+    }
+  
+    
+}
+
+
+
+
+Q1) code in c#
+
+
+
+public class stringchecker {
+ 
+static bool checksame(string ss)
+{
+    int n = ss.Length;
+    int c = 1;
+    bool check;
+    for (int i = c; i < n; i++)
+    {
+        if (ss[i] != ss[0])
+        {
+            return check = false;
+         }
+        else{    
+            return check = true;
+         }
+     } 
+
+}
+ 
+
+static public void Main (String []args){
+        string sst = "tttt";
+    if allsame(sst)
+    {
+        Console.WriteLine("OK");
+    }
+    else
+    {
+        Console.WriteLine("Not ok");
+    }
+         
+    }
+}

@@ -1,0 +1,364 @@
+﻿@model RMS.Web.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3" style="background-color:#5a5c69">
+
+            <h4 class="m-0  font-weight-bold">
+                <strong style="color:white;">Manage User </strong>
+                <button id="backBtn" class="btn btn-success col-md-offset-9">Back</button>
+
+            </h4>
+
+        </div>
+        @*<div class="card-body">
+            <hr />
+            <div class="form-group">
+                <lablel class="col-md-2" style="color:black"> UserName</lablel>
+
+                <div class="col-md-4">
+                    <input type="text" name="UserName" class="form-control" value="@Model.UserName " />
+
+                </div>
+            </div>
+            <div class="form-group">
+                <lablel class="col-md-2" style="color:black"> Email</lablel>
+                <input type="hidden" id="userid" value="@Model.Users.Id" />
+                <div class="col-md-4">
+                    <input type="text" name="Email" value="@Model.Users.Email " class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <lablel class="col-md-2" style="color:black"> Password</lablel>
+
+                <div class="col-md-4">
+                    <input type="password" name="Password" class="form-control" value="**********" />
+
+                </div>
+            </div>
+            <div class="form-group">
+                <lablel class="col-md-2" style="color:black"> ConfirmPassword</lablel>
+                <div class="col-md-4">
+                    <input type="password" name="Password" class="form-control" value="**********" />
+                </div>
+            </div>
+            
+
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-primary" value="Update" />
+                </div>
+            </div>
+        </div>*@
+                
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+        <div class="card-body">
+            @Html.AntiForgeryToken()
+            <h4></h4>
+            <div class="alert alert-danger" id="msg" role="alert">
+                @ViewBag.message
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            </div>
+            <hr />
+
+
+
+            <div class="form-group">
+                <lablel class="col-md-2" style="color:black"> UserName</lablel>
+
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                <lablel class="col-md-2" style="color:black"> Email</lablel>
+
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <lablel class="col-md-2" style="color:black"> Password</lablel>
+
+                <div class="col-md-3">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <lablel class="col-md-2" style="color:black"> ConfirmPassword</lablel>
+                <div class="col-md-3">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                </div>
+            </div>
+            <!---->
+
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-primary" value="Register" />
+                </div>
+            </div>
+        </div>
+
+        }
+
+
+
+
+
+            @*<div class="col-md-1">
+                @foreach (var item in Model.Usersmenu)
+                {
+                <ul classs="treeview">
+                    @if (item.MenuItems.ParentID == 0)
+                    {
+
+                    <li>
+                        <input type="checkbox" name=">@item.MenuItems.MenuName" id="@item.MenuItems.MenuName">
+                        <label for="@item.MenuItems.MenuName" class="custom-unchecked">@item.MenuItems.MenuName</label>
+                    </li>
+
+                    }
+                    else
+                    {
+                        <li>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" name="@item.MenuItems.MenuName-1" id="@item.MenuItems.MenuName-1">
+                                    <label for="@item.MenuItems.MenuName-1" class="custom-unchecked">@item.MenuItems.MenuName</label>
+                                </li>
+                                @*<li>
+                        <input type="checkbox" name="tall-2" id="tall-2">
+                        <label for="tall-2" class="custom-unchecked">Giants</label>
+                        <ul>
+                            <li>
+                                <input type="checkbox" name="tall-2-1" id="tall-2-1">
+                                <label for="tall-2-1" class="custom-unchecked">Andre</label>
+                            </li>
+                            <li class="last">
+                                <input type="checkbox" name="tall-2-2" id="tall-2-2">
+                                <label for="tall-2-2" class="custom-unchecked">Paul Bunyan</label>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="last">
+                        <input type="checkbox" name="tall-3" id="tall-3">
+                        <label for="tall-3" class="custom-unchecked">Two sandwiches</label>
+                    </li>
+                            </ul>
+
+                        </li>
+
+
+                    }
+                </ul>
+                }
+
+            </div>*@
+
+
+
+    </div>
+</div>
+
+
+<body>
+
+
+
+
+ 
+
+
+
+        @*<div id="page-wrap">
+
+            <h2>Treeview with Custom Checkboxes and Indeterminate State</h2>
+
+            <ul class="treeview">
+                <li>
+                    <input type="checkbox" name="tall" id="tall">
+                    <label for="tall" class="custom-unchecked">Tall Things</label>
+
+                    <ul>
+                        <li>
+                            <input type="checkbox" name="tall-1" id="tall-1">
+                            <label for="tall-1" class="custom-unchecked">Buildings</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="tall-2" id="tall-2">
+                            <label for="tall-2" class="custom-unchecked">Giants</label>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" name="tall-2-1" id="tall-2-1">
+                                    <label for="tall-2-1" class="custom-unchecked">Andre</label>
+                                </li>
+                                <li class="last">
+                                    <input type="checkbox" name="tall-2-2" id="tall-2-2">
+                                    <label for="tall-2-2" class="custom-unchecked">Paul Bunyan</label>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="last">
+                            <input type="checkbox" name="tall-3" id="tall-3">
+                            <label for="tall-3" class="custom-unchecked">Two sandwiches</label>
+                        </li>
+                    </ul>
+                </li>
+                <li class="last">
+                    <input type="checkbox" name="short" id="short">
+                    <label for="short" class="custom-unchecked">Short Things</label>
+
+                    <ul>
+                        <li>
+                            <input type="checkbox" name="short-1" id="short-1">
+                            <label for="short-1" class="custom-unchecked">Smurfs</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="short-2" id="short-2">
+                            <label for="short-2" class="custom-unchecked">Mushrooms</label>
+                        </li>
+                        <li class="last">
+                            <input type="checkbox" name="short-3" id="short-3">
+                            <label for="short-3" class="custom-unchecked">One Sandwich</label>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>*@
+
+        <script src="main.js"></script>
+
+
+
+</body>
+<script>  
+
+    $(document).ready(function () {
+        setTimeout(function () {
+            $("#msg").fadeOut();
+        }, 4000);
+    });
+    $(function () {
+
+        $('input[type="checkbox"]').change(checkboxChanged);
+
+        function checkboxChanged() {
+            var $this = $(this),
+                checked = $this.prop("checked"),
+                container = $this.parent(),
+                siblings = container.siblings();
+
+            container.find('input[type="checkbox"]')
+                .prop({
+                    indeterminate: false,
+                    checked: checked
+                })
+                .siblings('label')
+                .removeClass('custom-checked custom-unchecked custom-indeterminate')
+                .addClass(checked ? 'custom-checked' : 'custom-unchecked');
+
+            checkSiblings(container, checked);
+        }
+
+        function checkSiblings($el, checked) {
+            var parent = $el.parent().parent(),
+                all = true,
+                indeterminate = false;
+
+            $el.siblings().each(function () {
+                return all = ($(this).children('input[type="checkbox"]').prop("checked") === checked);
+            });
+
+            if (all && checked) {
+                parent.children('input[type="checkbox"]')
+                    .prop({
+                        indeterminate: false,
+                        checked: checked
+                    })
+                    .siblings('label')
+                    .removeClass('custom-checked custom-unchecked custom-indeterminate')
+                    .addClass(checked ? 'custom-checked' : 'custom-unchecked');
+
+                checkSiblings(parent, checked);
+            }
+            else if (all && !checked) {
+                indeterminate = parent.find('input[type="checkbox"]:checked').length > 0;
+
+                parent.children('input[type="checkbox"]')
+                    .prop("checked", checked)
+                    .prop("indeterminate", indeterminate)
+                    .siblings('label')
+                    .removeClass('custom-checked custom-unchecked custom-indeterminate')
+                    .addClass(indeterminate ? 'custom-indeterminate' : (checked ? 'custom-checked' : 'custom-unchecked'));
+
+                checkSiblings(parent, checked);
+            }
+            else {
+                $el.parents("li").children('input[type="checkbox"]')
+                    .prop({
+                        indeterminate: true,
+                        checked: false
+                    })
+                    .siblings('label')
+                    .removeClass('custom-checked custom-unchecked custom-indeterminate')
+                    .addClass('custom-indeterminate');
+            }
+        }
+    });
+
+
+    @*var userid = $('#userid').val();
+    if (userid != null) {
+        $.ajax({
+            type: 'GET',
+            datatype: 'JSON',
+            data: { id: userid },
+            url: "@Url.Action("Account","GetUserMenu")"
+        }).done(function (response) {
+
+            $('#availQuantity').(data);
+
+        }).fail(function (jqXHR, textStatus) {
+
+            alert("get data faied");
+
+        });
+
+
+
+
+    }*@
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+
+
+<script>
+    $('#backBtn').click(function () {
+        window.history.back();
+    });
+</script>

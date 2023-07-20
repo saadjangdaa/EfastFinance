@@ -1,0 +1,293 @@
+﻿@model RMS.Web.Models.ViewModels.VoucherMasterViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@*<div class="container-fluid">
+        <h1 class="col-lg-offset-5 " style="color:slategrey"></h1>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:#5a5c69">
+                <h1 class="m-0 font-weight-bold text-center" style="color:white;"> Stock Ledger</h1>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    @*<div class="">
+
+                            <label class="col-md-2">To Date</label>
+                            <div class="col-md-4">
+                                <input type="date" name="voucherdate" class="form-control" />
+                            </div>
+
+                            <label class="col-md-2">Display Type</label>
+                            <div class="col-md-4">
+                                <select id="ddltype" class="form-control">
+                                    <option value="0">---Select Display Type---</option>
+                                    <option value="1"> Group Wise</option>
+                                    <option value="2">Hierchal</option>
+                                </select>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <div class="">
+
+                                <button id="btnshow" class="btn btn-success btn-block">Show</button>
+
+                            </div>
+
+
+                        </div>
+
+
+
+
+
+                    <table class="table table-bordered table-dark" id="dataTable" width="100%" cellspacing="0">
+                        <thead style="background-color:grey">
+                            <tr>
+                                <th style="color:white;">Stock ID</th>
+                                <th style="color:white;">
+                                    @Html.DisplayNameFor(model => model.Quantity)
+                                </th>
+                                <th style="color:white;">
+                                    @Html.DisplayNameFor(model => model.Items.ItemName)
+                                </th>
+                                <th style="color:white;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.stockID</td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Quantity)
+                                    </td>
+                                    @if (item.ItemID == 9 || item.ItemID == 10 || item.ItemID == 11)
+                                    {
+                                        <td>testing</td>
+                                    }
+                                    else
+                                    {
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Items.ItemName)
+                                        </td>
+                                    }
+
+                                    <td>
+                                        <a href="~/Stock/Gettransbystock/@item.ItemID " class="btn btn-success btn-block"><i class="glyphicon glyphicon-info-sign"></i> Details</a>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3" style="background-color:#5a5c69">
+        <h1 class="m-0 font-weight-bold  text-center" style="color:white;"> Stock Ledger</h1>
+    </div>
+    <div class="card-body">
+        <div class="">
+            @using (Ajax.BeginForm("Index", "Stock", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "report", OnBegin = "showloader()", OnComplete = "hideloader()", OnSuccess = "hideloader()" }, new { @Id = "stockledger" }))
+            {
+                <form id="stockledger">
+
+                    <label class="col-md-2">Item List</label>
+                    <div class="col-md-4">
+                        @Html.DropDownList("txtItems", (IEnumerable<SelectListItem>)ViewBag.ItemLists, "---Select Items---", htmlAttributes: new { @class = " form-control ", @required = true, @Id = "txtItems" })
+
+                    </div>
+
+                    <label class="col-md-2">Location</label>
+                    <div class="col-md-4">
+                        @Html.DropDownList("LocationID", (IEnumerable<SelectListItem>)ViewBag.MaterialCentres, "---Select Location---", htmlAttributes: new { @required=true,@class = " form-control ", @Id = "LocationID" })
+
+
+                    </div>
+                    <br />
+                    <br />
+
+                    <label class="col-md-2">From Date</label>
+                    <div class="col-md-4">
+                        <input type="date" required class="form-control" id="startdate" name="startdate" />
+
+                    </div>
+
+                    <label class="col-md-2">To Date</label>
+                    <div class="col-md-4">
+                        <input required class="form-control" id="enddate" name="enddate" type="date" />
+
+
+
+                    </div>
+
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+
+                    <div class="">
+
+                        <button type="submit" id="btnshow" class="btn btn-success btn-block">Show</button>
+
+                    </div>
+
+                </form>
+            }
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<br />
+<div id="report">
+
+</div>
+@*<div>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:#5a5c69">
+
+                <h4 class="m-0 font-weight-bold"><strong style="color:white;">Account Name :  <em style="color:yellow;">sadsadas</em> </strong> <strong style="color:white; float:right;">Closing Balance :  <em style="color:yellow;" id="closing2"></em> </strong></h4>
+
+                @*<h6 class="m-0 font-weight-bold"><strong style="color:white;">Bill Sundry</strong></h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-dark"  width="100%" cellspacing="0">
+                        <thead style="background-color:grey">
+
+                            <tr>
+                                <th>VoucherDate</th>
+                                <th>VoucherType </th>
+                                <th>VoucherNum/BillNum </th>
+                                <th>Narration</th>
+                                <th>
+                                    Debit
+                                </th>
+                                <th>
+                                    Credit
+                                </th>
+                                <th>Closing Balance</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th> </th>
+                                <th></th>
+                                <th></th>
+                                <th style="background-color:gray">Debit Total : <strong style="color:yellow;" id="debittotal"></strong></th>
+                                <th style="background-color:gray">Credit Total : <strong style="color:yellow;" id="credittotal"></strong> </th>
+                                <th style="background-color:gray">Total Activity : <strong style="color:yellow;" id="closing"></strong> </th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+
+                        </tbody>
+
+
+                    </table>
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+
+
+    </div>*@
+
+
+
+
+
+<link href="~/Scripts/chosen/select2-4.1.0-beta.1/dist/css/select2.css" rel="stylesheet" />
+<script src="~/Scripts/chosen/select2-4.1.0-beta.1/dist/js/select2.full.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.js" integrity="sha512-f04GBpoqEZhbyjlRTuXeg8FIHDb+xfCJ0LVdqiN1fEl5B3jz3Z0SPe9IxDumOVdTeeXmKMcMJhb26VuGf1Laqw==" crossorigin="anonymous"></script>
+
+
+<script>
+    
+    var ed = new Date();
+    ed.setDate(ed.getDate() + 1);
+    document.querySelector("#enddate").value = ed.toISOString().substr(0, 10);
+
+
+    var d = new Date();
+    d.setDate(d.getDate() - 30);
+    document.querySelector("#startdate").value = d.toISOString().substr(0, 10);
+
+
+    function showloader() {
+        //$('#wait').css("display', 'normal');
+        $(".se-pre-con").fadeIn("slow");
+
+    }
+
+    function hideloader() {
+        $(".se-pre-con").fadeOut("slow");
+
+        var locationame = $('#LocationID option:selected').text();
+        $('#locationname').html(locationame);
+
+    }
+
+    $('#txtItems').select2();
+    $('#LocationID').select2();
+</script>
+
+
+
+@*<script>
+
+        $('.btndetails').click(function () {
+            var itemid = $(this).attr('data-id');
+
+            $.ajax({
+                type: 'GET',
+                data: { ItemID : itemid },
+                url: "@Url.Action("Gettransbystock","Stock")",
+
+            }).done(function (data) {
+                alert("caught stock details Successfully");
+
+            }).fail(function (jqXHR, textStatus) {
+
+
+                alert("stock details Failed, Contact to Admin");
+            });
+
+
+
+
+
+
+        });
+
+
+
+
+
+
+
+
+    </script>*@

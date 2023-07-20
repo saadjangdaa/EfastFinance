@@ -1,0 +1,89 @@
+﻿@model IEnumerable<RMS.Web.Models.VoucherMaster>
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h1 class="m-0 font-weight-bold text-primary text-center">Orders</h1>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+         <thead style="background-color:yellow">
+         <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.VoucherNum_BillNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VoucherCreateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VoucherFinalTotal)
+        </th>
+        <th>
+           Party Name
+        </th>
+
+        <th>
+           PaymentTypes
+        </th>
+
+        <th>Actions</th>
+    </tr>
+        </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VoucherNum_BillNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VoucherCreateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VoucherFinalTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.AccountName)
+            </td>
+            @if (item.VoucherTypeID == 1)
+            {
+                <td>
+                    Sale
+                </td>
+            }
+            else if (item.VoucherTypeID == 2)
+            {
+                <td>Purhase</td>
+            }
+
+
+                
+            @if (item.VoucherTypeID == 1)
+            {
+            <td>
+                <a href="~/Sales/detailSVoucher/@item.VoucherNum_BillNum" class="btn btn-primary"><i class="glyphicon glyphicon-info-sign"></i>Details</a>
+            </td>
+            }
+            else if (item.VoucherTypeID == 1)
+            {
+            <td>
+                <a href="~/Order/detailSVoucher/@item.VoucherNum_BillNum" class="btn btn-primary"><i class="glyphicon glyphicon-info-sign"></i>Details</a>
+            </td>
+            }
+
+
+
+            </tr>
+        }
+    </tbody>
+</table>
+            </div>
+</div>
+</div>

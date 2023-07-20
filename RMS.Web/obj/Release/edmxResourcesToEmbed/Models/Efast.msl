@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="currencyModelStoreContainer" CdmEntityContainer="currencyEntities">
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="currencyModel.users">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="sn" ColumnName="sn" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="pwd" ColumnName="pwd" />
+          <ScalarProperty Name="BusyAccount" ColumnName="BusyAccount" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="company" ColumnName="company" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="cell" ColumnName="cell" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="sdate" ColumnName="sdate" />
+          <ScalarProperty Name="days" ColumnName="days" />
+          <ScalarProperty Name="multi" ColumnName="multi" />
+          <ScalarProperty Name="block" ColumnName="block" />
+          <ScalarProperty Name="FcAmount" ColumnName="FcAmount" />
+          <ScalarProperty Name="LcAmount" ColumnName="LcAmount" />
+          <ScalarProperty Name="rate" ColumnName="rate" />
+          <ScalarProperty Name="releif" ColumnName="releif" />
+          <ScalarProperty Name="autoref" ColumnName="autoref" />
+          <ScalarProperty Name="automonth" ColumnName="automonth" />
+          <ScalarProperty Name="newblock" ColumnName="newblock" />
+          <ScalarProperty Name="package" ColumnName="package" />
+          <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+          <ScalarProperty Name="AgentUserID" ColumnName="AgentUserID" />
+          <ScalarProperty Name="IsWebUser" ColumnName="IsWebUser" />
+          <ScalarProperty Name="SMSMobileNo" ColumnName="SMSMobileNo" />
+          <ScalarProperty Name="IsSMSCountry" ColumnName="IsSMSCountry" />
+          <ScalarProperty Name="MobileNetworkId" ColumnName="MobileNetworkId" />
+          <ScalarProperty Name="IsSMSSend" ColumnName="IsSMSSend" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+          <ScalarProperty Name="StartingDate" ColumnName="StartingDate" />
+          <ScalarProperty Name="EndingDate" ColumnName="EndingDate" />
+          <ScalarProperty Name="IsUpdatedProfile" ColumnName="IsUpdatedProfile" />
+          <ScalarProperty Name="IsOldBlocked" ColumnName="IsOldBlocked" />
+          <ScalarProperty Name="IsMobileUser" ColumnName="IsMobileUser" />
+          <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+          <ScalarProperty Name="LastGuidDate" ColumnName="LastGuidDate" />
+          <ScalarProperty Name="LastGuidAccessDate" ColumnName="LastGuidAccessDate" />
+          <ScalarProperty Name="UserGuidExpired" ColumnName="UserGuidExpired" />
+          <ScalarProperty Name="FirebaseToken" ColumnName="FirebaseToken" />
+          <ScalarProperty Name="FirebaseTokenUpdatedOn" ColumnName="FirebaseTokenUpdatedOn" />
+          <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+          <ScalarProperty Name="RateUpdate" ColumnName="RateUpdate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="Getusers" FunctionName="currencyModel.Store.Getusers">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="currencyModel.Getusers_Result">
+          <ScalarProperty Name="sn" ColumnName="sn" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="pwd" ColumnName="pwd" />
+          <ScalarProperty Name="BusyAccount" ColumnName="BusyAccount" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="company" ColumnName="company" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="cell" ColumnName="cell" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="sdate" ColumnName="sdate" />
+          <ScalarProperty Name="days" ColumnName="days" />
+          <ScalarProperty Name="multi" ColumnName="multi" />
+          <ScalarProperty Name="block" ColumnName="block" />
+          <ScalarProperty Name="FcAmount" ColumnName="FcAmount" />
+          <ScalarProperty Name="LcAmount" ColumnName="LcAmount" />
+          <ScalarProperty Name="rate" ColumnName="rate" />
+          <ScalarProperty Name="releif" ColumnName="releif" />
+          <ScalarProperty Name="autoref" ColumnName="autoref" />
+          <ScalarProperty Name="automonth" ColumnName="automonth" />
+          <ScalarProperty Name="newblock" ColumnName="newblock" />
+          <ScalarProperty Name="package" ColumnName="package" />
+          <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+          <ScalarProperty Name="AgentUserID" ColumnName="AgentUserID" />
+          <ScalarProperty Name="IsWebUser" ColumnName="IsWebUser" />
+          <ScalarProperty Name="SMSMobileNo" ColumnName="SMSMobileNo" />
+          <ScalarProperty Name="IsSMSCountry" ColumnName="IsSMSCountry" />
+          <ScalarProperty Name="MobileNetworkId" ColumnName="MobileNetworkId" />
+          <ScalarProperty Name="IsSMSSend" ColumnName="IsSMSSend" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+          <ScalarProperty Name="StartingDate" ColumnName="StartingDate" />
+          <ScalarProperty Name="EndingDate" ColumnName="EndingDate" />
+          <ScalarProperty Name="IsUpdatedProfile" ColumnName="IsUpdatedProfile" />
+          <ScalarProperty Name="IsOldBlocked" ColumnName="IsOldBlocked" />
+          <ScalarProperty Name="IsMobileUser" ColumnName="IsMobileUser" />
+          <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+          <ScalarProperty Name="LastGuidDate" ColumnName="LastGuidDate" />
+          <ScalarProperty Name="LastGuidAccessDate" ColumnName="LastGuidAccessDate" />
+          <ScalarProperty Name="UserGuidExpired" ColumnName="UserGuidExpired" />
+          <ScalarProperty Name="FirebaseToken" ColumnName="FirebaseToken" />
+          <ScalarProperty Name="FirebaseTokenUpdatedOn" ColumnName="FirebaseTokenUpdatedOn" />
+          <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+          <ScalarProperty Name="RateUpdate" ColumnName="RateUpdate" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

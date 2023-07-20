@@ -1,0 +1,227 @@
+﻿@model List<RMS.Web.Models.Suppliers>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+    <div class="container-fluid">
+        <h1 class="col-lg-offset-5 " style="color:slategrey"></h1>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <button class="btn btn-primary" id="btnadd" data-target="#exampleModal" data-toggle="modal">Add Suppliers</button>
+
+                <h1 class="m-0 font-weight-bold text-primary text-center">Suppliers</h1>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead style="background-color:yellow">
+                            <tr>
+                                <th>Supplier Name</th>
+                                <th>Supplier Number</th>
+                                <th>Supplier CNIC</th>
+                                <th>Supplier Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.SupplierName</td>
+                                        <td>@item.SuplierNumber</td>
+                                        <td>@item.SuplierCNIC</td>
+                                        <td>@item.SupplierAddress</td>
+                                        <td><button class="btn btn-primary btnedit" data-target="#exampleModal" data-toggle="modal" data-id="@item.SupplierID"><i class="glyphicon glyphicon-edit"></i>Edit</button>
+                                        <button class="btn btn-danger btndelete" data-id="@item.SupplierID"><i class="glyphicon glyphicon-remove"></i>Delete</button></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+
+
+
+
+                    </table>
+                    @*<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="exampleModalLabel"><strong>Add Supplier </strong></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    @Html.Partial("partialsupp")
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button id="btnSave" type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="exampleModalLabel"><strong>Add Item Form</strong></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    @Html.Partial("partialsupp")
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button id="btnSave" type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+<script>
+
+
+    $('#btnadd').click(function () {
+        debugger;
+        $('#SupplierID').val(0);
+        $('#SupplierName').val("");
+        $('#SuplierNumber').val("");
+        $('#SuplierCNIC').val("");
+        $('#SupplierAddress').val("");
+        debugger;
+       
+        
+    });
+
+    $('#btnSave').click(function () {
+        suppid = $('#SupplierID').val();
+        if (suppid <= 0) {
+            confirm("Are U sure u want to Add");
+        }
+        else  {
+            confirm("Are U sure you want to update");
+
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: $('#supplierform').serialize(),
+            url: "@Url.Action("SaveSupp","Suppliers")"
+
+        }).done(function (data) {
+            location.reload();
+            debugger;
+            if (suppid <= 0) {
+                alert("Supplier Added Successfully")
+               
+                $('table > tbody > tr > 0').css("background-color", "grey");
+                
+            }
+            else {
+                alert("Supplier Updated  Successfully")
+            }
+
+            }).fail(function (jqxhr, textStatus) {
+
+                alert("Supplier save Failed, Contact to Admin");
+
+            });
+
+
+    });
+   $('.btndelete').click(function () {
+       var suppid = $(this).attr('data-id');
+
+       var con = confirm("Are u sure u want to delete");
+       if (con == true) {
+
+           debugger;
+           $.ajax({
+
+               type: 'GET',
+               data: { SupplierID: suppid },
+              url: "@Url.Action("DeleteSupp", "Suppliers")",
+           }).done(function (data) {
+
+               alert("Supplier deleted Successfully");
+               location.reload();
+
+           }).fail(function (jqxhr, textStatus) {
+
+               alert("Cant delete supplier");
+
+           });
+       }
+       else {
+           alert("ok");
+       }
+      
+
+
+   });
+    $(document).ready(function (){
+
+    $('.btnedit').click(function () {
+        var suppidd = $(this).attr('data-id');
+
+        debugger;
+        $.ajax({
+            type: 'GET',
+            data: { suppid: suppidd },
+            url: "@Url.Action("Getsupp","Suppliers")"
+        }).done(function (data) {
+            alert("data caught successfully");
+            $('#SupplierID').val(data.SupplierID);
+            $('#SupplierName').val(data.SupplierName);
+            $('#SuplierNumber').val(data.SuplierNumber);
+            $('#SuplierCNIC').val(data.SuplierCNIC);
+            $('#SupplierAddress').val(data.SupplierAddress);
+
+            $('#exampleModal').modal('show');
+
+        }).fail(function (jqxhr,textStatus)  {
+
+            alert("Cant get supplier details");
+
+        });
+
+
+
+
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+    });
+
+
+
+
+
+
+
+</script>

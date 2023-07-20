@@ -1,0 +1,2681 @@
+﻿@model RMS.Web.Models.ViewModels.VoucherMasterViewModel
+
+@{
+    ViewBag.Title = "Addsalevoucher";
+}
+<form id="VoucherForm">
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:#5a5c69">
+                <input type="hidden" id="vouchertypeidddd" name="vouchertypeid" value="@Model.vouchertypeid" />
+                @{
+                    if (Model.vouchertypeid == 1)
+                    {
+                        if (Model.modify == 1)
+                        {
+
+                            <h4 class="m-0 font-weight-bold"><strong style="color:white;">Modify Sales Voucher </strong>   <button type="button" id="btnSaveVoucher" style="float:right;" class="btn btn-success "><i class="glyphicon glyphicon-save-file"></i> Update Voucher</button></h4>
+                            <input type="hidden" id="modify" name="modify" value="1" />
+
+                        }
+                        else
+                        {
+                            <h4 class="m-0 font-weight-bold"><strong style="color:white;">Add Sales Voucher </strong>   <button type="button" style="float:right;" id="btnSaveVoucher" class="btn btn-success col-md-offset-8"><i class="glyphicon glyphicon-save-file"></i> Save Voucher</button></h4>
+                            <input type="hidden" id="modify" name="modify" value="0" />
+
+
+                        }
+                        <p hidden id="vouchertypeid">1</p>
+                    }
+                    else if (Model.vouchertypeid == 9)
+                    {
+                        if (Model.modify == 1)
+                        {
+
+                            <h4 class="m-0 font-weight-bold"><strong style="color:white;">Modify Sales Return Voucher </strong>   <button type="button" id="btnSaveVoucher" style="float:right;" class="btn btn-success "><i class="glyphicon glyphicon-save-file"></i> Update Voucher</button></h4>
+                            <input type="hidden" id="modify" name="modify" value="1" />
+
+                        }
+                        else
+                        {
+                            <h4 class="m-0 font-weight-bold"><strong style="color:white;">Add Sales Return Voucher </strong>   <button type="button" style="float:right;" id="btnSaveVoucher" class="btn btn-success col-md-offset-8"><i class="glyphicon glyphicon-save-file"></i> Save Voucher</button></h4>
+                            <input type="hidden" id="modify" name="modify" value="0" />
+
+
+                        }
+                        <p hidden id="vouchertypeid">1</p>
+                    }
+                    else if (Model.vouchertypeid == 2)
+                    {
+                        if (Model.modify == 1)
+                        {
+                            <h4 class="m-0 font-weight-bold"><strong style="color:white;"> Modify Purchase Voucher </strong>  <button type="button" style="float:right;" id="btnSaveVoucher" class="col-md-offset-7 btn btn-success "><i class="glyphicon glyphicon-save-file"></i> Update Voucher</button> </h4>
+                            <input type="hidden" id="modify" name="modify" value="1" />
+
+                        }
+                        else
+                        {
+                            <h4 class="m-0 font-weight-bold"><strong style="color:white;">Add Purchase Voucher </strong>  <button type="button" style="float:right;" id="btnSaveVoucher" class="col-md-offset-7 btn btn-success "><i class="glyphicon glyphicon-save-file"></i> Save Voucher</button> </h4>
+                            <input type="hidden" id="modify" name="modify" value="0" />
+
+                        }
+
+
+                        <p hidden id="vouchertypeid">2</p>
+
+
+
+                    }
+                    else if (Model.vouchertypeid == 10)
+                    {
+                        if (Model.modify == 1)
+                        {
+                            <h4 class="m-0 font-weight-bold"><strong style="color:white;"> Modify Purchase Return Voucher </strong>  <button type="button" style="float:right;" id="btnSaveVoucher" class="col-md-offset-7 btn btn-success "><i class="glyphicon glyphicon-save-file"></i> Update Voucher</button> </h4>
+                            <input type="hidden" id="modify" name="modify" value="1" />
+
+                        }
+                        else
+                        {
+                            <h4 class="m-0 font-weight-bold"><strong style="color:white;">Add Purchase Return Voucher </strong>  <button type="button" style="float:right;" id="btnSaveVoucher" class="col-md-offset-7 btn btn-success "><i class="glyphicon glyphicon-save-file"></i> Save Voucher</button> </h4>
+                            <input type="hidden" id="modify" name="modify" value="0" />
+
+                        }
+
+
+                        <p hidden id="vouchertypeid">2</p>
+
+                    }
+
+
+                }
+
+            </div>
+            <div class="card-body">
+                @{
+                    if (Model.modify == 1)
+                    {
+                        <lablel class="col-md-2" style="color:black">Voucher Number</lablel>
+                        <div class="col-md-4">
+                            <input class="form-control" name="VoucherNumber" readonly="readonly" type="text" value="@Model.VoucherNumber  " />
+                        </div>
+
+                        <lablel class="col-md-2" style="color:black">Voucher Date</lablel>
+                        <div class="col-md-4">
+                            <input class="form-control" id="VoucherCreateDate" name="VoucherCreateDate" readonly="readonly" value="@Model.VoucherCreateDate" />
+                        </div>
+
+                        <!---->
+                        <br />
+                        <br />
+                        <lablel class="col-md-2" style="color:black">
+                            Party Name
+
+                        </lablel>
+                        <div class="col-md-4">
+                            @Html.DropDownList("Partyid", (IEnumerable<SelectListItem>)ViewBag.Accountname, "---Select PartyName---", htmlAttributes: new { @class = " form-control ", @Id = "Partyid_Accountid", @Name = "Partyid" })
+
+                        </div>
+
+                        <lablel class="col-md-2" style="color:black">Material Centre</lablel>
+                        <div class="col-md-4">
+
+                            @Html.DropDownList("LocationID", (IEnumerable<SelectListItem>)ViewBag.MaterialCentres, "---Select Location---", htmlAttributes: new { @class = " form-control ", @Id = "LocationID" ,@Value=Model.LocationID})
+
+
+
+                        </div>
+                        <br />
+                        <br />
+                        <lablel class="col-md-2" style="color:black">
+                            Curr Balance:
+                            @*<em style="color:blue" id="balance"></em>*@
+                        </lablel>
+                        <div class="col-md-4">
+
+                            <input type="text" disabled style="color:blue" id="balance" class="form-control" />
+                        </div>
+                        <lablel class="col-md-2" style="color:black">Narration</lablel>
+                        <div class="col-md-4">
+                            <textarea class="form-control" id="Narration" name="Narration" placeholder="Enter Voucher Narration">@Model.Narration</textarea>
+                        </div>
+                    }
+                    else
+                    {
+                        <lablel class="col-md-2" style="color:black">Voucher Number</lablel>
+                        <div class="col-md-4">
+                            <input class="form-control" name="VoucherNumber" readonly="readonly" type="number" value="@ViewBag.ordernumber" />
+                        </div>
+
+                        <lablel class="col-md-2" style="color:black">Voucher Date</lablel>
+                        <div class="col-md-4">
+                            <input class="form-control" id="VoucherCreateDate" name="VoucherCreateDate" readonly="readonly" value="@DateTime.Now" />
+                        </div>
+
+                        <br />
+                        <br />
+                        <lablel class="col-md-2" style="color:black">
+                            Party Name
+                        </lablel>
+                        <div class="col-md-4">
+                            @Html.DropDownList("Partyid", (IEnumerable<SelectListItem>)ViewBag.Account, "---Select PartyName---", htmlAttributes: new { @class = " form-control ", @Id = "Partyid_Accountid", @Name = "Partyid" })
+
+                        </div>
+
+                        <lablel class="col-md-2" style="color:black">Material Centre</lablel>
+                        <div class="col-md-4">
+
+                            @Html.DropDownList("LocationID", (IEnumerable<SelectListItem>)ViewBag.MaterialCentres, "---Select Location---", htmlAttributes: new { @class = " form-control ", @Id = "LocationID", @Value = Model.LocationID })
+
+
+
+                        </div>
+                        <br />
+                        <br />
+                        <lablel class="col-md-2" style="color:black">
+                            Curr Balance:
+                            @*<em style="color:blue" id="balance"></em>*@
+                        </lablel>
+                        <div class="col-md-4">
+
+                            <input type="text" disabled style="color:blue" id="balance" class="form-control" />
+                        </div>
+                        <lablel class="col-md-2" style="color:black">Narration</lablel>
+                        <div class="col-md-4">
+                            <textarea class="form-control" id="Narration" name="Narration" placeholder="Enter Voucher Narration"></textarea>
+                        </div>
+                    }
+                }
+
+                <br />
+                <br />
+
+
+
+
+            </div>
+                    </div>
+    </div>
+    <div id="wait" class="text-center" style="display:none;">
+        <p><img src="~/startbootstrap-sb-admin-2-master/img/ajax-loader.gif" /> Please Wait</p>
+
+    </div>
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:#5a5c69">
+
+                <h4 class="m-0 font-weight-bold"><strong style="color:white;">Item Details </strong></h4>
+
+                @*<h6 class="m-0 font-weight-bold"><strong style="color:white;">Bill Sundry</strong></h6> *@
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+
+                    <table class="table table-bordered" id="table" width="100%" cellspacing="0">
+                        @{
+                            if (Model.vouchertypeid == 1 || Model.vouchertypeid == 9)
+                            {
+                                <thead class="thead-dark" style="background-color:lightgreen">
+                                    <tr>
+                                        <th style="width:300px;"> Item Name
+                                        @*/ <strong style="color:white;">Current Stock: <em style="color:yellow;background-color:black;" id="availQuantity"></em></strong>*@ 
+                                        </th>
+                                        <th>Quantity   </th>
+                                        <th>Unit</th>
+                                        <th>Price
+                                        @*/ <strong style="color:white;">Old Price: <em style="color:yellow;background-color:black;" id="currentprice"></em></strong>*@
+                                        </th>
+                                        <th>Amount</th>
+                                        <th>Actions</th>
+                                    </tr>
+
+                                </thead>
+                                <tfoot><tr><th hidden>1</th></tr></tfoot>
+                                <thead style="background-color:orange">
+                                    <tr>
+                                        <th>
+                                            @Html.DropDownList("itemname", (IEnumerable<SelectListItem>)ViewBag.Items, "---Select Item---", htmlAttributes: new { @class = "form-control ", @Id = "itemname" })
+                                        </th>
+                                        <th>
+                                            <input class="form-control text-right" type="number" id="Quantity" placeholder="Enter Quantity" />
+                                            @*<input class="form-control text-right" readonly="readonly" type="number" id="availQuantity" placeholder="Available Quantity" />*@
+                                        </th>
+                                        @*<th style="width:150px;"><input class="form-control" readonly="readonly" type="number" id="unitname" placeholder="Item units" /></th> js-example-basic-single*@
+                                        <th>@Html.DropDownList("unitname", (IEnumerable<SelectListItem>)ViewBag.Units, "---Item Unit---", htmlAttributes: new { @class = "form-control", @Id = "unitname", @disabled = "true" })</th>
+                                        <th><input class="form-control text-right" type="number" placeholder="item Price" id="ItemPrice" /></th>
+                                        <th><input class="form-control text-right" type="number" placeholder="total Amount" id="txttotal" /></th>
+                                        <th><button type="button" class="btn btn-success " id="btnadd"><i class="glyphicon glyphicon-plus"></i></button></th>
+                                    </tr>
+                                </thead>
+                            }
+                            else if (Model.vouchertypeid == 2 || Model.vouchertypeid == 10)
+                            {
+                                <thead class="thead-dark" style="background-color:lightgreen">
+                                    <tr>
+                                        <th style="width:300px;"> Item Name  </th>
+
+                                        <th>Quantity</th>
+                                        <th>Unit</th>
+                                        <th>Price</th>
+                                        <th>Amount</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <thead style="background-color:orange">
+                                    <tr>
+                                        <th>
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("itemname", (IEnumerable<SelectListItem>)ViewBag.Items, "---Select Item---", htmlAttributes: new { @class = "form-control ", @Id = "itemname" })
+                                            </div>
+                                            <div class="col-md-2">
+                                                <a href="@Url.Action("Index","Item")" class="btn btn-dark"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                                            </div>
+
+                                        </th><!--js-example-basic-single-->
+                                        <th><input class="form-control text-right" type="number" id="Quantity" placeholder="Enter Quantity" /></th>
+                                        <th>@Html.DropDownList("unitname", (IEnumerable<SelectListItem>)ViewBag.Units, "---Select Unit---", htmlAttributes: new { @class = "form-control", @Id = "unitname", @disabled = "true" })</th>
+                                        <th><input class="form-control text-right" type="number" placeholder="item Price" id="ItemPrice" /></th>
+                                        <th><input class="form-control text-right" placeholder="total Amount" type="number" id="txttotal" /></th>
+                                        <th><button type="button" class="btn btn-success " id="btnadd"><i class="glyphicon glyphicon-plus"></i></button></th>
+                                    </tr>
+                                </thead>
+                                <tfoot><tr><th hidden>1</th></tr></tfoot>
+                            }
+
+                        }
+
+
+                        @if (Model.modify == 1)
+                        {
+                            int rowid = 1;
+                            foreach (var item in Model.VoucherChildlist)
+                            {
+                                <tbody id="body">
+                                    <tr id="tr">
+                                        <td hidden><input type="number" value="@item.ItemID" />  </td>
+                                        <td> <input readonly type="text" class="form-control" value="@item.Items.ItemName" /></td>
+                                        <td><input readonly type="text" class="form-control text-right" value=" @item.Quantity" />  </td>
+                                        <td hidden>@item.Unitid</td>
+                                        <td><input readonly type="text" class="form-control" value=" @item.Units.UnitName" /> </td>
+                                        <td> <input readonly type="number" class="form-control text-right" value="@item.ItemPrice" />  </td>
+                                        <td><input readonly type="number" class="form-control text-right" value=" @item.TotalAmount" />  </td>
+                                        <td><button type="button" class="btn btn-danger " id="btnremove" onclick="removeDr(@rowid)"><i class="glyphicon glyphicon-minus"></i></button></td>
+
+                                        <td hidden>@item.TotalAmount</td>
+                                        <td hidden>@rowid</td>
+                                        <td hidden>@item.VoucherchildID</td>
+
+
+
+                                    </tr>
+                                </tbody>
+                                rowid = rowid + 1;
+                            }
+                        }
+                        else
+                        {
+                            <tbody id="itembody" style=""></tbody>
+
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row container-fluid">
+        <div class="col-md-3"></div>
+        @*<div class="col-md-6">
+
+            <div class="card shadow mb-4">
+
+
+
+                @*<div class="card-header py-3" style="background-color:#5a5c69">
+
+                    <h6 class="m-0 font-weight-bold"><strong style="color:white;">Bill Sundry</strong></h6>
+                </div>
+
+
+
+
+      <div class="card-body" style="background-color:white"> testing
+
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="billsundrytable" cellspacing="0">
+                        <thead class="thead-dark" style="background-color:lightgreen">
+                            <tr>
+                                <th>BillSundry Name</th>
+                                <th>Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <thead style="background-color:orange">
+
+                            <tr>
+                                <th>
+                                    @Html.DropDownList("BildlSudfdndryId", (IEnumerable<SelectListItem>)ViewBag.BillSundry, "---Select BillSundry---", htmlAttributes: new { @class = "form-control", @Id = "txbillsundry" })
+
+                                </th>
+                                <th><input class="form-control" type="number" placeholder="Enter Amount" id="BillSundryAmount" /></th>
+                                <th><button type="button" class="btn btn-success " id="btnaddbillsundry"><i class="glyphicon glyphicon-plus"></i></button></th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody id="billsundry"></tbody>
+
+
+                    </table>
+                </div>
+
+
+
+            </div>
+
+    </div>
+    </div>*@
+    <div class="col-md-12">
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:#5a5c69">
+
+                <h6 class="m-0 font-weight-bold"><strong style="color:white;">Total</strong></h6>
+            </div>
+            <div class="card-body" style="background-color:white">
+                <lablel class="col-md-4" style="color:black;"> Total</lablel>
+                <div class="col-md-8">
+                    @if (Model.modify == 1)
+                    {
+                        var total = Model.FinalTotal + Model.BillSundryAmount2;
+                        <input value=" @total" class="form-control font-weight-bolder text-right" id="txttotal1" readonly="readonly" style="background-color:orange; color:white;" />
+                    }
+                    else
+                    {
+                        <input value=" 0.00" class="form-control font-weight-bolder text-right" id="txttotal1" readonly="readonly" style="background-color:orange; color:white;" />
+                    }
+
+                </div>
+                <br />
+                <br />
+                @*<lablel class="col-md-4" style="color:black;"> Bill Sundry</lablel>
+                @*<div class="col-md-8">
+                        @if (Model.modify == 1)
+                        {
+                            <input value="@Model.BillSundryAmount2" class="form-control font-weight-bolder text-right" id="txtdiscounttotal" name="txtdiscounttotal" readonly="readonly" style="background-color:orange; color:white;" />
+                        }
+                        else
+                        {
+                            <input value="0.00" class="form-control font-weight-bolder text-right" id="txtdiscounttotal" name="txtdiscounttotal" readonly="readonly" style="background-color:orange; color:white;" />
+                        }
+
+                    </div>
+                <div class="col-md-8">
+
+                    <div class="card-body" style="background-color:white;">
+                        <div class="table-responsive" >
+                            <table class="table table-bordered" id="billsundrytable" cellspacing="0">
+                                <thead class="thead-dark" style="background-color:lightgreen">
+                                    <tr>
+                                        <th>BillSundry Name</th>
+                                        <th>Amount</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+
+                                <thead style="background-color:orange">
+
+                                    <tr>
+                                        <th>
+                                            @Html.DropDownList("BillSudfdfndryId22", (IEnumerable<SelectListItem>)ViewBag.BillSundry, "---Select BillSundry---", htmlAttributes: new { @class = "form-control", @Id = "txbillsundry" })
+
+                                        </th>
+                                        <th><input class="form-control text-right" type="number" placeholder="Enter Amount" id="BillSundryAmount" /></th>
+                                        <th><button type="button" class="btn btn-success " id="btnaddbillsundry"><i class="glyphicon glyphicon-plus"></i></button></th>
+
+
+                                    </tr>
+                                </thead>
+                                @if (Model.modify == 1 && Model.BillSundrychildlist != null)
+                                {
+                                    int rowid = 1;
+                                    <tbody id="billsundry">
+                                        @foreach (var item2 in Model.BillSundrychildlist)
+                                        {
+
+                                            <tr id="billsundryrows">
+                                                <td hidden>@item2.BillSundryChildID</td>
+                                                <td><input readonly class='form-control' value="@item2.BillSundry.BillSundryName" /></td>
+                                                <td><input readonly class='form-control text-right' value="@item2.BillSundryAmount" /></td>
+                                                <td> <button type='button' class='btn btn-danger ' id='btnremove' onclick='removeBillSundry(@rowid)'><i class='glyphicon glyphicon-minus'></i></button></td>
+                                                <td hidden>@item2.BillSundryAmount</td>
+                                                <td hidden>@rowid</td>
+                                            </tr>
+                                            rowid = rowid + 1;
+                                        }
+                                    </tbody>
+
+                                }
+                                else
+                                {
+                                    <tbody id="billsundry"></tbody>
+
+                                }
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+                <br />
+                <br />*@
+                <lablel class="col-md-4" style="color:black;">Final Total</lablel>
+                <div class="col-md-8">
+                    @*@Html.TextBox("FinalTotal", "0.00", new { @class = "form-control", @Id = "txtfinaltotal", @name = "FinalTotal", @readonly = "readonly" })*@
+                    @if (Model.modify == 1)
+                    {
+                        <input value="@Model.FinalTotal" class="form-control font-weight-bolder text-right" id="txtfinaltotal" name="FinalTotal" readonly="readonly" style="background-color:orange; color:white;" />
+
+                    }
+                    else
+                    {
+                        <input value="0.00" class="form-control font-weight-bolder text-right" id="txtfinaltotal" name="FinalTotal" readonly="readonly" style="background-color:orange; color:white;" />
+
+                    }
+
+                </div>
+                <br />
+                <br />
+
+                @*<label class="col-md-4" style="color:black;">Another Discount Value</label>
+                    <div class="col-md-8">
+                        <input class="form-control" id="txtdiscount2" placeholder="Enter second Discount Rate" value="0.00" />
+                    </div>*@
+
+                <lablel class="col-md-4"></lablel>
+                <div class="col-md-8">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="messagemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="messagetext"></div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Okay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+
+<link href="~/Scripts/chosen/select2-4.1.0-beta.1/dist/css/select2.css" rel="stylesheet" />
+<script src="~/Scripts/chosen/select2-4.1.0-beta.1/dist/js/select2.full.js"></script>
+
+
+@if (Model.vouchertypeid == 1 || Model.vouchertypeid == 9)
+{
+    <script>
+
+    $('#Partyid_Accountid').change(function () {
+
+        var accid = $('#Partyid_Accountid option:selected').val();
+        debugger;
+        $.ajax({
+
+            type: 'GET',
+            data: { accountid: accid },
+            url: "@Url.Action("getaccountbalance", "Purchase")"
+
+        }).done(function (data) {
+            $('#balance').val(data);
+
+
+        }).fail(function (jqXHR, textStatus) {
+
+            alert("Cant Get balance,Contact Admin");
+        });
+
+
+    });
+
+
+    $(document).on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                debugger;
+
+                var acccid = $('#Quantity').val();
+                if (acccid == 0 || acccid == "") {
+
+
+                    //$('.select2-selectio  n--single').focus();
+                    //$('table tfoot tr th span').attr("aria-labelledby", "select2-itemname-container").focus()
+                    var accountid = $('#select2-Partyid_Accountid-container').text();
+                    if (accountid == "---Select PartyName---") {
+                        $('#Partyid_Accountid').focus();
+
+                    }
+
+
+                }
+            }
+        }
+    });
+
+    $("#Partyid_Accountid").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                var accid = $('#Partyid_Accountid option:selected').val(); 
+                debugger;
+                if (accid != 0) {
+                    console.log('enter button pressed');
+                    $('#LocationID').focus();
+                }
+                else {
+                    $('#Partyid_Accountid').focus();
+                }
+
+            }
+        }
+    });
+        $("#LocationID").on({
+            keydown: function (ev) {
+                if (ev.which === 13) {   // enter button
+                    var accid2 = $('#LocationID option:selected').val();
+                    debugger;
+                    if (accid2 != 0) {
+                        console.log('enter button pressed');
+                        $('#Narration').focus();
+                    }
+                    else {
+                        $('#LocationID').focus();
+                    }
+
+                }
+            }
+        });
+    $("#Narration").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                console.log('enter button pressed');
+                var narr = $('#Narration').val();
+
+                $('#itemname').focus();
+            }
+        }
+    });
+
+    //$("#itemname").on({
+    //    keydown: function (ev) {
+    //        if (ev.which === 13) {   // enter button
+    //            console.log('enter button pressed');
+    //            var narr = $('#itemname').val();
+    //            if (narr == "---Select Item---") {
+                    //$('#itemname').foc();
+    //            }
+    //            else {
+
+    //                $('#Quantity').focus();
+
+    //            }
+    //        }
+    //    }
+    //});
+
+        //$("#itemname").on({
+        //    keydown: function (ev) {
+        //        if (ev.which === 13) {   // enter button
+        //            debugger;
+        //            var itemid = $('#itemname option:selected').val();
+
+
+        //            if (itemid != 0) {
+        //                console.log('enter button pressed');
+        //                $('#Quantity').focus();
+        //            }
+        //            else {
+        //                $('#itemname').focus();
+
+
+        //            }
+
+        //        }
+        //    }
+        //});
+
+    $("#Quantity").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                var quantt = parseInt($('#Quantity').val());
+                var quantt2 = $('#Quantity').val();
+                debugger;
+                var avstock = parseInt($('#availQuantity').html());
+
+                if (quantt > 0) {
+                    $('#ItemPrice').focus();
+
+                }
+                else {
+                    alert("enter quantity");
+                }
+
+
+                //if (quantt == 0 && quantt < 0  ) {
+                //    $('#Quantity').focus();
+                //    $('#Quantity').val(0);
+                //}
+                //else if (quantt >= avstock) {
+                //    alert("your item has no available stock");
+                //    $('#Quantity').val(0);
+                //    $('#itemname ').focus();
+                //    $('#select2-itemname-container').text("---Select Item---");
+
+                //}
+                //else {
+                //    if (quantt2 == "") {
+                //        alert("please enter quantity");
+
+                //    }
+                //    else {
+                //        $('#ItemPrice').focus();
+                //    }
+                //}
+
+            }
+            //else if (ev.which === 9) {
+            //    var quantt = parseInt($('#Quantity').val());
+            //    debugger;
+            //    var avstock = parseInt($('#availQuantity').html());
+
+            //    if (quantt == 0 && quantt < 0) {
+            //        $('#Quantity').focus();
+            //        $('#Quantity').val(0);
+            //    }
+            //    else if (quantt > avstock) {
+            //        alert("your item has no available stock");
+            //        $('#Quantity').val(0);
+            //        $('#itemname ').focus();
+
+            //    }
+            //    else {
+            //        console.log('enter button pressed');
+            //        $('#ItemPrice').focus();
+            //    }
+
+
+
+            //}
+        }
+    });
+
+    $("#ItemPrice").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                console.log('enter button pressed');
+                debugger;
+                var itemprice = $('#ItemPrice').val();
+
+
+                if (itemprice == "" || itemprice == 0 && itemprice < 0  ) {
+                    $('#ItemPrice').focus();
+                    alert("enter price  ");
+                }
+                else {
+                    $('#txttotal').focus();
+                }
+
+            }
+        }
+    });
+
+    $("#txttotal").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                debugger;
+                $('#btnadd').focus();
+            }
+        }
+    });
+
+    $("#txbillsundry").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                var billsundryid = $("#txbillsundry option:selected").val();
+
+                if (billsundryid > 0) {
+                    $('#BillSundryAmount').focus();
+
+                }
+            }
+            else if (ev.which == 16) {
+                var billsundryid = $("#txbillsundry option:selected").val();
+                    $('#btnSaveVoucher').focus();
+
+            }
+        }
+    });
+
+    $("#BillSundryAmount").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                var billsundryamountt = parseFloat($("#BillSundryAmount").val());
+                if (billsundryamountt > 0) {
+                    $('#btnaddbillsundry').focus();
+                }
+
+
+            }
+        }
+    });
+
+    $("#btnSaveVoucher").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                debugger;
+                btnSaveVoucher();
+
+            }
+        }
+    });
+    $("#btnSaveVoucher").focusin(function () {
+        $(this).css("background-color", "darkgreen")
+    });
+    $("#btnSaveVoucher").focusout(function () {
+        $(this).css("background-color", "green")
+    });
+
+    //$("#btnSaveVoucher").click(function () {
+    //    btnSaveVoucher();
+
+        //});
+        $('#btnadd').mousedown(function () {
+            debugger;
+            btnadd();
+        });
+
+
+    $("#btnadd").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                debugger;
+                btnadd();
+
+            }
+        }
+        });
+
+
+    $("#btnadd").focusin(function () {
+        $(this).css("background-color", "darkgreen")
+    })
+    $("#btnadd").focusout(function () {
+        $(this).css("background-color", "green")
+        //$(this).css("border-color", "#1cc88a")
+    })
+
+    $("#btnSaveVoucher").mousedown(function (e) {
+        btnSaveVoucher();
+
+    });
+
+        $("#btnaddbillsundry").mousedown(function (e) {
+            btnaddbillsundry();
+
+        });
+    $("#btnaddbillsundry").focusin(function () {
+        $(this).css("background-color", "yellow")
+    })
+    $("#btnaddbillsundry").focusout(function () {
+        $(this).css("background-color", "#1cc88a")
+        $(this).css("border-color", "#1cc88a")
+    })
+
+    $("#btnaddbillsundry").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                btnaddbillsundry();
+
+            }
+        }
+    });
+
+
+
+
+
+    $("#txbillsundry").focusin(function () {
+        $(this).css("background-color", "yellow");
+
+    })
+    $("#txbillsundry").focusout(function () {
+        $(this).css("background-color", "white");
+        //$(this).css("border-color", "#1cc88a");
+    })
+
+
+
+
+
+
+    function backspace_emolator(ev) {
+        // remove one character exactly how backspace button does
+        var inputString = $('#inputID').val();
+        var shortenedString = inputString.substr(0, (inputString.length - 1));
+        $('#inputID').val(shortenedString);
+        console.log("Backspace button Pressed" + " " + inputString);
+
+    }
+
+    $('#Partyid_Accountid').select2();
+    $('#itemname').select2();
+
+    function matchStart(params, data) {
+        // If there are no search terms, return all of the data
+        if ($.trim(params.term) === '') {
+            return data;
+        }
+
+        // Skip if there is no 'children' property
+        if (typeof data.children === 'undefined') {
+            return null;
+        }
+
+        // `data.children` contains the actual options that we are matching against
+        var filteredChildren = [];
+        $.each(data.children, function (idx, child) {
+            if (child.text.toUpperCase().indexOf(params.term.toUpperCase()) == 0) {
+                filteredChildren.push(child);
+            }
+        });
+
+        // If we matched any of the timezone group's children, then set the matched children on the group
+        // and return the group object
+        if (filteredChildren.length) {
+            var modifiedData = $.extend({}, data, true);
+            modifiedData.children = filteredChildren;
+
+            // You can return modified objects from here
+            // This includes matching the `children` how you want in nested data sets
+            return modifiedData;
+        }
+
+        // Return `null` if the term should not be displayed
+        return null;
+    }
+           
+    //$(".js-example-matcher-start").select2({
+    //    matcher: matchStart
+    //});
+
+
+    $('#itemname').change(function () {
+        var itemid = $('#itemname option:selected').val();
+        var itemtext = $('#ItemPrice option:selected').val();
+        var unitid = $('#unitname').val();
+
+        //alert("item is : " + itemid);
+        //var quantity = $('#txtQuantity').val();
+        //alert("it is" + quantity);
+
+        $.ajax({
+            type: 'GET',
+            datatype: 'JSON',
+            data: { ItemID: itemid },
+            url: "@Url.Action("GetItemprice","Order")"
+        }).done(function (data) {
+            debugger;
+
+            $('#currentprice').html(data);
+
+
+            //if (itemtext == "0.00") {
+            //    $('#ItemPrice').attr("placeholder", data.ItemPrice);
+            //}
+        }).fail(function (jqXHR, textStatus) {
+
+            if (itemid == null || itemid == "") {
+                alert("Please Select an Item");
+            }
+            else {
+
+                alert("CANT GET ITEM PRICE, CONTACT ADMIN");
+            }
+
+            });
+        $.ajax({
+            type: 'GET',
+            datatype: 'JSON',
+            data: { ItemID: itemid },
+            url: "@Url.Action("Getitemunit", "Order")"
+        }).done(function (data) {
+
+            var unitd = parseInt(data);
+
+            //$('#unitname option:selected').val(unitd);
+            $('#unitname').val(unitd);
+
+
+        }).fail(function (jqXHR, textStatus) {
+
+            if (itemid == null || itemid == "") {
+                alert("Please Select an Item");
+            }
+            else {
+
+                alert("CANT GET ITEM unit, CONTACT ADMIN");
+            }
+
+        });
+
+
+
+
+
+        $.ajax({
+            type: 'GET',
+            datatype: 'JSON',
+            data: { ItemID: itemid },
+            url: "@Url.Action("Getstockquantity","Sales")"
+        }).done(function (data) {
+
+            $('#availQuantity').html(data);
+
+
+        }).fail(function (jqXHR, textStatus) {
+
+            if (itemid == null || itemid == "") {
+                alert("Please Select an Item");
+            }
+            else {
+
+                alert("CANT GET stock quantity, CONTACT ADMIN");
+            }
+
+        });
+
+
+
+
+
+
+
+    });
+
+    $('#Quantity').focusout(function () {
+        var quantt = parseInt($('#Quantity').val());
+        var itemprice = $('#ItemPrice').val();
+        var total = $('#txttotal').val();
+        var itemid = $('#itemname option:selected').val();
+        var avstock = parseInt($('#availQuantity').html());
+
+        //debugger;
+        //if (quantt < 0 ) {
+        //    alert("Quantity cannot be lesser than 1 !!");
+        //    $('#Quantity').val(0);
+        //    $('#select2-itemname-container').text("---Select Item---");
+
+        //    $('#itemname').focus();
+        //}
+        /////////////////
+        //else if (avstock == 0 || quantt >= avstock) {
+
+        //    alert("your item has no available stock");
+        //    $('#Quantity').val(0);
+        //    $('#itemname ').focus();
+        //}
+        //else if (quantt >= avstock) {
+
+        //    alert("your quantity is greater than available stock");
+        //    $('#Quantity').val(0);
+        //    $('#itemname').focus();
+        //}
+
+
+    });
+
+
+    $('#ItemPrice').focusout(function () {
+        var quantt = parseInt($('#Quantity').val());
+        var itemprice = $('#ItemPrice').val();
+        var total = $('#txttotal').val();
+
+        var avstock = parseInt($('#availQuantity').html());
+
+        debugger;
+        if (quantt <= 0 ) {
+            alert("Quantity cannot be lesser than 1 !!");
+
+            $('#Quantity').val(0);
+            $('#Quantity').focus();
+        }
+
+
+        else {
+
+        debugger;
+
+        var quantity = $('#Quantity').val();
+            //var discount = $('#txtdiscount').val();
+            if (quantity != 0 || quantity != null) {
+
+                var result = parseInt(quantity).toFixed(1) * parseFloat(itemprice).toFixed(3); //- parseFloat(discount).toFixed(2)
+                $('#txttotal').val(parseFloat(result));
+            }
+        }
+
+    });
+
+    //$('#txttotal').focusout(function () {
+
+    //    //
+    //    var quantt = parseInt($('#Quantity').val());
+    //    var itemprice = parseFloat($('#ItemPrice').val());
+    //    var total = $('#txttoal').val();
+    //    debugger;
+    //    if (total != 0.00 && quantt != 0 ) {
+    //        var result = parseFloat(total) / parseFloat(quantt);
+    //        $('#ItemPrice').val(result);
+    //    }
+
+    //});
+
+        $('#txttotal').focusout(function () {
+
+
+            var quantt = parseInt($('#Quantity').val());
+            var itemprice = $('#ItemPrice').val();
+            var total = $('#txttotal').val();
+            debugger;
+            if (total != 0.00 && quantt != 0) {
+                var result = parseFloat(total) / parseFloat(quantt);
+                $('#ItemPrice').val(result);
+            }
+
+        });
+
+        $('#txtdiscount,#txttax').change(function () {
+            var discount = $('#txtdiscount').val();
+            var tax = $('#txttax').val();
+            var total = $('#txtfinaltotal').val();
+            debugger;
+
+            if (total == "0.00") {
+                alert("Please select and item then add bill sundry ");
+                $('#txbillsundry').val(0);
+                $('#child').hide();
+                $('#child2').hide();
+                $('#child3').show();
+            }
+
+
+           else if (discount != "" && total != "0.00") {
+                var result = parseFloat(total) - parseFloat(discount);
+                $('#txtfinaltotal').val(result);
+            }
+            else if (tax != 0 && total != 0.00) {
+                //var percent = parseFloat(total) / 100 * parseFloat(tax);
+                var result2 = parseFloat(total) - (parseFloat(total) / 100 * parseFloat(tax));
+                $('#txtfinaltotal').val(parseFloat(result2));
+            }
+
+
+            //$('#child').fadeOut(400);
+            //$('#child2').fadeOut(400);
+            //$('#child3').fadeIn(400);
+            //$('#txbillsundry').val();
+        });
+
+    function btnadd() {
+
+        var itemid = $('#itemname option:selected').val();
+        var itemname = $('#itemname option:selected').text();
+        var unitprice = $('#ItemPrice').val();
+        var quantity = $('#Quantity').val();
+        var Unitid = $('#unitname option:selected').val();
+        var Unittext = $('#unitname option:selected').text();
+        var availquantity = $('#availQuantity').html();
+        var modifychild = parseInt($('#modify').val());
+
+        //var discount = $('#txtdiscount').val();
+        var rowid = 1;
+        if ($("table > tbody > tr").length > 0) {
+            $("table  tbody  tr").each(function () {
+
+                //var ffx = $(this).find('td:eq(5)').html();
+                //var new = $('#total').attr('value');
+
+                var oldrow = parseInt($(this).find('td:eq(9)').html());
+
+
+                //ftotal += $(t).find('input[name=Total]').val();a
+                rowid = oldrow + 1;
+            });
+        }
+        var total = $('#txttotal').val();
+        //var btn = $('#btnadd').hasClass("disabled");
+        if (itemid == "" || itemname == "" || unitprice == "" || quantity == 0 || Unitid== 0) {
+            alert("Please Fill Item Details");
+        }
+
+        else {
+            var removebtn = "<button type='button' class='btn btn-danger ' id='btnremove' onclick='removeDr(`" + rowid + "` )'><i class='glyphicon glyphicon-minus'></i></button>'";
+
+            // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
+            if (modifychild == 1) {
+                var row = ` <tr id='tr'>
+            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
+            <td><input readonly class='form-control'   value="`+ itemname + `" /></td>
+            <td><input   readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
+            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
+            <td><input readonly class='form-control'  value="`+ Unittext + `"  /></td>
+            <td><input readonly  class='form-control text-right' type='number' value="`+ unitprice + `" name="ItemPrice" /></td>
+            <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
+            <td>`+ removebtn + `</td>
+            <td hidden>` + total + `</td>
+          <td hidden>`+ rowid + `</td>
+           <td hidden><input type="hidden" value="0" name="newchild2" id="newchild2" /></td>
+            </tr>`;
+
+                $('#body').append(row);
+
+            }
+            else if (modifychild == 0) {
+                var row = ` <tr id='tr'>
+            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
+            <td><input readonly class='form-control'   value="`+ itemname + `" /></td>
+            <td><input   readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
+            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
+            <td><input readonly class='form-control'  value="`+ Unittext + `"  /></td>
+            <td><input readonly  class='form-control text-right' type='number' value="`+ unitprice + `" name="ItemPrice" /></td>
+            <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
+            <td>`+ removebtn + `</td>
+            <td hidden>` + total + `</td>
+          <td hidden>`+ rowid + `</td>
+            </tr>`;
+
+
+                //$('table tbody').append(row);
+                $('#itembody').append(row);
+            }
+
+
+
+
+
+
+
+
+
+            $('#ItemID').text();
+            //$('#itemname option:selected').text("---Select Item---");
+            $('#select2-itemname-container').text("---Select Item---");
+
+            $('#ItemPrice').val("");
+            $('#Quantity').val("");
+            //$('#txtdiscount').val("0.00");
+            $('#txttotal').val("0.00");
+            debugger;
+            $('#unitname ').val("");
+            $('#itemname').focus();
+            var ftotal = 0;
+            if (modifychild == 1) {
+
+                var rowcheck = $('#newchild2').length;
+                if (rowcheck == 1) {
+                    ftotal = 0;
+                } else {
+                     ftotal = parseFloat($('#txtfinaltotal').val());
+
+                }
+                if ($("#table > #body > #tr").length > 0) {
+                    $("#table > #body > #tr").each(function () {
+
+
+
+                        var ffx = $(this).find('td:eq(8)').html();
+                        //var new = $('#total').attr('value');
+                        debugger;
+                        if (ffx != null) {
+                            ftotal += parseFloat(ffx);
+                        }
+
+
+                        //ftotal += $(t).find('input[name=Total]').val();a
+
+                    });
+                }
+                $('#txtfinaltotal').val(ftotal);
+                $('#txttotal1').val(ftotal);
+            }
+            else {
+                if ($("#table > #itembody > #tr").length > 0) {
+                    $("#table > #itembody >  #tr").each(function () {
+
+                        var lengthh = $("#table > #itembody >  #tr").length;
+                        var ffx = $(this).find('td:eq(8)').html();
+                        //var new = $('#total').attr('value');
+                        debugger;
+                        if (ffx != null) {
+                            ftotal += parseFloat(ffx);
+                        }
+                            
+                        //ftotal += $(t).find('input[name=Total]').val(); 
+
+                    });
+                }
+                $('#txtfinaltotal').val(ftotal);
+                $('#txttotal1').val(ftotal);
+               
+            }
+        }
+    };
+
+
+    function remove() {
+
+        $('#btnremove').parent().parent().remove();
+
+        var ftotal = 0.00;//+ $('#txttotal').val();
+        var pt = 0.00;
+        debugger;
+        if ($("table > tbody > tr").length > 0) {
+            $("table > tbody > tr").each(function () {
+                var ot = parseFloat($(this).find('td:eq(8)').html());
+                pt = ot - parseFloat(ftotal);
+                var ototal = ftotal;
+                ototal += ftotal;
+            })
+        }
+
+
+        $('#txtfinaltotal').val(parseFloat(pt));
+
+
+    }
+
+    function removeDr(rowid) {
+        var cc = $(this).parent().html();
+
+        var test = $('table tbody tr').parent().parent().find('td:eq(7)').html();
+
+        var ftotal = 0.00;//+ $('#txttotal').val();
+        var oldtotal = $('#txtfinaltotal').val();
+        var pt = 0.00;
+
+
+        if ($("table > tbody > tr").length > 0) {
+            $("table > tbody > tr").each(function () {
+                var rownum = parseFloat($(this).find('td:eq(9)').html());
+
+                if (rownum == rowid) {
+                    debugger;
+                    var ot = parseFloat($(this).find('td:eq(8)').html());
+                    pt = ot - parseFloat(ftotal);
+                    var newpt = oldtotal - pt;
+                    //var ototal = ftotal;
+                    //ototal += ftotal;
+                    //$(this).children().children().children().remove();
+                    //$('#btnremoveDr').parent().parent().remove();
+                    $('#txtfinaltotal').val(newpt);
+                    $('#txttotal1').val(newpt);
+
+
+                    var deletedid = parseInt($(this).find('td:eq(10)').html());
+                    var check = $('#modify').val();
+                    if (isNaN(deletedid)) {
+                        var ff = 0;
+                    }
+                   else if (check == 1 ) {
+                        //var row2 = "<td ><input type='number' value='0' name='deletedchild' id='deletedchild /></td>";
+                        var row2 = "<th hidden><input type='hidden' name='deletedchild' value=" + deletedid + " /></th>";
+                        $('table tfoot tr').append(row2);
+
+                    }
+
+
+                    $(this).find('td:eq(9)').parent().remove();
+
+
+                }
+
+            })
+        }
+
+
+
+
+
+
+
+
+        //var ftotal = 0.00;//+ $('#txttotal').val();
+        //var pt = 0.00;
+        //debugger;
+        //if ($("table > tbody > tr").length > 0) {
+        //    $("table > tbody > tr").each(function () {
+        //        var ot = parseFloat($(this).find('td:eq(7)').html());
+        //        pt = ot - parseFloat(ftotal);
+        //        //var ototal = ftotal;
+        //        //ototal += ftotal;
+        //    })
+        //}
+
+
+        //$('#debittotal').val(parseFloat(pt));
+        //$('#txtDebitTotal').val(parseFloat(pt));
+
+
+    }
+
+
+
+
+
+        //$('#txbillsundry').change(function () {
+        //    debugger;
+        //    var sundryid = $('#txbillsundry option:selected').val();
+
+
+
+        //});
+
+
+
+        function btnaddbillsundry() {
+
+            var sundryid = $('#txbillsundry option:selected').val();
+            var sundryname = $('#txbillsundry option:selected').text();
+            var sundryamount = parseFloat($('#BillSundryAmount').val());
+            var sundrypercentage = $('#Quantity').val();
+            var modifychild = parseInt($('#modify').val());
+            debugger;
+
+            var rowid = 1;
+            if ($("#billsundryrows").length > 0) {
+                $("#billsundryrows").each(function () {
+
+                    //var ffx = $(this).find('td:eq(5)').html();
+                    //var new = $('#total').attr('value');
+                    debugger;
+                    var oldrow = parseInt($(this).find('td:eq(5)').html());
+
+                    if (isNaN(oldrow)) {
+                        oldrow = 0;
+                    }
+                    //ftotal += $(t).find('input[name=Total]').val();a
+                    rowid = oldrow + 1;
+                });
+            }
+            debugger;
+
+            if (sundryid > 0) {
+                var removebtn = "<button type='button' class='btn btn-danger ' id='btnremove' onclick='removeBillSundry(" + rowid + ")'><i class='glyphicon glyphicon-minus'></i></button>'";
+
+                // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
+
+                if (modifychild == 1) {
+                    var row = ` <tr id="billsundryrows">
+            <td hidden><input type="hidden" name="BillSundryID"  value="`+ sundryid + `" /></td>
+            <td><input readonly class='form-control'   value="`+ sundryname + `" /></td>
+            <td><input readonly class='form-control text-right'  value="`+ sundryamount + `" name="BillSundryAmount" /></td>
+            <td>`+ removebtn + `</td>
+            <td hidden>` + sundryamount + `</td>
+          <td hidden>`+ rowid + `</td>
+           <td hidden><input type="hidden" value="0" name="newbillsundrychild2" id="newbillsundrychild2" /></td>
+            </tr>`;
+                }
+                else if (modifychild == 0) {
+                    var row = ` <tr id="billsundryrows">
+            <td hidden><input type="hidden" name="BillSundryID"  value="`+ sundryid + `" /></td>
+            <td><input readonly class='form-control'   value="`+ sundryname + `" /></td>
+            <td><input readonly class='form-control text-right'  value="`+ sundryamount + `" name="BillSundryAmount" /></td>
+            <td>`+ removebtn + `</td>
+            <td hidden>` + sundryamount + `</td>
+          <td hidden>`+ rowid + `</td>
+            </tr>`;
+                }
+
+                $('#billsundry').append(row);
+
+
+                var distotal = 0;
+                if ($("#billsundrytable > #billsundry > #billsundryrows").length > 0) {
+                    $("#billsundrytable > #billsundry > #billsundryrows").each(function () {
+                        debugger;       
+                        var ot = parseFloat($(this).find('td:eq(4)').html());
+                        distotal += ot;
+                        //pt = ot - parseFloat(ftotal);
+                        //var ototal = ftotal;
+                        //ototal += ftotal;
+
+                    })
+                }
+                $('#txtdiscounttotal').val(distotal);
+
+                var ftotal = 0;//+ $('#txttotal').val();
+                ftotal = sundryamount;
+               
+                var oldtotal = parseFloat($('#txtfinaltotal').val());
+              
+
+                var newtotal = oldtotal - ftotal;
+                $('#txtfinaltotal').val(newtotal);
+
+
+                $('#txbillsundry ').val("");
+                $('#BillSundryAmount ').val("");
+                $('#txbillsundry ').focus();
+
+            }
+        };
+
+
+
+        function removeBillSundry(rowid) {
+            var cc = $(this).parent().html();
+
+            var test = $('table tbody tr').parent().parent().find('td:eq(7)').html();
+            var ftotal = 0.00;//+ $('#txttotal').val();
+            var oldtotal = parseFloat($('#txtfinaltotal').val());
+            var pt = 0.00;
+            debugger;
+
+
+            if ($("#billsundrytable > #billsundry >#billsundryrows").length > 0) {
+                $("#billsundrytable > #billsundry >#billsundryrows").each(function () {
+                    var rownum = parseFloat($(this).find('td:eq(5)').html());
+                    debugger;
+
+                    if (rownum == rowid) {
+                        debugger;
+                        var distotal = $('#txtdiscounttotal').val();
+
+                        var ot = parseFloat($(this).find('td:eq(4)').html());
+                        distotal -= ot;
+                        $('#txtdiscounttotal').val(distotal);
+
+
+                        //$('#txtdiscounttotal').val(ot);
+                        pt = ot - parseFloat(ftotal);
+                        var newpt = oldtotal + pt;
+                        //var ototal = ftotal;
+                        //ototal += ftotal;
+                        //$(this).children().children().children().remove();
+                        //$('#btnremoveDr').parent().parent().remove();
+                        $('#txtfinaltotal').val(newpt);
+                        $('#txttotal1').val(newpt);
+
+
+                        //var distotal = 0;
+                        //if ($("#billsundrytable > #billsundry > #billsundryrows").length > 0) {
+                        //    $("#billsundrytable > #billsundry > #billsundryrows").each(function () {
+                        //        debugger;
+                        //        var ot = parseFloat($(this).find('td:eq(4)').html());
+                        //        distotal -= ot;
+                        //        //pt = ot - parseFloat(ftotal);
+                        //        //var ototal = ftotal;
+                        //        //ototal += ftotal;
+
+                        //    })
+                        //}
+                        //$('#txtdiscounttotal').val(distotal);
+
+
+                        var deletedid = parseInt($(this).find('td:eq(0)').html());
+                        var check = $('#modify').val();
+                        if (isNaN(deletedid)) {
+                            var ff = 0;
+                        }
+                        else if (check == 1) {
+                            //var row2 = "<td ><input type='number' value='0' name='deletedchild' id='deletedchild /></td>";
+                            var row2 = "<td hidden><input type='hidden' name='deletebillsundrychild' value=" + deletedid + " /></td>";
+                            $('#billsundry').append(row2);
+                        }
+
+                        $(this).find('td:eq(5)').parent().remove();
+
+
+                    }
+
+                })
+            }
+
+
+
+        }
+
+
+
+
+
+
+        function btnSaveVoucher() {
+            var form = $('#VoucherForm').serialize();
+            var check = parseInt($('#modify').val());
+            var childlen = $("table > tbody > tr").length;
+
+            debugger;
+            if (childlen > 0) {
+
+            
+            if (check == 1) {
+                var con = confirm("Are u sure u want to Update Voucher");
+
+            }
+            else {
+                var con = confirm("Are u sure u want Add  Voucher");
+
+            }
+            if (con == true) {
+                debugger;
+                $.ajax({
+                    type: 'POST',
+                    data: form,
+                    beforeSend: function () { $(".se-pre-con").fadeIn("slow"); },
+                    //complete: function () { $(".se-pre-con").fadeOut("slow"); },
+                    url: "@Url.Action("SaveSVoucher", "Sales")"
+
+                }).done(function (data) {
+                    alert("Voucher Save Successfully ");
+                    location.reload();
+                }).fail(function (jqXHR, textStatus) {
+                    alert("Your Voucher cant be save,Contact Admin");
+
+                });
+
+            }
+            else {
+                alert("Ok");
+            }
+        }
+        else {
+                alert("Please Fill details");
+
+        }
+
+
+    };
+
+
+
+
+
+
+
+    </script>
+}
+else if (Model.vouchertypeid == 2 || Model.vouchertypeid == 10)
+{
+    <script>
+
+
+    $('#Partyid_Accountid').change(function () {
+
+        var accid = $('#Partyid_Accountid option:selected').val();
+        debugger;
+        $.ajax({
+
+            type: 'GET',
+            data: { accountid: accid },
+            url:"@Url.Action("getaccountbalance", "Purchase")"
+                //"Url.Action("Getaccounts","Vouchers")"
+            
+
+        }).done(function (data) {
+            $('#balance').val(data + "  PKR");
+
+
+        }).fail(function (jqXHR, textStatus) {
+
+            alert("Cant Get balance,Contact Admin");
+        });
+
+
+    });
+
+    $(document).on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                debugger;
+
+                var acccid = $('#Quantity').val();
+                if (acccid == 0 || acccid == "") {
+
+
+                    //$('.select2-selection--single').focus();
+                    //$('table tfoot tr th span').attr("aria-labelledby", "select2-itemname-container").focus()
+                    var accountid = $('#select2-Partyid_Accountid-container').text();
+                    if (accountid == "---Select PartyName---") {
+                        $('#Partyid_Accountid').focus();
+
+                    }
+
+
+                }
+            }
+        }
+    });
+
+
+    $('#Partyid_Accountid').select2();
+    $('#itemname').select2();
+
+
+    $("#Partyid_Accountid").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                var accid = $('#Partyid_Accountid option:selected').val();
+                debugger;
+                if (accid != 0) {
+                    console.log('enter button pressed');
+                    $('#LocationID').focus();
+                }
+                else {
+                    $('#Partyid_Accountid').focus();
+
+
+                }
+
+            }
+        }
+    });
+
+        $("#LocationID").on({
+            keydown: function (ev) {
+                if (ev.which === 13) {   // enter button
+                    var accid2 = $('#LocationID option:selected').val();
+                    debugger;
+                    if (accid2 != 0) {
+                        console.log('enter button pressed');
+                        $('#Narration').focus();
+                    }
+                    else {
+                        $('#LocationID').focus();
+                    }
+
+                }
+            }
+        });
+    $("#Narration").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                console.log('enter button pressed');
+                $('#itemname').focus();
+            }
+        }
+    });
+
+    $("#itemname").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                debugger;
+                var itemid = $('#itemname option:selected').val();
+
+
+                if (itemid != 0) {
+                    console.log('enter button pressed');
+                    $('#Quantity').focus();
+                }
+                else {
+                    $('#itemname').focus();
+
+
+                }
+
+            }
+        }
+    });
+
+    $("#Quantity").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                var quantt = parseInt($('#Quantity').val());
+
+                if (quantt == 0 && quantt < 0) {
+                    $('#Quantity').focus();
+                }
+                else {
+                    console.log('enter button pressed');
+                    $('#ItemPrice').focus();
+                }
+
+            }
+        }
+    });
+
+    $("#ItemPrice").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                console.log('enter button pressed');
+                debugger;
+                var itemprice = $('#ItemPrice').val();
+
+
+                if (itemprice == "" || itemprice == 0 && itemprice < 0) {
+                    $('#ItemPrice').focus();
+                    alert("enter price  ");
+                }
+                else {
+                    $('#txttotal').focus();
+                }
+
+            }
+        }
+    });
+
+    $("#txttotal").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                console.log('enter button pressed');
+                $('#btnadd').focus();
+            }
+        }
+    });
+        $('#btnadd').mousedown(function () {
+            debugger;
+            btnadd();
+        });
+    $("#btnadd").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                debugger;
+                btnadd();
+
+            }
+        }
+    });
+    $("#btnadd").focusin(function () {
+        $(this).css("background-color", "darkgreen")
+    })
+    $("#btnadd").focusout(function () {
+        $(this).css("background-color", "green")
+        //$(this).css("border-color", "#1cc88a")
+    })
+    //$("#btnadd").click(function () {
+    //    btnadd();
+
+    //});
+
+        $("#txbillsundry").on({
+            keydown: function (ev) {
+                if (ev.which === 13) {   // enter button
+                    var billsundryid = $("#txbillsundry option:selected").val();
+
+                    if (billsundryid > 0) {
+                        $('#BillSundryAmount').focus();
+
+                    }
+                }
+                else if (ev.which == 16) {
+                    $('#btnSaveVoucher').focus();
+
+                }
+            }
+        });
+
+        $("#BillSundryAmount").on({
+            keydown: function (ev) {
+                if (ev.which === 13) {   // enter button
+                    var billsundryamountt = parseFloat($("#BillSundryAmount").val());
+                    if (billsundryamountt > 0) {
+                        $('#btnaddbillsundry').focus();
+                    }
+
+
+                }
+            }
+        });
+    $("#txbillsundry").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                var billsundryid = $("#txbillsundry option:selected").val();
+
+                if (billsundryid == 1) {
+                    $('#txtdiscount').focus();
+                }
+                else if (billsundryid == 2) {
+
+                    $('#txttax').focus();
+
+
+                }
+                else if (billsundryid == 3) {
+
+                    $('#btnSaveVoucher').focus();
+
+
+                }
+            }
+        }
+    });
+
+        $("#btnaddbillsundry").focusin(function () {
+            $(this).css("background-color", "yellow")
+        })
+        $("#btnaddbillsundry").focusout(function () {
+            $(this).css("background-color", "#1cc88a")
+            $(this).css("border-color", "#1cc88a")
+        })
+
+        //$("#btnaddbillsundry").on({
+        //    keydown: function (ev) {
+        //        if (ev.which === 13) {   // enter button
+        //            btnaddbillsundry();
+
+        //        }
+        //    }
+        //});
+
+
+
+
+
+        $("#txbillsundry").focusin(function () {
+            $(this).css("background-color", "yellow");
+
+        })
+        $("#txbillsundry").focusout(function () {
+            $(this).css("background-color", "white");
+            //$(this).css("border-color", "#1cc88a");
+        })
+    //$('.select2-selection--single').on({
+    //    keydown: function (ev) {
+    //        if (ev.which === 65,66,67,68,69,70,71,72,73,74,75,76) {   // enter button
+    //            debugger;
+    //            self.open();
+    //        }
+    //    }
+    //});
+
+    $("#btnSaveVoucher").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                btnSaveVoucher();
+
+            }
+        }
+    });
+
+    $("#btnSaveVoucher").mousedown(function (e) {
+        btnSaveVoucher();
+
+    });
+    $("#btnSaveVoucher").focusin(function () {
+        $(this).css("background-color", "darkgreen")
+    });
+    $("#btnSaveVoucher").focusout(function () {
+        $(this).css("background-color", "green")
+    });
+
+
+
+    $("#btnaddbillsundry").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                btnaddbillsundry();
+
+            }
+        }
+    });
+
+   /* $(document.readyState).on({
+        keydown: function (ev) {
+            debugger;
+            if (ev.which === 39) {   // arrow button
+                console.log("dfasdfs");
+                $('#Partyid_Accountid').focus();
+            }
+        }
+    });
+
+
+    $(document).ready(function () {
+        // When the DOM is ready, attach the event handler.
+        $('#PurchaseVoucher').keydown(function (event) {
+        enableEnter(event);
+        });
+});
+
+// enableEnter is accessible in the whole page scope.
+function enableEnter(event) {
+
+        debugger;
+    if (event.which === 39) {   // arrow button
+        console.log("dfasdfs");
+        alert("sdfsdf");
+            $('#Partyid_Accountid').focus();
+        }
+}
+
+    $('#wait').ajaxStart(function () {
+        $(this).show();
+    }).ajaxComplete(function () {
+        $(this).hide();
+        });
+
+
+    */
+    //$(document).ajaxStart(function () {
+    //    $('#wait').show();
+    //}).ajaxStop(function () {
+    //    $('#wait').hide();
+    //});
+
+    $('.js-example-basic-single').select2();
+
+    function matchStart(params, data) {
+        // If there are no search terms, return all of the data
+        if ($.trim(params.term) === '') {
+            return data;
+        }
+
+        // Skip if there is no 'children' property
+        if (typeof data.children === 'undefined') {
+            return null;
+        }
+
+        // `data.children` contains the actual options that we are matching against
+        var filteredChildren = [];
+        $.each(data.children, function (idx, child) {
+            if (child.text.toUpperCase().indexOf(params.term.toUpperCase()) == 0) {
+                filteredChildren.push(child);
+            }
+        });
+
+        // If we matched any of the timezone group's children, then set the matched children on the group
+        // and return the group object
+        if (filteredChildren.length) {
+            var modifiedData = $.extend({}, data, true);
+            modifiedData.children = filteredChildren;
+
+            // You can return modified objects from here
+            // This includes matching the `children` how you want in nested data sets
+            return modifiedData;
+        }
+
+        // Return `null` if the term should not be displayed
+        return null;
+    }
+
+    $(".js-example-matcher-start").select2({
+        matcher: matchStart
+    });
+
+
+    $('#itemname').change(function () {
+        var itemid = $('#itemname option:selected').val();
+        var itemtext = $('#ItemPrice option:selected').val();
+        //alert("item is : " + itemid);
+        debugger;
+        //var quantity = $('#txtQuantity').val();
+        //alert("it is" + quantity);
+
+        $.ajax({
+            type: 'GET',
+            datatype: 'JSON',
+
+            data: { ItemID: itemid },
+            url: "@Url.Action("GetItemprice","Order")"
+
+
+        }).done(function (data) {
+
+            //$('#ItemPrice').attr("placeholder", data);
+            //if (itemtext=="0.00") {
+            //    $('#ItemPrice').attr("placeholder", data);
+
+            //}
+        }).fail(function (jqXHR, textStatus) {
+
+            if (itemid == null || itemid == "") {
+                alert("Please Select an Item");
+            }
+            else {
+
+                alert("CANT GET ITEM PRICE, CONTACT ADMIN");
+            }
+
+            });
+
+
+
+        $.ajax({
+            type: 'GET',
+            datatype: 'JSON',
+            data: { ItemID: itemid },
+            url: "@Url.Action("Getitemunit", "Order")"
+        }).done(function (data) {
+
+            var unitd = parseInt(data);
+
+            //$('#unitname option:selected').val(unitd);
+            $('#unitname').val(unitd);
+
+
+        }).fail(function (jqXHR, textStatus) {
+
+            if (itemid == null || itemid == "") {
+                alert("Please Select an Item");
+            }
+            else {
+
+                alert("CANT GET ITEM unit, CONTACT ADMIN");
+            }
+
+        });
+
+    });
+
+
+
+
+
+    $('#ItemPrice').focusout(function () {
+        var quantt = parseInt($('#Quantity').val());
+        var itemprice = $('#ItemPrice').val();
+        var total = $('#txttotal').val();
+
+        //var avstock = parseInt($('#txtavstock').val());
+
+        debugger;
+        if (quantt <= 0) {
+            alert("Quantity cannot be lesser than 1 !!");
+            $('#Quantity').val(0);
+            $('#Quantity').focus();
+        }
+
+
+        else {
+
+        debugger;
+
+        var quantity = $('#Quantity').val();
+            //var discount = $('#txtdiscount').val();
+
+            var result = parseInt(quantity).toFixed(1) * parseFloat(itemprice).toFixed(3); //- parseFloat(discount).toFixed(2)
+
+            $('#txttotal').val(result);
+        }
+
+    });
+
+    $('#txttotal').focusout(function () {
+            
+        //2
+        var quantt = parseInt($('#Quantity').val());
+        var itemprice = $('#ItemPrice').val();
+        var total = $('#txttotal').val();
+        debugger;
+        if (total != 0.00 && quantt != 0 && itemprice == 0) {
+            var result = parseFloat(total) / parseFloat(quantt);
+            $('#ItemPrice').val(result);
+        }
+
+    });
+
+
+
+        $('#txtdiscount,#txttax').change(function () {
+            var discount = $('#txtdiscount').val();
+            var tax = $('#txttax').val();
+            var total = $('#txtfinaltotal').val();
+            debugger;
+
+            if (total == "0.00") {
+                alert("Please select and item then add bill sundry ");
+                $('#txbillsundry').val(0);
+                $('#child').hide();
+                $('#child2').hide();
+                $('#child3').show();
+            }
+
+
+           else if (discount != "" && total != "0.00") {
+                var result = parseFloat(total) - parseFloat(discount);
+                $('#txtfinaltotal').val(result);
+            }
+            else if (tax != 0 && total != 0.00) {
+                //var percent = parseFloat(total) / 100 * parseFloat(tax);
+                var result2 = parseFloat(total) - (parseFloat(total) / 100 * parseFloat(tax));
+                $('#txtfinaltotal').val(parseFloat(result2));
+            }
+
+
+            $('#child').fadeOut(400);
+            $('#child2').fadeOut(400);
+            $('#child3').fadeIn(400);
+            $('#txbillsundry').val();
+        });
+
+        function btnadd() {
+            debugger;
+        var itemid = $('#itemname option:selected').val();
+       var itemname = $('#itemname option:selected').text();
+       var unitprice = parseFloat($('#ItemPrice').val());
+        var quantity = $('#Quantity').val();
+        var Unitid = $('#unitname option:selected').val();
+        var Unittext = $('#unitname option:selected').text();
+        //var discount = $('#txtdiscount').val();
+       var modifychild = parseInt($('#modify').val());
+
+
+       var rowid = 1;
+       if ($("table > tbody > tr").length > 0) {
+           $("table  tbody  tr").each(function () {
+
+               //var ffx = $(this).find('td:eq(5)').html();
+               //var new = $('#total').attr('value');
+               debugger;
+
+               var oldrow = parseInt($(this).find('td:eq(9)').html());
+
+
+               //ftotal += $(t).find('input[name=Total]').val();a
+               rowid = oldrow + 1;
+           });
+       }
+
+        var total = $('#txttotal').val();
+        //var btn = $('#btnadd').hasClass("disabled");
+        if (itemid == "" || itemname == "" || unitprice == "" || quantity == 0 || Unitid== 0) {
+            alert("Please Fill Item Details");
+        }
+
+        else {
+            var removebtn = "<button type='button' class='btn btn-danger ' id='btnremove' onclick='removeDr(" + rowid + ")'><i class='glyphicon glyphicon-minus'></i></button>'";
+
+            // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
+
+            if (modifychild == 1) {
+                var row = ` <tr id='tr'>
+            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
+            <td><input readonly class='form-control'   value="`+ itemname + `" /></td>
+            <td><input readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
+            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
+            <td><input readonly class='form-control'  value="`+ Unittext + `"  /></td>
+            <td><input readonly type='number'  class='form-control text-right' value="`+ unitprice + `" name="ItemPrice" /></td>
+            <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
+            <td>`+ removebtn + `</td>
+            <td hidden>` + total + `</td>
+          <td hidden>`+ rowid + `</td>
+           <td hidden><input type="hidden" value="0" name="newchild2" id="newchild2" /></td>
+            </tr>`;
+
+                $('#body').append(row);
+
+            }
+            else if(modifychild == 0) {
+                var row = ` <tr id='tr'>
+            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
+            <td><input readonly class='form-control'   value="`+ itemname + `" /></td>
+            <td><input readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
+            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
+            <td><input readonly class='form-control'  value="`+ Unittext + `"  /></td>
+            <td><input type='number' readonly  class='form-control text-right' value="`+ unitprice + `" name="ItemPrice" /></td>
+            <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
+            <td>`+ removebtn + `</td>
+            <td hidden>` + total + `</td>
+          <td hidden>`+ rowid + `</td>
+
+            </tr>`;
+
+                $('#itembody').append(row);
+            }
+
+
+
+
+            //var ftotal = 0;//+ $('#txttotal').val();
+            //    if ($("table > tbody > tr").length > 0) {
+            //    $("table  tbody  tr").each(function () {
+            //        var ffx = $(this).find('td:eq(5)').html();
+            //        //var new = $('#total').attr('value');
+            //        debugger;
+            //        ftotal += parseFloat($(this).find('td:eq(8)').html());
+
+            //        //ftotal += $(t).find('input[name=Total]').val();a
+
+            //    });
+            //    }
+            //debugger;
+            $('#txtfinaltotal').val(ftotal);
+
+            $('#txttotal1').val(ftotal);
+
+            $('#itemname option:selected').val(0);
+
+            //$('#ItemID').text();
+            //$('#ItemPrice').val();
+            //$('#Quantity').val(0);
+            ////$('#txtdiscount').val("0.00");
+            //$('#txttotal').val("0.00");
+            //$('#Unitid').val();
+            //$('#itemname').focus();
+
+            ////////////////////////
+            $('#ItemID').text();
+            //$('#itemname option:selected').val(0);
+            $('#select2-itemname-container').text("---Select Item---");
+
+            $('#ItemPrice').val("");
+            $('#Quantity').val("");
+            //$('#txtdiscount').val("0.00");
+            $('#txttotal').val("0.00");
+            $('#unitname ').val("");
+            $('#itemname').focus();
+
+
+            var ftotal = 0;
+            if (modifychild == 1) {
+
+                var rowcheck = $('#newchild2').length;
+                if (rowcheck == 1) {
+                    ftotal = 0;
+                } else {
+                    ftotal = parseFloat($('#txtfinaltotal').val());
+
+                }
+                if ($("#table > #body > #tr").length > 0) {
+                    $("#table > #body > #tr").each(function () {
+
+
+
+                        var ffx = $(this).find('td:eq(8)').html();
+                        //var new = $('#total').attr('value');
+                        debugger;
+                        if (ffx != null) {
+                            ftotal += parseFloat(ffx);
+                        }
+
+
+                        //ftotal += $(t).find('input[name=Total]').val();a
+
+                    });
+                }
+                $('#txtfinaltotal').val(ftotal);
+                $('#txttotal1').val(ftotal);
+            }
+            else {
+                if ($("#table > #itembody > #tr").length > 0) {
+                    $("#table > #itembody >  #tr").each(function () {
+
+                        var lengthh = $("#table > #itembody >  #tr").length;
+                        var ffx = $(this).find('td:eq(8)').html();
+                        //var new = $('#total').attr('value');
+                        debugger;
+                        if (ffx != null) {
+                            ftotal += parseFloat(ffx);
+                        }
+
+                        //ftotal += $(t).find('input[name=Total]').val(); 
+
+                    });
+                }
+                $('#txtfinaltotal').val(ftotal);
+                $('#txttotal1').val(ftotal);
+
+            }
+
+        }
+    };
+
+
+    function removee() {
+
+        $('#btnremove').parent().parent().remove();
+
+        var ftotal = 0.00;//+ $('#txttotal').val();
+        var pt = 0.00;
+        debugger;
+        if ($("table > tbody > tr").length > 0) {
+            $("table > tbody > tr").each(function () {
+                var ot = parseFloat($(this).find('td:eq(8)').html());
+                pt = ot - parseFloat(ftotal);
+                var ototal = ftotal;
+                ototal += ftotal;
+            })
+        }
+
+        $('#itemname').val(0);
+        $('#txtfinaltotal').val(parseFloat(pt));
+
+
+        }
+        $('#txbillsundry').change(function () {
+            debugger;
+            var sundryid = $('#txbillsundry option:selected').val();
+
+
+            if (sundryid == 1) {
+                //$('#append').html("");
+                //$('#append').append(div);
+                //$('#append').append(function () {
+                    //$('#child2').hide(800);
+                //$('#child').show(800);
+                $('#child2').fadeOut(400);
+                $('#child3').fadeOut(400);
+                //$('#child2').hide(800);
+                $('#child').fadeIn(400);
+                //$('#append').append(div);
+
+
+            }
+            else if (sundryid == 2) {
+                //$('#append').html("");
+                //$('#child').hide(div);
+                $('#child').fadeOut(300);
+                $('#child3').fadeOut(400);
+                $('#child2').fadeIn(400);
+                //$('#append').append(div2);
+                //$('#append').append(function () {
+            }
+            else {
+                $('#child').fadeOut(400);
+                $('#child2').fadeOut(400);
+
+                $('#child3').fadeIn(400);
+            }
+
+
+        });
+
+    function removeDr(rowid) {
+        var cc = $(this).parent().html();
+
+        var test = $('table tbody tr').parent().parent().find('td:eq(7)').html();
+
+        var ftotal = 0.00;//+ $('#txttotal').val();
+        var oldtotal = $('#txtfinaltotal').val();
+        var pt = 0.00;
+        debugger;
+
+
+        if ($("table > tbody > tr").length > 0) {
+            $("table > tbody > tr").each(function () {
+                var rownum = parseFloat($(this).find('td:eq(9)').html());
+                debugger;
+
+                if (rownum == rowid) {
+                    debugger;
+                    var ot = parseFloat($(this).find('td:eq(8)').html());
+                    pt = ot - parseFloat(ftotal);
+                    var newpt = oldtotal - pt;
+                    //var ototal = ftotal;
+                    //ototal += ftotal;
+                    //$(this).children().children().children().remove();
+                    //$('#btnremoveDr').parent().parent().remove();
+                    $('#txtfinaltotal').val(newpt);
+                    $('#txttotal1').val(newpt);
+
+
+                    var deletedid = parseInt($(this).find('td:eq(10)').html());
+                    var check = $('#modify').val();
+                    if (isNaN(deletedid)) {
+                        var ff = 0;
+                    }
+                    else if (check == 1) {
+                        //var row2 = "<td ><input type='number' value='0' name='deletedchild' id='deletedchild /></td>";
+                        var row2 = "<th hidden><input type='hidden' name='deletedchild' value=" + deletedid + " /></th>";
+                        $('table tfoot tr').append(row2);
+                    }
+
+                    $(this).find('td:eq(9)').parent().remove();
+
+
+                }
+
+            })
+        }
+
+
+
+
+
+
+
+
+        //var ftotal = 0.00;//+ $('#txttotal').val();
+        //var pt = 0.00;
+        //debugger;
+        //if ($("table > tbody > tr").length > 0) {
+        //    $("table > tbody > tr").each(function () {
+        //        var ot = parseFloat($(this).find('td:eq(7)').html());
+        //        pt = ot - parseFloat(ftotal);
+        //        //var ototal = ftotal;
+        //        //ototal += ftotal;
+        //    })
+        //}
+
+
+        //$('#debittotal').val(parseFloat(pt));
+        //$('#txtDebitTotal').val(parseFloat(pt));
+
+
+    }
+
+
+
+
+
+        function btnaddbillsundry() {
+
+            var sundryid = $('#txbillsundry option:selected').val();
+            var sundryname = $('#txbillsundry option:selected').text();
+            var sundryamount = parseFloat($('#BillSundryAmount').val());
+            var sundrypercentage = $('#Quantity').val();
+            var modifychild = parseInt($('#modify').val());
+            debugger;
+
+            var rowid = 1;
+            if ($("#billsundryrows").length > 0) {
+                $("#billsundryrows").each(function () {
+
+                    //var ffx = $(this).find('td:eq(5)').html();
+                    //var new = $('#total').attr('value');
+                    debugger;
+                    var oldrow = parseInt($(this).find('td:eq(5)').html());
+
+                    if (isNaN(oldrow)) {
+                        oldrow = 0;
+                    }
+                    //ftotal += $(t).find('input[name=Total]').val();a
+                    rowid = oldrow + 1;
+                });
+            }
+            debugger;
+
+            if (sundryid > 0) {
+                var removebtn = "<button type='button' class='btn btn-danger ' id='btnremove' onclick='removeBillSundry(" + rowid + ")'><i class='glyphicon glyphicon-minus'></i></button>'";
+
+                // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
+
+                if (modifychild == 1) {
+                    var row = ` <tr id="billsundryrows">
+            <td hidden><input type="hidden" name="BillSundryID"  value="`+ sundryid + `" /></td>
+            <td><input readonly class='form-control'   value="`+ sundryname + `" /></td>
+            <td><input readonly class='form-control text-right'  value="`+ sundryamount + `" name="BillSundryAmount" /></td>
+            <td>`+ removebtn + `</td>
+            <td hidden>` + sundryamount + `</td>
+          <td hidden>`+ rowid + `</td>
+           <td hidden><input type="hidden" value="0" name="newbillsundrychild2" id="newbillsundrychild2" /></td>
+            </tr>`;
+                }
+                else if (modifychild == 0) {
+                    var row = ` <tr id="billsundryrows">
+            <td hidden><input type="hidden" name="BillSundryID"  value="`+ sundryid + `" /></td>
+            <td><input readonly class='form-control'   value="`+ sundryname + `" /></td>
+            <td><input readonly class='form-control text-right'  value="`+ sundryamount + `" name="BillSundryAmount" /></td>
+            <td>`+ removebtn + `</td>
+            <td hidden>` + sundryamount + `</td>
+          <td hidden>`+ rowid + `</td>
+            </tr>`;
+                }
+
+                $('#billsundry').append(row);
+
+                var distotal = 0;
+                if ($("#billsundrytable > #billsundry > #billsundryrows").length > 0) {
+                    $("#billsundrytable > #billsundry > #billsundryrows").each(function () {
+                        debugger;
+                        var ot = parseFloat($(this).find('td:eq(4)').html());
+                        distotal += ot;
+                        //pt = ot - parseFloat(ftotal);
+                        //var ototal = ftotal;
+                        //ototal += ftotal;
+
+                    })
+                }
+                $('#txtdiscounttotal').val(distotal);
+                var ftotal = 0;//+ $('#txttotal').val();
+                ftotal = sundryamount;
+                var oldtotal = parseFloat($('#txtfinaltotal').val());
+                var newtotal = oldtotal - ftotal;
+                $('#txtfinaltotal').val(newtotal);
+
+
+                $('#txbillsundry ').val("");
+                $('#BillSundryAmount ').val("");
+                $('#txbillsundry ').focus();
+
+            }
+        };
+
+
+
+        function removeBillSundry(rowid) {
+            var cc = $(this).parent().html();
+
+            var test = $('table tbody tr').parent().parent().find('td:eq(7)').html();
+            var ftotal = 0.00;//+ $('#txttotal').val();
+            var oldtotal = parseFloat($('#txtfinaltotal').val());
+            var pt = 0.00;
+            debugger;
+
+
+            if ($("#billsundrytable > #billsundry >#billsundryrows").length > 0) {
+                $("#billsundrytable > #billsundry >#billsundryrows").each(function () {
+                    var rownum = parseFloat($(this).find('td:eq(5)').html());
+                    debugger;
+
+                    if (rownum == rowid) {
+
+
+                        var distotal = $('#txtdiscounttotal').val();
+
+                        var ot = parseFloat($(this).find('td:eq(4)').html());
+                        distotal -= ot;
+                        $('#txtdiscounttotal').val(distotal);
+                        debugger;
+                        var ot = parseFloat($(this).find('td:eq(4)').html());
+                        pt = ot - parseFloat(ftotal);
+                        var newpt = oldtotal + pt;
+                        //var ototal = ftotal;
+                        //ototal += ftotal;
+                        //$(this).children().children().children().remove();
+                        //$('#btnremoveDr').parent().parent().remove();
+                        $('#txtfinaltotal').val(newpt);
+                        $('#txttotal1').val(newpt);
+
+
+                        var deletedid = parseInt($(this).find('td:eq(0)').html());
+                        var check = $('#modify').val();
+                        if (isNaN(deletedid)) {
+                            var ff = 0;
+                        }
+                        else if (check == 1) {
+                            //var row2 = "<td ><input type='number' value='0' name='deletedchild' id='deletedchild /></td>";
+                            var row2 = "<td hidden><input type='hidden' name='deletebillsundrychild' value=" + deletedid + " /></td>";
+                            $('#billsundry').append(row2);
+                        }
+
+                        $(this).find('td:eq(5)').parent().remove();
+
+
+                    }
+
+                })
+            }
+
+
+
+        }
+
+
+
+
+
+        function btnSaveVoucher() {
+            var form = $('#VoucherForm').serialize();
+            var check = $('#modify').val();
+            var childlen = $("table > tbody > tr").length;
+            var con;
+
+
+            debugger;
+            if (childlen > 0) {
+
+
+            if (check == 1) {
+                con = confirm("Are u sure u want to Update Voucher");
+            }
+            else {
+                con = confirm("Are u sure u want to Add Voucher");
+            }
+            if (con == true) {
+
+
+                $.ajax({
+
+                    type: 'POST',
+                    data: form,
+
+                    beforeSend: function () { $(".se-pre-con").fadeIn("slow"); },
+                    //complete: function () { $(".se-pre-con").fadeOut("slow"); },
+                    url: "@Url.Action("SavePVoucher", "Purchase")"
+
+                }).done(function (data) {
+                    location.reload();
+                    //alert("Voucher Save Successfully ");
+
+                }).fail(function (jqXHR, textStatus) {
+                    //$(".se-pre-con").hide();
+                    alert("Your Voucher cant be save,Contact Admin");
+                    //$('#messagetext').text("Your Voucher cant be save,Contact Admin");
+                    //$('#messagemodal').modal().show(); 
+                });
+
+            }
+            else {
+                alert("Ok");
+            }
+        }
+        else {
+            alert("Please Fill Details")
+        }
+    };
+
+
+
+
+
+
+
+    </script>
+}
+
+
+

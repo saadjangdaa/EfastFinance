@@ -1,0 +1,1459 @@
+﻿@model RMS.Web.Models.ViewModels.trialbalanceviewmodel
+@{
+    ViewBag.Title = "TrialBalance";
+}
+<style>
+
+    .counttable > tr:nth-child(2) > th {
+        padding-left: 22px !important;
+    }
+</style>
+<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+@if (Model.reporttypeid == 1)
+{
+    <div class="card shadow mb-4">
+        <div class="card-header py-3" style="background-color:#5a5c69">
+            <h1 class="m-0 font-weight-bold  text-center" style="color:white;"> TrialBalance</h1>
+        </div>
+        <div class="card-body">
+            <div class="">
+                @using (Ajax.BeginForm("TrialBalance", "Masters", new AjaxOptions { HttpMethod = "POST", OnBegin = "showloader()", OnComplete = "hideloader()", OnSuccess = "hideloader()" }, new { @Id = "reportform" }))
+                {
+
+                    <form id="reportform">
+                        <label class="col-md-2">To Date</label>
+                        <div class="col-md-4">
+                            <input required name="enddate" type="date" class="form-control" />
+                        </div>
+
+                        @*<label class="col-md-2">Display Type</label>
+                            <div class="col-md-4">
+                                <select id="ddltype" class="form-control">
+                                    <option value="0">---Select Display Type---</option>
+                                    <option value="1"> Group Wise</option>
+                                    <option value="2">Hierchal</option>
+                                </select>
+                            </div>*@
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div class="">
+
+                            <button type="submit" class="btn btn-success btn-block">Show</button>
+
+                        </div>
+                    </form>
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+    if (Model.accountlist != null)
+    {
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:#5a5c69">
+                <h4 class="m-0 font-weight-bold  text-center" style="color:white;"> </h4>
+
+                <button type="button" onclick="printJS({
+            printable: 'printtable',
+            // properties: ['name', 'email', 'phone', 'hello'],
+            type: 'html',
+            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
+            gridStyle: 'border: 2px solid #3971A5;'})">
+                    Print Report
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="container" style="box-shadow: 5px 5px 2px 2px grey;min-height: 100vh;">
+                    @if (Model.reporttypeid == 5)
+                    {
+
+                    }
+                    else if (Model.reporttypeid == 1)
+                    {
+                        <table id="printtable" style="width: 100%;max-width: 100%;margin-bottom: 1rem;background-color: #fff;border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: center;vertical-align: bottom;" colspan="6"><h2><strong>Trial Balance</strong></h2></th>
+                                </tr>
+                                <tr>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;" colspan="6">HBUET</th>
+                                </tr>
+                                <tr>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;" colspan="6">As On @Model.enddate2  </th>
+                                </tr>
+                                <tr>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;">Code</th>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;">Account</th>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;">Lc Debit</th>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;">Lc Credit</th>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;"> Ex Rate</th>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;">Fc Balance </th>
+                                </tr>
+                            </thead>
+                            <tbody id="printbody">
+
+
+                                @{
+                                    int rowid2 = 1;
+
+                                    foreach (var item3 in Model.accountlist)
+                                    {
+                                        <tr id="printtr">
+
+                                            <td>@item3.AccountID</td>
+                                            <td>@item3.AccountName</td>
+                                            <td>@item3.DebitTotal</td>
+                                            <td>@item3.CreditTotal</td>
+                                            <td>0.00</td>
+                                            <td>0.00</td>
+                                            <td style="color:yellow;" id="@rowid2"></td>
+                                            <td hidden>@rowid2</td>
+                                        </tr>
+
+
+
+                                        rowid2 = rowid2 + 1;
+
+                                    }
+                                }
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                                    <td style="padding: 4px!important;text-align: left;vertical-align: bottom;border: 1px solid black;">Total Dr/Cr</td>
+                                    <td id="debittotal" style="padding: 4px!important;text-align: left;vertical-align: bottom;border: 1px solid black;">0.00</td>
+                                    <td id="credittotal" style="padding: 4px!important;text-align: left;vertical-align: bottom;border: 1px solid black;">0.00</td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+
+
+
+            function numberWithCommas(number) {
+                var parts = number.toString().split(".");
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                return parts.join(".");
+            }
+
+            var rtotal = 0;
+            if ($("table > tbody > tr").length > 0) {
+                $("table  tbody  tr").each(function () {
+
+                    var ffx = $(this).find('td:eq(2)').html();
+
+                    rtotal += parseFloat($(this).find('td:eq(2)').html());
+
+
+
+                    $(this).find('td:eq(2)').html(numberWithCommas(ffx));
+                    //if (ffx == "0") {
+
+                    //    //var new = $('#total').attr('value');
+
+
+                    //    //ftotal += $(t).find('input[name=Total]').val();a
+                    //}
+
+                });
+            }
+            debugger;
+            $('#debittotal').text(numberWithCommas(rtotal));
+
+
+
+            var credittotal = 0;
+            if ($("table > tbody > tr").length > 0) {
+                $("table  tbody  tr").each(function () {
+
+                    debugger;
+                    var ffx = $(this).find('td:eq(3)').html();
+
+                    credittotal += Math.abs(parseFloat($(this).find('td:eq(3)').html()));
+
+
+
+                    $(this).find('td:eq(3)').html(numberWithCommas(ffx));
+                    //if (ffx == "0") {
+
+                    //    //var new = $('#total').attr('value');
+
+
+                    //    //ftotal += $(t).find('input[name=Total]').val();a
+                    //}
+
+                });
+            }
+
+            debugger;
+
+            $('#credittotal').text(numberWithCommas(credittotal));
+
+
+            //var rowid = 1;
+            //var debit = 0;
+            //var credit = 0;
+            //var balane = 0;
+            //var oldbalane = 0;
+            //if ($("#printtable > #printbody > #printtr").length > 0) {
+            //    $("#printtable > #printbody > #printtr").each(function () {
+            //        var rownum = parseFloat($(this).find('td:eq(7)').html());
+
+
+
+
+
+            //        if (rownum == rowid) {
+            //            debugger;
+            //            debit = parseInt($(this).find('td:eq(2)').html());
+            //            credit = parseInt($(this).find('td:eq(3)').html());
+            //            debit1 = numberWithCommas(debit);
+            //            credit2 = numberWithCommas(credit);
+            //            //oldbalane = balane;
+            //            //var commaNum2 = numberWithCommas(num2);
+            //            $(this).find('td:eq(2)').html(debit1);
+            //            $(this).find('td:eq(3)').html(credit2);
+
+
+            //            //if (debit1 > 0 || credit2 > 0) {
+            //            //    //$('#' + rownum + '').html(Math.abs(oldbalane) + " Debit");
+
+            //            //}
+            //            //else {
+            //            //    $('#' + rownum + '').html(Math.abs(oldbalane) + " Credit");
+
+            //            //}
+
+            //        }
+
+            //        rowid = rowid + 1;
+
+
+
+
+
+
+            //    })
+            //}
+
+
+
+
+
+
+        </script>
+    }
+
+}
+else if (Model.reporttypeid == 3)
+{
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3" style="background-color:#5a5c69">
+            <h1 class="m-0 font-weight-bold  text-center" style="color:white;"> Payable Report</h1>
+        </div>
+        <div class="card-body">
+            <div class="">
+                @using (Ajax.BeginForm("PayablesReport", "Masters", new AjaxOptions { HttpMethod = "POST", OnBegin = "showloader()", OnComplete = "hideloader()", OnSuccess = "hideloader()" }, new { @Id = "reportform" }))
+                {
+
+                    <form id="reportform">
+                        <lablel class="col-md-2" style="color:black">Account Name</lablel>
+                        <div class="col-md-4">
+                            @Html.DropDownList("accountname", (IEnumerable<SelectListItem>)ViewBag.accounts, "---Select AccountGroup---", htmlAttributes: new { @class = "form-control js-example-basic-single", @required = true, @Id = "Partyid_Accountid" })
+                        </div>
+
+                        <label class="col-md-2">To Date</label>
+                        <div class="col-md-4">
+                            <input required name="enddate" type="date" class="form-control" />
+                        </div>
+
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div class="">
+
+                            <button type="submit" class="btn btn-success btn-block">Show</button>
+
+                        </div>
+                    </form>
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+    if (Model.accountlist != null)
+    {
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:#5a5c69">
+                <h4 class="m-0 font-weight-bold  text-center" style="color:white;"> </h4>
+                <button type="button" onclick="printJS({
+            printable: 'printtable',
+            // properties: ['name', 'email', 'phone', 'hello'],
+            type: 'html',
+            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
+            gridStyle: 'border: 2px solid #3971A5;'})">
+                    Print Report
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="container" style="box-shadow: 5px 5px 2px 2px grey;min-height: 100vh;">
+                    <table id="printtable" style="width: 100%;max-width: 100%;margin-bottom: 1rem;background-color: #fff;border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="padding: 0.6px!important;font-size: 14px;text-align: center;vertical-align: bottom;" colspan="6"><h2>Payables</h2></th>
+                            </tr>
+                            <tr>
+                                <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;" colspan="6">HBUET</th>
+                            </tr>
+                            <tr>
+                                <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;" colspan="6">As On @Model.enddate3</th>
+                            </tr>
+                            <tr>
+                                <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;">Code</th>
+                                <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;">Title Of Account</th>
+                                <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;">Balace</th>
+                                <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;">Days</th>
+                            </tr>
+                            <tr>
+                                <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid rgb(95, 95, 95);" colspan="6">@Model.childName</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @{
+
+                                foreach (var item3 in Model.accountlist)
+                                {
+                                    <tr>
+
+                                        <td style="border-bottom: 2px solid #eceeef;">@item3.AccountID</td>
+                                        <td style="border-bottom: 2px solid #eceeef;">@item3.AccountName</td>
+                                        <td style="border-bottom: 2px solid #eceeef;">@item3.CreditTotal</td>
+                                        <td style="border-bottom: 2px solid #eceeef;">0</td>
+                                    </tr>
+
+
+
+
+                                }
+                            }
+
+                        </tbody>
+                        <tbody>
+                            <tr>
+
+                                <td style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid #eceeef;"></td>
+                                <td style="padding: 0.6px!important;font-size: 14px;text-align: center;vertical-align: bottom;border-bottom: 2px solid #eceeef;">Total:</td>
+                                <td id="debittotal" style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid #eceeef;">0.00</td>
+                                <td style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid #eceeef;"></td>
+                            </tr>
+                            @*<tr>
+                                    <td style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid #eceeef;"></td>
+                                    <td style="padding: 0.6px!important;font-size: 14px;text-align: center;vertical-align: bottom;border-bottom: 2px solid #eceeef;">Total:</td>
+                                    <td id="debittotal" style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid #eceeef;">0.00</td>
+                                    <td style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid #eceeef;"></td>
+                                </tr>*@
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+
+        <script>
+
+            function numberWithCommas(number) {
+                var parts = number.toString().split(".");
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                return parts.join(".");
+            }
+            var rtotal = 0;
+            if ($("table > tbody > tr").length > 0) {
+                $("table  tbody  tr").each(function () {
+
+                    debugger;
+                    var ffx = $(this).find('td:eq(2)').html();
+
+                    rtotal += parseFloat($(this).find('td:eq(2)').html());
+
+
+
+                    $(this).find('td:eq(2)').html(numberWithCommas(ffx));
+                    //if (ffx == "0") {
+
+                    //    //var new = $('#total').attr('value');
+
+
+                    //    //ftotal += $(t).find('input[name=Total]').val();a
+                    //}
+
+                });
+            }
+            $('#debittotal').text(numberWithCommas(rtotal));
+
+
+            var rowid = 1;
+            var debit = 0;
+            var credit = 0;
+            var balane = 0;
+            var oldbalane = 0;
+            if ($("table > tbody > tr").length > 0) {
+                $("table > tbody > tr").each(function () {
+                    var rownum = parseFloat($(this).find('td:eq(5)').html());
+
+
+
+
+
+                    if (rownum == rowid) {
+                        debit = parseInt($(this).find('td:eq(2)').html());
+                        credit = parseInt($(this).find('td:eq(3)').html());
+                        balane = debit - credit;
+                        oldbalane = balane;
+                        //var commaNum2 = numberWithCommas(num2);
+                        if (oldbalane > 0) {
+                            $('#' + rownum + '').html(Math.abs(oldbalane) + " Debit");
+
+                        }
+                        else {
+                            $('#' + rownum + '').html(Math.abs(oldbalane) + " Credit");
+
+                        }
+
+                    }
+
+                    rowid = rowid + 1;
+
+
+
+
+
+
+                })
+            }
+
+
+
+
+            //////////////////////////////////////////
+        </script>
+    }
+
+}
+
+
+else if (Model.reporttypeid == 4)
+{
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3" style="background-color:#5a5c69">
+            <h1 class="m-0 font-weight-bold  text-center" style="color:white;"> Receiveables Report</h1>
+
+        </div>
+        <div class="card-body">
+            <div class="">
+                @using (Ajax.BeginForm("RecieveableReport", "Masters", new AjaxOptions { HttpMethod = "POST", OnBegin = "showloader()", OnComplete = "hideloader()", OnSuccess = "hideloader()" }, new { @Id = "reportform" }))
+                {
+
+                    <form id="reportform">
+                        <lablel class="col-md-2" style="color:black">Account Name</lablel>
+                        <div class="col-md-4">
+                            @Html.DropDownList("accountname", (IEnumerable<SelectListItem>)ViewBag.accounts, "---Select AccountGroup---", htmlAttributes: new { @required = true, @class = "form-control js-example-basic-single", @Id = "Partyid_Accountid" })
+                        </div>
+
+                        <label class="col-md-2">To Date</label>
+                        <div class="col-md-4">
+                            <input required name="enddate" type="date" class="form-control" />
+                        </div>
+
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div class="">
+
+                            <button type="submit" class="btn btn-success btn-block">Show</button>
+
+                        </div>
+                    </form>
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+    if (Model.accountlist != null)
+    {
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:#5a5c69">
+                <h4 class="m-0 font-weight-bold  text-center" style="color:white;"> </h4>
+                <button type="button" onclick="printJS({
+            printable: 'printtable',
+            // properties: ['name', 'email', 'phone', 'hello'],
+            type: 'html',
+            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
+            gridStyle: 'border: 2px solid #3971A5;'})">
+                    Print Report
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="container" style="box-shadow: 5px 5px 2px 2px grey;min-height: 100vh;">
+                    <table id="printtable" style="width: 100%;max-width: 100%;margin-bottom: 1rem;background-color: #fff;border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="padding: 0.6px!important;font-size: 14px;text-align: center;vertical-align: bottom;" colspan="6"><h2>Receivable</h2></th>
+                            </tr>
+                            <tr>
+                                <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;" colspan="6">HBUET</th>
+                            </tr>
+                            <tr>
+                                <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;" colspan="6">As On @Model.enddate3</th>
+                            </tr>
+                            <tr>
+                                <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;">Code</th>
+                                <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;">Title Of Account</th>
+                                <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;">Balace</th>
+                                <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;">Days</th>
+                            </tr>
+                            <tr>
+                                <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid rgb(95, 95, 95);" colspan="6">@Model.childName</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @{
+
+                                foreach (var item3 in Model.accountlist)
+                                {
+                                    <tr>
+
+                                        <td style="border-bottom: 2px solid #eceeef;">@item3.AccountID</td>
+                                        <td style="border-bottom: 2px solid #eceeef;">@item3.AccountName</td>
+                                        <td style="border-bottom: 2px solid #eceeef;">@item3.DebitTotal</td>
+                                        <td style="border-bottom: 2px solid #eceeef;">0</td>
+                                    </tr>
+
+
+
+
+                                }
+                            }
+
+                        </tbody>
+                        <tbody>
+                            <tr>
+
+                                <td style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid #eceeef;"></td>
+                                <td style="padding: 0.6px!important;font-size: 14px;text-align: center;vertical-align: bottom;border-bottom: 2px solid #eceeef;">Total:</td>
+                                <td id="debittotal" style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid #eceeef;">0.00</td>
+                                <td style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid #eceeef;"></td>
+                            </tr>
+                            @*<tr>
+                                    <td style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid #eceeef;"></td>
+                                    <td style="padding: 0.6px!important;font-size: 14px;text-align: center;vertical-align: bottom;border-bottom: 2px solid #eceeef;">Total:</td>
+                                    <td id="debittotal" style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid #eceeef;">0.00</td>
+                                    <td style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid #eceeef;"></td>
+                                </tr>*@
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+
+        <script>
+
+            function numberWithCommas(number) {
+                var parts = number.toString().split(".");
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                return parts.join(".");
+            }
+            var rtotal = 0;
+            if ($("table > tbody > tr").length > 0) {
+                $("table  tbody  tr").each(function () {
+
+                    debugger;
+                    var ffx = $(this).find('td:eq(2)').html();
+
+                    rtotal += parseFloat($(this).find('td:eq(2)').html());
+
+
+
+                    $(this).find('td:eq(2)').html(numberWithCommas(ffx));
+                    //if (ffx == "0") {
+
+                    //    //var new = $('#total').attr('value');
+
+
+                    //    //ftotal += $(t).find('input[name=Total]').val();a
+                    //}
+
+                });
+            }
+            $('#debittotal').text(numberWithCommas(rtotal));
+
+
+            var rowid = 1;
+            var debit = 0;
+            var credit = 0;
+            var balane = 0;
+            var oldbalane = 0;
+            if ($("table > tbody > tr").length > 0) {
+                $("table > tbody > tr").each(function () {
+                    var rownum = parseFloat($(this).find('td:eq(5)').html());
+
+
+
+
+
+                    if (rownum == rowid) {
+                        debit = parseInt($(this).find('td:eq(2)').html());
+                        credit = parseInt($(this).find('td:eq(3)').html());
+                        balane = debit - credit;
+                        oldbalane = balane;
+                        //var commaNum2 = numberWithCommas(num2);
+                        if (oldbalane > 0) {
+                            $('#' + rownum + '').html(Math.abs(oldbalane) + " Debit");
+
+                        }
+                        else {
+                            $('#' + rownum + '').html(Math.abs(oldbalane) + " Credit");
+
+                        }
+
+                    }
+
+                    rowid = rowid + 1;
+
+
+
+
+
+
+                })
+            }
+
+
+
+
+            //////////////////////////////////////////
+        </script>
+    }
+
+}
+
+else if (Model.reporttypeid == 5)
+{
+    <div class="card shadow mb-4">
+        <div class="card-header py-3" style="background-color:#5a5c69">
+            <h1 class="m-0 font-weight-bold  text-center" style="color:white;">Combined TrialBalance</h1>
+        </div>
+        <div class="card-body">
+            <div class="">
+                @using (Ajax.BeginForm("CombineTrialBalance", "Masters", new AjaxOptions { HttpMethod = "POST", OnBegin = "showloader()", OnComplete = "hideloader()", OnSuccess = "hideloader()" }, new { @Id = "reportform" }))
+                {
+
+                    <form id="reportform">
+                        <label class="col-md-2">To Date</label>
+                        <div class="col-md-4">
+                            <input required name="enddate" type="date" class="form-control" />
+                        </div>
+
+                        @*<label class="col-md-2">Display Type</label>
+                            <div class="col-md-4">
+                                <select id="ddltype" class="form-control">
+                                    <option value="0">---Select Display Type---</option>
+                                    <option value="1"> Group Wise</option>
+                                    <option value="2">Hierchal</option>
+                                </select>
+                            </div>*@
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div class="">
+
+                            <button type="submit" class="btn btn-success btn-block">Show</button>
+
+                        </div>
+                    </form>
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+    if (Model.accountlist != null)
+    {
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:#5a5c69">
+                <h4 class="m-0 font-weight-bold  text-center" style="color:white;"> </h4>
+
+                <button type="button" onclick="printJS({
+            printable: 'printtable',
+            // properties: ['name', 'email', 'phone', 'hello'],
+            type: 'html',
+            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
+            gridStyle: 'border: 2px solid #3971A5;'})">
+                    Print Report
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="container" style="box-shadow: 5px 5px 2px 2px grey;min-height: 100vh;">
+                    @if (Model.reporttypeid == 5)
+                    {
+                        <table id="printtable" style="width: 93%;max-width: 100%;margin-bottom: 1rem;background-color: #fff;border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: center;vertical-align: bottom;" colspan="6"><h2><strong>Combine Trial Balance</strong></h2></th>
+                                </tr>
+                                <tr>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;" colspan="6">HBUET</th>
+                                </tr>
+                                <tr>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;" colspan="6">As On @Model.enddate2  </th>
+                                </tr>
+                                <tr>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;">Code</th>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;">Account</th>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;">Lc Debit</th>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;">Lc Credit</th>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;"> Ex Rate</th>
+                                    <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;">Fc Balance </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @*@foreach (System.Data.DataRow dr in ViewBag.accgruplist.Rows)
+                                    {
+                                        if (dr["level"].ToString() == "0")
+                                        {
+                                            <tr>
+                                                <th style="padding: 4px !important; font-size: 12px; text-align: left; vertical-align: bottom; border: 1px solid black; text-decoration: underline; border-bottom: none; border-top: none;text-decoration:none!important;" colspan="7">
+                                                    <span style="text-decoration: underline;">    @dr["childName"].ToString()</span>
+                                                </th>
+                                            </tr>
+                                        }
+                                        else if (dr["level"].ToString() == "1")
+                                        {
+                                            <tr>
+                                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;border-top: none;" colspan="7">
+                                                    &nbsp;&nbsp;&nbsp;  <span>@dr["childName"].ToString()</span>
+                                                </th>
+                                            </tr>
+                                        }
+                                        else if (dr["level"].ToString() == "2")
+                                        {
+                                            <tr>
+                                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;border-top: none;" colspan="7">
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>@dr["childName"].ToString()</span>
+                                                </th>
+                                            </tr>
+                                        }
+                                    }*@
+
+
+                            </tbody>
+                            <tbody id="printbody">
+
+
+                                @{
+
+                                    int rowid2 = 1;
+
+                                    foreach (var item3 in Model.accountlist)
+                                    {
+                                        foreach (System.Data.DataRow dr in ViewBag.accgruplist.Rows)
+                                        {
+                                            @*if (dr["level"].ToString() == "0")
+                    {
+                        <tr>
+                            <th style="padding: 4px !important; font-size: 12px; text-align: left; vertical-align: bottom; border: 1px solid black; text-decoration: underline; border-bottom: none; border-top: none;text-decoration:none!important;" colspan="7">
+                                <span style="text-decoration: underline;">    @dr["childName"].ToString()</span>
+                            </th>
+                        </tr>
+                    }
+                    else if (dr["level"].ToString() == "1")
+                    {
+                        if (item3.Accgroupid == Convert.ToInt32(dr["childId"].ToString()))
+                        {
+                            <tr>
+                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;border-top: none;" colspan="7">
+                                    &nbsp;&nbsp;&nbsp;  <span>@dr["childName"].ToString()</span>
+                                </th>
+                            </tr>
+                        }
+
+                    }
+                    else if (dr["level"].ToString() == "2")
+                    {
+                        if (item3.Accgroupid == Convert.ToInt32(dr["childId"].ToString()))
+                        {
+                            <tr>
+                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;border-top: none;" colspan="7">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>@dr["childName"].ToString()</span>
+                                </th>
+                            </tr>
+                        }
+                    }
+                                            *@
+
+                                            if (Convert.ToInt32(dr["childId"].ToString()) == Convert.ToInt32(dr["parentId"].ToString()))
+                                            {
+                                                <tr>
+                                                    <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;border-top: none;" colspan="7">
+                                                      <span>@dr["childName"].ToString()</span>
+                                                    </th>
+                                                </tr>
+                                            }
+
+                                            if (Convert.ToInt32(dr["childId"].ToString()) == item3.Accgroupid)
+                                            {
+                                                <tr>
+                                                    <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;border-top: none;" colspan="7">
+                                                        &nbsp;  <span>@dr["childName"].ToString()</span>
+                                                    </th>
+                                                </tr>
+                                                <tr id="printtr">
+
+                                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item3.AccountID</td>
+                                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item3.AccountName</td>
+                                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item3.DebitTotal</td>
+                                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item3.CreditTotal</td>
+                                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">0.00</td>
+                                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;">0.00</td>
+                                                    <td hidden style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border: 1px solid black;" id="@rowid2"></td>
+                                                    <td hidden>@rowid2</td>
+                                                </tr>
+                                            }
+                                            rowid2 = rowid2 + 1;
+                                        }
+
+                                    }
+                                }
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                                    <td style="padding: 4px!important;text-align: left;vertical-align: bottom;border: 1px solid black;">Total Dr/Cr</td>
+                                    <td id="debittotal" style="padding: 4px!important;text-align: left;vertical-align: bottom;border: 1px solid black;">0.00</td>
+                                    <td id="credittotal" style="padding: 4px!important;text-align: left;vertical-align: bottom;border: 1px solid black;">0.00</td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                                    <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+
+
+
+            function numberWithCommas(number) {
+                var parts = number.toString().split(".");
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                return parts.join(".");
+            }
+
+            var rtotal = 0;
+            if ($("#printtable > #printbody > #printtr").length > 0) {
+                $("#printtable #printbody  #printtr").each(function () {
+
+                    var ffx = $(this).find('td:eq(2)').html();
+
+                    rtotal += parseFloat($(this).find('td:eq(2)').html());
+
+
+
+                    $(this).find('td:eq(2)').html(numberWithCommas(ffx));
+                    //if (ffx == "0") {
+
+                    //    //var new = $('#total').attr('value');
+
+
+                    //    //ftotal += $(t).find('input[name=Total]').val();a
+                    //}
+
+                });
+            }
+            debugger;
+            $('#debittotal').text(numberWithCommas(rtotal));
+
+
+
+            var credittotal = 0;
+            if ($("#printtable > #printbody > #printtr").length > 0) {
+                $("#printtable #printbody #printtr").each(function () {
+
+                    debugger;
+                    var ffx = $(this).find('td:eq(3)').html();
+
+                    credittotal += Math.abs(parseFloat($(this).find('td:eq(3)').html()));
+
+
+
+                    $(this).find('td:eq(3)').html(numberWithCommas(ffx));
+                    //if (ffx == "0") {
+
+                    //    //var new = $('#total').attr('value');
+
+
+                    //    //ftotal += $(t).find('input[name=Total]').val();a
+                    //}
+
+                });
+            }
+
+            debugger;
+
+            $('#credittotal').text(numberWithCommas(credittotal));
+
+
+            //var rowid = 1;
+            //var debit = 0;
+            //var credit = 0;
+            //var balane = 0;
+            //var oldbalane = 0;
+            //if ($("#printtable > #printbody > #printtr").length > 0) {
+            //    $("#printtable > #printbody > #printtr").each(function () {
+            //        var rownum = parseFloat($(this).find('td:eq(7)').html());
+
+
+
+
+
+            //        if (rownum == rowid) {
+            //            debugger;
+            //            debit = parseInt($(this).find('td:eq(2)').html());
+            //            credit = parseInt($(this).find('td:eq(3)').html());
+            //            debit1 = numberWithCommas(debit);
+            //            credit2 = numberWithCommas(credit);
+            //            //oldbalane = balane;
+            //            //var commaNum2 = numberWithCommas(num2);
+            //            $(this).find('td:eq(2)').html(debit1);
+            //            $(this).find('td:eq(3)').html(credit2);
+
+
+            //            //if (debit1 > 0 || credit2 > 0) {
+            //            //    //$('#' + rownum + '').html(Math.abs(oldbalane) + " Debit");
+
+            //            //}
+            //            //else {
+            //            //    $('#' + rownum + '').html(Math.abs(oldbalane) + " Credit");
+
+            //            //}
+
+            //        }
+
+            //        rowid = rowid + 1;
+
+
+
+
+
+
+            //    })
+            //}
+
+
+
+
+
+
+        </script>
+    }
+
+}
+
+
+
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+
+
+        //var credit1 = $('#credit').val();
+        //var credit = Math.abs(credit1);
+        //$('#credit').text(credit);
+
+        //var credit2 = parseFloat($('#credit2').html());
+        //var finalcredit = Math.abs(credit2);
+        //$('#credit2').text(finalcredit);
+
+        //var credit3 = parseFloat($('#credit3').html());
+        //var finalcredi3 = Math.abs(credit3);credit221
+        //$('#credit3').text(finalcredi3);
+
+        function numberWithCommas(number) {
+            var parts = number.toString().split(".");
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return parts.join(".");
+        }
+
+
+        if ($("table > tbody > tr").length > 0) {
+            $("table  tbody  tr").each(function () {
+
+
+                var num = $('#debit22').html();
+
+                var commaNum = numberWithCommas(num);
+                $('#debit22').html(commaNum);
+            });
+        }
+
+        //debugger;
+        //var ffx = $('table  tbody  tr').find('td:eq(1)').html();
+        //var ffx = $('table  tbody  tr').find('td:eq(2)').text();
+
+        var ftotal = 0;
+        if ($("#table1 > #tbody1 > #tr1").length > 0) {
+            $("#table1  #tbody1  #tr1").each(function () {
+
+                var ffx = $(this).find('td:eq(1)').html();
+
+                //if (ffx == "0") {
+
+                //    //var new = $('#total').attr('value');
+
+
+                //    //ftotal += $(t).find('input[name=Total]').val();a
+                //}
+                ftotal += parseFloat($(this).find('td:eq(2)').html());
+
+            });
+        }
+        //$('#debittotal').text(ftotal);
+        //////////////////////////////////////////
+
+
+
+
+
+        var crtotal = 0.00;
+
+        if ($("#table1 > #tbody1 > #tr1").length > 0) {
+            $("#table1  #tbody1  #tr1").each(function () {
+
+                var x = parseFloat($(this).find('td:eq(3)').html());
+                var ffx = $(this).find('td:eq(1)').html();
+                //if (ffx == "0") {
+                //    var credit2222 = parseFloat($('.credit221').html());
+                //   var maths4 = Math.abs(credit2222);
+                //    $('.credit221').html(maths4);
+                //}
+                //var new = $('#total').attr('value');
+                crtotal += parseFloat($(this).find('td:eq(3)').html());
+
+
+
+            });
+        }
+        var x = Math.abs(crtotal);
+        //$('#credittotal').text(x);
+
+
+        //$("table  tbody  tr td:eq(3)").each(function () {
+
+        //    var msths = parseFloat($('#credit22').html());
+        //    var maths3 = Math.abs(msths);
+        //    $('#credit22').html(maths3);
+
+        //});
+
+
+
+
+    });
+
+
+    $('#btnshow').click(function () {
+        debugger;
+        var ddlvalue = $('#ddltype option:selected').val();
+
+
+        if (ddlvalue == 1) {
+
+            $('#table1').hide(300);
+            $('#table2').show(300);
+
+        }
+        else if (ddlvalue == 2) {
+            //table2').hide(300);
+            $('#table1').show(300);
+
+
+
+
+        }
+        else {
+            alert("select display type");
+        }
+
+
+
+
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br />
+@*<div style="display:normal;" class="card shadow mb-4" id="table1">
+        <div class="card-header py-3" style="background-color:#5a5c69">
+            <h4 class="m-0 font-weight-bold  text-center" style="color:white;"> Heirchal Wise</h4>
+        </div>
+        <div class="card-body" >
+            <table id="table1" class="table-bordered table table-dark">
+                <thead style="background-color:grey;">
+                    <tr>
+                        <th>Account/Group</th>
+                        <th>Debit Balance  </th>
+                        <th>Credit  Balance  </th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th style="background-color:gray" id="debittotal">Debit Total</th>
+                        <th style="background-color:gray" id="credittotal">Credit Total</th>
+                    </tr>
+                </tfoot>
+                <tbody id="tbody1">
+                    @foreach (System.Data.DataRow dr in ViewBag.trialbalanceheirchal.Rows)
+                    {
+                    <tr id="tr1">
+                        @if (dr["level"].ToString() == "0")
+                        {
+                            <td><strong style="color:yellow;">@dr["childName"]</strong></td>
+                            <td hidden>0</td>
+
+                            if (Convert.ToDouble(dr["balance"]) < 0)
+                            {
+                                <td style="color:yellow;">0.00</td>
+
+                                <td id="credit" style="color:yellow;">@dr["balance"]</td>
+                            }
+
+                            else
+                            {
+                                <td id="credit" style="color:yellow;">@dr["balance"]</td>
+
+                                <td style="color:yellow;">0.00</td>
+                            }
+                        }
+
+
+                        @if (dr["level"].ToString() == "1")
+                        {
+                            <td><em class="col-md-offset-2">@dr["childName"]</em></td>
+                            <td hidden>1</td>
+
+                            if (Convert.ToDouble(dr["balance"]) > 0.00)
+                            {
+                                <td>@dr["balance"]</td>
+                                <td>0.00</td>
+
+                            }
+                            else if (Convert.ToDouble(dr["balance"]) < 0.00)
+                            {
+                                <td>0.00</td>
+                                <td id="credit2">@dr["balance"]</td>
+
+                            }
+                            else
+                            {
+                                <td>0.00</td>
+                                <td>0.00</td>
+                            }
+
+                        }
+                        @if (dr["level"].ToString() == "2")
+                        {
+                            <td><em class="col-md-offset-3" style="color:peachpuff;"><strong>@dr["childName"]</strong></em></td>
+                            <td hidden>2</td>
+
+                            if (Convert.ToDouble(dr["balance"]) > 0.00)
+                            {
+                                <td style="color:peachpuff;">@dr["balance"]</td>
+                                <td style="color:peachpuff;">0.00</td>
+
+                            }
+                            else if (Convert.ToDouble(dr["balance"]) < 0.00)
+                            {
+                                <td style="color:peachpuff;">0.00</td>
+                                <td id="credit3" style="color:peachpuff;">@dr["balance"]</td>
+
+                            }
+                            else
+                            {
+                                <td style="color:peachpuff;">0.00</td>
+                                <td style="color:peachpuff;">0.00</td>
+                            }
+
+                        }
+
+                        @if (dr["level"].ToString() == "3")
+                        {
+                            <td><em class="col-md-offset-4">@dr["childName"]</em></td>
+                            <td hidden>3</td>
+
+                            if (Convert.ToDouble(dr["balance"]) > 0.00)
+                            {
+                                <td>@dr["balance"]</td>
+                                <td>0.00</td>
+
+                            }
+                            else if (Convert.ToDouble(dr["balance"]) < 0.00)
+                            {
+                                <td>0.00</td>
+                                <td id="credit4">@dr["balance"]</td>
+
+                            }
+                            else
+                            {
+                                <td>0.00</td>
+                                <td>0.00</td>
+                            }
+
+                        }
+
+                        @if (dr["level"].ToString() == "4")
+                        {
+                            <td><em class="col-md-offset-5">@dr["childName"]</em></td>
+                            <td hidden>4</td>
+
+                            if (Convert.ToDouble(dr["balance"]) > 0.00)
+                            {
+                                <td>@dr["balance"]</td>
+                                <td>0.00</td>
+
+                            }
+                            else if (Convert.ToDouble(dr["balance"]) < 0.00)
+                            {
+                                <td>0.00</td>
+                                <td id="credit5">@dr["balance"]</td>
+
+                            }
+                            else
+                            {
+                                <td>0.00</td>
+                                <td>0.00</td>
+                            }
+
+                        }
+
+                        @if (dr["level"].ToString() == "5")
+                        {
+                            <td><em class="col-md-offset-6">@dr["childName"]</em></td>
+                            <td hidden>5</td>
+
+                            if (Convert.ToDouble(dr["balance"]) > 0.00)
+                            {
+                                <td>@dr["balance"]</td>
+                                <td>0.00</td>
+
+                            }
+                            else if (Convert.ToDouble(dr["balance"]) < 0.00)
+                            {
+                                <td>0.00</td>
+                                <td id="credit5">@dr["balance"]</td>
+
+                            }
+                            else
+                            {
+                                <td>0.00</td>
+                                <td>0.00</td>
+                            }
+
+                        }
+                        else
+                        {
+                            <td hidden></td>
+                            <td hidden>0.00</td>
+                            <td hidden>0.00</td>
+                            <td hidden></td>
+                        }
+
+
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+
+    <div style="display:none;" class="card shadow mb-4" id="table2">
+        <div class="card-header py-3" style="background-color:#5a5c69">
+            <h4 class="m-0 font-weight-bold  text-center" style="color:white;"> Group Wise</h4>
+        </div>
+        <div class="card-body">
+            <table id="datatable" class="table-bordered table table-dark">
+                <thead style="background-color:grey;">
+                    <tr>
+                        <th>Account/Group</th>
+                        <th>Debit Balance  </th>
+                        <th>Credit  Balance  </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th style="background-color:gray" id="debittotal">Debit Total</th>
+                        <th style="background-color:gray" id="credittotal">Credit Total</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (System.Data.DataRow dr in ViewBag.trialbalance.Rows)
+                    {
+                    <tr>
+                        @if (dr["level"].ToString() == "0")
+                        {
+                            <td><strong style="color:yellow;">@dr["childName"]</strong></td>
+                            <td hidden>0</td>
+
+
+                            if (Convert.ToDouble(dr["ClosingBalance"]) < 0.00)
+                            {
+                                <td style="color:yellow;">0.00</td>
+                                <td class="credit221" id="credit221" style="color:yellow;">@dr["ClosingBalance"]</td>
+                            }
+
+                            else
+                            {
+                                <td style="color:yellow;">@dr["ClosingBalance"]</td>
+                                <td style="color:yellow;">0.00</td>
+                            }
+                        }
+
+
+                        @if (dr["level"].ToString() == "1")
+                        {
+                            <td><em class="col-md-offset-2">@dr["childName"]</em></td>
+                            <td hidden>1</td>
+
+                            @*<td>@dr["ClosingBalance"]</td>
+                            if (Convert.ToDouble(dr["ClosingBalance"]) > 0.00)
+                            {
+                                <td id="debit22">@dr["ClosingBalance"] (Dr)</td>
+                                <td>0.00</td>
+
+                            }
+                            else if (Convert.ToDouble(dr["ClosingBalance"]) < 0.00)
+                            {
+                                <td>0.00</td>
+                                <td > @dr["ClosingBalance"] (Cr)</td>
+
+                            }
+                            else
+                            {
+                                <td>0.00</td>
+                                <td>0.00</td>
+                            }
+                            <td><a class="btn btn-success btn-block" href="~/Masters/accountbalance/@dr["childId"]"><i class="glyphicon glyphicon-info-sign"></i></a></td>
+
+                        }
+                        else
+                        {
+                            <td hidden></td>
+                            <td hidden>0.00</td>
+                            <td hidden>0.00</td>
+                            <td hidden></td>
+                        }
+
+
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+    </div>*@
+
+

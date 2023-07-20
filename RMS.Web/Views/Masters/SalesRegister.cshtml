@@ -1,0 +1,222 @@
+﻿@model RMS.Web.Models.ViewModels.reportmodel
+
+@{
+    ViewBag.Title = "SalesRegister";
+}
+
+@if (Model.vouchertypeid == 1)
+{
+    <div class="card shadow mb-4">
+        <div class="card-header py-3" style="background-color:#5a5c69">
+            <h1 class="m-0 font-weight-bold  text-center" style="color:white;"> Sales Register</h1>
+        </div>
+        <div class="card-body">
+            <div class="">
+                @using (Ajax.BeginForm("SalesRegister", "Masters", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "report", OnBegin = "showloader()", OnComplete = "hideloader()", OnSuccess = "hideloader()" }, new { @Id = "reportform" }))
+                {
+                    <form id="reportform">
+
+
+
+                        <lablel class="col-md-2" style="color:black">Account Name</lablel>
+                        <div class="col-md-4">
+                            @Html.DropDownList("AccountID", (IEnumerable<SelectListItem>)ViewBag.accounts, "---Select AccountName---", htmlAttributes: new { @required = true, @class = "form-control ", @Id = "Partyid_Accountid" })
+                        </div>
+                        <label class="col-md-2">Item List</label>
+                        <div class="col-md-4">
+                            @Html.DropDownList("ItemID", (IEnumerable<SelectListItem>)ViewBag.ItemLists, "---Select Items---", htmlAttributes: new { @required = true, @class = " form-control ", @Id = "txtItems" })
+
+                        </div>
+                        <br />
+                        <br />
+
+
+
+                        <label class="col-md-2">From Date</label>
+                        <div class="col-md-4">
+                            <input type="date" required class="form-control" id="startdate" name="startdate" />
+
+                        </div>
+
+                        <label class="col-md-2">To Date</label>
+                        <div class="col-md-4">
+                            <input required class="form-control" id="enddate" name="enddate" type="date" />
+
+
+
+                        </div>
+                        <br />
+                        <br />
+                        <label class="col-md-2">Location</label>
+                        <div class="col-md-4">
+                            @Html.DropDownList("LocationID", (IEnumerable<SelectListItem>)ViewBag.MaterialCentres, "---Select Location---", htmlAttributes: new { @required = true, @class = " form-control ", @Id = "LocationID" })
+
+
+                        </div>
+                        <label class="col-md-2">Voucher Type</label>
+                        <div class="col-md-4">
+                            @*@Html.DropDownList("vouchertypeid", (IEnumerable<SelectListItem>)ViewBag.VoucherTypes, "---Select VoucherType---", htmlAttributes: new { @class = " form-control ", @Id = "vouchertypeid" })*@
+
+                            <select id="vouchertypeid" name="vouchertypeid" class="form-control">
+                                <option value="1">Sales</option>
+                                <option value="2">Purchase</option>
+                                <option value="9">Sales Return</option>
+                                <option value="10">Purchase Return</option>
+                            </select>
+
+                        </div>
+                        <br />
+                        <br />
+
+                        <div class="">
+
+                            <button type="submit" id="btnshow" class="btn btn-success btn-block">Show</button>
+
+                        </div>
+
+                    </form>
+                }
+
+            </div>
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="card shadow mb-4">
+        <div class="card-header py-3" style="background-color:#5a5c69">
+            <h1 class="m-0 font-weight-bold  text-center" style="color:white;"> Stock Register</h1>
+        </div>
+        <div class="card-body">
+            <div class="">
+                @using (Ajax.BeginForm("StockRegister", "Masters", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "report", OnBegin = "showloader()", OnComplete = "hideloader()", OnSuccess = "hideloader()" }, new { @Id = "reportform" }))
+                {
+                    <form id="reportform">
+
+
+
+                        <lablel class="col-md-2" style="color:black">Account Name</lablel>
+                        <div class="col-md-4">
+                            @Html.DropDownList("AccountID", (IEnumerable<SelectListItem>)ViewBag.accounts, "---Select AccountName---", htmlAttributes: new { @required = true, @class = "form-control ", @Id = "Partyid_Accountid" })
+                        </div>
+                        <label class="col-md-2">Item List</label>
+                        <div class="col-md-4">
+                            @Html.DropDownList("ItemID", (IEnumerable<SelectListItem>)ViewBag.ItemLists, "---Select Items---", htmlAttributes: new { @required = true, @class = " form-control ", @Id = "txtItems" })
+
+                        </div>
+                        <br />
+                        <br />
+
+                        <input type="hidden" name="vouchertypeid" value="12" />
+
+                        <label class="col-md-2">From Date</label>
+                        <div class="col-md-4">
+                            <input type="date" required class="form-control" id="startdate" name="startdate" />
+
+                        </div>
+
+                        <label class="col-md-2">To Date</label>
+                        <div class="col-md-4">
+                            <input required class="form-control" id="enddate" name="enddate" type="date" />
+
+
+
+                        </div>
+                        <br />
+                        <br />
+                        <label class="col-md-2">Location</label>
+                        <div class="col-md-4">
+                            @Html.DropDownList("LocationID", (IEnumerable<SelectListItem>)ViewBag.MaterialCentres, "---Select Location---", htmlAttributes: new { @required = true, @class = " form-control ", @Id = "LocationID" })
+
+
+                        </div>
+                        @*<label class="col-md-2">Voucher Type</label>
+                            <div class="col-md-4">
+                                Html.DropDownList("vouchertypeid", (IEnumerable<SelectListItem>)ViewBag.VoucherTypes, "---Select VoucherType---", htmlAttributes: new { @class = " form-control ", @Id = "vouchertypeid" })
+
+                                <select id="vouchertypeid" name="vouchertypeid" class="form-control">
+                                    <option value="1">Sales</option>
+                                    <option value="2">Purchase</option>
+                                    <option value="9">Sales Return</option>
+                                    <option value="10">Purchase Return</option>
+                                </select>
+
+                            </div>*@
+                        <label class="col-md-2">VoucherType</label>
+                        <div class="col-md-4">
+                            <select name="vouchertypeid" class="form-control">
+                                <option>---Select VoucherType---</option>
+                                <option value="12">Stock Transfer</option>
+                                <option value="13">Receive From</option>
+                            </select>
+
+
+                        </div>
+                        <br />
+                        <br />
+
+                        <div class="">
+
+                            <button type="submit" id="btnshow" class="btn btn-success btn-block">Show</button>
+
+                        </div>
+
+                    </form>
+                }
+
+            </div>
+        </div>
+
+    </div>
+    
+}
+    <div id="report">
+
+
+    </div>
+
+
+<link href="~/Scripts/chosen/select2-4.1.0-beta.1/dist/css/select2.css" rel="stylesheet" />
+<script src="~/Scripts/chosen/select2-4.1.0-beta.1/dist/js/select2.full.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.js" integrity="sha512-f04GBpoqEZhbyjlRTuXeg8FIHDb+xfCJ0LVdqiN1fEl5B3jz3Z0SPe9IxDumOVdTeeXmKMcMJhb26VuGf1Laqw==" crossorigin="anonymous"></script>
+<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+
+
+
+<script>
+
+    //var accountname = $('')
+
+    //let today = new Date().toISOString().substr(0, 10);
+    //document.querySelector("#enddate").value = today;
+    debugger;
+    var ed = new Date();
+    ed.setDate(ed.getDate() + 1);
+    document.querySelector("#enddate").value = ed.toISOString().substr(0, 10);
+
+
+    var d = new Date();
+    d.setDate(d.getDate() - 30);
+    document.querySelector("#startdate").value = d.toISOString().substr(0, 10);
+
+
+    function showloader() {
+        //$('#wait').css("display', 'normal');
+        $(".se-pre-con").fadeIn("slow");
+
+    }
+
+    function hideloader() {
+        $(".se-pre-con").fadeOut("slow");
+
+        var locationame = $('#LocationID option:selected').text();
+        $('#locationname').html(locationame);
+
+    }
+
+    $('#txtItems').select2();
+    $('#LocationID').select2();
+    $('#Partyid_Accountid').select2();
+</script>
+

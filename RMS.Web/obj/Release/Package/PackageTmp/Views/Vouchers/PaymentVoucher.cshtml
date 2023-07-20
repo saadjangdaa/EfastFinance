@@ -1,0 +1,1513 @@
+﻿@model RMS.Web.Models.ViewModels.JournalVMasterViewModel
+@{
+    ViewBag.Title = "PaymentVoucher";
+}
+
+
+<div class="container-fluid">
+    <form id="PaymentVoucher" class="paymentvoucher">
+        @*<div class="card shadow mb-4">
+            <div class="card-header " style="background-color:#5a5c69; padding-bottom:40px; padding-top:01px; height:0px;">
+            </div>
+        </div>*@
+        <br />
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:#5a5c69">
+
+                @if (Model != null)
+                {
+                    <h3 class="m-0 font-weight-bold "><strong style="color:white;">Modify Payment Voucher </strong> <a class="btn btn-success col-md-offset-6" href="@Url.Action("PaymentVoucherHistory", "Vouchers")">Find</a> <button type="button" id="btnSaveVoucher" class="btn btn-success ">Update Voucher</button></h3>
+                    <p hidden id="vouchertypeid">6</p>
+                    <p hidden id="modify">1</p>
+                }
+                else
+                {
+                    <h3 class="m-0 font-weight-bold "><strong style="color:white;">Add Payment Voucher </strong> <a class="btn btn-success col-md-offset-6" href="@Url.Action("PaymentVoucherHistory", "Vouchers")">Find</a> <button type="button" id="btnSaveVoucher" class="btn btn-success ">Save Voucher</button></h3>
+                    <p hidden id="vouchertypeid">6</p>
+
+                }
+            </div>
+            @{
+                if (Model != null)
+                {
+                    <div class="card-body">
+
+                        <lablel class="col-md-2" style="color:black">Voucher Number</lablel>
+                        <div class="col-md-4">
+                            <input class="form-control text-right" id="JVMasterID" readonly="readonly" name="JVMasterID" type="number" value="@Model.JvID_VoucherNo" />
+                        </div>
+
+                        <lablel class="col-md-2" style="color:black">Voucher Date</lablel>
+                        <div class="col-md-4">
+                            <input class="form-control" id="VoucherCreateDate" name="VoucherDate" value="@Model.VoucherDate" readonly="readonly" />
+                        </div>
+
+                        <!---->
+                        <br />
+                        <br />
+                        <lablel class="col-md-2" style="color:black">Payment Mode</lablel>
+                        <div class="col-md-4">
+                            @*<textarea class="form-control" id="Narration" readonly="readonly" name="details" placeholder="saad modified by saad"></textarea>*@
+                            @Html.DropDownList("paymentaccountid", (IEnumerable<SelectListItem>)ViewBag.paymentmode, "---Select---", htmlAttributes: new { @class = "form-control", @Name = "paymentaccountid", @Id = "paymentaccountid" })
+                            <input type="hidden" name="paymentaccountid" value="@Model.paymentaccountid" />
+
+                        </div>
+
+                        <lablel class="col-md-2" style="color:black">Currency</lablel>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    @Html.DropDownList("curremcyname", (IEnumerable<SelectListItem>)ViewBag.currency, "---Select Currency---", htmlAttributes: new { @class = "form-control", @Id = "currencyID", @Name = "CurrencyID", @disabled = "true" })
+                                    @*<span><button type="button" data-target="#exampleModal" data-toggle="modal" class="btn btn-primary"><i class="fa fa-search"></i></button></span>*@
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center" id="exampleModalLabel"><strong>Currency Exchange Rate</strong></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <input type="hidden" class="form-control" name="currid" id="currid" />
+                                        <div class="row">
+
+                                            <label class="col-sm-5">Currency Name</label>
+                                            <input class="form-control" readonly="readonly" placeholder="select currency first" id="currName" name="currName" />
+                                            <br />
+                                            <br />
+                                            <label class="col-sm-5">Currency Rate</label>
+                                            <input class="form-control" type="number" id="currRate" name="currName" />
+                                            <br />
+                                            <br />
+
+                                            <label class="col-md-offset-1">Note!! These rates will apply after filling voucher details</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button id="btnexchange" type="button" class="btn btn-primary">Exchange</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                }
+                else
+                {
+                    <div class="card-body">
+
+                        <lablel class="col-md-2" style="color:black">Voucher Number</lablel>
+                        <div class="col-md-4">
+                            <input class="form-control text-right" id="JVMasterID" readonly="readonly" name="JVMasterID" type="number" value="@ViewBag.vouchernumber" />
+                        </div>
+
+                        <lablel class="col-md-2" style="color:black">Voucher Date</lablel>
+                        <div class="col-md-4">
+                            <input class="form-control" id="VoucherCreateDate" name="VoucherDate" value="@DateTime.Now" readonly="readonly" />
+                        </div>
+
+                        <!---->
+                        <br />
+                        <br />
+                        <lablel class="col-md-2" style="color:black">Payment Mode</lablel>
+                        <div class="col-md-4">
+                            @*<textarea class="form-control" id="Narration" readonly="readonly" name="details" placeholder="saad modified by saad"></textarea>*@
+                            @Html.DropDownList("paymentaccountid", (IEnumerable<SelectListItem>)ViewBag.paymentmode, "---Select---", htmlAttributes: new { @class = "form-control", @Name = "paymentaccountid", @Id = "paymentaccountid" })
+                            <h6 style="color:black">Curr Balance: <em style="color:blue" id="balance"></em></h6>
+                        </div>
+
+                        <lablel class="col-md-2" style="color:black">Currency</lablel>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    @Html.DropDownList("curremcyname", (IEnumerable<SelectListItem>)ViewBag.currency, "---Select Currency---", htmlAttributes: new { @class = "form-control", @Id = "currencyID", @Name = "CurrencyID", @disabled = "true" })
+                                    @*<span><button type="button" data-target="#exampleModal" data-toggle="modal" class="btn btn-primary"><i class="fa fa-search"></i></button></span>*@
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center" id="exampleModalLabel"><strong>Currency Exchange Rate</strong></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <input type="hidden" class="form-control" name="currid" id="currid" />
+                                        <div class="row">
+
+                                            <label class="col-sm-5">Currency Name</label>
+                                            <input class="form-control" readonly="readonly" placeholder="select currency first" id="currName" name="currName" />
+                                            <br />
+                                            <br />
+                                            <label class="col-sm-5">Currency Rate</label>
+                                            <input class="form-control" type="number" id="currRate" name="currName" />
+                                            <br />
+                                            <br />
+
+                                            <label class="col-md-offset-1">Note!! These rates will apply after filling voucher details</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button id="btnexchange" type="button" class="btn btn-primary">Exchange</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                }
+            }
+
+
+
+        </div>
+        <div id="wait" class="text-center" style="display:none;">
+            <p><img src="~/startbootstrap-sb-admin-2-master/img/ajax-loader.gif" /> Please Wait</p>
+
+        </div>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:#5a5c69">
+
+                <h6 class="m-0 font-weight-bold"><strong style="color:white;">Voucher Details</strong></h6>
+
+            </div>
+            <div class="card-body">
+                <div style="width:100; overflow: auto;">
+                    <div class="table-responsive">
+                        <table class="table table-bordered " width="100%" cellspacing="0">
+                            <thead style="background-color:grey;">
+                                <tr>
+                                    @*<th style="color:white;">Debit/Credit</th>*@
+                                    
+                                    <th style="color:white;"> Account   <strong>Curr Balance: <em style="color:yellow" id="balance2"></em></strong></th>
+                                    @*<th style="color:white;">Credit(<label id="pp"></label>)</th>*@
+                                    <th style="color:white;">Short Narration</th>
+                                    <th style="color:white;">Amount(PKR)</th>
+
+                                    <th style="color:white;">Actions</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                    <th>
+
+                                        @Html.DropDownList("AccountName", (IEnumerable<SelectListItem>)ViewBag.Account, "--Select Account---", htmlAttributes: new { @class = "form-control search", @Id = "accountID" })
+                                    </th>
+                                    @*  <th><input type="number" value="0.00" disabled id="creditID" class="form-control " /></th>*@
+                                    <th><input placeholder="Enter Narration" id="narration" class="form-control" /></th>
+                                    <th><input type="number" placeholder="enter amount" id="debitID" class="form-control text-right" /></th>
+
+                                    <th><button type="button" class="btn btn-success " id="btnadd"><i class="glyphicon glyphicon-plus"></i></button></th>
+
+                                </tr>
+                            </thead>
+                            <tfoot style="background-color:grey;">
+                                <tr>
+                                    <th style="color:white;"><h5 class="text-center"><strong>  Total</strong></h5></th>
+                                    @if (Model != null)
+                                    {
+                                        <th style="color:white;"><input style="background-color:orange;color:white;" disabled value="@Model.DebitTotal" class="text-right font-weight-bolder font-italic form-control text-right" id="debittotal" /></th>
+                                        <th hidden><input type="hidden" value="1" name="jvchildid3" id="jvchildid3" placeholder="modifyvoucher" /></th>
+
+
+                                    }
+                                    else
+                                    {
+
+                                        <th style="color:white;"><input style="background-color:orange;color:white;" disabled value="0.00" class="text-right font-weight-bolder font-italic form-control text-right" id="debittotal" /></th>
+                                        <th hidden><input type="hidden" value="0" name="jvchildid3" id="jvchildid3" placeholder="addvoucher" /></th>
+
+                                    }
+                                    <th style="color:white;"></th>
+
+                                    <th style="color:white;"></th>
+                                </tr>
+                            </tfoot>
+                            @if (Model != null)
+                            {
+                                int rowid = 1;
+
+                                foreach (var item in Model.Journalvoucherchildlist)
+                                {
+                            <tbody>
+                                <tr>
+                                    <td hidden><input type="hidden" name="DrCrID" value="@item.DrCrID" /></td>
+
+                                    <td hidden><input type="hidden" value="@item.AccountID" /></td>
+                                    <td><input readonly class='form-control' value="@item.Account.AccountName" /></td>
+
+                                    <td>
+                                        @*<input readonly class='form-control' value="@item.ShortNarration" />*@
+                                        <textarea readonly class='form-control'>@item.ShortNarration</textarea>
+                                    </td>
+                                    <td><input readonly class='form-control' value="@item.DebitAmount" name="DebitAmount" /></td>
+                                    <td hidden><input type="hidden" readonly class='form-control' value="@item.CreditAmount" name="CreditAmount" /></td>
+                                    <td>
+                                        <button type='button' id='btnremoveDr' class='btnremoveDr btn btn-danger' onclick="removeDr(@rowid)"><i class='glyphicon glyphicon-minus'></i></button>
+                                        @*<button type="button" class="btn btn-danger btnremoveDr"><i class="glyphicon glyphicon-minus"></i></button>*@
+                                        @*<input type="button" class="btnremoveDr btn btn-success" value="-" />*@
+                                    </td>
+                                    <td hidden>@item.DebitAmount</td>
+
+                                    <td hidden>@item.AccountID</td>
+                                    <td hidden>@rowid</td>
+
+                                    <td hidden><input type="number" value="@item.JVchildID" name="jvchildid2" id="jvchildid2" /></td>
+                                    <td hidden>@item.JVchildID"</td>
+
+                                </tr>
+                            </tbody>
+                                    rowid = rowid +1;
+                                }
+
+                            }
+                            else
+                            {
+                                <tbody></tbody>
+
+                            }
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card shadow mb-4">
+                <div class="card-header py-3" style="background-color:#5a5c69">
+
+                    <h6 class="m-0 font-weight-bold"><strong style="color:white;">Voucher Details</strong></h6>
+                </div>
+                <div class="card-body" style="background-color:white">
+
+                    @{
+                        if (Model != null)
+                        {
+                            <label class="col-md-4" style="color:black;">Long Narration</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" name="LongNarration" id="LongNarration" placeholder="Enter Narration">@Model.LongNarration</textarea>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <label class="col-md-4" style="color:black;">Other Details</label>
+                            <div class="col-md-8">
+                                <input class="form-control" name="VoucherOtherDetails" id="VoucherOtherDetails" value="@Model.VoucherOtherDetails" />
+                            </div>
+                            <br />
+                        }
+                        else
+                        {
+                        <label class="col-md-4" style="color:black;">Long Narration</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" name="LongNarration" id="LongNarration" placeholder="Enter Narration"></textarea>
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <label class="col-md-4" style="color:black;">Other Details</label>
+                        <div class="col-md-8">
+                            <input class="form-control" name="VoucherOtherDetails" id="VoucherOtherDetails" placeholder="Enter Details" />
+                        </div>
+                        <br />
+                        }
+                        }
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <div class="card shadow mb-4">
+                <div class="card-header py-3" style="background-color:#5a5c69">
+
+                    <h6 class="m-0 font-weight-bold"><strong style="color:white;">Total</strong></h6>
+                </div>
+                <div class="card-body" style="background-color:white">
+                    <lablel class="col-md-4" style="color:black;">Total Tota(PKR)</lablel>
+                    @if (Model != null)
+                    {
+                        <div class="col-md-8">
+                            @Html.TextBox("DebitTotal", "0.00", new { @class = "font-italic form-control font-weight-bolder text-right", @Id = "txtDebitTotal",@Value=Model.DebitTotal, @name = "DebitTotal", @readonly = "readonly", @style = "background-color:orange;color:white;" })
+                        </div>
+                        <div class="col-md-8" hidden>
+                            @Html.TextBox("CreditTotal", "0.00", new { @class = "font-italic form-control font-weight-bolder text-right", @Id = "txtCreditTotal", @Value = Model.CreditTotal , @name = "CreditTotal", @readonly = "readonly", @style = "background-color:orange;color:white;" })
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-8">
+                            @Html.TextBox("DebitTotal", "0.00", new { @class = "font-italic form-control font-weight-bolder text-right", @Id = "txtDebitTotal", @name = "DebitTotal", @readonly = "readonly", @style = "background-color:orange;color:white;" })
+                        </div>
+                        <div class="col-md-8" hidden>
+                            @Html.TextBox("CreditTotal", "0.00", new { @class = "font-italic form-control font-weight-bolder", @Id = "txtCreditTotal", @name = "CreditTotal", @readonly = "readonly", @style = "background-color:yellow" })
+
+                        </div>
+                    }
+                    <br />
+                    <br />
+                    <br />
+
+                    <div class="col-md-8 col-md-offset-2">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+    <br />
+    <br />
+
+
+</div>
+
+
+
+
+<link href="~/Scripts/chosen/select2-4.1.0-beta.1/dist/css/select2.css" rel="stylesheet" />
+@*<script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-ui.min.css" rel="stylesheet" />*@
+<script src="~/Scripts/chosen/select2-4.1.0-beta.1/dist/js/select2.full.js"></script>
+
+@section scripts{
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#search3").on({
+                keydown: function (ev) {
+                    if (ev.which === 13) {   // enter button
+                        debugger;
+                        var itemid = parseFloat($('#creditID').val());
+
+                        var drcrid = $('#accountID option:selected').val();
+
+
+                        if (drcrid == "0" || drcrid == "") {
+
+                            $('#accountID').focus();
+                        }
+
+                        else {
+                            $('#narration').focus();
+
+
+                        }
+
+                    }
+                    //if (ev.which === 16) {   // enter button
+                    //    debugger;
+                    //    var itemid = parseFloat($('#creditID').val());
+
+                    //    var drcrid = $('#accountID option:selected').val();
+
+
+                    //        $('#LongNarration').focus();
+
+                    //}
+                    //else if (ev.which === 8) {  // back button
+                    //    debugger;
+                    //    var itemid = parseFloat($('#creditID').val());
+
+                    //    var drcrid = parseInt($('#accountID option:selected').val());
+
+
+                    //    $('#accountID ').focus();
+
+                    //}
+
+
+                }
+                //keyup: function (ep) {
+                //    if (ep.which === 13) {   // enter button
+                //        debugger;
+                //        var itemid = parseFloat($('#creditID').val());
+
+                //        var drcrid = $('#accountID option:selected').val();
+
+
+                //        if (drcrid == "0" || drcrid == "") {
+
+                //            $('#accountID').focus();
+                //        }
+
+                //        else {
+                //            $('#narration').focus();
+
+
+                //        }
+
+                //    }
+                //    //if (ev.which === 16) {   // enter button
+                //    //    debugger;
+                //    //    var itemid = parseFloat($('#creditID').val());
+
+                //    //    var drcrid = $('#accountID option:selected').val();
+
+
+                //    //        $('#LongNarration').focus();
+
+                //    //}
+                //    //else if (ev.which === 8) {  // back button
+                //    //    debugger;
+                //    //    var itemid = parseFloat($('#creditID').val());
+
+                //    //    var drcrid = parseInt($('#accountID option:selected').val());
+
+
+                //    //    $('#accountID ').focus();
+
+                //    //}
+
+
+                //}
+
+            });
+            //alert("dsfsd");
+            //$("#accountID").chosen();
+            //$("#txtaccsearch").autocomplete({
+            //    source: function (request, response) {
+            //        $.ajax({
+            //            url: "../../Vouchers/Getaccounts",
+            //            type: 'GET',
+            //            dataType: 'JSON',
+            //            data: { accountname: request.term },
+            //            success: function (data) {
+            //                response($.map(data, function (item) {
+            //                    return { label: item.AccountName, val: item.AccountID }
+            //                }));
+
+            //            }
+
+
+            //        });
+            //    }
+            //});
+        });
+
+
+        //$('input,select').on('keypress', functioxn (e) {
+        //    if (e.which == 13) {
+        //        e.preventDefault();
+        //        var $next = $('[tabIndex=' + (+this.tabIndex + 1) + ']');
+        //        console.log($next.length);
+        //        if (!$next.length) {
+        //            $next = $('[tabIndex=1]');
+        //        }
+        //        $next.focus();
+        //    }
+        //});
+    </script>
+
+
+
+
+
+}
+<script>
+    $('#accountID').select2();
+
+    $('#accountID').change(function () {
+
+        var accid = $('#accountID option:selected').val();
+        debugger;
+        $.ajax({
+
+            type: 'GET',
+            data: { accountid: accid },
+            url: "@Url.Action("Getaccounts","Vouchers")"
+
+        }).done(function (data) {
+            $('#balance2').html(data);
+
+
+        }).fail(function (jqXHR, textStatus) {
+
+            alert("Cant Get balance,Contact Admin");
+        });
+
+
+    });
+
+    $('#paymentaccountid').change(function () {
+
+        var accid = $('#paymentaccountid option:selected').val();
+        debugger;
+        $.ajax({
+
+            type: 'GET',
+            data: { accountid: accid },
+            url: "@Url.Action("Getaccounts","Vouchers")"
+
+        }).done(function (data) {
+            $('#balance').html(data);
+
+
+        }).fail(function (jqXHR, textStatus) {
+
+            alert("Cant Get balance,Contact Admin");
+        });
+
+        function numberWithCommas(number) {
+            var parts = number.toString().split(".");
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return parts.join(".");
+        }
+
+        var num = $('#balance').html();
+        if (num > 0) {
+            var commaNum = numberWithCommas(num);
+            $('#balance').html(commaNum + "Dr");
+        }
+        else {
+            var commaNum = numberWithCommas(num);
+            $('#balance').html(commaNum + "Cr");
+
+        }
+
+    });
+
+
+  
+
+    // register jQuery extension
+    //jQuery.extend(jQuery.expr[':'], {
+    //    focusable: function (el, index, selector) {
+    //        return $(el).is('a, button, :input, [tabindex]');
+    //    }
+    //});
+
+    //$(document).on('keypress', 'input,select', function (e) {
+    //    if (e.which == 13) {
+    //        e.preventDefault();
+    //        // Get all focusable elements on the page
+    //        var $canfocus = $(':focusable');
+    //        var index = $canfocus.index(document.activeElement) + 1;
+    //        if (index >= $canfocus.length) index = 0;
+    //        $canfocus.eq(index).focus();
+    //    }
+    //});
+
+    $(document).on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                debugger;
+
+                var acccid = $('#paymentaccountid option:selected').val();
+                if (acccid == 0 || acccid == "") {
+                    $('#paymentaccountid').focus();
+
+                }
+            }
+        }
+    });
+    //$(document).on({
+    //    keydown: function (ev) {
+    //        if (ev.which === 13) {   // enter button
+    //            debugger;
+
+    //            var paymentid = $('#paymentaccountid option:selected').val();
+    //            var acccid = $('#accountID option:selected').val();
+
+    //            if (acccid == 0 || acccid == "") {
+    //                $('#paymentaccountid').focus();
+
+    //            }
+    //            else if (acccid != 0) {
+
+
+
+    //            }
+    //        }
+    //    }
+    //});
+    $("#paymentaccountid").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                var accid = $('#paymentaccountid option:selected').val();
+
+
+                debugger;
+                if (accid != 0) {
+                    console.log('enter button pressed');
+                    //$('#search3').val("dsfsdf");
+                    //$('#search3').val("");
+                    $('.select2-selection--single').focus();
+                    //$('#search').focus();
+
+                }
+                else {
+                    //$('#paymentaccountid').focus();
+                    //$('#accountID').text("dsfsd");
+                    //$('#accountID option:selected').val("dsfsdf");
+                    //$('#search3').val("dsfsdf");
+                    $('#search').focus();
+
+
+                }
+
+            }
+        }
+    });
+
+    $("#currencyID").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                var accid = $('#currencyID option:selected').val();
+                debugger;
+                if (accid != 0) {
+                    console.log('enter button pressed');
+                    $('#accountID').focus();
+                }
+                else {
+                    $('#currencyID').focus();
+
+
+                }
+
+            }
+        }
+    });
+    $("#search").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                debugger;
+                var itemid = parseFloat($('#creditID').val());
+                alert("dfsfs");
+                var drcrid = $('#accountID option:selected').val();
+
+
+                //if (drcrid == "0" || drcrid == "") {
+
+                //    $('#accountID').focus();
+                //}
+
+                //else {
+                //    $('#narration').focus();
+
+
+                //}
+
+            }
+            //if (ev.which === 16) {   // enter button
+            //    debugger;
+            //    var itemid = parseFloat($('#creditID').val());
+
+            //    var drcrid = $('#accountID option:selected').val();
+
+
+            //        $('#LongNarration').focus();
+
+            //}
+            //else if (ev.which === 8) {  // back button
+            //    debugger;
+            //    var itemid = parseFloat($('#creditID').val());
+
+            //    var drcrid = parseInt($('#accountID option:selected').val());
+
+
+            //    $('#accountID ').focus();
+
+            //}
+
+
+        },
+        keyup: function (ep) {
+            if (ep.which === 13) {   // enter button
+                debugger;
+                var itemid = parseFloat($('#creditID').val());
+
+                var drcrid = $('#accountID option:selected').val();
+
+
+                if (drcrid == "0" || drcrid == "") {
+
+                    $('#accountID').focus();
+                }
+
+                else {
+                    $('#narration').focus();
+
+
+                }
+
+            }
+            //if (ev.which === 16) {   // enter button
+            //    debugger;
+            //    var itemid = parseFloat($('#creditID').val());
+
+            //    var drcrid = $('#accountID option:selected').val();
+
+
+            //        $('#LongNarration').focus();
+
+            //}
+            //else if (ev.which === 8) {  // back button
+            //    debugger;
+            //    var itemid = parseFloat($('#creditID').val());
+
+            //    var drcrid = parseInt($('#accountID option:selected').val());
+
+
+            //    $('#accountID ').focus();
+
+            //}
+
+
+        }
+
+    });
+
+
+
+    $("#select2-search-container").on({
+        keydown: function (ev) {
+            if (ev.which === 16) {   // enter button
+                debugger;
+                var itemid = parseFloat($('#creditID').val());
+                alert("dfsfs");
+                var drcrid = $('#accountID option:selected').val();
+
+
+                //if (drcrid == "0" || drcrid == "") {
+
+                //    $('#accountID').focus();
+                //}
+
+                //else {
+                //    $('#narration').focus();
+
+
+                //}
+
+            }
+            //if (ev.which === 16) {   // enter button
+            //    debugger;
+            //    var itemid = parseFloat($('#creditID').val());
+
+            //    var drcrid = $('#accountID option:selected').val();
+
+
+            //        $('#LongNarration').focus();
+
+            //}
+            //else if (ev.which === 8) {  // back button
+            //    debugger;
+            //    var itemid = parseFloat($('#creditID').val());
+
+            //    var drcrid = parseInt($('#accountID option:selected').val());
+
+
+            //    $('#accountID ').focus();
+
+            //}
+
+
+        },
+        keyup: function (ep) {
+            if (ep.which === 13) {   // enter button
+                debugger;
+                var itemid = parseFloat($('#creditID').val());
+
+                var drcrid = $('#accountID option:selected').val();
+
+
+                if (drcrid == "0" || drcrid == "") {
+
+                    $('#accountID').focus();
+                }
+
+                else {
+                    $('#narration').focus();
+
+
+                }
+
+            }
+            //if (ev.which === 16) {   // enter button
+            //    debugger;
+            //    var itemid = parseFloat($('#creditID').val());
+
+            //    var drcrid = $('#accountID option:selected').val();
+
+
+            //        $('#LongNarration').focus();
+
+            //}
+            //else if (ev.which === 8) {  // back button
+            //    debugger;
+            //    var itemid = parseFloat($('#creditID').val());
+
+            //    var drcrid = parseInt($('#accountID option:selected').val());
+
+
+            //    $('#accountID ').focus();
+
+            //}
+
+
+        }
+
+    });
+
+    $("#debitID").on({
+
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                debugger;
+                var itemid = $('#debitID').val();
+
+                var drcrid = parseInt($('#DrCrId').val());
+
+
+                if (itemid != 0 && itemid != null) {
+                    $('#btnadd').focus();
+
+                }
+
+                else {
+                    $('#debitID').focus();
+                    alert("enter amount");
+
+                }
+
+            }
+        }
+    });
+    $("#btnadd").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                debugger;
+                btnadd();
+
+            }
+        }
+    });
+    $("#btnadd").focusin(function () {
+        $(this).css("background-color", "yellow")
+    })
+    $("#btnadd").focusout(function () {
+        $(this).css("background-color", "#1cc88a")
+        $(this).css("border-color", "#1cc88a")
+    })
+
+    $("#narration").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                debugger;
+                console.log('enter button pressed');
+                $('#debitID').focus();
+
+            }
+        }
+    });
+
+    $("#LongNarration").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                debugger;
+                console.log('enter button pressed');
+                $('#VoucherOtherDetails').focus();
+
+            }
+        }
+    });
+    $("#btnSaveVoucher").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                debugger;
+                btnSaveVoucher();
+
+            }
+        }
+    });
+    $("#btnSaveVoucher").focusin(function () {
+        $(this).css("background-color", "orange")
+    });
+    $("#btnSaveVoucher").focusout(function () {
+        $(this).css("background-color", "#1cc88a")
+    });
+
+    $("#btnSaveVoucher").mousedown(function (e) {
+        btnSaveVoucher();
+
+    });
+
+    $("#VoucherOtherDetails").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                debugger;
+                console.log('enter button pressed');
+                $('#btnSaveVoucher').focus();
+
+            }
+        }
+    });
+
+//        window.onscroll = function() {myFunction()};
+
+//        var header = document.getElementById("myHeader");
+//        var sticky = header.offsetTop;
+
+//function myFunction() {
+//  if (window.pageYOffset > sticky) {
+//            header.classList.add("sticky");
+//  }
+//  else {
+//            header.classList.remove("sticky");
+//    }
+
+        $('#currencyID').change(function () {
+            var currencyid = $(this).val();
+
+            if (currencyid != 0) {
+
+                $.ajax({
+                    type: 'GET',
+                    data: { cid: currencyid },
+                    url: "@Url.Action("getcurrency","Vouchers")"
+
+                }).done(function (data) {
+                    $('#p').text(data);
+                    $('#pp').text(data);
+                }).fail(function (jqXHR, textStatus) {
+
+                    alert("Cant Get Currency,Contact Admin");
+                });
+            }
+                else {
+                $('#p').text("");
+                $('#pp').text("");
+            }
+
+            var currid = $('#currencyID option:selected').val();
+            var currname = $('#currencyID option:selected').text();
+
+            if (currid == 1) {
+                $('#currName').attr("placeholder", "PKR is the base currency");
+            }
+            else if (currid > 1) {
+                $('#currName').val(currname);
+            }
+
+
+
+        });
+
+        $('#DrCrID').change(function () {
+            var drcrid = 1;
+            debugger;
+
+            if (drcrid == 1) {
+                $('#debitID').prop('disabled', false);
+                //$('#debitID').removeAttr('disabled');
+                $('#creditID').prop('disabled', true);
+                $('#creditID').val("0.00");
+
+
+                var crfind = parseFloat($('table tbody tr').find('td:eq(9)').html());
+                if ($("table > tbody > tr").length > 0) {
+                    $('#debitID').val(crfind);
+
+
+                }
+
+
+            }
+            else if (drcrid == 2) {
+                $('#creditID').prop('disabled', false);
+
+
+                $('#creditID').removeAttr('disabled');
+                $('#debitID').prop('disabled', true);
+                $('#debitID').val("0.00");
+
+
+                var drfind = parseFloat($('table tbody tr').find('td:eq(8)').html());
+                if ($("table > tbody > tr").length > 0) {
+                    $('#creditID').val(drfind);
+
+
+                }
+
+            }
+            else if (drcrid == 0) {
+                $('#creditID').val("0.00");
+                $('#debitID').val("0.00");
+
+
+                $('#debitID').prop('disabled', true);
+                $('#creditID').prop('disabled', true);
+
+
+            }
+
+
+        });
+
+
+    function btnadd() {
+
+
+            var drcrid = $('#DrCrID option:selected').val();
+            var drcrname = $('#DrCrID option:selected').text();
+        var accountID = $('#accountID option:selected').val();
+        var modifychild = parseInt($('#modify').html());
+
+            var accountID2 = 0;
+            account1 = $("table  tbody  tr ").find('td:eq(10)').html();
+            debugger;
+            var find = $('table tbody tr ').length;
+            if ($("table > tbody > tr").length >= 1) {
+                $("table  tbody  tr").each(function () {
+
+                    //var ffx = $(this).find('td:eq(5)').html();
+                    //var new = $('#total').attr('value');
+
+                    account1 = $(this).find('td:eq(10)').html();
+
+
+                    //ftotal += $(t).find('input[name=Total]').val();a
+                    accountID2 = account1;
+                });
+            }
+
+        var rowid = 1;
+        if ($("table > tbody > tr").length > 0) {
+            $("table  tbody  tr").each(function () {
+
+                //var ffx = $(this).find('td:eq(5)').html();
+                //var new = $('#total').attr('value');
+
+                var oldrow = parseInt($(this).find('td:eq(9)').html());
+
+
+                //ftotal += $(t).find('input[name=Total]').val();a
+                rowid = oldrow + 1;
+            });
+        }
+
+
+
+        var accountname = $('#accountID option:selected').text();
+            var debitvalue = $('#debitID').val();
+            var creditvalue = $('#creditID').val();
+
+            var shortnarration = $('#narration').val();
+            debugger;
+            //var btn = $('#btnadd').hasClass("disabled");||  debitvalue == 0.00
+
+
+            debugger;
+            if (drcrid == 0 && accountID == "" && drcrname == "" ) {
+
+                alert("Please Fill Voucher Details First");
+                $('#DrCrID').focus();
+
+            }
+            //else if (drcrid == 0 && accountID == "" && drcrname == "" || debitvalue != "0.00" || creditvalue == "0.00" ) {
+            //    alert("Please Fill Voucher Details First");
+            //    $('#DrCrID').focus();
+
+        //}
+            else if (debitvalue != "") {
+                var removebtn = "<button type='button' id='btnremoveDr' class='btnremoveDr btn btn-danger'  onclick='removeDr(`" + rowid + "` )'><i class='glyphicon glyphicon-minus'></i></button>'";
+                // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";  <td><input readonly class='form-control'  value='Debit' /></td>//// <td><input type="hidden" readonly class='form-control' value="`+ creditvalue + `" name="CreditAmount" /></td>
+
+                if (modifychild == 1) {
+                    var row = ` <tr>
+            <td hidden><input type="hidden" name="DrCrID" value="1" /></td>
+            <td hidden><input type="hidden" name="AccountID" value="`+ accountID + `" /></td>
+            <td><input readonly class='form-control'  value="`+ accountname + `" name="Accountnameee" /></td>
+            <td><input readonly class='form-control' value="`+ shortnarration + `" name="ShortNarration"  id='ShortNarration' /></td>
+            <td><input readonly class='form-control' value="`+ debitvalue + `" name="DebitAmount" /></td>
+           <td hidden><input type="hidden" readonly class='form-control' value="0.00" name="CreditAmount" /></td>
+            <td>`+ removebtn + `</td>
+            <td hidden>`+ debitvalue + `</td>
+            <td hidden>`+ accountID + `</td>
+            <td hidden>`+ rowid + `</td>
+           <td hidden><input type="hidden" value="0" name="newchild2" /></td>
+
+            </tr>`;
+                }
+                else {
+                    var row = ` <tr>
+            <td hidden><input type="hidden" name="DrCrID" value="1" /></td>
+            <td hidden><input type="hidden" name="AccountID" value="`+ accountID + `" /></td>
+            <td><input readonly class='form-control'  value="`+ accountname + `" name="Accountnameee" /></td>
+            <td><input readonly class='form-control' value="`+ shortnarration + `" name="ShortNarration"  id='ShortNarration' /></td>
+            <td><input readonly class='form-control' value="`+ debitvalue + `" name="DebitAmount" /></td>
+           <td hidden><input type="hidden" readonly class='form-control' value="0.00" name="CreditAmount" /></td>
+            <td>`+ removebtn + `</td>
+            <td hidden>`+ debitvalue + `</td> 
+            <td hidden>`+ accountID + `</td>
+            <td hidden>`+ rowid + `</td>
+
+            </tr>`;
+                }
+
+
+                $('table tbody ').append(row);
+
+
+                /*Calculate Debit total*/
+                //if (modifychild == 1) {
+                //    var ftotal = parseFloat($('#debittotal').val());
+
+                //} else {
+                //    var ftotal = 0;
+                //}
+                var ftotal = 0;
+
+                if ($("table > tbody > tr").length > 0) {
+                    $("table  tbody  tr").each(function () {
+
+                        //var ffx = $(this).find('td:eq(5)').html();
+                        //var new = $('#total').attr('value');
+                        debugger;
+                        ftotal += parseFloat($(this).find('td:eq(7)').html());
+                        //ftotal += $(t).find('input[name=Total]').val();
+
+                    });
+                }
+
+                $('#debittotal').val(ftotal);
+                $('#txtDebitTotal').val(ftotal);
+
+                /*Calculate Credit total*/
+                //if (modifychild == 1) {
+                //    var credittotal = parseFloat($('#credittotal').val());
+                //} else {
+                //    var credittotal = 0;
+                //}
+                var credittotal = 0;
+
+
+                if ($("table > tbody > tr").length > 0) {
+                    $("table  tbody  tr").each(function () {
+
+                        //var ffx = $(this).find('td:eq(5)').html();
+                        //var new = $('#total').attr('value');
+                        debugger;
+                        credittotal += parseFloat($(this).find('td:eq(7)').html());
+
+                        //ftotal += $(t).find('input[name=Total]').val();a
+
+                    });
+                }
+
+                $('#credittotal').val(credittotal);
+                $('#txtCreditTotal').val(credittotal );
+
+
+
+
+                //$(document).ready(function () {
+                //    $('#search').focus();
+
+                //});
+
+                $('#DrCrID ').text();
+                //$('#select2-search-container').focus();
+                $('#debitID').val("");
+                $('#creditID').val("");
+                $('#select2-accountID-container').text("--Select Account---");
+
+                $('#narration').val("");
+                $('.select2-selection--single').focus();
+
+
+
+
+            }
+
+            else {
+                alert("Same accounts cant be debit and credit");
+                $('.select2-selection--single').focus();
+            }
+
+
+
+    };
+
+    function btnremoveDr() {
+
+        var cc = $(this).parent().html();
+
+        var test = $(this).parent().parent().find('td:eq(7)').html();
+
+
+        var ftotal = 0.00;//+ $('#txttotal').val();
+        var pt = 0.00;
+        debugger;
+        if ($("table > tbody > tr").length > 0) {
+            $("table > tbody > tr").each(function () {
+                var ot = parseFloat($(this).find('td:eq(7)').html());
+                pt = ot - parseFloat(ftotal);
+                //var ototal = ftotal;
+                //ototal += ftotal;
+            })
+        }
+
+
+        $('#debittotal').val(parseFloat(pt));
+        $('#txtDebitTotal').val(parseFloat(pt));
+
+
+        $('#btnremoveDr').parent().parent().remove();
+
+
+    };
+
+        $('#btnexchange').click(function () {
+            debugger;
+            //$('#txtCreditTotal').val("0.00");
+            //$('#txtDebitTotal').val("0.00");
+            var currid = $('#currencyID option:selected').val();
+            var exrate = $('#currRate').val();
+            var credittoal =  $('#credittotal').val();
+            var debittotal = $('#debittotal').val();
+
+            if (currid > 1) {
+
+                var creditftotal = parseFloat(credittoal) * parseFloat(exrate);
+                $('#txtCreditTotal').val(parseFloat(creditftotal));
+
+                var debittotal = parseFloat(debittotal) * parseFloat(exrate);
+                $('#txtDebitTotal').val(parseFloat(debittotal));
+
+                $(this).attr('data-dismiss','modal');
+
+            }
+            else {
+                $(this).attr('data-dismiss', 'modal');
+
+
+            }
+
+    });
+
+
+    function removeDr(rowid) {
+
+        var cc = $(this).parent().html();
+
+        var test = $('table tbody tr').parent().parent().find('td:eq(7)').html();
+
+        debugger;
+        var ftotal = 0.00;//+ $('#txttotal').val();
+        var oldtotal = $('#txtDebitTotal').val();
+        var pt = 0.00;
+        debugger;
+        if ($("table > tbody > tr").length > 0) {
+            $("table > tbody > tr").each(function () {
+                var rownum = parseFloat($(this).find('td:eq(9)').html());
+                debugger;
+
+                if (rownum == rowid) {
+                    debugger;
+                    var ot = parseFloat($(this).find('td:eq(7)').html());
+                    pt = ot - parseFloat(ftotal);
+                    var newpt = oldtotal - pt;
+                    //var ototal = ftotal;
+                    //ototal += ftotal;
+                    //$(this).children().children().children().remove();
+                    //$('#btnremoveDr').parent().parent().remove();
+
+                    $('#debittotal').val(newpt);
+                    $('#txtDebitTotal').val(parseFloat(newpt));
+
+                    $('#credittotal').val(parseFloat(newpt));
+                    $('#txtCreditTotal').val(parseFloat(newpt));
+
+
+                    var deletedid = parseInt($(this).find('td:eq(11)').html());
+                    var check = $('#jvchildid3').val();
+                    if (isNaN(deletedid)) {
+                        var ff = 0;
+                    }
+                    else if (check == 1) {
+                        //var row2 = "<td ><input type='number' value='0' name='deletedchild' id='deletedchild /></td>";
+                        var row2 = "<td hidden><input type='hidden' name='deletedchild' value=" + deletedid + " /></td>";
+                        $('table tbody tr').append(row2);
+
+                    }
+
+
+
+                    $(this).find('td:eq(9)').parent().remove();
+
+
+
+                }
+
+            })
+        }
+
+
+
+
+
+
+
+        //var ftotal = 0.00;//+ $('#txttotal').val();
+        //var pt = 0.00;
+        //debugger;
+        //if ($("table > tbody > tr").length > 0) {
+        //    $("table > tbody > tr").each(function () {
+        //        var ot = parseFloat($(this).find('td:eq(7)').html());
+        //        pt = ot - parseFloat(ftotal);
+        //        //var ototal = ftotal;
+        //        //ototal += ftotal;
+        //    })
+        //}
+
+
+        //$('#debittotal').val(parseFloat(pt));
+        //$('#txtDebitTotal').val(parseFloat(pt));
+
+
+    }
+
+
+
+    function removeCr() {
+
+        $('#btnremoveCr').parent().parent().remove();
+
+        var ftotalcr = 0.00;//+ $('#txttotal').val();
+        var ptcr = 0.00;
+        debugger;
+        if ($("table > tbody > tr").length > 0) {
+            $("table > tbody > tr").each(function () {
+                var otcr = parseFloat($(this).find('td:eq(9)').html());
+                ptcr = otcr - parseFloat(ftotalcr);
+                //var ototal = ftotal;
+                //ototal += ftotal;
+            })
+        }
+
+
+        $('#credittotal').val(parseFloat(ptcr));
+        $('#txtCreditTotal').val(parseFloat(ptcr));
+
+
+    }
+
+
+    //$('.btnremoveDr').click(function () {
+    //    debugger;
+    //    var test = $('#btnremoveDr').parent().parent();
+    //    //$('#DebitAmount').parent().remove();
+
+    //    var test = $('table tbody tr').find('td:eq(7)').html();
+
+    //    var ftotal = parseFloat($('#debittotal').val());        //+ $('#txttotal').val();
+    //    var pt = 0.00;
+
+    //    var tet = $(this).parent().parent().find('td:eq(7)').html();
+
+    //    if ($("table > tbody > tr").length > 0) {
+
+    //        var ot = parseFloat($(this).parent().parent().find('td:eq(7)').html());
+    //        pt = parseFloat(ftotal) - ot;
+
+    //    }
+
+
+    //    $('#debittotal').val(parseFloat(pt));
+    //    $('#txtDebitTotal').val(parseFloat(pt));
+
+
+    //    $(this).parent().parent().remove();
+
+
+
+    //});
+
+
+
+
+
+
+   function btnSaveVoucher() {
+            var form = $('.paymentvoucher').serialize();
+            var debittotal = $('#txtDebitTotal').val();
+            var credittotal = $('#txtCreditTotal').val();
+
+
+
+       var check = parseInt($('#modify').html());
+       debugger;
+       if (check == 1) {
+           var con = confirm("Are u sure u want to Update Voucher");
+
+       }
+       else {
+           var con = confirm("Are u sure u want Add Voucher");
+
+       }
+
+                if (con == true) {
+
+                    $.ajax({
+
+                        type: 'POST',
+                        data: form,
+                        beforeSend: function () { $('#wait').show(); },
+                        complete: function () { $('#wait').hide(); },
+                        url: "@Url.Action("SavePaymentVoucher", "Vouchers")"
+
+                    }).done(function (data) {
+                        alert("Voucher Save Successfully ");
+                        location.reload();
+                    }).fail(function (jqXHR, textStatus) {
+                        alert("Your Voucher cant be save,Contact Admin");
+                    });
+                }
+                else {
+                    alert("theak hai");
+                }
+   };
+
+
+</script>
+

@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="currencyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="sn" />
+      <PropertyRef Name="id" />
+      <PropertyRef Name="pwd" />
+      <PropertyRef Name="company" />
+      <PropertyRef Name="sdate" />
+      <PropertyRef Name="days" />
+      <PropertyRef Name="multi" />
+      <PropertyRef Name="automonth" />
+      <PropertyRef Name="newblock" />
+      <PropertyRef Name="package" />
+      <PropertyRef Name="AgentId" />
+      <PropertyRef Name="AgentUserID" />
+      <PropertyRef Name="IsWebUser" />
+      <PropertyRef Name="IsSMSCountry" />
+      <PropertyRef Name="IsUpdatedProfile" />
+      <PropertyRef Name="IsOldBlocked" />
+      <PropertyRef Name="IsMobileUser" />
+      <PropertyRef Name="UserGuidExpired" />
+    </Key>
+    <Property Name="sn" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="pwd" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BusyAccount" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="company" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="cell" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="sdate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="days" Type="Int32" Nullable="false" />
+    <Property Name="multi" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
+    <Property Name="block" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="FcAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="LcAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="rate" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="releif" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="autoref" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="automonth" Type="Byte" Nullable="false" />
+    <Property Name="newblock" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="package" Type="Byte" Nullable="false" />
+    <Property Name="AgentId" Type="Int32" Nullable="false" />
+    <Property Name="AgentUserID" Type="Int32" Nullable="false" />
+    <Property Name="IsWebUser" Type="Boolean" Nullable="false" />
+    <Property Name="SMSMobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="IsSMSCountry" Type="Boolean" Nullable="false" />
+    <Property Name="MobileNetworkId" Type="Int32" />
+    <Property Name="IsSMSSend" Type="Boolean" />
+    <Property Name="CountryId" Type="Int32" />
+    <Property Name="CountryCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="StartingDate" Type="DateTime" Precision="3" />
+    <Property Name="EndingDate" Type="DateTime" Precision="3" />
+    <Property Name="IsUpdatedProfile" Type="Boolean" Nullable="false" />
+    <Property Name="IsOldBlocked" Type="Boolean" Nullable="false" />
+    <Property Name="IsMobileUser" Type="Boolean" Nullable="false" />
+    <Property Name="UserGuid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastGuidDate" Type="DateTime" Precision="3" />
+    <Property Name="LastGuidAccessDate" Type="DateTime" Precision="3" />
+    <Property Name="UserGuidExpired" Type="Boolean" Nullable="false" />
+    <Property Name="FirebaseToken" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="FirebaseTokenUpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="SellingPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="RateUpdate" Type="Boolean" />
+  </EntityType>
+  <EntityContainer Name="currencyEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="users" EntityType="Self.users" />
+    <FunctionImport Name="Getusers" ReturnType="Collection(currencyModel.Getusers_Result)">
+      <Parameter Name="sn" Mode="In" Type="Decimal" />
+      <Parameter Name="id" Mode="In" Type="String" />
+      <Parameter Name="pwd" Mode="In" Type="String" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="company" Mode="In" Type="String" />
+      <Parameter Name="address" Mode="In" Type="String" />
+      <Parameter Name="phone" Mode="In" Type="String" />
+      <Parameter Name="cell" Mode="In" Type="String" />
+      <Parameter Name="email" Mode="In" Type="String" />
+      <Parameter Name="sdate" Mode="In" Type="DateTime" />
+      <Parameter Name="days" Mode="In" Type="Int32" />
+      <Parameter Name="multi" Mode="In" Type="Int32" />
+      <Parameter Name="block" Mode="In" Type="String" />
+      <Parameter Name="rate" Mode="In" Type="Decimal" />
+      <Parameter Name="releif" Mode="In" Type="Decimal" />
+      <Parameter Name="autoref" Mode="In" Type="String" />
+      <Parameter Name="automonth" Mode="In" Type="Byte" />
+      <Parameter Name="newblock" Mode="In" Type="String" />
+      <Parameter Name="package" Mode="In" Type="Byte" />
+      <Parameter Name="AgentId" Mode="In" Type="Int32" />
+      <Parameter Name="AgentUserId" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="Getusers_Result">
+    <Property Type="Decimal" Name="sn" Nullable="false" Precision="18" Scale="0" />
+    <Property Type="String" Name="id" Nullable="false" MaxLength="40" />
+    <Property Type="String" Name="pwd" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="BusyAccount" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="name" Nullable="true" MaxLength="60" />
+    <Property Type="String" Name="company" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="address" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="phone" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="cell" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="email" Nullable="true" MaxLength="60" />
+    <Property Type="DateTime" Name="sdate" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="days" Nullable="false" />
+    <Property Type="Decimal" Name="multi" Nullable="false" Precision="3" Scale="0" />
+    <Property Type="String" Name="block" Nullable="true" MaxLength="1" />
+    <Property Type="Decimal" Name="FcAmount" Nullable="true" Precision="19" Scale="4" />
+    <Property Type="Decimal" Name="LcAmount" Nullable="true" Precision="19" Scale="4" />
+    <Property Type="Decimal" Name="rate" Nullable="true" Precision="19" Scale="4" />
+    <Property Type="Decimal" Name="releif" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="String" Name="autoref" Nullable="true" MaxLength="1" />
+    <Property Type="Byte" Name="automonth" Nullable="false" />
+    <Property Type="String" Name="newblock" Nullable="false" MaxLength="1" />
+    <Property Type="Byte" Name="package" Nullable="false" />
+    <Property Type="Int32" Name="AgentId" Nullable="false" />
+    <Property Type="Int32" Name="AgentUserID" Nullable="false" />
+    <Property Type="Boolean" Name="IsWebUser" Nullable="false" />
+    <Property Type="String" Name="SMSMobileNo" Nullable="true" MaxLength="15" />
+    <Property Type="Boolean" Name="IsSMSCountry" Nullable="false" />
+    <Property Type="Int32" Name="MobileNetworkId" Nullable="true" />
+    <Property Type="Boolean" Name="IsSMSSend" Nullable="true" />
+    <Property Type="Int32" Name="CountryId" Nullable="true" />
+    <Property Type="String" Name="CountryCode" Nullable="true" MaxLength="3" />
+    <Property Type="DateTime" Name="StartingDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="EndingDate" Nullable="true" Precision="23" />
+    <Property Type="Boolean" Name="IsUpdatedProfile" Nullable="false" />
+    <Property Type="Boolean" Name="IsOldBlocked" Nullable="false" />
+    <Property Type="Boolean" Name="IsMobileUser" Nullable="false" />
+    <Property Type="String" Name="UserGuid" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="LastGuidDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="LastGuidAccessDate" Nullable="true" Precision="23" />
+    <Property Type="Boolean" Name="UserGuidExpired" Nullable="false" />
+    <Property Type="String" Name="FirebaseToken" Nullable="true" MaxLength="200" />
+    <Property Type="DateTime" Name="FirebaseTokenUpdatedOn" Nullable="true" Precision="23" />
+    <Property Type="Decimal" Name="SellingPrice" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Boolean" Name="RateUpdate" Nullable="true" />
+  </ComplexType>
+</Schema>

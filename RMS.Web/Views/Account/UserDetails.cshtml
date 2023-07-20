@@ -1,0 +1,537 @@
+﻿@model RMS.Web.Models.UserPrivilegeViewModel
+@{
+    ViewBag.Title = "Register";
+}
+<script src="~/Scripts/jquery.tree-multiselect.min.js"></script>
+<link href="~/Content/jquery.tree-multiselect.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.12/js/bootstrap-multiselect.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3" style="background-color:#5a5c69">
+
+            <h4 class="m-0  font-weight-bold">
+                <strong style="color:white;">Manage User </strong>
+                <a href="~/Account/UsersList" id="backBtn" class="btn btn-success col-md-offset-9">Back</a>
+
+            </h4>
+
+        </div>
+        @*<div class="card-body">
+            <hr />
+            <div class="form-group">
+                <lablel class="col-md-2" style="color:black"> UserName</lablel>
+
+                <div class="col-md-4">
+                    <input type="text" name="UserName" class="form-control" value="@Model.UserName " />
+
+                </div>
+            </div>
+            <div class="form-group">
+                <lablel class="col-md-2" style="color:black"> Email</lablel>
+                <input type="hidden" id="userid" value="@Model.Users.Id" />
+                <div class="col-md-4">
+                    <input type="text" name="Email" value="@Model.Users.Email " class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <lablel class="col-md-2" style="color:black"> Password</lablel>
+
+                <div class="col-md-4">
+                    <input type="password" name="Password" class="form-control" value="**********" />
+
+                </div>
+            </div>
+            <div class="form-group">
+                <lablel class="col-md-2" style="color:black"> ConfirmPassword</lablel>
+                <div class="col-md-4">
+                    <input type="password" name="Password" class="form-control" value="**********" />
+                </div>
+            </div>
+
+
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-primary" value="Update" />
+                </div>
+            </div>
+        </div>*@
+
+
+        @*@using (Html.BeginForm("UserDetails", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {*@
+            <form id="userdetailform">
+
+                <div class="card-body">
+                    <div class="col-md-8">
+
+                        @*@Html.AntiForgeryToken()
+                        <h4></h4>
+                        <div class="alert alert-danger" id="msg" role="alert">
+                            @ViewBag.message
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                        </div>
+                        <hr />*@
+
+
+                        @*<input type="hidden" name="" id="selectUserId" value="@Model.registerViewModel.Userid" />*@
+                        @Html.Hidden("Userid", new { @class = "form-control", @Id = "selectUserId", @value = Model.registerViewModel.Userid })
+                        @Html.Hidden("Id", new { @class = "form-control", @Id = "selectId", @value = Model.registerViewModel.Id })
+
+                        <div class="form-group">
+                            <lablel class="col-md-2" style="color:black"> UserName</lablel>
+
+                            <div class="col-md-3">
+                                @Html.TextBox("UserName", null, new { @class = "form-control", @Value = Model.registerViewModel.UserName })
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <lablel class="col-md-2" style="color:black"> Material Centre</lablel>
+
+                            <div class="col-md-3">
+                                @Html.DropDownList("locationid", (IEnumerable<SelectListItem>)ViewBag.MaterialCentres, "---Select Location---", htmlAttributes: new { @class = " form-control ", @Id = "LocationID" })
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <lablel class="col-md-2" style="color:black"> Email</lablel>
+
+                            <div class="col-md-3">
+                                @Html.TextBox("Email", null, new { @class = "form-control", @Value = Model.registerViewModel.Email })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <lablel class="col-md-2" style="color:black"> Phone Number</lablel>
+
+                            <div class="col-md-3">
+                                @Html.TextBox("PhoneNumber", null, new { @class = "form-control", @Value = Model.registerViewModel.PhoneNumber })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <lablel class="col-md-2" style="color:black"> Password</lablel>
+
+                            <div class="col-md-3">
+                                @Html.Password("Password", null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <lablel class="col-md-2" style="color:black"> ConfirmPassword</lablel>
+                            <div class="col-md-3">
+                                @Html.Password("ConfirmPassword", null,new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <!---->
+                        <br />
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" class="btn btn-primary btnSaveUserPrivilege" value="Submit" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <lablel class="col-md-2" style="color:black"> UserName</lablel>
+
+                            <div class="col-md-3">
+                                @Html.TextBox("UserName", null, new { @class = "form-control",@Value = Model.registerViewModel.UserName })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+
+
+
+
+
+        <div class="container">
+            @*<div class="panel" style="background-color:white;padding:20px;">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div style="padding: 30px;">
+                            <label>Select User :</label>
+                            <select id="selectUserId" class="form-control">
+                                <option hidden value="">Select User</option>
+                                @if (Model.UserDetails != null)
+                                {
+                                    foreach (var r in Model.UserDetails)
+                                    {
+                                        if (r.UserID == Model.SelectedUserId)
+                                        {
+                                            <option selected value="@r.UserID">@r.UserName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@r.UserID">@r.UserName</option>
+                                        }
+
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div style="padding-top: 55px;">
+                            <div class="btn-group">
+                                <button class="button btn btn-success waves-effect btnSaveUserPrivilege"><i class="fa fa-save"></i> Save</button>
+                                <button class="button btn btn-danger waves-effect btnReplaceUserPrivilege"><i class="fa fa-reply"></i> Replace Current Priviliges</button>
+                                <button class="button btn btn-primary waves-effect backBtn" id="backBtn"><i class="fa fa-reply"></i>Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+            <div class="panel">
+                <select name="MenuIds" id="userPrivilege" multiple="multiple">
+                    @if (Model.MenuItems != null)
+                    {
+                        if (Model.ExistingAssignedMenuIds != null)
+                        {
+                            foreach (var m in Model.MenuItems.Where(m => m.IsParent == true))
+                            {
+                                if (Model.MenuItems.Count > 0)
+                                {
+                                    foreach (var sm in Model.MenuItems.Where(x => x.ParentID == m.ID && x.IsActive == true))
+                                    {
+                                        if (Model.ExistingAssignedMenuIds.Contains(sm.ID))
+                                        {
+                                            <option value="@sm.ID" selected data-section="@m.MenuName">@sm.MenuName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@sm.ID" data-section="@m.MenuName">@sm.MenuName</option>
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var m in Model.MenuItems.Where(m => m.IsParent == true))
+                            {
+
+                                if (Model.MenuItems.Count > 0)
+                                {
+                                    foreach (var sm in Model.MenuItems.Where(x => x.ParentID == m.ID))
+                                    {
+                                        <option value="@sm.ID" data-section="@m.MenuName">@sm.MenuName</option>
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                </select>
+            </div>
+        </div>
+        <script>
+
+            var tree = $("#userPrivilege").treeMultiselect({
+                allowBatchSelection: true,
+                enableSelectAll: true,
+                searchable: true,
+                sortable: true,
+                startCollapsed: false
+            });
+
+            $('.btnSaveUserPrivilege').click(function () {
+
+                var menuIds = [];
+                $("#userPrivilege > option:selected").each(function () {
+                    menuIds.push(this.value);
+                });
+
+                var userId = $('#selectUserId').val();
+                var form = $('#userdetailform').serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Account/UserPrivilege',
+                    data: { MenuIds: menuIds, UserId: userId }
+                })
+                    .done(function (data) {
+                        if (data == "success") {
+
+                            alert("User Privileges Updated Successfully!");
+                        }
+                        else {
+                            toastr.warning(data, "Failed!");
+                        }
+
+                    })
+                    .fail(function (XMLHttpRequest, txtStatus, errorThrown) {
+                        alert("User Privilege Save Failed");
+                    });
+                debugger;
+                $.ajax({
+                    type: 'POST',
+                    url: '/Account/UserDetails',
+                    data: { model: form}
+                })
+                    .done(function (data) {
+                        if (data == "success") {
+
+                            alert("User  Updated Successfully!");
+                        }
+                        else {
+                            toastr.warning(data, "Failed!");
+                        }
+
+                    })
+                    .fail(function (XMLHttpRequest, txtStatus, errorThrown) {
+                        alert("User  Save Failed");
+                    });
+
+                //$.ajax({
+                //    type: 'POST',
+                //    url: '/Account/UserPrivilege',
+                //    data: { MenuIds: menuIds, UserId: userId }
+                //})
+                //    .done(function (data) {
+                //        if (data == "success") {
+
+                //            alert("User Privileges Updated Successfully!");
+                //        }
+                //        else {
+                //            toastr.warning(data, "Failed!");
+                //        }
+
+                //    })
+                //    .fail(function (XMLHttpRequest, txtStatus, errorThrown) {
+                //        alert("User Privilege Save Failed");
+                //    });
+
+            })
+
+            $('.btnReplaceUserPrivilege').click(function () {
+
+                var menuIds = [];
+                $("#userPrivilege > option:selected").each(function () {
+                    menuIds.push(this.value);
+                });
+
+                var userId = $('#selectUserId').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Account/UserPrivilege',
+                    data: { MenuIds: menuIds, UserId: userId, Replace: "True" }
+                })
+                    .done(function (data) {
+                        if (data == "success") {
+
+                            alert("User Privileges Updated Successfully!");
+                        }
+                        else {
+                            toastr.warning(data, "Failed!");
+                        }
+
+                    })
+                    .fail(function (XMLHttpRequest, txtStatus, errorThrown) {
+                        alert("User Privilege Save Failed");
+                    });
+
+            })
+
+
+        </script>
+
+
+
+
+
+
+        @*<div class="col-md-1">
+            @foreach (var item in Model.Usersmenu)
+            {
+            <ul classs="treeview">
+                @if (item.MenuItems.ParentID == 0)
+                {
+
+                <li>
+                    <input type="checkbox" name=">@item.MenuItems.MenuName" id="@item.MenuItems.MenuName">
+                    <label for="@item.MenuItems.MenuName" class="custom-unchecked">@item.MenuItems.MenuName</label>
+                </li>
+
+                }
+                else
+                {
+                    <li>
+                        <ul>
+                            <li>
+                                <input type="checkbox" name="@item.MenuItems.MenuName-1" id="@item.MenuItems.MenuName-1">
+                                <label for="@item.MenuItems.MenuName-1" class="custom-unchecked">@item.MenuItems.MenuName</label>
+                            </li>
+                            @*<li>
+                    <input type="checkbox" name="tall-2" id="tall-2">
+                    <label for="tall-2" class="custom-unchecked">Giants</label>
+                    <ul>
+                        <li>
+                            <input type="checkbox" name="tall-2-1" id="tall-2-1">
+                            <label for="tall-2-1" class="custom-unchecked">Andre</label>
+                        </li>
+                        <li class="last">
+                            <input type="checkbox" name="tall-2-2" id="tall-2-2">
+                            <label for="tall-2-2" class="custom-unchecked">Paul Bunyan</label>
+                        </li>
+                    </ul>
+                </li>
+                <li class="last">
+                    <input type="checkbox" name="tall-3" id="tall-3">
+                    <label for="tall-3" class="custom-unchecked">Two sandwiches</label>
+                </li>
+                        </ul>
+
+                    </li>
+
+
+                }
+            </ul>
+            }
+
+        </div>*@
+
+
+
+    </div>
+    </div>
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+        setTimeout(function () {
+            $("#msg").fadeOut();
+        }, 4000);
+    });
+    $(function () {
+
+        $('input[type="checkbox"]').change(checkboxChanged);
+
+        function checkboxChanged() {
+            var $this = $(this),
+                checked = $this.prop("checked"),
+                container = $this.parent(),
+                siblings = container.siblings();
+
+            container.find('input[type="checkbox"]')
+                .prop({
+                    indeterminate: false,
+                    checked: checked
+                })
+                .siblings('label')
+                .removeClass('custom-checked custom-unchecked custom-indeterminate')
+                .addClass(checked ? 'custom-checked' : 'custom-unchecked');
+
+            checkSiblings(container, checked);
+        }
+
+        function checkSiblings($el, checked) {
+            var parent = $el.parent().parent(),
+                all = true,
+                indeterminate = false;
+
+            $el.siblings().each(function () {
+                return all = ($(this).children('input[type="checkbox"]').prop("checked") === checked);
+            });
+
+            if (all && checked) {
+                parent.children('input[type="checkbox"]')
+                    .prop({
+                        indeterminate: false,
+                        checked: checked
+                    })
+                    .siblings('label')
+                    .removeClass('custom-checked custom-unchecked custom-indeterminate')
+                    .addClass(checked ? 'custom-checked' : 'custom-unchecked');
+
+                checkSiblings(parent, checked);
+            }
+            else if (all && !checked) {
+                indeterminate = parent.find('input[type="checkbox"]:checked').length > 0;
+
+                parent.children('input[type="checkbox"]')
+                    .prop("checked", checked)
+                    .prop("indeterminate", indeterminate)
+                    .siblings('label')
+                    .removeClass('custom-checked custom-unchecked custom-indeterminate')
+                    .addClass(indeterminate ? 'custom-indeterminate' : (checked ? 'custom-checked' : 'custom-unchecked'));
+
+                checkSiblings(parent, checked);
+            }
+            else {
+                $el.parents("li").children('input[type="checkbox"]')
+                    .prop({
+                        indeterminate: true,
+                        checked: false
+                    })
+                    .siblings('label')
+                    .removeClass('custom-checked custom-unchecked custom-indeterminate')
+                    .addClass('custom-indeterminate');
+            }
+        }
+    });
+
+
+    @*var userid = $('#userid').val();
+    if (userid != null) {
+        $.ajax({
+            type: 'GET',
+            datatype: 'JSON',
+            data: { id: userid },
+            url: "@Url.Action("Account","GetUserMenu")"
+        }).done(function (response) {
+
+            $('#availQuantity').(data);
+
+        }).fail(function (jqXHR, textStatus) {
+
+            alert("get data faied");
+
+        });
+
+
+
+
+    }*@
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+
+
+<script>
+    $('#backBtn').click(function () {
+        window.history.back();
+    });
+</script>

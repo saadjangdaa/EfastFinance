@@ -1,0 +1,161 @@
+﻿
+<input type="hidden" class="form-control" name="AccountID" id="AccountID" />
+<div class="row">
+    <label class="col-md-4">Account  Name</label>
+    <div class="col-md-8">
+        <input type="text" class="form-control " id="AccountName" name="AccountName" />
+    </div>
+</div>
+<br />
+<div class="row">
+    <label class="col-md-4">Account  Alias</label>
+    <div class="col-md-8">
+        <input type="text" class="form-control" id="Alias" name="Alias" />
+    </div>
+</div>
+
+<br />
+<div class="row">
+    <label class="col-md-4">LedgerType</label>
+    <div class="col-md-8">
+        @Html.DropDownList("Ledgertype", (IEnumerable<SelectListItem>)ViewBag.Ledgertype, "----Select LedgerType----", htmlAttributes: new { @class = "form-control", @Id = "LedgerTypeid", @Name = "LedgerTypeid" })
+    </div>
+</div>
+<br />
+<div id="append">
+    <div class="row" style="display:none;" id="child">
+
+        <label class="col-md-4">SubLedger Account Name</label>
+        <div class="col-md-8">
+            @Html.DropDownList("Subledgeraccounts", (IEnumerable<SelectListItem>)ViewBag.accounts, "----Select Account Name----", htmlAttributes: new { @class = "js-example-basic-single", @Id = "SubledgeraccountID", @Name = "SubledgeraccountID" })
+            <input type="hidden" id="SubledgerGroupID" name="SubledgerGroupID" />
+            <input type="hidden" id="SubledgerGroupName " name="SubledgerGroupName" />
+        </div>
+    </div>
+    <br />
+    <div class="row" style="display:none;" id="child2">
+        <label class="col-md-4">Account  Group Name</label>
+        <div class="col-md-8">
+            @Html.DropDownList("AccGroup", (IEnumerable<SelectListItem>)ViewBag.AccGroup, "----Select Account Group----", htmlAttributes: new { @class = "form-control", @Id = "Accgroupid", @Name = "Accgroupid" })
+            @*@Html.DropDownList("AccGroup", (IEnumerable<SelectListItem>)ViewBag.AccGroup, "----Select Account Group----", htmlAttributes: new { @class = "js-example-basic-single", @Id = "Accgroupid", @Name = "Accgroupid"  })*@
+        </div>
+    </div>
+
+</div>
+<div id="child3" class="row " style="display:none;">
+    <h5 class="text-center col-md-offset-4">Select Ledger Type</h5>
+
+</div>
+
+
+<br />
+<div class="row">
+    <label class="col-md-4">Currency</label>
+    <div class="col-md-8">
+        @Html.DropDownList("Currency", (IEnumerable<SelectListItem>)ViewBag.Currency, "----Select Currency----", htmlAttributes: new { @class = "form-control", @Id = "CurrencyID", @Name = "CurrencyID" })
+
+    </div>
+</div>
+
+
+
+
+<br />
+
+<div class="row">
+    <label class="col-md-4">Opening Balance  </label>
+    <div class="col-md-8">
+        <input type="number" value="0.00" class="form-control" id="Opening_Balance" name="Opening_Balance" />
+    </div>
+</div>
+<br />
+
+<div class="row">
+    <label class="col-md-4">Address</label>
+    <div class="col-md-8">
+        <input type="text" class="form-control" id="Address" name="Address" />
+    </div>
+</div>
+<br />
+
+<div class="row">
+    <label class="col-md-4">Country</label>
+    <div class="col-md-8">
+        @Html.DropDownList("Country", (IEnumerable<SelectListItem>)ViewBag.Country, "----Select Country----", htmlAttributes: new { @class = "form-control", @Id = "CountryID", @Name = "CountryID" })
+
+    </div>
+</div>
+<br />
+
+
+<div class="row">
+    <label class="col-md-4">CNIC</label>
+    <div class="col-md-8">
+        <input type="number" class="form-control" id="CNIC" name="CNIC" />
+    </div>
+</div>
+
+<br />
+
+<div class="row">
+    <label class="col-md-4">Mobile Number</label>
+    <div class="col-md-8">
+        <input type="number" class="form-control" id="mobileNum" name="mobileNum" />
+    </div>
+</div>
+<br />
+
+<div class="row">
+    <label class="col-md-4">Email</label>
+    <div class="col-md-8">
+        <input type="email" class="form-control" id="email" name="email" />
+    </div>
+</div>
+<br />
+
+
+<div class="row">
+    <label class="col-md-4">BeneficiaryName</label>
+    <div class="col-md-8">
+        <input type="text" readonly="readonly" class="form-control" id="BeneficiaryName" name="BeneficiaryName" />
+    </div>
+</div>
+
+
+
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+<script>
+    $('.js-example-basic-single').select2();
+
+
+    $('#AccountName').focusout(function () {
+        debugger;
+        var accountname = $(this).val();
+
+        if (accountname != "") {
+
+            $.ajax({
+                type: 'POST',
+                data: { accname: accountname },
+                url: "@Url.Action("FindAccount", "Masters")"
+
+            }).done(function (data) {
+                debugger;
+                if (data != "") {
+                    alert(data);
+                    $('#AccountName').val(" ");
+                    $('#AccountName').focusin();
+                }
+
+            }).fail(function (jqxhr, textStatus) {
+
+                alert("Cant find account, contact admin");
+
+            });
+        }
+    });
+
+</script>

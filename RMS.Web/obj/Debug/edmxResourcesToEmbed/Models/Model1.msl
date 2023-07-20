@@ -1,0 +1,529 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MVCDBLiveModelStoreContainer" CdmEntityContainer="MVCDBLiveEntities">
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.C__MigrationHistory">
+        <MappingFragment StoreEntitySet="__MigrationHistory">
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AccGroup">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.AccGroup">
+        <MappingFragment StoreEntitySet="AccGroup">
+          <ScalarProperty Name="AccgroupID" ColumnName="AccgroupID" />
+          <ScalarProperty Name="Accgroupname" ColumnName="Accgroupname" />
+          <ScalarProperty Name="Accgroupalias" ColumnName="Accgroupalias" />
+          <ScalarProperty Name="AccunderprimarygroupName" ColumnName="AccunderprimarygroupName" />
+          <ScalarProperty Name="Accgroupbalance" ColumnName="Accgroupbalance" />
+          <ScalarProperty Name="Accunderprimarygroupid" ColumnName="Accunderprimarygroupid" />
+          <ScalarProperty Name="DebitAmount" ColumnName="DebitAmount" />
+          <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Account">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.Account">
+        <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+          <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+          <ScalarProperty Name="Alias" ColumnName="Alias" />
+          <ScalarProperty Name="Print_Name" ColumnName="Print Name" />
+          <ScalarProperty Name="LedgerTypeid" ColumnName="LedgerTypeid" />
+          <ScalarProperty Name="SubledgeraccountID" ColumnName="SubledgeraccountID" />
+          <ScalarProperty Name="Accgroupid" ColumnName="Accgroupid" />
+          <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
+          <ScalarProperty Name="Opening_Balance" ColumnName="Opening Balance" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="CNIC" ColumnName="CNIC" />
+          <ScalarProperty Name="Userid" ColumnName="Userid" />
+          <ScalarProperty Name="mobileNum" ColumnName="mobileNum" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="BeneficiaryName" ColumnName="BeneficiaryName" />
+          <ScalarProperty Name="SubledgerGroupID" ColumnName="SubledgerGroupID" />
+          <ScalarProperty Name="SubledgerGroupName" ColumnName="SubledgerGroupName" />
+          <ScalarProperty Name="ClosingBalance" ColumnName="ClosingBalance" />
+          <ScalarProperty Name="CreditTotal" ColumnName="CreditTotal" />
+          <ScalarProperty Name="DebitTotal" ColumnName="DebitTotal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AccountMainHead">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.AccountMainHead">
+        <MappingFragment StoreEntitySet="AccountMainHead">
+          <ScalarProperty Name="MainID" ColumnName="MainID" />
+          <ScalarProperty Name="MainAccGroupName" ColumnName="MainAccGroupName" />
+          <ScalarProperty Name="MainGroupID" ColumnName="MainGroupID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.AspNetRoles">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.AspNetUserClaims">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.AspNetUserLogins">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.AspNetUsers">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="AllowPrint" ColumnName="AllowPrint" />
+          <ScalarProperty Name="AllowDelete" ColumnName="AllowDelete" />
+          <ScalarProperty Name="AllowUpdate" ColumnName="AllowUpdate" />
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BillSundry">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.BillSundry">
+        <MappingFragment StoreEntitySet="BillSundry">
+          <ScalarProperty Name="BiilSundryID" ColumnName="BiilSundryID" />
+          <ScalarProperty Name="BillSundryName" ColumnName="BillSundryName" />
+          <ScalarProperty Name="BillSundryPrice" ColumnName="BillSundryPrice" />
+          <ScalarProperty Name="BillSundryShortName" ColumnName="BillSundryShortName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BillSundryChild">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.BillSundryChild">
+        <MappingFragment StoreEntitySet="BillSundryChild">
+          <ScalarProperty Name="BillSundryChildID" ColumnName="BillSundryChildID" />
+          <ScalarProperty Name="BillSundryID" ColumnName="BillSundryID" />
+          <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+          <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+          <ScalarProperty Name="BillSundryAmount" ColumnName="BillSundryAmount" />
+          <ScalarProperty Name="Vouchermasterid" ColumnName="Vouchermasterid" />
+          <ScalarProperty Name="BillSundryNumber" ColumnName="BillSundryNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Country">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Currency">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.Currency">
+        <MappingFragment StoreEntitySet="Currency">
+          <ScalarProperty Name="HighRate" ColumnName="HighRate" />
+          <ScalarProperty Name="LowRate" ColumnName="LowRate" />
+          <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
+          <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
+          <ScalarProperty Name="CurrencyShortName" ColumnName="CurrencyShortName" />
+          <ScalarProperty Name="CurrencyName" ColumnName="CurrencyName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DrCr">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.DrCr">
+        <MappingFragment StoreEntitySet="DrCr">
+          <ScalarProperty Name="DrCrID" ColumnName="DrCrID" />
+          <ScalarProperty Name="DrCrName" ColumnName="DrCrName" />
+          <ScalarProperty Name="DrCrShortName" ColumnName="DrCrShortName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemGroup">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.ItemGroup">
+        <MappingFragment StoreEntitySet="ItemGroup">
+          <ScalarProperty Name="ItemGroupId" ColumnName="ItemGroupId" />
+          <ScalarProperty Name="ItemGroupName" ColumnName="ItemGroupName" />
+          <ScalarProperty Name="ItemGroupAlias" ColumnName="ItemGroupAlias" />
+          <ScalarProperty Name="ItemUndergroupid" ColumnName="ItemUndergroupid" />
+          <ScalarProperty Name="Itemundergroupname" ColumnName="Itemundergroupname" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JournalVoucherChild">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.JournalVoucherChild">
+        <MappingFragment StoreEntitySet="JournalVoucherChild">
+          <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
+          <ScalarProperty Name="FcRate" ColumnName="FcRate" />
+          <ScalarProperty Name="JVchildID" ColumnName="JVchildID" />
+          <ScalarProperty Name="JVMasterID" ColumnName="JVMasterID" />
+          <ScalarProperty Name="DrCrID" ColumnName="DrCrID" />
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+          <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
+          <ScalarProperty Name="DebitAmount" ColumnName="DebitAmount" />
+          <ScalarProperty Name="ShortNarration" ColumnName="ShortNarration" />
+          <ScalarProperty Name="JvDate" ColumnName="JvDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JournalVoucherMaster">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.JournalVoucherMaster">
+        <MappingFragment StoreEntitySet="JournalVoucherMaster">
+          <ScalarProperty Name="JvID_VoucherNo" ColumnName="JvID/VoucherNo" />
+          <ScalarProperty Name="VoucherDate" ColumnName="VoucherDate" />
+          <ScalarProperty Name="LongNarration" ColumnName="LongNarration" />
+          <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
+          <ScalarProperty Name="DebitTotal" ColumnName="DebitTotal" />
+          <ScalarProperty Name="CreditTotal" ColumnName="CreditTotal" />
+          <ScalarProperty Name="VoucherOtherDetails" ColumnName="VoucherOtherDetails" />
+          <ScalarProperty Name="VoucherTypeID" ColumnName="VoucherTypeID" />
+          <ScalarProperty Name="jvmasterid" ColumnName="jvmasterid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ledgertype">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.ledgertype">
+        <MappingFragment StoreEntitySet="ledgertype">
+          <ScalarProperty Name="LegerID" ColumnName="LegerID" />
+          <ScalarProperty Name="LedgerName" ColumnName="LedgerName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MaterialCentreGroup">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.MaterialCentreGroup">
+        <MappingFragment StoreEntitySet="MaterialCentreGroup">
+          <ScalarProperty Name="MaterialGroupID" ColumnName="MaterialGroupID" />
+          <ScalarProperty Name="MaterialGroupName" ColumnName="MaterialGroupName" />
+          <ScalarProperty Name="Alias" ColumnName="Alias" />
+          <ScalarProperty Name="PrintName" ColumnName="PrintName" />
+          <ScalarProperty Name="MaterialGroupUndergroupid" ColumnName="MaterialGroupUndergroupid" />
+          <ScalarProperty Name="MaterialGroupUndergroupName" ColumnName="MaterialGroupUndergroupName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MenuItems">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.MenuItems">
+        <MappingFragment StoreEntitySet="MenuItems">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Icon" ColumnName="Icon" />
+          <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+          <ScalarProperty Name="IsParent" ColumnName="IsParent" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Purchase">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.Purchase">
+        <MappingFragment StoreEntitySet="Purchase">
+          <ScalarProperty Name="PurchaseID" ColumnName="PurchaseID" />
+          <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="PurchaseNumber" ColumnName="PurchaseNumber" />
+          <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+          <ScalarProperty Name="RecieveDate" ColumnName="RecieveDate" />
+          <ScalarProperty Name="FinalTotal" ColumnName="FinalTotal" />
+          <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stock">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.Stock">
+        <MappingFragment StoreEntitySet="Stock">
+          <ScalarProperty Name="stockID" ColumnName="stockID" />
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="stockref" ColumnName="stockref" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockTransferChild">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.StockTransferChild">
+        <MappingFragment StoreEntitySet="StockTransferChild">
+          <ScalarProperty Name="StockTransferChildID" ColumnName="StockTransferChildID" />
+          <ScalarProperty Name="StockTransferMasterID" ColumnName="StockTransferMasterID" />
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+          <ScalarProperty Name="ItemPrice" ColumnName="ItemPrice" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="BillSundryID" ColumnName="BillSundryID" />
+          <ScalarProperty Name="BillSundryAmount" ColumnName="BillSundryAmount" />
+          <ScalarProperty Name="StockTransferTypeID" ColumnName="StockTransferTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockTransferMaster">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.StockTransferMaster">
+        <MappingFragment StoreEntitySet="StockTransferMaster">
+          <ScalarProperty Name="StockTransferID" ColumnName="StockTransferID" />
+          <ScalarProperty Name="StockTransferNo" ColumnName="StockTransferNo" />
+          <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+          <ScalarProperty Name="MaterialCentreID" ColumnName="MaterialCentreID" />
+          <ScalarProperty Name="VoucherID" ColumnName="VoucherID" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="Narration" ColumnName="Narration" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentInfo">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.StudentInfo">
+        <MappingFragment StoreEntitySet="StudentInfo">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+          <ScalarProperty Name="StudentFatherName" ColumnName="StudentFatherName" />
+          <ScalarProperty Name="StudentAge" ColumnName="StudentAge" />
+          <ScalarProperty Name="StudentEmail" ColumnName="StudentEmail" />
+          <ScalarProperty Name="Fathercnic" ColumnName="Fathercnic" />
+          <ScalarProperty Name="FatherOcp" ColumnName="FatherOcp" />
+          <ScalarProperty Name="FatherEmail" ColumnName="FatherEmail" />
+          <ScalarProperty Name="FatherNumber" ColumnName="FatherNumber" />
+          <ScalarProperty Name="Course" ColumnName="Course" />
+          <ScalarProperty Name="Branch" ColumnName="Branch" />
+          <ScalarProperty Name="Timings" ColumnName="Timings" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Suppliers">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.Suppliers">
+        <MappingFragment StoreEntitySet="Suppliers">
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+          <ScalarProperty Name="SuplierNumber" ColumnName="SuplierNumber" />
+          <ScalarProperty Name="SuplierCNIC" ColumnName="SuplierCNIC" />
+          <ScalarProperty Name="SupplierAddress" ColumnName="SupplierAddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Units">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.Units">
+        <MappingFragment StoreEntitySet="Units">
+          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UsersMenu">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.UsersMenu">
+        <MappingFragment StoreEntitySet="UsersMenu">
+          <ScalarProperty Name="UserMenuID" ColumnName="UserMenuID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="MenuItemID" ColumnName="MenuItemID" />
+          <ScalarProperty Name="AllowUpdate" ColumnName="AllowUpdate" />
+          <ScalarProperty Name="AllowRead" ColumnName="AllowRead" />
+          <ScalarProperty Name="AllowDelete" ColumnName="AllowDelete" />
+          <ScalarProperty Name="AllowInsert" ColumnName="AllowInsert" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VoucherChild">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.VoucherChild">
+        <MappingFragment StoreEntitySet="VoucherChild">
+          <ScalarProperty Name="VoucherchildID" ColumnName="VoucherchildID" />
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Unitid" ColumnName="Unitid" />
+          <ScalarProperty Name="ItemPrice" ColumnName="ItemPrice" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="BillsundryID" ColumnName="BillsundryID" />
+          <ScalarProperty Name="VoucherTypeID" ColumnName="VoucherTypeID" />
+          <ScalarProperty Name="VoucherMasterID" ColumnName="VoucherMasterID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VoucherMaster">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.VoucherMaster">
+        <MappingFragment StoreEntitySet="VoucherMaster">
+          <ScalarProperty Name="LocationID2" ColumnName="LocationID2" />
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="VoucherNum_BillNum" ColumnName="VoucherNum/BillNum" />
+          <ScalarProperty Name="VoucherCreateDate" ColumnName="VoucherCreateDate" />
+          <ScalarProperty Name="Partyid_Accountid" ColumnName="Partyid/Accountid" />
+          <ScalarProperty Name="Narration" ColumnName="Narration" />
+          <ScalarProperty Name="BillSundryId" ColumnName="BillSundryId" />
+          <ScalarProperty Name="BillSundryAmount" ColumnName="BillSundryAmount" />
+          <ScalarProperty Name="VoucherFinalTotal" ColumnName="VoucherFinalTotal" />
+          <ScalarProperty Name="VoucherTypeID" ColumnName="VoucherTypeID" />
+          <ScalarProperty Name="DrCrType" ColumnName="DrCrType" />
+          <ScalarProperty Name="vouchermasterid" ColumnName="vouchermasterid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VoucherType">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.VoucherType">
+        <MappingFragment StoreEntitySet="VoucherType">
+          <ScalarProperty Name="VoucherTypeID" ColumnName="VoucherTypeID" />
+          <ScalarProperty Name="VoucherTypeName" ColumnName="VoucherTypeName" />
+          <ScalarProperty Name="VoucherTypeShortName" ColumnName="VoucherTypeShortName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Itemsnew">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.Itemsnew">
+        <MappingFragment StoreEntitySet="Itemsnew">
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="ItemPrice" ColumnName="ItemPrice" />
+          <ScalarProperty Name="ItemUnitID" ColumnName="ItemUnitID" />
+          <ScalarProperty Name="ItemMaxDiscount" ColumnName="ItemMaxDiscount" />
+          <ScalarProperty Name="ItemMinDiscount" ColumnName="ItemMinDiscount" />
+          <ScalarProperty Name="ItemGroupID" ColumnName="ItemGroupID" />
+          <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="treetable">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.treetable">
+        <MappingFragment StoreEntitySet="treetable">
+          <ScalarProperty Name="childId" ColumnName="childId" />
+          <ScalarProperty Name="parentId" ColumnName="parentId" />
+          <ScalarProperty Name="childName" ColumnName="childName" />
+          <ScalarProperty Name="level" ColumnName="level" />
+          <ScalarProperty Name="orderSequence" ColumnName="orderSequence" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="MVCDBLiveModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetRoles">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.Customers">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.Items">
+        <MappingFragment StoreEntitySet="Items">
+          <ScalarProperty Name="ItemMinDiscount" ColumnName="ItemMinDiscount" />
+          <ScalarProperty Name="ItemMaxDiscount" ColumnName="ItemMaxDiscount" />
+          <ScalarProperty Name="ItemUnitID" ColumnName="ItemUnitID" />
+          <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
+          <ScalarProperty Name="ItemGroupID" ColumnName="ItemGroupID" />
+          <ScalarProperty Name="ItemPrice" ColumnName="ItemPrice" />
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentTypes">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.PaymentTypes">
+        <MappingFragment StoreEntitySet="PaymentTypes">
+          <ScalarProperty Name="PaymentTypeName" ColumnName="PaymentTypeName" />
+          <ScalarProperty Name="PaymentTypeID" ColumnName="PaymentTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transactions">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.Transactions">
+        <MappingFragment StoreEntitySet="Transactions">
+          <ScalarProperty Name="TransType" ColumnName="TransType" />
+          <ScalarProperty Name="ItemPrice" ColumnName="ItemPrice" />
+          <ScalarProperty Name="PayTypeID" ColumnName="PayTypeID" />
+          <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderChild">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.OrderChild">
+        <MappingFragment StoreEntitySet="OrderChild">
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <ScalarProperty Name="OrderMasterID" ColumnName="OrderMasterID" />
+          <ScalarProperty Name="OrderChildID" ColumnName="OrderChildID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ordermaster">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.ordermaster">
+        <MappingFragment StoreEntitySet="ordermaster">
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+          <ScalarProperty Name="FinalTotal" ColumnName="FinalTotal" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MaterialCentre">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.MaterialCentre">
+        <MappingFragment StoreEntitySet="MaterialCentre">
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="PurchaseAccountid" ColumnName="PurchaseAccountid" />
+          <ScalarProperty Name="SalesAccountid" ColumnName="SalesAccountid" />
+          <ScalarProperty Name="PrintName" ColumnName="PrintName" />
+          <ScalarProperty Name="Alias" ColumnName="Alias" />
+          <ScalarProperty Name="MaterialCentreName" ColumnName="MaterialCentreName" />
+          <ScalarProperty Name="MaterialcentreID" ColumnName="MaterialcentreID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Preferences">
+      <EntityTypeMapping TypeName="MVCDBLiveModel.Preferences">
+        <MappingFragment StoreEntitySet="Preferences">
+          <ScalarProperty Name="PreferencetypeID" ColumnName="PreferencetypeID" />
+          <ScalarProperty Name="PreferenceNarration" ColumnName="PreferenceNarration" />
+          <ScalarProperty Name="Preferencevalue" ColumnName="Preferencevalue" />
+          <ScalarProperty Name="PreferenceID" ColumnName="PreferenceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

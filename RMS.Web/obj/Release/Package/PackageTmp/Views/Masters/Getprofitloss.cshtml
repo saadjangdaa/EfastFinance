@@ -1,0 +1,271 @@
+﻿@model RMS.Web.Models.ViewModels.Ptofitlossviewmodel
+@{
+    ViewBag.Title = "Getprofitloss";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3" style="background-color:#5a5c69">
+        <h1 class="m-0 font-weight-bold  text-center" style="color:white;"> Profit & Loss A/c</h1>
+    </div>
+    <div class="card-body">
+        <div class="">
+
+            <label class="col-md-2">To Date</label>
+            <div class="col-md-4">
+                <input type="date" class="form-control" />
+            </div>
+
+            <label class="col-md-2">Display Type</label>
+            <div class="col-md-4">
+                <select id="ddltype" class="form-control">
+                    <option value="0">---Select Display Type---</option>
+                    <option value="1"> Group Wise</option>
+                    <option value="2">Hierchal</option>
+                </select>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <div class="">
+
+                <button id="btnshow" class="btn btn-success btn-block">Show</button>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+<br />
+
+
+<div class="card shadow mb-4" id="table1">
+    @*<div class="card-header py-3" style="background-color:#5a5c69">
+        <h4 class="m-0 font-weight-bold  text-center" style="color:white;"> P&L</h4>
+    </div>*@
+    <div class="card-body">
+        <table id="datatable" class="table-bordered table table-dark">
+            <thead style="background-color:grey;">
+                <tr>
+                    <th style="font-size:x-large;" class="text-center"><strong>Debit Rs</strong></th>
+                    <th style="font-size:x-large;" class="text-center"><strong>Credit Rs</strong></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr >
+                    <td style="font-size:large" class="font-weight-bolder">Opening Stock<strong id="openingstock" class="col-md-offset-8">0.00</strong> </td>
+                    <td style="font-size:large" class="font-weight-bolder">Closing Stock<strong id="closingstock" class="col-md-offset-8">0.00</strong> </td>
+                </tr>
+                <tr>
+                    <td style="font-size:large"  class="font-weight-bolder">@Model.purchaseaccount.Accgroupname<td> <strong id="purchase"  >@Model.purchaseaccount.Accgroupbalance</strong><a href="~/Masters/getsubbacctrialB/@Model.purchaseaccount.AccgroupID" class="btn btn-success "><i class="glyphicon glyphicon-info-sign"></i></a></td>
+                    <td style="font-size:large" class="font-weight-bolder">@Model.salesaccount.Accgroupname <strong id="sales" style="padding-left:470px;">@Model.salesaccount.CreditAmount</strong><a href="~/Masters/getsubbacctrialB/@Model.salesaccount.AccgroupID" class="btn btn-success "><i class="glyphicon glyphicon-info-sign"></i></a></td>
+                </tr>
+                <tr>
+                  
+                    <td style="font-size:large" class="font-weight-bolder">@Model.expaccount.Accgroupname <strong id="expenses" style="padding-left:350px;">@Model.expaccount.Accgroupbalance</strong> <a href="~/Masters/getsubbacctrialB/@Model.expaccount.AccgroupID" class="btn btn-success "><i class="glyphicon glyphicon-info-sign"></i></a></td>
+                    <td style="font-size:large" class="font-weight-bolder">@Model.incomeaccount.Accgroupname <strong id="income" style="padding-left:350px;">@Model.incomeaccount.Accgroupbalance</strong><a href="~/Masters/getsubbacctrialB/@Model.incomeaccount.AccgroupID" class="btn btn-success "><i class="glyphicon glyphicon-info-sign"></i></a></td>
+                </tr>
+                <tr>
+                    <td id="grossprofitbd" style="font-size:large" class="font-weight-bolder">Gross Profit <strong id="grossproft" style="padding-left:500px; ">0.00</strong> </td>
+                    <td id="emptygrossprofitbd"></td>
+
+                    <td id="emptygrosslossbd" style="display:none;"></td>
+                    <td id="grosslossbd" style="font-size:large;display:none;" class="font-weight-bolder">Gross Loss <strong id="grossloss" style="padding-left:400px; ">0.00</strong> </td>
+                </tr>
+
+                <tr>
+                   <td style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
+                    <td  style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
+
+                </tr>
+                <tr>
+                    <td style="font-size:large" class="font-weight-bolder">Total <strong id="purchasetotal" style="padding-left:470px;">0.00</strong></td>
+                     <td style="font-size:large" class="font-weight-bolder">Total <strong id="salestotal" style="padding-left:470px;">0.00</strong></td>
+
+                </tr>
+                <tr>
+                    <td  style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
+                    <td  style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
+
+                </tr>
+                <tr>
+                    <td id="emptygrossprofitbd2"></td>
+                    <td id="grossprofitbd2" style="font-size:large" class="font-weight-bolder">Gross Profit b/d <strong id="grossproft2" style="padding-left:350px;">0.00</strong> </td>
+
+                    <td style="font-size:large;display:none;" id="grosslossbd2" class="font-weight-bolder">Gross Loss b/d  <strong id="grossloss2" style="padding-left:450px;">0.00</strong> </td>
+                    <td style="display:none;" id="emptygrosslossbd2"></td>
+
+                </tr>
+                <tr>
+                    <td style="font-size:large" class="font-weight-bolder">@Model.expaccount2.Accgroupname <strong id="expesnsesindirect2" style="padding-left:350px;">@Model.expaccount2.Accgroupbalance</strong><a href="~/Masters/getsubbacctrialB/@Model.expaccount2.AccgroupID" class="btn btn-success "><i class="glyphicon glyphicon-info-sign"></i></a></td>
+                    <td style="font-size:large" class="font-weight-bolder">@Model.incomeaccount2.Accgroupname <strong id="incomedirect2" style="padding-left:350px;">@Model.incomeaccount2.Accgroupbalance</strong><a href="~/Masters/getsubbacctrialB/@Model.incomeaccount2.AccgroupID" class="btn btn-success "><i class="glyphicon glyphicon-info-sign"></i></a></td>
+                </tr>
+                <tr>
+
+                    <td id="NetProfit" style="font-size:large" class="font-weight-bolder">Net Profit <strong id="netprofit" style="padding-left:470px;">0.00</strong> </td>
+                    <td id="empty"></td>
+                    
+                    <td style="display:none;" id="empty2"></td>
+                    <td style="font-size:large;display:none;" id="Netloss" class="font-weight-bolder">Net Loss <strong id="netloss" style="padding-left:450px;">0.00</strong> </td>
+                </tr>
+                <tr>
+                    <td  style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
+                    <td  style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
+
+                </tr>
+                <tr>
+                    <td style="font-size:large" class="font-weight-bolder">Total <strong class="number"  id="purchasetotal2" style="padding-left:470px;">0.00</strong></td>
+
+                    <td style="font-size:large" class="font-weight-bolder">Total <strong class="number" id="salestotal2" style="padding-left:470px;">0.00</strong></td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+    <script>
+
+        $(document).ready(function () {
+            debugger;
+
+            var ftotal = 0;
+            var closingstock = $("#closingstock").html();
+            var openingstock = $("#openingstock").html();
+
+
+
+            var saletotal = $("#sales").html();
+            var incometotal = $("#income").html();
+
+            var expenstotal = $('#expenses').html();
+            var purchasetotal = $('#purchase').html();
+
+
+            if ($("table > tbody > tr").length > 0) {
+                //$("table  tbody  tr td:eq(0)").each(function () {
+
+
+                //    var ffx = $(this).find('td:eq(5)').html();
+                //    //var new = $('#total').attr('value');
+                //    debugger;
+                //    ftotal += parseFloat($(this).find('td:eq(8)').html());
+
+                //    //ftotal += $(t).find('input[name=Total]').val();a
+
+                //});
+                var stotal = parseFloat(saletotal) + parseFloat(incometotal) + parseFloat(closingstock);
+                $('#salestotal').html(stotal + ".00");
+
+
+
+                var purchases = parseFloat(expenstotal) + parseFloat(purchasetotal) + parseFloat(openingstock);
+                //$('#purchasetotal').html(ptotal + ".00");
+
+                var grossprofit = stotal - purchases;
+
+                if (grossprofit > 0) {
+
+                    $('#grossproft').html(grossprofit + ".00");
+                    $('#grossproft2').html(grossprofit + ".00");
+                }
+                else if (grossprofit < 0) {
+                    var gp = Math.abs(grossprofit);
+
+                    $('#emptygrossprofitbd').hide();
+                    $('#grossprofitbd').hide();
+
+                    $('#grossloss').html(gp + ".00");
+
+                    $('#grosslossbd').show();
+                    $('#emptygrosslossbd').show();
+
+
+                    $('#emptygrossprofitbd2').hide();
+                     $('#grossprofitbd2').hide();
+
+                    $('#grossloss2').html(gp + ".00");
+
+                    $('#grosslossbd2').show();
+                    $('#emptygrosslossbd2').show();
+
+
+                    
+
+                }
+
+
+
+                var ptotal = purchases + grossprofit;
+                $('#purchasetotal').html(ptotal + ".00");
+
+
+                var purchasetotal = parseFloat(expenstotal) + parseFloat(purchasetotal) + parseFloat(openingstock);
+
+
+                var gp2 = parseFloat(grossprofit) + parseFloat($('#incomedirect2').html()); 
+
+                var expesnsesindirect = parseFloat($('#expesnsesindirect2').html());
+                var netprofit = gp2 - parseFloat(expesnsesindirect);
+
+                if (netprofit >= 0) {
+                    $('#netprofit').html(netprofit + ".00");
+
+                }
+                else if (netprofit < 0) {
+                    $('#NetProfit').hide();
+                    $('#empty').hide();
+                  
+                    $('#empty2').show();
+                    $('#Netloss').show();
+                    var netprofit2 = Math.abs(netprofit);
+
+                    $('#netloss').html(netprofit2 + ".00");
+
+                }
+
+
+                var purchasetotal2 = parseFloat(expesnsesindirect) + parseFloat(netprofit);
+
+                var commanum = numberWithCommas(Math.abs(purchasetotal2));
+                $('#purchasetotal2').html(commanum + ".00");
+
+
+
+                var salestotal2 = Math.abs(gp2);
+
+                $('#salestotal2').html(salestotal2 + ".00");
+
+            }
+
+
+
+
+
+            function numberWithCommas(number) {
+                var parts = number.toString().split(".");
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                return parts.join(".");
+            }
+                    var num = $('#salestotal2').html();
+
+                    var commaNum = numberWithCommas(num);
+                    $('#salestotal2').html(commaNum);
+
+
+        });
+
+
+
+
+
+
+
+
+
+    </script>

@@ -1,0 +1,199 @@
+﻿@model RMS.Web.Models.ViewModels.trialbalanceviewmodel
+
+@{
+    ViewBag.Title = "getsubbacctrialB";
+}
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3" style="background-color:#5a5c69">
+        @*<a href="~/Masters/TrialBalance" class="btn btn-success">Back</a>*@
+        <button id="backbtn" class="btn btn-success">Back</button>
+
+        <h1 class="m-0 font-weight-bold  text-center" style="color:white;">  Group Balances</h1>
+    </div>
+    <div class="card-body">
+        <div class="">
+            <table id="datatable" class="table-bordered table table-hover table-dark">
+                <thead>
+                    <tr>
+                        <th style="background-color:gray">Account Name</th>
+                        <th style="background-color:gray">Type</th>
+                        <th style="background-color:gray">Debit Balance</th>
+                        <th style="background-color:gray">Credit Balance</th>
+                        <th style="background-color:gray">Action</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th ></th>
+                        <th></th>
+                        <th style="background-color:gray" id="debittotal">Debit Total</th>
+                        <th style="background-color:gray" id="credittotal">Credit Total</th>
+
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @if (Model.accgrouplist != null)
+                    {
+                        foreach (var item2 in Model.accgrouplist)
+                        {
+                        <tr>
+                            <td>@item2.Accgroupname</td>
+                            <td>Group</td>
+
+                            @if (item2.Accgroupbalance >= 0)
+                            {
+                                <td id="debittotal">@item2.Accgroupbalance</td>
+                                <td>0.00</td>
+
+                            }
+                            else if (item2.Accgroupbalance <= 0)
+                            {
+                                <td>0.00</td>
+                                <td id="credittotal">@item2.Accgroupbalance</td>
+
+                            }
+                            <td><a id="btninfo" style="background-color:white;"  href="~/Masters/getsubbacctrialB/@item2.AccgroupID" class="btn btn-default btn-block btninfo"><i class="glyphicon glyphicon-info-sign"></i></a></td>
+
+                        </tr>
+
+                         }
+                     }
+                        @if (Model.accountlist != null)
+                        {
+                            foreach (var item in Model.accountlist)
+                            {
+                                <tr>
+                                    <td>@item.AccountName</td>
+                                    <td>Account</td>
+
+                                    @if (item.ClosingBalance >= 0)
+                                    {
+                                        <td id="debittotal">@item.ClosingBalance</td>
+                                        <td>0.00</td>
+
+                                    }
+                                    else if (item.ClosingBalance <= 0)
+                                    {
+                                        <td>0.00</td>
+                                        <td id="credittotal">@item.ClosingBalance</td>
+
+                                    }
+                                </tr>
+
+                            }
+                        }
+
+
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<script>
+    //$('.btninfo').hover(function () {
+    //    debugger;
+    //    $(this).css("background-color", "yellow");
+
+
+    //});
+    $(".btninfo").hover(function () {
+        $(this).css("background-color", "yellow");
+    }, function () {
+        $(this).css("background-color", "white");
+        });
+
+
+    $(document).on({
+        keydown: function (ev) {
+            if (ev.which === 27) {
+                debugger;
+                goBack();
+
+            }
+        },
+        keyup: function (ep) {
+            if (ep.which === 27) {
+                debugger;
+                goBack();
+
+            }
+
+        }
+    });
+
+    $(document).on({
+        keydown: function (ev) {
+            if (ev.which === 13) {
+                debugger;
+                $("#btninfo").focus();
+                //    $(this).css("background-color", "yellow");
+                //}, function () {
+                //    $(this).css("background-color", "white");
+                //});
+                
+            }
+
+        }
+    });
+
+
+    function goBack() {
+        window.history.back();
+    }
+
+    $('#backbtn').click(function () {
+        debugger;
+
+        window.history.back();
+    });
+
+         var ftotal = 0;
+        if ($("table > tbody > tr").length > 0) {
+            $("table  tbody  tr").each(function () {
+
+
+
+                var ffx = $(this).find('td:eq(2)').html();
+
+
+                    //var new = $('#total').attr('value');
+                    ftotal += parseFloat($(this).find('td:eq(2)').html());
+
+                    //ftotal += $(t).find('input[name=Total]').val();a
+            });
+        }
+        $('#debittotal').text(ftotal);
+
+
+        var crtotal = 0;
+        if ($("table > tbody > tr").length > 0) {
+            $("table  tbody  tr").each(function () {
+
+
+
+                var ffx = $(this).find('td:eq(3)').html();
+
+
+                //var new = $('#total').attr('value');
+                crtotal += parseFloat($(this).find('td:eq(3)').html());
+
+                //ftotal += $(t).find('input[name=Total]').val();a
+            });
+        }
+        $('#credittotal').text(crtotal);
+
+
+
+
+
+
+
+</script>

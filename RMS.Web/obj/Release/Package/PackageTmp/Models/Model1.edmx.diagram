@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5660a800a5034451aa06bff6a2ba6a68" Name="Diagram1" ZoomLevel="58">
+        <EntityTypeShape EntityType="MVCDBLiveModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.AccGroup" Width="1.5" PointX="1.5" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.Account" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.AccountMainHead" Width="1.5" PointX="13.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.AspNetRoles" Width="1.5" PointX="2.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.AspNetUserClaims" Width="1.5" PointX="7.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.AspNetUserLogins" Width="1.5" PointX="7.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.AspNetUsers" Width="1.5" PointX="5" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.BillSundry" Width="1.5" PointX="9.75" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.BillSundryChild" Width="1.5" PointX="12" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.Country" Width="1.5" PointX="5.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.Currency" Width="1.5" PointX="14.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.DrCr" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.ItemGroup" Width="1.5" PointX="14.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.JournalVoucherChild" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.JournalVoucherMaster" Width="1.5" PointX="6" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.ledgertype" Width="1.5" PointX="14.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.MaterialCentreGroup" PointX="9.375" PointY="9.75" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.MenuItems" Width="1.5" PointX="9.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.Purchase" Width="1.5" PointX="14.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.Stock" Width="1.5" PointX="15.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.StockTransferChild" Width="1.5" PointX="16.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.StockTransferMaster" Width="1.5" PointX="16.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.StudentInfo" Width="1.5" PointX="8.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.Suppliers" Width="1.5" PointX="10.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.sysdiagrams" Width="1.5" PointX="16.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.Units" Width="1.5" PointX="8.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.UsersMenu" Width="1.5" PointX="12" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.VoucherChild" Width="1.5" PointX="11" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.VoucherMaster" Width="1.5" PointX="6" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.VoucherType" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.Itemsnew" Width="1.5" PointX="12.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.treetable" Width="1.5" PointX="16.75" PointY="15.75" IsExpanded="true" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_Account_AccGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_JournalVoucherChild_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_VoucherMaster_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_BillSundryChild_BillSundry" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_JournalVoucherChild_DrCr" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_VoucherMaster_DrCr" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_JournalVoucherMaster_VoucherType" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_UsersMenu_MenuItems" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_SaleVoucherChild_Units" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_VoucherMaster_VoucherType" ManuallyRouted="false" />
+        <AssociationConnector Association="MVCDBLiveModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.Customers" Width="1.5" PointX="18.375" PointY="0.75" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.Items" Width="1.5" PointX="17" PointY="19.25" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.PaymentTypes" Width="1.5" PointX="12.5" PointY="21.375" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_Items_ItemGroup" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_Purchase_PaymentTypes" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_SaleVoucherChild_Items" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_VoucherChild_Items" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.Transactions" Width="1.5" PointX="14.75" PointY="22" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_Transactions_PaymentTypes" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.OrderChild" Width="1.5" PointX="4.375" PointY="18.75" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.ordermaster" Width="1.5" PointX="20.625" PointY="10.625" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_ordermaster_Customers" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_ordermaster_PaymentTypes" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.MaterialCentre" Width="1.5" PointX="0.75" PointY="20" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_VoucherMaster_MaterialCentre" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_VoucherMaster_MaterialCentre1" />
+        <EntityTypeShape EntityType="MVCDBLiveModel.Preferences" Width="1.5" PointX="11.375" PointY="9.75" />
+        <AssociationConnector Association="MVCDBLiveModel.FK_JournalVoucherChild_Currency" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

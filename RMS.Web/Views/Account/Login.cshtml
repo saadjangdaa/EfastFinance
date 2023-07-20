@@ -1,0 +1,253 @@
+﻿@using RMS.Web.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+}
+
+
+@*@Scripts.Render("~/bundles/bootstrap")
+    <link href="~/startbootstrap-sb-admin-2-master/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">*@
+
+@*<body class="bg-gradient-primary">
+        <div class="container">
+            <!-- Outer Row -->
+            <div class="row justify-content-center">
+                <div class="col-xl-10 col-lg-12 col-md-9">
+                    <div class="card o-hidden border-0 shadow-lg my-5">
+                        <div class="card-body p-0">
+                            <!-- Nested Row within Card Body -->
+                            <div class="row">
+                                <div class="col-lg-6 d-none d-lg-block "><img width="500px" height="400px" src="~/startbootstrap-sb-admin-2-master/img/accounts-payable_interview_questions-removebg-preview.png" /></div>
+                                <div class="col-lg-6">
+                                    <div class="p-5">
+                                        <div class="text-center">
+                                            <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        </div>
+                                        <form class="user">
+                                            <div class="form-group">
+                                                <input type="email" class="form-control form-control-user"
+                                                       id="exampleInputEmail" aria-describedby="emailHelp"
+                                                       placeholder="Enter Email Address...">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="password" class="form-control form-control-user"
+                                                       id="exampleInputPassword" placeholder="Password">
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="custom-control custom-checkbox small">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck">
+                                                    <label class="custom-control-label" for="customCheck">
+                                                        Remember
+                                                        Me
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                                Login
+                                            </a>
+                                            <hr>
+                                        </form>
+                                        <hr>
+                                        <div class="text-center">
+                                            <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                        </div>
+                                        <div class="text-center">
+                                            <a class="small" href="register.html">Create an Account!</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
+    </body>*@
+
+
+
+<link href="~/startbootstrap-sb-admin-2-master/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <title>Efast Finance</title>
+    <link media="screen" href="~/startbootstrap-sb-admin-2-master/Login_v3/particles.js-master/demo/css/style.css" rel="stylesheet" />
+
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/startbootstrap-sb-admin-2-master/Login_v3/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/startbootstrap-sb-admin-2-master/Login_v3/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/startbootstrap-sb-admin-2-master/Login_v3/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/startbootstrap-sb-admin-2-master/Login_v3/vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/startbootstrap-sb-admin-2-master/Login_v3/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/startbootstrap-sb-admin-2-master/Login_v3/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/startbootstrap-sb-admin-2-master/Login_v3/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/startbootstrap-sb-admin-2-master/Login_v3/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/startbootstrap-sb-admin-2-master/Login_v3/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/startbootstrap-sb-admin-2-master/Login_v3/css/main.css">
+    <link href="~/download__2_-removebg-preview (1).ico" rel="icon" />
+    @Scripts.Render("~/bundles/jquery")
+
+</head>
+<body class="loaded">
+    <!-- count particles -->
+    <!-- particles.js container -->
+    <!-- panel -->
+    <div id="particles-js">
+        <div class="loginform">
+            <div class="limiter">
+                <div class="container-login100">
+                    @*<div id="particles-js"></div>*@
+
+                    <div class="wrap-login100" style="background-color:aqua;">
+
+                        <form class="login100-form validate-form">
+                            <span class="login100-form-logo">
+                                @*<i style="background-image:url(../../startbootstrap-sb-admin-2-master/img/efastdfd.JPG)" class="zmdi zmdi-landscape"></i>*@
+                                @*<img src="../../startbootstrap-sb-admin-2-master/img/efastdfd.JPG" /> *@
+                                <img src="~/startbootstrap-sb-admin-2-master/Login_v3/images/download__2_-removebg-preview.png" width="100px" height="100px" />
+                            </span>
+                        </form>
+
+
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <span class="login100-form-title p-b-34 p-t-27">
+                                Log in
+                            </span>
+                            @Html.ValidationSummary(true, "", new { @class = "text-primary" })
+
+                            <div class="wrap-input100 validate-input col" data-validate="Enter username">
+                                @*<input class="input100" type="text" name="username" placeholder="Username">*@
+                                <div class="">
+
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "input100", @placeholder = "Username" })
+                                    <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                                </div>
+                                
+                                @*<div class="col-md-6">
+                                    <button type="button" class="btn  col-md-8" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                                        Popover on right
+                                    </button> 
+                                </div>*@
+                            </div>
+
+
+                            <div class="wrap-input100 validate-input" data-validate="Enter password">
+                                @Html.PasswordFor(m => m.Password, new { @class = "input100", @placeholder = "Password" })
+                                <span class="focus-input100" data-placeholder="&#xf191;"></span>
+                            </div>
+
+                            <div class="contact100-form-checkbox">
+                                <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                                <label class="label-checkbox100" for="ckb1">
+                                    Remember me
+                                </label>
+                            </div>
+
+                            <div>
+                                <div class="container-login100-form-btn ">
+                                    <button type="submit" class="login100-form-btn">
+                                        Login
+                                    </button>
+                                </div>
+                                @*<div class="container-login100-form-btn col-md-6">
+                                        <a class="login100-form-btn" href="@Url.Action("Register","Account")">Register</a> 
+                                    </div>*@
+                            </div>
+                            <div class="text-center p-t-90">
+                                <a class="txt1" href="#">
+                                    Forgot Password?
+                                </a>
+                            </div>
+                            @*<div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <div class="checkbox">
+                                            @Html.CheckBoxFor(m => m.RememberMe)
+                                            @Html.LabelFor(m => m.RememberMe)
+                                        </div>
+                                    </div>
+                                </div>*@
+
+
+
+
+                        }
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div>
+        <!-- scripts -->
+        <!-- stats.js -->
+
+        @*<script src="~/startbootstrap-sb-admin-2-master/Login_v3/particles.js-master/particles.js"></script>
+        <script src="~/startbootstrap-sb-admin-2-master/Login_v3/particles.js-master/demo/js/app.js"></script>
+        <script src="~/startbootstrap-sb-admin-2-master/Login_v3/particles.js-master/demo/js/lib/stats.js"></script>*@
+    </div>
+
+    <script src="~/startbootstrap-sb-admin-2-master/Login_v3/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/startbootstrap-sb-admin-2-master/Login_v3/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/startbootstrap-sb-admin-2-master/Login_v3/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/startbootstrap-sb-admin-2-master/Login_v3/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/startbootstrap-sb-admin-2-master/Login_v3/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/startbootstrap-sb-admin-2-master/Login_v3/vendor/daterangepicker/moment.min.js"></script>
+    <script src="~/startbootstrap-sb-admin-2-master/Login_v3/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/startbootstrap-sb-admin-2-master/Login_v3/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/startbootstrap-sb-admin-2-master/Login_v3/js/main.js"></script>
+</body>
+
+
+
+
+<script >
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+</script>
+
+
+
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,308 @@
+﻿@model IEnumerable<RMS.Web.Models.ItemGroup>
+
+
+<div class="container-fluid">
+    <h1 class="col-lg-offset-5 " style="color:slategrey"></h1>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <button type="button" id="btnadd" class="btn btn-dark" data-target="#exampleModal" data-toggle="modal"><i class="glyphicon glyphicon-plus"></i> Add Account Group</button>
+            <h1 class="m-0 font-weight-bold  text-center" style="color:black;">Item Groups</h1>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="color:white">Item ID</th>
+                            <th style="color:white">Item Group Name</th>
+                            <th style="color:white">Item Parent Group </th>
+                            <th style="color:white">Actions</th>
+                        </tr>
+                    </thead>
+                    <tfoot class="thead-dark">
+                        <tr>
+                            <th style="color:white">Item ID</th>
+                            <th style="color:white">Item Group Name</th>
+                            <th style="color:white">Item Parent Group </th>
+                            <th style="color:white">Actions</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.ItemGroupId</td>
+                                    <td>@item.ItemGroupName</td>
+                                    <td> @item.Itemundergroupname  </td>
+                                    <td>
+                                        <button class="btn btn-primary btnedit" data-id="@item.ItemGroupId" data-target="#exampleModal" data-toggle="modal"><i class="glyphicon glyphicon-edit"></i>Edit</button>
+
+                                        <button data-id="@item.ItemGroupId" class="btn btn-danger btndelete"><i class="glyphicon glyphicon-remove"></i>Delete</button>
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+
+
+
+                    
+                </table>
+
+
+
+
+
+            </div>
+
+            <form id="accgroupform">
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="exampleModalLabel"><strong>Add Item Group</strong></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                <input type="hidden" class="form-control" name="ItemGroupId" id="ItemGroupId" />
+                                <div class="row">
+                                    <label class="col-md-6">Item Group Name</label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control " id="ItemGroupName" name="ItemGroupName" />
+                                    </div>
+                                    <hr />
+                                    <br />
+                                    <br />
+                                    <label class="col-md-6">Item Group Alias</label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control " id="ItemGroupAlias" name="ItemGroupAlias" />
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <label class="col-md-6">Primary Group</label>
+
+                                    <div class="col-md-6">
+                                        <select id="primarygroup" class="form-control">
+                                            <option value="0">---Select---</option>
+                                            <option value="1">Yes</option>
+                                            <option value="2">No</option>
+                                        </select>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <label class="col-md-6">Item Under Group</label>
+
+                                    <div id="child" style="display:none;" class="col-md-6">
+                                        <input type="text" class="form-control " value="NULL" placeholder="enter Item under group" id="Itemundergroupname" name="Itemundergroupname" />
+                                    </div>
+
+                                    <div id="child2" style="display:none;" class="col-md-6">
+                                        @Html.DropDownList("itemgroup", (IEnumerable<SelectListItem>)ViewBag.itemgroups, "NULL", htmlAttributes: new { @class = "form-control", @Id = "Itemundergroupname2", @Name = "Itemundergroupname2" })
+
+                                    </div>
+
+                                    <br />
+                                    <br />
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button id="btnSave" type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+    $('#btnadd').click(function () {
+        debugger;
+        $('#ItemGroupId').val(0);
+        $('#ItemGroupName').val("");
+        $('#ItemGroupAlias').val(" ");
+        $('#primarygroup').val(0);
+
+
+    });
+
+    $('#btnSave').click(function () {
+        var itemgroupid = $(this).attr('data-id');
+
+        debugger;
+        var itemgroupid = $('#ItemGroupId').val();
+        var itemgroupname = $('#ItemGroupName').val();
+        var  itemgroupalias = $('#ItemGroupAlias').val();
+        var  itemgroupundergroup = $('#Itemundergroupname').val();
+        var  itemgroupnderprimarygroup2 = $('#Itemundergroupname2 option:selected').text();
+        var  itemgroupunderprimarygroupid2 = $('#Itemundergroupname2 option:selected').val()
+
+
+        var optionid = $('#primarygroup').val();
+        if (optionid == 0) {
+            alert("Please select primary group type");
+
+        }
+        else if (optionid == 1) {
+
+            itemgroupundergroup = "";
+            itemgroupnderprimarygroup2 = " ";
+            itemgroupunderprimarygroupid2 = 0;
+
+        }
+
+
+
+
+            $.ajax({
+                type: 'POST',
+                data: { itemgrupid: itemgroupid, itemgrupname: itemgroupname, itemgrupalias: itemgroupalias,  itemgrupprimname: itemgroupnderprimarygroup2, itemgrupprimid: itemgroupunderprimarygroupid2 },
+                url: "@Url.Action("SaveItemgroup", "Item")"
+
+            }).done(function (data) {
+                if (itemgroupid == 0) {
+                    alert("SaveItemgroup added successdully");
+                    location.reload();
+
+
+                }
+                else {
+                    alert("SaveItemgroup updated successdully");
+                    location.reload();
+                    $('#btnadd').focusin();
+                }
+                location.reload();
+
+
+            }).fail(function (jqxhr, textStatus) {
+
+                alert("Cant add Itemgroup ");
+                location.reload();
+            });
+
+
+    });
+    $('.btnedit').click(function () {
+        var itemgrupid = $(this).attr('data-id');
+        debugger;
+
+
+       $.ajax({
+            type: 'GET',
+           data: { itemgid: itemgrupid },
+            url: "@Url.Action("Getitemgroup", "Item")"
+        }).done(function (data) {
+            alert("data caught successfully");
+            $('#ItemGroupId').val(data.ItemGroupId);
+            $('#ItemGroupName').val(data.ItemGroupName);
+            $('#ItemGroupAlias').val(data.ItemGroupAlias);
+            $('#Itemundergroupname2').val(data.ItemUndergroupid);
+
+            debugger;
+            if (data.Accgroupalias == null) {
+                $('#Accgroupalias').val("no alias");
+            }
+            else {
+                $('#Accgroupalias').val(data.Accgroupalias);
+            }
+
+
+            if (data.Accunderprimarygroupid != "NULL") {
+                $('#primarygroup').val(2);
+                $('#child2').show();
+                $('#AccUnderGroup2').val(data.Accunderprimarygroupid);
+            }
+
+
+            $('#exampleModal').modal('show');
+
+        }).fail(function (jqxhr,textStatus)  {
+
+            alert("Cant get Accgroup details");
+
+        });
+
+
+
+    });
+
+    $('.btndelete').click(function () {
+        var accid = $(this).attr('data-id');
+
+
+        var con = confirm("Are u sure u want to delete");
+        $(this).parent().parent().remove();
+        if (con == true) {
+
+            $.ajax({
+                type: 'GET',
+                data: { itemgroupid: accid},
+                url: "@Url.Action("Deleteitemgroup", "Item")"
+
+            }).done(function (data) {
+                debugger;
+                alert("AccGroup Deleted  successfully");
+                window.location.reload();
+
+            }).fail(function (jqxhr, textStatus) {
+
+                alert("Cant Deleted  Accgroup ");
+
+            });
+
+
+
+
+        }
+        else {
+            alert("ok");
+        }
+
+
+    });
+
+    $('#primarygroup').change(function () {
+        debugger;
+        var pgval = $(this).val();
+
+        if (pgval == 2) {
+            $('#child').hide();
+            $('#child2').show();
+
+        }
+        else if (pgval == 1) {
+            $('#child2').hide();
+            $('#child').hide(400);
+        }
+        else {
+            $('#child2').hide();
+            $('#child').hide();
+        }
+
+    });
+
+
+
+
+
+
+
+
+
+</script>

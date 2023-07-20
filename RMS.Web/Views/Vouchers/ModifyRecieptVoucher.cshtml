@@ -1,0 +1,913 @@
+﻿@model RMS.Web.Models.ViewModels.JournalVMasterViewModel
+
+@{
+    ViewBag.Title = "ModifyRecieptVoucher";
+}
+
+<div class="container-fluid">
+    <form id="PaymentVoucher">
+        @*<div class="card shadow mb-4">
+                <div class="card-header " style="background-color:#5a5c69; padding-bottom:40px; padding-top:01px; height:0px;">
+
+
+                </div>
+            </div>*@
+        <a class="btn btn-success btn-block" href="@Url.Action("RecieptVoucherHistory","Vouchers")">Find</a>
+        <br />
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:#5a5c69">
+
+                <h3 class="m-0 font-weight-bold text-center"><strong style="color:white;">Add Reciept Voucher </strong> </h3>
+
+            </div>
+            <div class="card-body">
+
+                <lablel class="col-md-2" style="color:black">Voucher Number</lablel>
+                <div class="col-md-4">
+                    <input class="form-control text-right" id="" readonly="readonly" name="JVMasterID" type="number" value="@Model.JvID_VoucherNo" />
+                </div>
+
+                <lablel class="col-md-2" style="color:black">Voucher Date</lablel>
+                <div class="col-md-4">
+                    <input class="form-control" id="VoucherCreateDate" name="VoucherDate" value="@Model.VoucherDate" readonly="readonly" />
+                </div>
+
+                <!---->
+                <br />
+                <br />
+                <lablel class="col-md-2" style="color:black">Payment Mode</lablel>
+                <div class="col-md-4">
+                    @*<textarea class="form-control" id="Narration" readonly="readonly" name="details" placeholder="saad modified by saad"></textarea>*@
+                    @Html.DropDownList("paymentaccountid", (IEnumerable<SelectListItem>)ViewBag.paymentmode, "---Select---", htmlAttributes: new { @class = "form-control", @Name = "paymentaccountid" })
+                    <input type="hidden" name="paymentaccountid" value="@Model.paymentaccountid" />
+                </div>
+
+                <lablel class="col-md-2" style="color:black">Currency</lablel>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.DropDownList("curremcyname", (IEnumerable<SelectListItem>)ViewBag.currency, "---Select Currency---", htmlAttributes: new { @class = "form-control", @Id = "currencyID", @Name = "CurrencyID" })
+                            <span><button type="button" data-target="#exampleModal" data-toggle="modal" class="btn btn-primary"><i class="fa fa-search"></i></button></span>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <br />
+
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="exampleModalLabel"><strong>Currency Exchange Rate</strong></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                <input type="hidden" class="form-control" name="currid" id="currid" />
+                                <div class="row">
+
+                                    <label class="col-sm-5">Currency Name</label>
+                                    <input class="form-control" readonly="readonly" placeholder="select currency first" id="currName" name="currName" />
+                                    <br />
+                                    <br />
+                                    <label class="col-sm-5">Currency Rate</label>
+                                    <input class="form-control" type="number" id="currRate" name="currName" />
+                                    <br />
+                                    <br />
+
+                                    <label class="col-md-offset-1">Note!! These rates will apply after filling voucher details</label>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button id="btnexchange" type="button" class="btn btn-primary">Exchange</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3" style="background-color:#5a5c69">
+
+                <h6 class="m-0 font-weight-bold"><strong style="color:white;">Voucher Details</strong></h6>
+
+            </div>
+            <div class="card-body">
+                <div style="width:100; overflow:auto;">
+                    <div class="table-responsive">
+                        <table class="table table-bordered " width="100%" cellspacing="0">
+                            <thead style="background-color:grey;">
+                                <tr>
+                                    @*<th style="color:white;">Debit/Credit</th>*@
+                                    <th style="color:white;">Account</th>
+                                    <th style="color:white;">Amount(<label id="p"></label>)</th>
+                                    @*<th style="color:white;">Credit(<label id="pp"></label>)</th>*@
+                                    <th style="color:white;">Short Narration</th>
+                                    <th style="color:white;">Actions</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                    @* <th>@Html.DropDownList("Dr/Cr", (IEnumerable<SelectListItem>)ViewBag.DrCrID, "--Select--", htmlAttributes: new { @class = "form-control", @Id = "DrCrID" })</th>*@
+                                    <th>@Html.DropDownList("AccountName", (IEnumerable<SelectListItem>)ViewBag.Account, "--Select Account---", htmlAttributes: new { @class = " js-example-basic-single", @Id = "accountID" })</th>
+                                    <th><input type="number" value="0.00" id="debitID" class="form-control " /></th>
+                                    @*  <th><input type="number" value="0.00" disabled id="creditID" class="form-control " /></th>*@
+                                    <th><input placeholder="Enter Narration" id="narration" class="form-control" /></th>
+
+                                    <th><button type="button" class="btn btn-success " id="btnadd"><i class="glyphicon glyphicon-plus"></i></button></th>
+
+                                </tr>
+                            </thead>
+                            <tfoot style="background-color:grey;">
+                                <tr>
+                                    <th style="color:white;"><h5 class="text-center"><strong>  Total</strong></h5></th>
+                                    <th style="color:darkblue;"><input style="background-color:yellow" disabled value="@Model.DebitTotal" class="font-weight-bolder font-italic form-control" id="debittotal" /></th>
+                                    <th style="color:white;"></th>
+                                    <th style="color:white;"></th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @foreach (var item in Model.Journalvoucherchildlist)
+                                {
+                                <tr>
+                                    @*<td hidden>@item.DrCrID</td>
+        <td>@item.Account.AccountName</td>
+        <td>@item.DebitAmount</td>
+        <td hidden>@item.CreditAmount</td>
+        <td>@item.ShortNarration</td>
+        <td>
+            <button type='button' class='btn btn-danger ' id='btnremoveDr' onclick='removeDr()'><i class='glyphicon glyphicon-minus'></i></button>
+        </td>
+        <td hidden>@item.DebitAmount</td>
+        <td hidden>@item.DebitAmount</td>
+        <td hidden>@item.DebitAmount</td>*@
+
+
+
+                                    <td hidden><input type="hidden" value="@item.DrCrID" /></td>
+
+                                    <td hidden><input type="hidden"  value="@item.AccountID" /></td>
+                                    <td><input readonly class='form-control' value="@item.Account.AccountName" /></td>
+                                    <td hidden><input readonly type="hidden" class='form-control' value="@item.DebitAmount" /></td>
+                                    <td ><input readonly class='form-control' value="@item.CreditAmount"  /></td>
+                                    <td><input readonly class='form-control' value="@item.ShortNarration"  /></td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btnremoveDr"><i class="glyphicon glyphicon-minus"></i></button>
+                                        <input type="button" class="btnremoveDr btn btn-success" value="-" />
+                                        <a class="btnremoveDr btn btn-success" value="-"></a>
+                                    </td>
+                                    <td hidden>@item.DebitAmount</td>
+
+                                    <td hidden>@item.AccountID</td>
+                                    <td hidden><input type="number" value="@item.JVchildID" name="jvchildid2" /></td>
+                                    <td hidden>@item.JVchildID"</td>
+
+                                </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card shadow mb-4">
+                <div class="card-header py-3" style="background-color:#5a5c69">
+
+                    <h6 class="m-0 font-weight-bold"><strong style="color:white;">Voucher Details</strong></h6>
+                </div>
+                <div class="card-body" style="background-color:white">
+                    <label class="col-md-4" style="color:black;">Long Narration</label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" name="LongNarration" placeholder="Enter Narration"> @Model.LongNarration</textarea>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <label class="col-md-4" style="color:black;">Other Details</label>
+                    <div class="col-md-8">
+                        <input class="form-control" name="VoucherOtherDetails" value="@Model.VoucherOtherDetails" placeholder="Enter Details" />
+                    </div>
+                    <br />
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <div class="card shadow mb-4">
+                <div class="card-header py-3" style="background-color:#5a5c69">
+
+                    <h6 class="m-0 font-weight-bold"><strong style="color:white;">Total</strong></h6>
+                </div>
+                <div class="card-body" style="background-color:white">
+                    <lablel class="col-md-4" style="color:black;">Total (PKR)</lablel>
+                    <div class="col-md-8">
+                        @Html.TextBox("DebitTotal", "0.00", new { @class = "font-italic form-control font-weight-bolder", @Id = "txtDebitTotal", @name = "DebitTotal", @readonly = "readonly", @style = "background-color:yellow", @Value = Model.DebitTotal })
+                    </div>
+                    <div class="col-md-8" hidden>
+                        @Html.TextBox("CreditTotal", "0.00", new { @class = "font-italic form-control font-weight-bolder", @Id = "txtCreditTotal", @name = "CreditTotal", @readonly = "readonly", @style = "background-color:yellow", @Value = Model.CreditTotal })
+
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+
+                    <div class="col-md-8 col-md-offset-2">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" id="btnSaveVoucher" class="btn btn-success form-control">Update Voucher</button>
+
+    </form>
+    <br />
+    <br />
+</div>
+
+
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+
+
+
+<script>
+
+    $("#paymentaccountid").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                var accid = $('#paymentaccountid option:selected').val();
+
+                if (accid != 0) {
+                    console.log('enter button pressed');
+                    $('#currencyID').focus();
+                }
+                else {
+                    $('#paymentaccountid').focus();
+
+
+                }
+
+            }
+        }
+    });
+
+    $("#currencyID").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                var accid = $('#currencyID option:selected').val();
+                if (accid != 0) {
+                    console.log('enter button pressed');
+                    $('#accountID').focus();
+                }
+                else {
+                    $('#currencyID').focus();
+
+
+                }
+
+            }
+        }
+    });
+
+    $("#accountID").on({
+        keydown: function (ev) {
+            if (ev.which === 9) {   // enter button
+                var itemid = parseFloat($('#debitID').val());
+
+                var drcrid = parseInt($('#accountID option:selected').val());
+
+
+                if (drcrid != 0) {
+                    $('#narration').focus();
+
+                }
+
+                else {
+                    $('#accountID').focus();
+
+
+                }
+
+            }
+        }
+    });
+
+    $("#debitID").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                var itemid = parseFloat($('#debitID').val());
+
+                var drcrid = parseInt($('#DrCrId').val());
+
+
+                if (itemid != 0) {
+                    $('#narration').focus();
+
+                }
+
+                else {
+                    $('#debitID').focus();
+
+
+                }
+
+            }
+        }
+    });
+
+    $("#narration").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                console.log('enter button pressed');
+                $('#btnadd').focus();
+
+            }
+        }
+    });
+
+    $("#LongNarration").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                console.log('enter button pressed');
+                $('#VoucherOtherDetails').focus();
+
+            }
+        }
+    });
+    $("#VoucherOtherDetails").on({
+        keydown: function (ev) {
+            if (ev.which === 13) {   // enter button
+                console.log('enter button pressed');
+                $('#btnSaveVoucher').focus();
+
+            }
+        }
+    });
+    $('.js-example-basic-single').select2();
+
+
+//        window.onscroll = function() {myFunction()};
+
+//        var header = document.getElementById("myHeader");
+//        var sticky = header.offsetTop;
+
+//function myFunction() {
+//  if (window.pageYOffset > sticky) {
+//            header.classList.add("sticky");
+//  }
+//  else {
+//            header.classList.remove("sticky");
+//    }
+
+        $('#currencyID').change(function () {
+            var currencyid = $(this).val();
+
+            if (currencyid != 0) {
+
+                $.ajax({
+                    type: 'GET',
+                    data: { cid: currencyid },
+                    url: "@Url.Action("getcurrency","Vouchers")"
+
+                }).done(function (data) {
+                    $('#p').text(data);
+                    $('#pp').text(data);
+                }).fail(function (jqXHR, textStatus) {
+
+                    alert("Cant Get Currency,Contact Admin");
+                });
+            }
+                else {
+                $('#p').text("");
+                $('#pp').text("");
+            }
+
+            var currid = $('#currencyID option:selected').val();
+            var currname = $('#currencyID option:selected').text();
+
+            if (currid == 1) {
+                $('#currName').attr("placeholder", "PKR is the base currency");
+            }
+            else if (currid > 1) {
+                $('#currName').val(currname);
+            }
+
+
+
+        });
+
+        $('#DrCrID').change(function () {
+            var drcrid = 1;
+            debugger;
+
+            if (drcrid == 1) {
+                $('#debitID').prop('disabled', false);
+                //$('#debitID').removeAttr('disabled');
+                $('#creditID').prop('disabled', true);
+                $('#creditID').val("0.00");
+
+
+                var crfind = parseFloat($('table tbody tr').find('td:eq(9)').html());
+                if ($("table > tbody > tr").length > 0) {
+                    $('#debitID').val(crfind);
+
+
+                }
+
+
+            }
+            else if (drcrid == 2) {
+                $('#creditID').prop('disabled', false);
+
+
+                $('#creditID').removeAttr('disabled');
+                $('#debitID').prop('disabled', true);
+                $('#debitID').val("0.00");
+
+
+                var drfind = parseFloat($('table tbody tr').find('td:eq(8)').html());
+                if ($("table > tbody > tr").length > 0) {
+                    $('#creditID').val(drfind);
+
+
+                }
+
+            }
+            else if (drcrid == 0) {
+                $('#creditID').val("0.00");
+                $('#debitID').val("0.00");
+
+
+                $('#debitID').prop('disabled', true);
+                $('#creditID').prop('disabled', true);
+
+
+            }
+
+
+        });
+
+    $(document).ready(function () {
+
+        $('#btnadd').click(function () {
+
+            var drcrid = $('#DrCrID option:selected').val();
+            var drcrname = $('#DrCrID option:selected').text();
+            var accountID = $('#accountID option:selected').val();
+
+            var accountID2 = 0;
+            account1 = $("table  tbody  tr ").find('td:eq(10)').html();
+            debugger;
+            var find = $('table tbody tr ').length;
+            if ($("table > tbody > tr").length >= 1) {
+                $("table  tbody  tr").each(function () {
+
+                    //var ffx = $(this).find('td:eq(5)').html();
+                    //var new = $('#total').attr('value');
+
+                    account1 = $(this).find('td:eq(10)').html();
+
+
+                    //ftotal += $(t).find('input[name=Total]').val();a
+                    accountID2 = account1;
+                });
+            }
+
+            var accountname = $('#accountID option:selected').text();
+            var debitvalue = $('#debitID').val();
+            var creditvalue = $('#creditID').val();
+
+            var shortnarration = $('#narration').val();
+
+            //var btn = $('#btnadd').hasClass("disabled");||  debitvalue == 0.00
+
+
+            if (drcrid == 0 && accountID == "" && drcrname == "" ) {
+
+                alert("Please Fill Voucher Details First");
+                $('#DrCrID').focus();
+
+            }
+            //else if (drcrid == 0 && accountID == "" && drcrname == "" || debitvalue != "0.00" || creditvalue == "0.00" ) {
+            //    alert("Please Fill Voucher Details First");
+            //    $('#DrCrID').focus();
+
+            //}
+            else if (debitvalue != "0.00" && accountID != account1) {
+                var removebtn = "<button type='button' class='btn btn-danger btnremoveDr'  ><i class='glyphicon glyphicon-minus'></i></button>";
+
+                // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";  <td><input readonly class='form-control'  value='Debit' /></td>//// <td><input type="hidden" readonly class='form-control' value="`+ creditvalue + `" name="CreditAmount" /></td>
+
+            var row = ` <tr>
+            <td hidden><input type="hidden" name="DrCrID" value="1" /></td>
+
+            <td hidden><input type="hidden" name="AccountID" value="`+ accountID + `" /></td>
+            <td><input readonly class='form-control'  value="`+ accountname + `" /></td>
+            <td><input readonly class='form-control' value="`+ debitvalue + `" name="DebitAmount" /></td>
+           <td hidden><input type="hidden" readonly class='form-control' value="0.00" name="CreditAmount" /></td>
+            <td><input readonly class='form-control' value="`+ shortnarration + `" name="ShortNarration"  id='ShortNarration' /></td>
+            <td><button type='button' class='btnremoveDr btn btn-danger' onclick='btnremoveDr()'><i class='glyphicon glyphicon-minus'></i></button> <input type="button" class="btnremoveDr btn btn-success" value="-" /> <a class="btnremoveDr btn btn-success" value="-"></a> </td>
+            <td hidden>`+ debitvalue + `</td>
+
+            <td hidden>`+ accountID + `</td>
+            </tr>`;
+
+                $('table tbody').append(row);
+
+
+                debugger;
+
+                var test = $('table > tbody > tr').find('td:eq(7)').html();
+                /*Calculate Debit total*/
+
+
+                var count =  $("table > tbody > tr").length - 1;
+                var ftotal = 0.00;   //+ $('#txttotal').val();
+                if ($("table > tbody > tr").length > 0) {
+                    $("table  tbody  tr").each(function () {
+
+                        //var ffx = $(this).find('td:eq(5)').html();
+                        //var new = $('#total').attr('value');
+                        ftotal += parseFloat($(this).find('td:eq(7)').html());
+                        //ftotal += $(t).find('input[name=Total]').val();a
+
+                    });
+                }
+
+                $('#debittotal').val(ftotal);
+                $('#txtDebitTotal').val(ftotal );
+
+                /*Calculate Credit total*/
+
+
+                var credittotal = 0;//+ $('#txttotal').val();
+                if ($("table > tbody > tr").length > 0) {
+                    $("table  tbody  tr").each(function () {
+
+                        //var ffx = $(this).find('td:eq(5)').html();
+                        //var new = $('#total').attr('value');
+                        credittotal += parseFloat($(this).find('td:eq(7)').html());
+
+                        //ftotal += $(t).find('input[name=Total]').val();a
+
+                    });
+                }
+
+                $('#credittotal').val(credittotal);
+                $('#txtCreditTotal').val(credittotal );
+
+
+
+
+
+
+                $('#DrCrID ').text();
+                $('#accountID ').text();
+                $('#debitID').val("0.00");
+                $('#creditID').val("0.00");
+
+                $('#narration').text("");
+                $('#accountID').focus();
+
+
+
+
+            }
+            //else if (creditvalue != "0.00" && accountID != account1) {
+
+
+            //    var removebtn = "<button type='button' class='btn btn-danger ' id='btnremoveCr' onclick='removeCr()'><i class='glyphicon glyphicon-minus'></i></button>'";
+
+            //    // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
+            //    var row = ` <tr>
+            //<td hidden><input type="hidden" name="DrCrID" value="`+ drcrid + `" /></td>
+            //<td><input readonly class='form-control'  value='Credit' /></td>
+            //<td hidden><input type="hidden" name="AccountID" value="`+ accountID + `" /></td>
+            //<td><input readonly class='form-control'  value="`+ accountname + `" /></td>
+
+            //<td><input type="hidden" readonly  class='form-control' value="`+ debitvalue + `" name="DebitAmount" /></td>
+            //<td><input readonly  class='form-control' value="`+ creditvalue + `" name="CreditAmount" /></td>
+            //<td><input readonly class='form-control' value="`+ shortnarration + `" name="ShortNarration" id='shortnarration' /></td>
+            //<td>`+ removebtn + `</td>
+            //<td hidden>`+ debitvalue + `</td>
+            //<td hidden>`+ creditvalue + `</td>
+            //<td hidden>`+ accountID + `</td>
+
+            //</tr>`;
+
+            //    $('table tbody').append(row);
+
+            //    debugger;
+            //    var ftotal = 0;//+ $('#txttotal').val();
+            //    if ($("table > tbody > tr").length > 0) {
+            //        $("table  tbody  tr").each(function () {
+
+            //            //var ffx = $(this).find('td:eq(5)').html();
+            //            //var new = $('#total').attr('value');
+            //            debugger;
+            //            ftotal += parseFloat($(this).find('td:eq(8)').html());
+
+            //            //ftotal += $(t).find('input[name=Total]').val();a
+
+            //        });
+            //    }
+
+            //    $('#debittotal').val(ftotal);
+            //    $('#txtDebitTotal').val(ftotal);
+
+
+            //    var credittotal = 0;//+ $('#txttotal').val();
+            //    if ($("table > tbody > tr").length > 0) {
+            //        $("table  tbody  tr").each(function () {
+
+            //            //var ffx = $(this).find('td:eq(5)').html();
+            //            //var new = $('#total').attr('value');
+            //            debugger;
+            //            credittotal += parseFloat($(this).find('td:eq(9)').html());
+
+            //            //ftotal += $(t).find('input[name=Total]').val();a
+
+            //        });
+            //    }
+
+            //    $('#credittotal').val(credittotal);
+            //    $('#txtCreditTotal').val(credittotal);
+
+            //    ///For Refresh/
+            //    $('#DrCrID ').text();
+            //    $('#accountID ').text();
+            //    $('#debitID').val("0.00");
+            //    $('#creditID').val("0.00");
+            //    $('#narration').text("");
+            //    $('#DrCrID').focus();
+
+
+            //}
+
+            else {
+                alert("Same accounts cant be debit and credit");
+                $('#DrCrID').focus();
+
+              }
+
+
+
+        });
+    });
+
+
+
+        $('#btnexchange').click(function () {
+            debugger;
+            //$('#txtCreditTotal').val("0.00");
+            //$('#txtDebitTotal').val("0.00");
+            var currid = $('#currencyID option:selected').val();
+            var exrate = $('#currRate').val();
+            var credittoal =  $('#credittotal').val();
+            var debittotal = $('#debittotal').val();
+
+            if (currid > 1) {
+
+                var creditftotal = parseFloat(credittoal) * parseFloat(exrate);
+                $('#txtCreditTotal').val(parseFloat(creditftotal));
+
+                var debittotal = parseFloat(debittotal) * parseFloat(exrate);
+                $('#txtDebitTotal').val(parseFloat(debittotal));
+
+                $(this).attr('data-dismiss','modal');
+
+            }
+            else {
+                $(this).attr('data-dismiss', 'modal');
+
+
+            }
+
+    });
+
+
+
+
+    $('.btnremoveDr').click(function () {
+
+        var test = $('#btnremoveDr').parent().parent();
+        //$('#DebitAmount').parent().remove();
+
+        var test = $('table tbody tr').find('td:eq(7)').html();
+
+        var ftotal = parseFloat($('#debittotal').val());        //+ $('#txttotal').val();
+        var pt = 0.00;
+
+        var tet = $(this).parent().parent().find('td:eq(7)').html();
+
+        if ($("table > tbody > tr").length > 0) {
+
+            var ot = parseFloat($(this).parent().parent().find('td:eq(7)').html());
+            pt = parseFloat(ftotal) - ot;
+
+        }
+
+
+        $('#debittotal').val(parseFloat(pt));
+        $('#txtDebitTotal').val(parseFloat(pt));
+
+
+        $(this).parent().parent().remove();
+
+
+
+        var childid = $(this).parent().parent().find('td:eq(10)').html();
+
+
+        var row2 = ` <tr hidden>
+
+            <td hidden><input name="deletedchild" type="hidden" value="`+ childid + `" /></td>
+            </tr>`;
+
+        $('table tbody').append(row2);
+
+
+    });
+
+
+
+    function btnremoveDr() {
+
+
+        debugger;
+        var test = $('#btnremoveDr').parent().parent();
+        //$('#DebitAmount').parent().remove();
+
+        var test = $('table tbody tr').find('td:eq(7)').html();
+        var ftotal = parseFloat($('#debittotal').val());        //+ $('#txttotal').val();
+        var pt = 0.00;
+
+        var tet = $(this).parent().parent().find('td:eq(7)').html();
+
+        if ($("table > tbody > tr").length > 0) {
+
+            var ot = parseFloat($(this).parent().parent().find('td:eq(7)').html());
+            pt = parseFloat(ftotal) - ot;
+
+        }
+
+
+        $('#debittotal').val(parseFloat(pt));
+        $('#txtDebitTotal').val(parseFloat(pt));
+
+
+        $('#btnremoveDr').parent().parent().remove();
+
+
+    }
+    //function removeCr() {
+
+    //    $('#btnremoveCr').parent().parent().remove();
+
+    //    var ftotalcr = 0.00;//+ $('#txttotal').val();
+    //    var ptcr = 0.00;
+    //    debugger;
+    //    if ($("table > tbody > tr").length > 0) {
+    //        $("table > tbody > tr").each(function () {
+    //            var otcr = parseFloat($(this).find('td:eq(9)').html());
+    //            ptcr = otcr - parseFloat(ftotalcr);
+    //            //var ototal = ftotal;
+    //            //ototal += ftotal;
+    //        })
+    //    }
+
+
+    //    $('#credittotal').val(parseFloat(ptcr));
+    //    $('#txtCreditTotal').val(parseFloat(ptcr));
+
+    $('.btnremoveDr').click(function () {
+        debugger;
+        var test = $('#btnremoveDr').parent().parent();
+        //$('#DebitAmount').parent().remove();
+
+        var test = $('table tbody tr').find('td:eq(7)').html();
+
+        var ftotal = parseFloat($('#debittotal').val());        //+ $('#txttotal').val();
+        var pt = 0.00;
+
+        var tet = $(this).parent().parent().find('td:eq(7)').html();
+
+        if ($("table > tbody > tr").length > 0) {
+
+            var ot = parseFloat($(this).parent().parent().find('td:eq(7)').html());
+            pt = parseFloat(ftotal) - ot;
+
+        }
+
+
+        $('#debittotal').val(parseFloat(pt));
+        $('#txtDebitTotal').val(parseFloat(pt));
+        $('#txtCreditTotal').val(parseFloat(pt));
+        $('#creditTotal').val(parseFloat(pt));
+
+        debugger;
+        $(this).parent().parent().remove();
+        var childid = $(this).parent().parent().find('td:eq(10)').html();
+
+
+        var row2 = ` <tr hidden>
+
+            <td hidden><input name="deletedchild" type="hidden" value="`+ childid + `" /></td>
+            </tr>`;
+
+        $('table tbody').append(row2);
+
+    });
+
+
+
+    function btnremoveDr() {
+
+
+        debugger;
+        var test = $('#btnremoveDr').parent().parent();
+        //$('#DebitAmount').parent().remove();
+
+        var test = $('table tbody tr').find('td:eq(7)').html();
+        var ftotal = parseFloat($('#debittotal').val());        //+ $('#txttotal').val();
+        var pt = 0.00;
+
+        var tet = $(this).parent().parent().find('td:eq(7)').html();
+
+        if ($("table > tbody > tr").length > 0) {
+
+            var ot = parseFloat($(this).parent().parent().find('td:eq(7)').html());
+            pt = parseFloat(ftotal) - ot;
+
+        }
+
+
+        $('#debittotal').val(parseFloat(pt));
+        $('#txtDebitTotal').val(parseFloat(pt));
+
+
+        $('#btnremoveDr').parent().parent().remove();
+
+
+    }
+    //}
+
+
+
+
+
+
+
+ $('#btnSaveVoucher').click(function () {
+   var form = $('#JournalVoucher').serialize();
+   var debittotal = $('#txtDebitTotal').val();
+   var credittotal = $('#txtCreditTotal').val();
+
+
+    var con = confirm("Are u sure u want to Add Voucher");
+
+
+
+       if (con == true) {
+
+           $.ajax({
+
+               type: 'POST',
+               data: $('#PaymentVoucher').serialize(),
+               url: "@Url.Action("SavePaymentVoucher", "Vouchers")"
+
+           }).done(function (data) {
+               alert("Voucher Save Successfully ");
+               location.reload();
+           }).fail(function (jqXHR, textStatus) {
+               alert("Your Voucher cant be save,Contact Admin");
+           });
+       }
+       else {
+           alert("Ok");
+       }
+ });
+
+
+</script>
+

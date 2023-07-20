@@ -1,0 +1,606 @@
+﻿@using Microsoft.AspNet.Identity
+@*<!DOCTYPE html>
+
+    <div class="container-fluid body-content">
+        @Scripts.Render("~/bundles/jquery")
+        <script src="http://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>*@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Efast Finance</title>
+    <!-- Custom fonts for this template -->
+    <link href="~/startbootstrap-sb-admin-2-master/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template -->
+    <link href="~/startbootstrap-sb-admin-2-master/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="~/Content/bootstrap-chosen.css" rel="stylesheet" />
+
+    <link href="~/download__2_-removebg-preview (1).ico" rel="icon" />
+    <!-- Custom styles for this page -->
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+
+
+    @*<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>FinAcc 2</title>
+        <!-- Custom fonts for this template -->
+        <!--  <link href="~/startbootstrap-sb-admin-2-master/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+         @*<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">*@
+    <!-- Custom styles for this template -->
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>*@
+
+    <!-- Custom styles for this page-->
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-chosen.css" rel="stylesheet" />
+    @*@Styles.Render("~/Content/css")
+
+        @Scripts.Render("~/bundles/modernizr")
+
+
+
+                <link href="~/startbootstrap-sb-admin-2-master/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+                <!-- Custom styles for this template-->
+
+                <link href="~/startbootstrap-sb-admin-2-master/css/sb-admin-2.css" rel="stylesheet" />
+                <link href="~/startbootstrap-sb-admin-2-master/css/sb-admin-2.min.css" rel="stylesheet">*@
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+
+    <script>
+
+        $(window).load(function () {
+            // Animate loader off screen
+            $(".se-pre-con").fadeOut("slow");
+        });
+        $.ajax({
+
+            beforeSend: function () { $(".se-pre-con").fadeIn("slow"); },
+            complete: function () { $(".se-pre-con").fadeOut("slow"); },
+        })
+
+        //paste this code under head tag or in a seperate js file.
+        // Wait for window load
+
+        //$(ajax).load(function () {
+        //    $(".se-pre-con").fadeOut("slow");
+
+        //})
+    </script>
+
+</head>
+<body id="page-top">
+    <style>
+        /* Paste this css to your style sheet file or under head tag */
+        /* This only works with JavaScript,
+                    if it's not present, don't show loader */
+        .no-js #loader {
+            display: none;
+        }
+        .table-bordered > thead:nth-child(2){
+            background-color:White!important;
+        }
+        .table-bordered > thead:nth-child(3) {
+            background-color: White !important;
+        }
+        .js #loader {
+            display: block;
+            position: absolute;
+            left: 100px;
+            top: 0;
+        }
+        .form-control{
+            background-color:White!important;
+            color:black!important;
+        }
+        .se-pre-con {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('../../startbootstrap-sb-admin-2-master/Login_v3/images/Preloader_2.gif') center no-repeat #fff;
+            /*background-image: url('../../startbootstrap-sb-admin-2-master/Login_v3/images/Preloader_2.gif'); */
+        }
+    </style>
+
+
+    <div class="se-pre-con"></div>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav  sidebar sidebar-dark accordion" style="background-color:#5a5c69" id="accordionSidebar">
+            <div>
+                <!-- Sidebar - Brand -->
+                <a class="" href="~/Home/Index">
+                    @*<div class="sidebar-brand-icon rotate-n-15">
+                            <i class="fas fa-laugh-wink"></i>
+                        </div>*@
+                    @*                    <div class="sidebar-brand-text mx-3">IMS <sup>2</sup></div>*@
+                    <img src="~/startbootstrap-sb-admin-2-master/img/efastdfd (1).png" width="310px" height="95px" style="padding-right:100px" />
+                    @*<img src="~/startbootstrap-sb-admin-2-master/img/fasdfs.png" width="310px" height="95px" style="padding-right:100px" />*@
+                </a>
+
+                <br />
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0">
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" style="color:white" href="@Url.Action("Index","Home")">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    <Main></Main>
+                </div>
+                <!-- Nav Item - Pages Collapse Menu -->
+                <!-- Nav Item - Utilities Collapse Menu -->
+
+
+                @Html.Action("GetMenuList", "Home")
+
+                <!-- Divider -->
+                @*<hr class="sidebar-divider">*@
+
+                @*<li class="nav-item">
+                        <a class="nav-link collapsed" style="color:white" href="#" data-toggle="collapse" data-target="#collapseP33ages133"
+                           aria-expanded="true" aria-controls="collapsePages133">
+                            <i class="fas fa-fw fa-user-circle"></i>
+                            Manage Efast
+                        </a>
+                        <div id="collapseP33ages133" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="@Url.Action("GetEUsers","ManageEfast")"><i class="fas fa-fw fa-user"></i> Efast Users</a>
+                            </div>
+                        </div>
+                    </li>*@
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+                <!-- Sidebar Toggler (Sidebar) -->
+                <div class="text-center d-none d-md-inline">
+                    @*<button class="rounded-circle border-0" id="sidebarToggle"></button>*@
+                </div>
+            </div>
+        </ul>
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" >
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1024px-Hamburger_icon.svg.png" style="width:30px;cursor:pointer;" id="hideandshow"/>
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <h2 class=" col-lg-offset-4 " style="color:white"><strong>   </strong></h2>
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                 aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                               placeholder="Search for..." aria-label="Search"
+                                               aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                        <!-- Nav Item - Alerts -->
+                        <!-- Nav Item - Messages -->
+                        <!-- Nav Item - User Information -->
+
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", style = "color:white;" })
+                        </li>
+                        <li><a href="@Url.Action("Login","Account")" style="color:white;">Log off</a></li>
+                    </ul>
+                </nav>
+                <!-- End of Topbar -->
+                <!-- Begin Page Content -->
+                <div class="container-fluid  body-content">
+                    @*<link href="~/Content/bootstrap.css" rel="stylesheet" />
+                        <link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
+
+
+
+
+                    @*  <script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
+                    @Scripts.Render("~/bundles/jquery")
+
+                    @*<link href="~/startbootstrap-sb-admin-2-master/css/sb-admin-2.min.css" rehttp://localhost:63119/Sales/AddsalevoucherXl="stylesheet">*@
+                    <!-- Custom styles for this page -->
+                    <link href="~/startbootstrap-sb-admin-2-master/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+
+                    @RenderBody()
+
+
+                </div>
+
+
+                @Scripts.Render("~/bundles/bootstrap")
+                @RenderSection("scripts", required: false)
+
+
+                @*<!--Bootstrap core JavaScript-->
+                    <script src="~/startbootstrap-sb-admin-2-master/vendor/jquery/jquery.min.js"></script>
+                    <script src="~/startbootstrap-sb-admin-2-master/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                    <!--Core plugin JavaScript-->
+                    <script src="~/startbootstrap-sb-admin-2-master/vendor/jquery-easing/jquery.easing.min.js"></script>
+                    <!--Custom scripts for all pages-->
+                    <script src="~/startbootstrap-sb-admin-2-master/js/sb-admin-2.min.js"></script>
+                    <!--Page level plugins-->
+                    <script src="~/startbootstrap-sb-admin-2-master/vendor/chart.js/Chart.min.js"></script>
+                    <!--Page level custom scripts-->
+                    <script src="~/startbootstrap-sb-admin-2-master/js/demo/chart-area-demo.js"></script>
+                    <script src="~/startbootstrap-sb-admin-2-master/js/demo/chart-pie-demo.js"></script>
+                    @*<!-- Bootstrap core JavaScript-->
+                    <script src="~/startbootstrap-sb-admin-2-master/vendor/jquery/jquery.min.js"></script>
+                    <script src="~/startbootstrap-sb-admin-2-master/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                    <!-- Core plugin JavaScript-->
+
+                    <script src="~/startbootstrap-sb-admin-2-master/vendor/jquery-easing/jquery.easing.min.js"></script>
+                    <!-- Custom scripts for all pages-->
+                    <script src="~/startbootstrap-sb-admin-2-master/js/sb-admin-2.min.js"></script>
+                    <!-- Page level plugins -->
+                    <script src="~/startbootstrap-sb-admin-2-master/vendor/chart.js/Chart.min.js"></script>
+                    <!-- Page level custom scripts -->
+                    <script src="~/startbootstrap-sb-admin-2-master/js/demo/chart-area-demo.js"></script>
+                    <script src="~/startbootstrap-sb-admin-2-master/js/demo/chart-pie-demo.js"></script>
+
+
+                    <!-- Bootstrap core JavaScript-->
+                    <script src="~/startbootstrap-sb-admin-2-master/vendor/jquery/jquery.min.js"></script>
+                    <script src="~/startbootstrap-sb-admin-2-master/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                    <!-- Core plugin JavaScript-->
+                    <script src="~/startbootstrap-sb-admin-2-master/vendor/jquery-easing/jquery.easing.min.js"></script>
+                    <!-- Custom scripts for all pages-->
+                    <script src="~/startbootstrap-sb-admin-2-master/js/sb-admin-2.min.js"></script>
+                    <!-- Page level plugins -->
+                    <script src="~/startbootstrap-sb-admin-2-master/vendor/datatables/jquery.dataTables.min.js"></script>
+                    <script src="~/startbootstrap-sb-admin-2-master/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+                    <!-- Page level custom scripts -->
+                    <script src="~/startbootstrap-sb-admin-2-master/js/demo/datatables-demo.js"></script>*@
+
+
+
+
+
+
+
+                @*<!-- Bootstrap core JavaScript-->
+                    <script src="~/startbootstrap-sb-admin-2-master/vendor/jquery/jquery.min.js"></script>
+                    <script src="~/startbootstrap-sb-admin-2-master/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                    <!-- Core plugin JavaScript-->
+
+                    <script src="~/startbootstrap-sb-admin-2-master/vendor/jquery-easing/jquery.easing.min.js"></script>
+                    <!-- Custom scripts for all pages-->*@
+                <script src="~/startbootstrap-sb-admin-2-master/js/sb-admin-2.min.js"></script>
+                <!-- Page level plugins -->
+                <!-- Bootstrap core JavaScript-->
+                <script src="~/startbootstrap-sb-admin-2-master/vendor/jquery/jquery.min.js"></script>
+                <script src="~/startbootstrap-sb-admin-2-master/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <!-- Core plugin JavaScript-->
+                <script src="~/startbootstrap-sb-admin-2-master/vendor/jquery-easing/jquery.easing.min.js"></script>
+                <!-- Custom scripts for all pages-->
+                <script src="~/startbootstrap-sb-admin-2-master/js/sb-admin-2.min.js"></script>
+                <!-- Page level plugins -->
+                <script src="~/startbootstrap-sb-admin-2-master/vendor/datatables/jquery.dataTables.min.js"></script>
+                <script src="~/startbootstrap-sb-admin-2-master/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+                <!-- Page level custom scripts -->
+                <script src="~/startbootstrap-sb-admin-2-master/js/demo/datatables-demo.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+<script>
+    //function hideandshow() {
+    //    var x = document.getElementById("accordionSidebar");
+    //    if (x.style.display === "none") {
+    //        x.style.display = "block";
+    //    } else {
+    //        x.style.display = "none";
+    //    }
+    //}
+    $(document).ready(function () {
+        $("#hideandshow").click(function () {
+            $("#accordionSidebar").fadeToggle();
+        });
+    });
+
+
+
+    function DeleteBill() {
+        var accid = $(this).attr('data-id');
+
+
+        var con = confirm("Are u sure u want to delete");
+        $(this).parent().parent().remove();
+        if (con == true) {
+
+            $.ajax({
+                type: 'GET',
+                data: { id: accid},
+                url: "@Url.Action("DeleteSVoucher", "Vouchers")"
+
+            }).done(function (data) {
+                alert("Voucher Deleted  successfully");
+
+
+            }).fail(function (jqxhr, textStatus) {
+
+                alert("Voucher can't deleted  ");
+
+            });
+
+
+
+
+        }
+        else {
+            alert("ok");
+        }
+
+
+    });
+
+
+
+    function DeleteVoucher() {
+        var accid = $(this).attr('data-id');
+
+
+        var con = confirm("Are u sure u want to delete");
+        $(this).parent().parent().remove();
+        if (con == true) {
+
+            $.ajax({
+                type: 'GET',
+                data: { id: accid},
+                url: "@Url.Action("DeleteJVoucher", "Vouchers")"
+
+            }).done(function (data) {
+                alert("Voucher Deleted  successfully");
+
+
+            }).fail(function (jqxhr, textStatus) {
+
+                alert("Voucher can't deleted  ");
+
+            });
+
+
+
+
+        }
+        else {
+            alert("ok");
+        }
+
+
+    });
+
+
+</script>
+
+@*<script>
+
+    $(document).on({
+        keydown: function (ev) {
+            if ( ev.which === 74 && ev.shiftKey && ev.ctrlKey != true) {   // enter button
+
+                var keycode = 74;
+                debugger
+                $.ajax({
+                    type: 'GET',
+                    datatype: 'JSON',
+                    befsoreSend: function () { $('#wait').show(); },
+                    complete: function () { $('#wait').hide(); },
+                    data: { key: keycode },
+                    url: "@Url.Action("Redirecttourl", "Home")"
+
+
+                }).done(function (data) {
+
+                    window.location.href = data;
+
+                }).fail(function (jqXHR, textStatus) {
+
+                    alert("CANT redirect to url, CONTACT ADMIN");
+
+                });
+            }
+            else if (ev.which === 80 && ev.shiftKey && ev.ctrlKey != true) {
+                var keycode = 80;
+                @*$.ajax({
+                    type: 'GET',
+                    datatype: 'JSON',
+                    beforeSend: function () { $('#wait').show(); },
+                    complete: function () { $('#wait').hide(); },
+                    data: { key: keycode },
+                    url: "@Url.Action("Redirecttourl", "Home")"
+
+
+                }).done(function (data) {
+
+                    window.location.href = data;
+
+                }).fail(function (jqXHR, textStatus) {
+
+              alert("CANT redirect to url, CONTACT ADMIN");
+
+                });
+            }
+            else if (ev.which === 82  && ev.shiftKey && ev.ctrlKey != true) {
+                var keycode = 82;
+                $.ajax({
+                    type: 'GET',
+                    datatype: 'JSON',
+                    data: { key: keycode },
+                    url: "@Url.Action("Redirecttourl", "Home")"
+
+
+                }).done(function (data) {
+
+                    window.location.href = data;
+
+                }).fail(function (jqXHR, textStatus) {
+
+                    alert("CANT redirect to url, CONTACT ADMIN");
+
+                });
+            }
+            else if (ev.which === 83 && ev.shiftKey && ev.ctrlKey != true) {
+                var keycode = 83;
+                @*$.ajax({
+                    type: 'GET',
+                    datatype: 'JSON',
+                    data: { key: keycode },
+                    url: "@Url.Action("Redirecttourl", "Home")"
+
+
+                }).done(function (data) {
+
+                    window.location.href = data;
+
+                }).fail(function (jqXHR, textStatus) {
+
+                    alert("CANT redirect to url, CONTACT ADMIN");
+
+                });
+            }
+            else if (ev.which === 76 && ev.shiftKey && ev.ctrlKey != true) {
+                var keycode = 76;
+                $.ajax({
+                    type: 'GET',
+                    datatype: 'JSON',
+                    data: { key: keycode },
+                    url: "@Url.Action("Redirecttourl", "Home")"
+
+
+                }).done(function (data) {
+
+                    window.location.href = data;
+
+                }).fail(function (jqXHR, textStatus) {
+
+                    alert("CANT redirect to url, CONTACT ADMIN");
+
+                });
+            }
+            else if (ev.which === 84 && ev.shiftKey && ev.ctrlKey != true) {
+                var keycode = 84;
+                $.ajax({
+                    type: 'GET',
+                    datatype: 'JSON',
+                    data: { key: keycode },
+                    url: "@Url.Action("Redirecttourl", "Home")"
+
+
+                }).done(function (data) {
+
+                    window.location.href = data;
+
+                }).fail(function (jqXHR, textStatus) {
+
+                    alert("CANT redirect to url, CONTACT ADMIN");
+
+                });
+            }
+            else if (ev.which === 72 && ev.shiftKey && ev.ctrlKey != true) {
+                var keycode = 72;
+                $.ajax({
+                    type: 'GET',
+                    datatype: 'JSON',
+                    data: { key: keycode },
+                    url: "@Url.Action("Redirecttourl", "Home")"
+
+
+                }).done(function (data) {
+
+                    window.location.href = data;
+
+                }).fail(function (jqXHR, textStatus) {
+
+                    alert("CANT redirect to url, CONTACT ADMIN");
+
+                });
+            }
+
+
+            else if (ev.which === 27) {
+                window.history.back();
+
+
+            }
+
+
+        }
+
+        //keyup: function (ev) {
+        //    if (ev.which === 27) {
+
+        //        window.history.back();
+
+
+        //    }
+
+
+
+        //}
+    });
+
+
+</script>*@
