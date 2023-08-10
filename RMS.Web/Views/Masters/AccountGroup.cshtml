@@ -128,14 +128,23 @@
 <script>
     $('#btnadd').click(function () {
         debugger;
+        clearmodal();
+    });
+
+    function clearmodal() {
+        debugger;
         $('#AccgroupID').val(0);
         $('#Accgroupname').val("");
         $('#Accgroupalias').val("");
         $('#Accundergroup2').val("");
         $('#Accmaingrp').val("");
+        $('#primarygroup').val(0);
+        $('#child2').hide();
+        $('#child2L').hide();
+        $('#child3').hide();
+        $('#child3L').hide();
+    };
 
-
-    });
 
     $('#btnSave').click(function () {
         var accgid = $(this).attr('data-id');
@@ -147,12 +156,12 @@
         var accundergroup = $('#AccUnderGroup').val();
         var accunderprimarygroup = $('#AccUnderGroup2 option:selected').text();
         var accunderprimarygroupid = $('#AccUnderGroup2 option:selected').val()
-        var maingrpid = $('#Accmaingrp option:selected').val()
+        var maingroupid = $('#Accmaingrp option:selected').val()
 
 
         //if (accgid == 0) {
         //    confirm("Are U sure u want to Add");
-           
+
         //}
         //else {
         //    confirm("ok");
@@ -164,7 +173,7 @@
 
             $.ajax({
                 type: 'POST',
-                data: { AccgroupID: accid, Accgroupname: accgname, Accgroupalias: accgalias, Accundergroup: accundergroup, Accunderprimarygroup: accunderprimarygroup, Accprimarygroupid: accunderprimarygroupid, MainGrpId:maingrpid },
+                data: { AccgroupID: accid, Accgroupname: accgname, Accgroupalias: accgalias, Accundergroup: accundergroup, Accunderprimarygroup: accunderprimarygroup, Accprimarygroupid: accunderprimarygroupid, MainGroupId:maingroupid },
                 url: "@Url.Action("SaveAccgroup", "Masters")"
 
             }).done(function (data) {
@@ -207,14 +216,23 @@
             }
             else {
                 $('#Accgroupalias').val(data.Accgroupalias);
-            } 
-
-
-            if (data.Accunderprimarygroupid != "NULL") {
+            }
+            debugger
+            if (data.Accunderprimarygroupid != null) {               
                 $('#primarygroup').val(2);
                 $('#child2').show();
+                $('#child2L').show();
+                $('#child3').hide();
+                $('#child3L').hide();
                 $('#AccUnderGroup2').val(data.Accunderprimarygroupid);
-
+            }
+            else {
+                $('#primarygroup').val(1);
+                $('#child2').hide();
+                $('#child2L').hide();
+                $('#child3').show();
+                $('#child3L').show();
+                $('#Accmaingrp').val(data.MainGroupID);
             }
 
 
@@ -245,7 +263,7 @@
 
             }).done(function (data) {
                 alert("AccGroup Deleted  successfully");
-              
+
 
             }).fail(function (jqxhr, textStatus) {
 
@@ -268,6 +286,9 @@
         debugger;
         var pgval = $(this).val();
 
+        $('#Accmaingrp').val("");
+        $('#AccUnderGroup2').val("");
+
         if (pgval == 2) {
             $('#child').hide();
             $('#child2').show();
@@ -283,7 +304,8 @@
             $('#child3').show();
             $('#child3L').show();
         }
-        else {
+        else
+        {
             $('#child2').hide();
             $('#child2L').hide();
             $('#child').hide();
@@ -292,14 +314,14 @@
         }
     });
 
-    
+
     @*$(document).ready(function () {
         $("#primarygroup").change(function () {
-            debugger;   
+            debugger;
              if ($('#primarygroup').val() == 1) {
                  $("#child3").css("display", "block");
              }
         });
-        
+
     });*@
 </script>

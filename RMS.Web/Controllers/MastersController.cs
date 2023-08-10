@@ -46,7 +46,7 @@ namespace RMS.Web.Controllers
             return View(accountgrouplist);
         }
         [HttpPost]
-        public ActionResult SaveAccgroup(int AccgroupID, string Accgroupname, string Accgroupalias, string Accundergroup, string Accunderprimarygroup, int? Accprimarygroupid, int MainGrpId)
+        public ActionResult SaveAccgroup(int AccgroupID, string Accgroupname, string Accgroupalias, string Accundergroup, string Accunderprimarygroup, int? Accprimarygroupid, int? MainGroupId)
         {
 
             if (AccgroupID == 0)
@@ -68,7 +68,7 @@ namespace RMS.Web.Controllers
                 acg.Accunderprimarygroupid = val;
                 acg.DebitAmount = 0.00;
                 acg.CreditAmount = 0.00;
-                acg.MainGroupID = MainGrpId;
+                acg.MainGroupID = MainGroupId;
                 var addaccg = acg;
 
                 services.AddAccgrup(addaccg);
@@ -657,6 +657,7 @@ namespace RMS.Web.Controllers
                         oldaccg.Accgroupalias = Accgroupalias;
                         oldaccg.AccunderprimarygroupName = Accunderprimarygroup;
                         oldaccg.Accunderprimarygroupid = Accprimarygroupid;
+                        oldaccg.MainGroupID = MainGroupId;
                         services.UpdateAccgroup(oldaccg);
 
                         var accountchildgroups = db.AccGroup.Where(i => i.Accunderprimarygroupid == oldaccg.AccgroupID).ToList();
@@ -699,6 +700,7 @@ namespace RMS.Web.Controllers
             acc.Accgroupalias = olddata.Accgroupalias;
             acc.Accunderprimarygroupid = olddata.Accunderprimarygroupid;
             acc.AccunderprimarygroupName = olddata.AccunderprimarygroupName;
+            acc.MainGroupID = olddata.MainGroupID;
 
 
             return Json(acc, JsonRequestBehavior.AllowGet);

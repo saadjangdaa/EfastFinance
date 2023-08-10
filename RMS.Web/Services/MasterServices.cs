@@ -33,7 +33,7 @@ namespace RMS.Web.Services
 
         public AccGroup Getaccgroupbyid(int? AccgroupID)
         {
-           var oldd =  db.AccGroup.Find(AccgroupID);
+            var oldd =  db.AccGroup.Find(AccgroupID);
             return oldd;
         }
         public void UpdateAccgroup(AccGroup accGroup)
