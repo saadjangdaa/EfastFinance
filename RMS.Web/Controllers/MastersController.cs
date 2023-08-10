@@ -36,18 +36,18 @@ namespace RMS.Web.Controllers
             var accountgrouplist = db.AccGroup.ToList();
 
             AccGroup accg = new AccGroup();
+            AccountMainHead accm = new AccountMainHead();
 
             ViewBag.Accundergroup = new SelectList(db.AccGroup, "AccgroupID", "Accgroupname", 0);
             ViewBag.accundergroup = new SelectList(db.AccGroup, "AccgroupID", "Accgroupname", accg.AccunderprimarygroupName);
+            ViewBag.Accmain = new SelectList(db.AccountMainHead, "MainGroupID", "MainAccGroupName", accm.MainAccGroupName);
 
 
             return View(accountgrouplist);
         }
         [HttpPost]
-        public ActionResult SaveAccgroup(int AccgroupID, string Accgroupname, string Accgroupalias, string Accundergroup, string Accunderprimarygroup, int? Accprimarygroupid)
+        public ActionResult SaveAccgroup(int AccgroupID, string Accgroupname, string Accgroupalias, string Accundergroup, string Accunderprimarygroup, int? Accprimarygroupid, int MainGrpId)
         {
-
-
 
             if (AccgroupID == 0)
             {
@@ -68,8 +68,7 @@ namespace RMS.Web.Controllers
                 acg.Accunderprimarygroupid = val;
                 acg.DebitAmount = 0.00;
                 acg.CreditAmount = 0.00;
-
-
+                acg.MainGroupID = MainGrpId;
                 var addaccg = acg;
 
                 services.AddAccgrup(addaccg);

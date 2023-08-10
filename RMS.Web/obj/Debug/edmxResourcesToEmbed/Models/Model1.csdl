@@ -23,6 +23,7 @@
     <Property Name="DebitAmount" Type="Double" />
     <Property Name="CreditAmount" Type="Double" />
     <NavigationProperty Name="Account" Relationship="Self.FK_Account_AccGroup" FromRole="AccGroup" ToRole="Account" />
+    <Property Name="MainGroupID" Type="Int32" />
   </EntityType>
   <EntityType Name="Account">
     <Key>

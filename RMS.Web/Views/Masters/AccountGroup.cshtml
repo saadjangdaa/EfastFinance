@@ -132,6 +132,7 @@
         $('#Accgroupname').val("");
         $('#Accgroupalias').val("");
         $('#Accundergroup2').val("");
+        $('#Accmaingrp').val("");
 
 
     });
@@ -146,6 +147,7 @@
         var accundergroup = $('#AccUnderGroup').val();
         var accunderprimarygroup = $('#AccUnderGroup2 option:selected').text();
         var accunderprimarygroupid = $('#AccUnderGroup2 option:selected').val()
+        var maingrpid = $('#Accmaingrp option:selected').val()
 
 
         //if (accgid == 0) {
@@ -162,7 +164,7 @@
 
             $.ajax({
                 type: 'POST',
-                data: { AccgroupID: accid, Accgroupname: accgname, Accgroupalias: accgalias, Accundergroup: accundergroup, Accunderprimarygroup: accunderprimarygroup, Accprimarygroupid: accunderprimarygroupid },
+                data: { AccgroupID: accid, Accgroupname: accgname, Accgroupalias: accgalias, Accundergroup: accundergroup, Accunderprimarygroup: accunderprimarygroup, Accprimarygroupid: accunderprimarygroupid, MainGrpId:maingrpid },
                 url: "@Url.Action("SaveAccgroup", "Masters")"
 
             }).done(function (data) {
@@ -269,25 +271,35 @@
         if (pgval == 2) {
             $('#child').hide();
             $('#child2').show();
+            $('#child2L').show();
+            $('#child3').hide();
+            $('#child3L').hide();
 
         }
         else if (pgval == 1) {
             $('#child2').hide();
+            $('#child2L').hide();
             $('#child').hide(400);
+            $('#child3').show();
+            $('#child3L').show();
         }
         else {
             $('#child2').hide();
+            $('#child2L').hide();
             $('#child').hide();
+            $('#child3').hide();
+            $('#child3L').hide();
         }
-
     });
 
-
-
-
-
-
-
-
-
+    
+    @*$(document).ready(function () {
+        $("#primarygroup").change(function () {
+            debugger;   
+             if ($('#primarygroup').val() == 1) {
+                 $("#child3").css("display", "block");
+             }
+        });
+        
+    });*@
 </script>

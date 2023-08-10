@@ -22,6 +22,7 @@
     <Property Name="Accunderprimarygroupid" Type="int" />
     <Property Name="DebitAmount" Type="float" />
     <Property Name="CreditAmount" Type="float" />
+    <Property Name="MainGroupID" Type="int" />
   </EntityType>
   <EntityType Name="Account">
     <Key>

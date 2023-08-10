@@ -28,6 +28,7 @@ namespace RMS.Web.Models
         public Nullable<int> Accunderprimarygroupid { get; set; }
         public Nullable<double> DebitAmount { get; set; }
         public Nullable<double> CreditAmount { get; set; }
+        public Nullable<int> MainGroupID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Account> Account { get; set; }

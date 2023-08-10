@@ -14,6 +14,7 @@
     <EntitySetMapping Name="AccGroup">
       <EntityTypeMapping TypeName="MVCDBLiveModel.AccGroup">
         <MappingFragment StoreEntitySet="AccGroup">
+          <ScalarProperty Name="MainGroupID" ColumnName="MainGroupID" />
           <ScalarProperty Name="AccgroupID" ColumnName="AccgroupID" />
           <ScalarProperty Name="Accgroupname" ColumnName="Accgroupname" />
           <ScalarProperty Name="Accgroupalias" ColumnName="Accgroupalias" />

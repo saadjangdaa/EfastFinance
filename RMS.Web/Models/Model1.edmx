@@ -27,6 +27,7 @@
           <Property Name="Accunderprimarygroupid" Type="int" />
           <Property Name="DebitAmount" Type="float" />
           <Property Name="CreditAmount" Type="float" />
+          <Property Name="MainGroupID" Type="int" />
         </EntityType>
         <EntityType Name="Account">
           <Key>
@@ -1010,6 +1011,7 @@ warning 6002: The table/view 'MVCDBLive.dbo.treetable' does not have a primary k
           <Property Name="DebitAmount" Type="Double" />
           <Property Name="CreditAmount" Type="Double" />
           <NavigationProperty Name="Account" Relationship="Self.FK_Account_AccGroup" FromRole="AccGroup" ToRole="Account" />
+          <Property Name="MainGroupID" Type="Int32" />
         </EntityType>
         <EntityType Name="Account">
           <Key>
@@ -1963,6 +1965,7 @@ warning 6002: The table/view 'MVCDBLive.dbo.treetable' does not have a primary k
           <EntitySetMapping Name="AccGroup">
             <EntityTypeMapping TypeName="MVCDBLiveModel.AccGroup">
               <MappingFragment StoreEntitySet="AccGroup">
+                <ScalarProperty Name="MainGroupID" ColumnName="MainGroupID" />
                 <ScalarProperty Name="AccgroupID" ColumnName="AccgroupID" />
                 <ScalarProperty Name="Accgroupname" ColumnName="Accgroupname" />
                 <ScalarProperty Name="Accgroupalias" ColumnName="Accgroupalias" />

@@ -25,15 +25,22 @@
         </div>
         <br />
         <br />
-        <label class="col-md-6">Account Under Group</label>
+
 
         <div id="child" style="display:none;" class="col-md-6">
             <input type="text" class="form-control " value="NULL" placeholder="enter account under group" id="AccUnderGroup" name="AccUnderGroup" />
         </div>
-
+        <div id="child2L" style="display:none;" class="col-md-6">
+            <label>Account Under Group</label>
+        </div>      
         <div id="child2" style="display:none;" class="col-md-6">
-            @Html.DropDownList("accundergroup", (IEnumerable<SelectListItem>)ViewBag.accundergroup, "NULL",htmlAttributes: new { @class = "form-control",@Id= "AccUnderGroup2", @Name= "AccUnderGroup2" })
-        
+            @Html.DropDownList("accundergroup", (IEnumerable<SelectListItem>)ViewBag.accundergroup, "NULL", htmlAttributes: new { @class = "form-control", @Id = "AccUnderGroup2", @Name = "AccUnderGroup2" })
+        </div>
+        <div id="child3L" class="col-md-6" style="display:none;">
+            <label >Account Main Group</label>
+        </div>       
+        <div id="child3" class="col-md-6" style="display:None;">
+            @Html.DropDownList("Accmain", (IEnumerable<SelectListItem>)ViewBag.Accmain, "NULL", htmlAttributes: new { @class = "form-control", @Id = "Accmaingrp", @Name = "Accmaingrp" })
         </div>
 
         <br />
