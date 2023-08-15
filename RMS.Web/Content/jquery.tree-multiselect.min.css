@@ -4,7 +4,7 @@ div.tree-multiselect {
     border-radius: 5px;
     display: table;
     height: inherit;
-    width: 85%
+    width: 100%;
 }
 
     div.tree-multiselect > div.selected, div.tree-multiselect > div.selections {
