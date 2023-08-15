@@ -9,193 +9,132 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3" style="background-color:#5a5c69">
-
             <h4 class="m-0  font-weight-bold">
-                <strong style="color:white;">Manage User </strong>
-                <a href="~/Account/UsersList" id="backBtn" class="btn btn-success col-md-offset-9">Back</a>
-
+                <strong style="color:white;">Manage User</strong>
+                <a href="~/Account/UsersList" id="backBtn" class="btn btn-success col-md-offset-10">Back</a>  
             </h4>
-
         </div>
         @*<div class="card-body">
-            <hr />
-            <div class="form-group">
-                <lablel class="col-md-2" style="color:black"> UserName</lablel>
-
-                <div class="col-md-4">
-                    <input type="text" name="UserName" class="form-control" value="@Model.UserName " />
-
-                </div>
-            </div>
-            <div class="form-group">
-                <lablel class="col-md-2" style="color:black"> Email</lablel>
-                <input type="hidden" id="userid" value="@Model.Users.Id" />
-                <div class="col-md-4">
-                    <input type="text" name="Email" value="@Model.Users.Email " class="form-control" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <lablel class="col-md-2" style="color:black"> Password</lablel>
-
-                <div class="col-md-4">
-                    <input type="password" name="Password" class="form-control" value="**********" />
-
-                </div>
-            </div>
-            <div class="form-group">
-                <lablel class="col-md-2" style="color:black"> ConfirmPassword</lablel>
-                <div class="col-md-4">
-                    <input type="password" name="Password" class="form-control" value="**********" />
-                </div>
-            </div>
-
-
-            <br />
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-primary" value="Update" />
-                </div>
-            </div>
-        </div>*@
-
-
-        @*@using (Html.BeginForm("UserDetails", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {*@
-            <form id="userdetailform">
-
-                <div class="card-body">
-                    <div class="col-md-8">
-
-                        @*@Html.AntiForgeryToken()
-                        <h4></h4>
-                        <div class="alert alert-danger" id="msg" role="alert">
-                            @ViewBag.message
-                            @Html.ValidationSummary("", new { @class = "text-danger" })
-
-                        </div>
-                        <hr />*@
-
-
-                        @*<input type="hidden" name="" id="selectUserId" value="@Model.registerViewModel.Userid" />*@
-                        @Html.Hidden("Userid", new { @class = "form-control", @Id = "selectUserId", @value = Model.registerViewModel.Userid })
-                        @Html.Hidden("Id", new { @class = "form-control", @Id = "selectId", @value = Model.registerViewModel.Id })
-
-                        <div class="form-group">
-                            <lablel class="col-md-2" style="color:black"> UserName</lablel>
-
-                            <div class="col-md-3">
-                                @Html.TextBox("UserName", null, new { @class = "form-control", @Value = Model.registerViewModel.UserName })
-
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <lablel class="col-md-2" style="color:black"> Material Centre</lablel>
-
-                            <div class="col-md-3">
-                                @Html.DropDownList("locationid", (IEnumerable<SelectListItem>)ViewBag.MaterialCentres, "---Select Location---", htmlAttributes: new { @class = " form-control ", @Id = "LocationID" })
-
-
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <lablel class="col-md-2" style="color:black"> Email</lablel>
-
-                            <div class="col-md-3">
-                                @Html.TextBox("Email", null, new { @class = "form-control", @Value = Model.registerViewModel.Email })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <lablel class="col-md-2" style="color:black"> Phone Number</lablel>
-
-                            <div class="col-md-3">
-                                @Html.TextBox("PhoneNumber", null, new { @class = "form-control", @Value = Model.registerViewModel.PhoneNumber })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <lablel class="col-md-2" style="color:black"> Password</lablel>
-
-                            <div class="col-md-3">
-                                @Html.Password("Password", null, new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <lablel class="col-md-2" style="color:black"> ConfirmPassword</lablel>
-                            <div class="col-md-3">
-                                @Html.Password("ConfirmPassword", null,new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <!---->
-                        <br />
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" class="btn btn-primary btnSaveUserPrivilege" value="Submit" />
-                            </div>
-                        </div>
-                    </div>
+                <hr />
+                <div class="form-group">
+                    <lablel class="col-md-2" style="color:black"> UserName</lablel>
 
                     <div class="col-md-4">
-                        <div class="form-group">
-                            <lablel class="col-md-2" style="color:black"> UserName</lablel>
+                        <input type="text" name="UserName" class="form-control" value="@Model.UserName " />
 
-                            <div class="col-md-3">
-                                @Html.TextBox("UserName", null, new { @class = "form-control",@Value = Model.registerViewModel.UserName })
-
-                            </div>
-                        </div>
                     </div>
                 </div>
-            </form>
-
-
-
-
-
-
-
-        <div class="container">
-            @*<div class="panel" style="background-color:white;padding:20px;">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div style="padding: 30px;">
-                            <label>Select User :</label>
-                            <select id="selectUserId" class="form-control">
-                                <option hidden value="">Select User</option>
-                                @if (Model.UserDetails != null)
-                                {
-                                    foreach (var r in Model.UserDetails)
-                                    {
-                                        if (r.UserID == Model.SelectedUserId)
-                                        {
-                                            <option selected value="@r.UserID">@r.UserName</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@r.UserID">@r.UserName</option>
-                                        }
-
-                                    }
-                                }
-                            </select>
-                        </div>
+                <div class="form-group">
+                    <lablel class="col-md-2" style="color:black"> Email</lablel>
+                    <input type="hidden" id="userid" value="@Model.Users.Id" />
+                    <div class="col-md-4">
+                        <input type="text" name="Email" value="@Model.Users.Email " class="form-control" />
                     </div>
-                    <div class="col-md-6">
-                        <div style="padding-top: 55px;">
-                            <div class="btn-group">
-                                <button class="button btn btn-success waves-effect btnSaveUserPrivilege"><i class="fa fa-save"></i> Save</button>
-                                <button class="button btn btn-danger waves-effect btnReplaceUserPrivilege"><i class="fa fa-reply"></i> Replace Current Priviliges</button>
-                                <button class="button btn btn-primary waves-effect backBtn" id="backBtn"><i class="fa fa-reply"></i>Back</button>
-                            </div>
-                        </div>
+                </div>
+
+                <div class="form-group">
+                    <lablel class="col-md-2" style="color:black"> Password</lablel>
+
+                    <div class="col-md-4">
+                        <input type="password" name="Password" class="form-control" value="**********" />
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <lablel class="col-md-2" style="color:black"> ConfirmPassword</lablel>
+                    <div class="col-md-4">
+                        <input type="password" name="Password" class="form-control" value="**********" />
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" class="btn btn-primary" value="Update" />
                     </div>
                 </div>
             </div>*@
 
+
+        @using (Html.BeginForm("UserDetails", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            <div class="card-body">
+                <div class="col-md-8">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg">
+                                @Html.AntiForgeryToken()
+                                @*<h4></h4>
+                                    <div class="alert alert-danger" id="msg" role="alert">
+                                        @ViewBag.message
+                                        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                                    </div>*@
+                                <input type="hidden" name="" id="selectUserId" value="@Model.registerViewModel.Userid" />
+                                @Html.HiddenFor(m => m.registerViewModel.Userid, new { @class = "form-control", @Id = "selectUserId", @value = Model.registerViewModel.Userid })
+                                <div class="form-group">
+                                    <lablel class="col-md-4" style="color:black"> UserName</lablel>
+                                    <div class="col-md-6">
+                                        @Html.TextBoxFor(m => m.registerViewModel.UserName, new { @class = "form-control" })
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <lablel class="col-md-4" style="color:black"> Material Centre</lablel>
+                                    <div class="col-md-6">
+                                        @Html.DropDownListFor(m => m.registerViewModel.locationid, (IEnumerable<SelectListItem>)ViewBag.MaterialCentres, "---Select Location---", htmlAttributes: new { @class = " form-control ", @Id = "LocationID", @Value = Model.registerViewModel.locationid })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg">
+                                <div class="form-group">
+                                    <lablel class="col-md-4" style="color:black"> Email</lablel>
+                                    <div class="col-md-6">
+                                        @Html.TextBoxFor(m => m.registerViewModel.Email, new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <lablel class="col-md-4" style="color:black"> Phone Number</lablel>
+
+                                    <div class="col-md-6">
+                                        @Html.TextBoxFor(m => m.registerViewModel.PhoneNumber, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg">
+                                <div class="form-group">
+                                    <lablel class="col-md-4" style="color:black"> Password</lablel>
+
+                                    <div class="col-md-6">
+                                        @Html.PasswordFor(m => m.registerViewModel.Password, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <lablel class="col-md-4" style="color:black"> Confirm Password</lablel>
+                                    <div class="col-md-6">
+                                        @Html.PasswordFor(m => m.registerViewModel.ConfirmPassword, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-6" >
+                                        @*<i class="glyphicon glyphicon-save-file"></i>*@<input type="submit" class="btn btn-success fa fa-save btnSaveUserPrivilege" value="Save User" />
+                                        @*<button type="submit" class="btn btn-success btnSaveUserPrivilege">Save User</button>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                 
+                    
+                </div>
+            </div>
+        }
+
+
+
+
+
+        <div class="container-fluid" @* style="height: 500px; overflow-y: scroll;"*@>
             <div class="panel">
                 <select name="MenuIds" id="userPrivilege" multiple="multiple">
                     @if (Model.MenuItems != null)
@@ -240,6 +179,8 @@
                 </select>
             </div>
         </div>
+
+
         <script>
 
             var tree = $("#userPrivilege").treeMultiselect({
@@ -258,7 +199,6 @@
                 });
 
                 var userId = $('#selectUserId').val();
-                var form = $('#userdetailform').serialize();
 
                 $.ajax({
                     type: 'POST',
@@ -278,16 +218,18 @@
                     .fail(function (XMLHttpRequest, txtStatus, errorThrown) {
                         alert("User Privilege Save Failed");
                     });
-                debugger;
+
+
+
                 $.ajax({
                     type: 'POST',
-                    url: '/Account/UserDetails',
-                    data: { model: form}
+                    url: '/Account/UserPrivilege',
+                    data: { MenuIds: menuIds, UserId: userId }
                 })
                     .done(function (data) {
                         if (data == "success") {
 
-                            alert("User  Updated Successfully!");
+                            alert("User Privileges Updated Successfully!");
                         }
                         else {
                             toastr.warning(data, "Failed!");
@@ -295,27 +237,8 @@
 
                     })
                     .fail(function (XMLHttpRequest, txtStatus, errorThrown) {
-                        alert("User  Save Failed");
+                        alert("User Privilege Save Failed");
                     });
-
-                //$.ajax({
-                //    type: 'POST',
-                //    url: '/Account/UserPrivilege',
-                //    data: { MenuIds: menuIds, UserId: userId }
-                //})
-                //    .done(function (data) {
-                //        if (data == "success") {
-
-                //            alert("User Privileges Updated Successfully!");
-                //        }
-                //        else {
-                //            toastr.warning(data, "Failed!");
-                //        }
-
-                //    })
-                //    .fail(function (XMLHttpRequest, txtStatus, errorThrown) {
-                //        alert("User Privilege Save Failed");
-                //    });
 
             })
 
@@ -358,59 +281,59 @@
 
 
         @*<div class="col-md-1">
-            @foreach (var item in Model.Usersmenu)
-            {
-            <ul classs="treeview">
-                @if (item.MenuItems.ParentID == 0)
+                @foreach (var item in Model.Usersmenu)
                 {
+                <ul classs="treeview">
+                    @if (item.MenuItems.ParentID == 0)
+                    {
 
-                <li>
-                    <input type="checkbox" name=">@item.MenuItems.MenuName" id="@item.MenuItems.MenuName">
-                    <label for="@item.MenuItems.MenuName" class="custom-unchecked">@item.MenuItems.MenuName</label>
-                </li>
-
-                }
-                else
-                {
                     <li>
-                        <ul>
-                            <li>
-                                <input type="checkbox" name="@item.MenuItems.MenuName-1" id="@item.MenuItems.MenuName-1">
-                                <label for="@item.MenuItems.MenuName-1" class="custom-unchecked">@item.MenuItems.MenuName</label>
-                            </li>
-                            @*<li>
-                    <input type="checkbox" name="tall-2" id="tall-2">
-                    <label for="tall-2" class="custom-unchecked">Giants</label>
-                    <ul>
-                        <li>
-                            <input type="checkbox" name="tall-2-1" id="tall-2-1">
-                            <label for="tall-2-1" class="custom-unchecked">Andre</label>
-                        </li>
-                        <li class="last">
-                            <input type="checkbox" name="tall-2-2" id="tall-2-2">
-                            <label for="tall-2-2" class="custom-unchecked">Paul Bunyan</label>
-                        </li>
-                    </ul>
-                </li>
-                <li class="last">
-                    <input type="checkbox" name="tall-3" id="tall-3">
-                    <label for="tall-3" class="custom-unchecked">Two sandwiches</label>
-                </li>
-                        </ul>
-
+                        <input type="checkbox" name=">@item.MenuItems.MenuName" id="@item.MenuItems.MenuName">
+                        <label for="@item.MenuItems.MenuName" class="custom-unchecked">@item.MenuItems.MenuName</label>
                     </li>
 
+                    }
+                    else
+                    {
+                        <li>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" name="@item.MenuItems.MenuName-1" id="@item.MenuItems.MenuName-1">
+                                    <label for="@item.MenuItems.MenuName-1" class="custom-unchecked">@item.MenuItems.MenuName</label>
+                                </li>
+                                @*<li>
+                        <input type="checkbox" name="tall-2" id="tall-2">
+                        <label for="tall-2" class="custom-unchecked">Giants</label>
+                        <ul>
+                            <li>
+                                <input type="checkbox" name="tall-2-1" id="tall-2-1">
+                                <label for="tall-2-1" class="custom-unchecked">Andre</label>
+                            </li>
+                            <li class="last">
+                                <input type="checkbox" name="tall-2-2" id="tall-2-2">
+                                <label for="tall-2-2" class="custom-unchecked">Paul Bunyan</label>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="last">
+                        <input type="checkbox" name="tall-3" id="tall-3">
+                        <label for="tall-3" class="custom-unchecked">Two sandwiches</label>
+                    </li>
+                            </ul>
 
+                        </li>
+
+
+                    }
+                </ul>
                 }
-            </ul>
-            }
 
-        </div>*@
+            </div>*@
 
 
 
     </div>
-    </div>
+</div>
 
 
 
