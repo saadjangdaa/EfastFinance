@@ -189,7 +189,7 @@ namespace RMS.Web.Controllers
                                   from d in dis.DefaultIfEmpty()
                                   join m in db.AspNetUsers on new { DID = (int?)d.UserID } equals new { DID = (int?)m.UserID } into diss
                                   from m in diss.DefaultIfEmpty()
-                                  where d.UserID == userid2 
+                                  where d.UserID == userid2 && p.IsActive == true
                                   select new RMS.Web.Models.ViewModels.DynamicMenuviewmodel.Menu_List
                                   {
                                       ID = p.ID,
