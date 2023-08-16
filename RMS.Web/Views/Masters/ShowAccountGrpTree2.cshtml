@@ -1,0 +1,36 @@
+﻿@model RMS.Web.Models.ViewModels.AccGroupTreeView
+@{
+    ViewBag.Title = "ShowAccountGrpTree2";
+}
+
+<h2>ShowAccountGrpTree2</h2>
+@foreach (var Mainitem in Model.parent)
+{
+    if (Mainitem.MainGroupID != 0)
+    {
+        <ul>
+            <li>@Mainitem.MainGroupName</li>
+            @foreach (var item in Model.Child)
+            {
+                if (item.MainGroupID == Mainitem.MainGroupID)
+                {
+                    <ul>
+                        <li>@item.Accgroupname</li>
+                        @foreach (var newitem in Model.Child)
+                        {
+                            if (newitem.Accunderprimarygroupid == item.AccgroupID)
+                            {
+                                <ul>
+                                    <li>@newitem.Accgroupname</li>
+                                </ul>
+                            }
+                        }
+
+                    </ul>
+                }
+            }
+        </ul>
+    }
+}
+
+

@@ -25,6 +25,7 @@ namespace RMS.Web.Controllers
         ADOServices treeservice = new ADOServices();
         trialbalanceviewmodel tbmodel = new trialbalanceviewmodel();
         Ptofitlossviewmodel proftlossmodel = new Ptofitlossviewmodel();
+        AccGroupTreeView Tree = new AccGroupTreeView();
 
         // GET: Masters
         //------------------Account Groups------------------//
@@ -2633,6 +2634,24 @@ namespace RMS.Web.Controllers
             ViewBag.subaccoutns = ds2.Tables[0];
 
             return View();
+        }
+
+        public ActionResult ShowAccountGrpTree2(AccGroupTreeView modal)
+        {
+            modal.parent = db.AccountMainHead.Select(w => new AccGroupTreeView
+            {
+                MainGroupID=w.MainGroupID,
+                MainGroupName=w.MainAccGroupName
+            }).ToList();
+            modal.Child = db.AccGroup.Select(w => new AccGroupTreeView
+            {
+                AccgroupID = w.AccgroupID,
+                Accgroupname = w.Accgroupname,
+                Accunderprimarygroupid = w.Accunderprimarygroupid,
+                AccunderprimarygroupName = w.AccunderprimarygroupName,
+                MainGroupID = w.MainGroupID,
+            }).ToList();
+            return View(modal);
         }
 
         public ActionResult ShowmaterialsTree()

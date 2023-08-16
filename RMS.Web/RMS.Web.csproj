@@ -344,6 +344,7 @@
     <Compile Include="Models\UsersMenu.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\AccGroupTreeView.cs" />
     <Compile Include="Models\ViewModels\AccountGroupTreeViewModel.cs" />
     <Compile Include="Models\ViewModels\DynamicMenuviewmodel.cs" />
     <Compile Include="Models\ViewModels\JournalVMasterViewModel.cs" />
@@ -3426,6 +3427,7 @@
     <Content Include="Views\Shared\SPRegister.cshtml" />
     <Content Include="Views\Masters\Currency.cshtml" />
     <Content Include="Views\Masters\ShowAccountGrpTree.cshtml" />
+    <Content Include="Views\Masters\ShowAccountGrpTree2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
