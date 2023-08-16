@@ -1,0 +1,284 @@
+﻿
+@{
+    ViewBag.Title = "ItemTree";
+}
+<head>
+    <meta charset="UTF-8">
+    @*<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>*@
+    <script src="~/startbootstrap-sb-admin-2-master/vendor/simple-tree-table/dist/jquery-simple-tree-table.js"></script>
+
+
+</head>
+<body>
+
+
+
+
+
+
+    <button style="width:100px;" type="button" class="btn btn-success" id="expander">expand</button>
+    <button style="width:100px;" type="button" class="btn btn-success" id="collapser">collapse</button>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h1 class="m-0 font-weight-bold  text-center" style="color:black;"> Chart Of Accounts</h1>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table " id="basic" border="1">
+
+                    @{
+                        var i = 1;
+                        var i2 = 1;
+                        var i3 = 1;
+                        var i4 = 1;
+                        var i5 = 1;
+                        var i6 = 1;
+                        var i7 = 1;
+
+
+                        foreach (System.Data.DataRow dr in ViewBag.treedata.Rows)
+                        {
+                            if (dr["level"].ToString() == "0")
+                            {
+                                i++;
+                            }
+                            if (dr["level"].ToString() == "1")
+                            {
+                                i2++;
+                            }
+                            if (dr["level"].ToString() == "2")
+                            {
+                                i3++;
+                            }
+
+                            if (dr["level"].ToString() == "3")
+                            {
+                                i4++;
+                            }
+                            if (dr["level"].ToString() == "4")
+                            {
+                                i5++;
+                            }
+                            if (dr["level"].ToString() == "5")
+                            {
+                                i6++;
+                            }
+                            if (dr["level"].ToString() == "6")
+                            {
+                                i7++;
+                            }
+
+
+                            if (dr["level"].ToString() == "0")
+                            {
+                                <tr data-node-id="@i">
+                                    <td style="background-color:yellow;">@dr["childName"]</td>
+                                    <td style="background-color:yellow;">Group of @dr["childName"]</td>
+                                </tr>
+                            }
+                            if (dr["level"].ToString() == "1")
+                            {
+                                <tr data-node-id="@i.@i2" data-node-pid="@i">
+                                    <td><a href="#">@dr["childName"]</a></td>
+                                    @if (dr["parentId"].ToString() == "0")
+                                    {
+                                        <td>Group of @dr["childName"]</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td>@dr["childName"]</td>
+
+                                    }
+
+                                </tr>
+                            }
+
+                            if (dr["level"].ToString() == "2")
+                            {
+                                <tr data-node-id="@i.@i2.@i3" data-node-pid="@i.@i2">
+                                    <td><a href="#">@dr["childName"]</a></td>
+                                    @if (dr["parentId"].ToString() == "0")
+                                    {
+                                        <td>Group of @dr["childName"]</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td>@dr["childName"]</td>
+
+                                    }
+                                </tr>
+                            }
+
+                            if (dr["level"].ToString() == "3")
+                            {
+                                <tr data-node-id="@i.@i2.@i3.@i4" data-node-pid="@i.@i2.@i3">
+                                    <td><a href="#">@dr["childName"]</a></td>
+                                    @if (dr["parentId"].ToString() == "0")
+                                    {
+                                        <td>Group of @dr["childName"]</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td>Item of @dr["childName"]</td>
+
+                                    }
+                                </tr>
+                            }
+
+
+                            if (dr["level"].ToString() == "4")
+                            {
+                                <tr data-node-id="@i.@i2.@i3.@i4.@i5" data-node-pid="@i.@i2.@i3.@i4">
+                                    <td><a href="#">@dr["childName"]</a></td>
+                                    @if (dr["parentId"].ToString() == "0")
+                                    {
+                                        <td>Group of @dr["childName"]</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td>Item of @dr["childName"]</td>
+
+                                    }
+                                </tr>
+
+                            }
+                            if (dr["level"].ToString() == "5")
+                            {
+                                <tr data-node-id="@i.@i2.@i3.@i4.@i5.@i6" data-node-pid="@i.@i2.@i3.@i4.@i5">
+                                    <td><a href="#">@dr["childName"]</a></td>
+                                    @if (dr["parentId"].ToString() == "0")
+                                    {
+                                        <td>Group of @dr["childName"]</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td>Item of @dr["childName"]</td>
+
+                                    }
+                                </tr>
+
+                            }
+                            if (dr["level"].ToString() == "6")
+                            {
+                                <tr data-node-id="@i.@i2.@i3.@i4.@i5.@i6.@i7" data-node-pid="@i.@i2.@i3.@i4.@i5.@i6">
+                                    <td><a href="#">@dr["childName"]</a></td>
+                                    @if (dr["parentId"].ToString() == "0")
+                                    {
+                                        <td>Group of @dr["childName"]</td>
+
+                                    }
+                                    else
+                                    {
+                                        <td>Item of @dr["childName"]</td>
+
+                                    }
+                                </tr>
+
+                            }
+
+                            //else if()
+                            //{
+
+
+
+                            //}
+
+
+                        }
+
+
+                    }
+
+
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        $()
+
+
+
+
+
+
+
+    </script>
+
+
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <hr />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+
+
+<script>
+    $('#basic').simpleTreeTable({
+        expander: $('#expander'),
+        collapser: $('#collapser'),
+        store: 'session',
+        storeKey: 'simple-tree-table-basic'
+    });
+    $('#open1').on('click', function () {
+        $('#basic').data('simple-tree-table').openByID("1");
+    });
+    $('#close1').on('click', function () {
+        $('#basic').data('simple-tree-table').closeByID("1");
+    });
+</script>
+<script>
+    $('#opened').simpleTreeTable({
+        opened: [1, 1.1]
+    });
+</script>
+
+
+<script>
+    $('#callback').simpleTreeTable({
+    }).on('node:open', function (e, $node) {
+        $('#message').append("opened " + $node.data('node-id') + " ");
+    }).on('node:close', function (e, $node) {
+        $('#message').append("closed " + $node.data('node-id') + " ");
+    });
+</script>
+<script>
+    $('#icon_pos').simpleTreeTable({
+        iconPosition: 'td:last-child > span'
+    });
+</script>
+
+

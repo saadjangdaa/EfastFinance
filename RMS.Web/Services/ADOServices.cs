@@ -26,7 +26,17 @@ namespace RMS.Web.Services
             return ds;
         }
         
+        public DataSet GetAccGrpData()
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("Sp_Accounts", con);
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            sda.Fill(ds);
+            con.Close();
 
+            return ds;
+        }
         public DataSet GetSubaccounts()
         {
             con.Open();

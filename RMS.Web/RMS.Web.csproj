@@ -3425,6 +3425,7 @@
     <Content Include="Views\Masters\SalesRegister.cshtml" />
     <Content Include="Views\Shared\SPRegister.cshtml" />
     <Content Include="Views\Masters\Currency.cshtml" />
+    <Content Include="Views\Masters\ShowAccountGrpTree.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
