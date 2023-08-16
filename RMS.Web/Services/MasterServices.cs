@@ -366,11 +366,15 @@ namespace RMS.Web.Services
             db.SaveChanges();
         }
 
-        public void SaveUser(AspNetUsers model)
+        public void SaveUser(UserPrivilegeViewModel model)
         {
-           
+            AspNetUsers usermodel = new AspNetUsers();
+            usermodel.UserName = model.registerViewModel.UserName;
+            usermodel.Email = model.registerViewModel.Email;
+            usermodel.PhoneNumber = model.registerViewModel.PhoneNumber;
+            usermodel.LocationID = model.registerViewModel.locationid;
 
-             db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+            db.Entry(usermodel).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
         }
 

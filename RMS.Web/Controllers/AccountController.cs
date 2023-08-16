@@ -230,7 +230,7 @@ namespace RMS.Web.Controllers
 
         //
         // GET: /Account/UserDetails
-        public ActionResult UserDetails(string Id = " ")
+        public ActionResult UserDetails(int UserID = 0)
         {
             UserPrivilegeViewModel model = new UserPrivilegeViewModel();
             model.registerViewModel = new RegisterViewModel();
@@ -238,26 +238,21 @@ namespace RMS.Web.Controllers
             var userContext = db.AspNetUsers.ToList();
             model.registerViewModel.Menulists = db.MenuItems.ToList();
             ViewBag.MaterialCentres = new SelectList(db.MaterialCentre, "MaterialcentreID", "MaterialCentreName");
-            int UserID = 0;
 
-            if (Id != null && Id != " ")
+
+            if (UserID != 0)
             {
-                var user = db.AspNetUsers.Where(m => m.Id == Id).FirstOrDefault();
+                var user = db.AspNetUsers.Where(m => m.UserID == UserID).FirstOrDefault();
                 model.registerViewModel.Userid = user.UserID;
-                UserID = user.UserID;
-                model.registerViewModel.Userid = user.UserID;
-                model.registerViewModel.Id = user.Id;
                 model.registerViewModel.UserName = user.UserName;
                 model.registerViewModel.PhoneNumber = user.PhoneNumber;
                 model.registerViewModel.Email = user.Email;
                 model.registerViewModel.locationid = user.LocationID;
-                ViewBag.MaterialCentres = new SelectList(db.MaterialCentre, "MaterialcentreID", "MaterialCentreName" , user.LocationID);
+                ViewBag.MaterialCentres = new SelectList(db.MaterialCentre, "MaterialcentreID", "MaterialCentreName", user.LocationID);
 
             }
 
-
-
-            if (Id == null && Id == " ")
+            if (UserID == 0)
             {
                 model.MenuItems = setupServices.GetAllMenus();
                 model.UserDetails = userContext;
@@ -279,89 +274,70 @@ namespace RMS.Web.Controllers
         //
         // POST: /Account/UserDetails
         [HttpPost]
-        
-        public JsonResult UserDetails(RegisterViewModel model)
+        public async Task<ActionResult> UserDetails(UserPrivilegeViewModel model)
         {
             try
             {
                 AspNetUsers usermodel = new AspNetUsers();
-                AspNetUsers usermodel2 = new AspNetUsers();
-                //usermodel2 = db.AspNetUsers.Find(model.Id);
-                //ViewBag.MaterialCentres = new SelectList(db.MaterialCentre, "MaterialcentreID", "MaterialCentreName", model.locationid);
 
-                //if (model.Userid > 0)
-                //{
+                if (model.registerViewModel.Userid > 0)
+                {
+                    setupServices.SaveUser(model);
+                }
+                else
+                {
 
+                    if (ModelState.IsValid)
+                    {
+                        var user = new ApplicationUser { UserName = model.registerViewModel.UserName, Email = model.registerViewModel.Email };
+                        var result = await UserManager.CreateAsync(user, model.registerViewModel.Password);
+                        if (result.Succeeded)
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                //    //usermodel.Id = db.AspNetUsers.Where(m => m.UserID == model.registerViewModel.Userid).FirstOrDefault().Id;
-                //    usermodel.Id = model.Id;
-                //    usermodel.UserName = model.UserName;
-                //    usermodel.Email = model.Email;
-                //    usermodel.PhoneNumber = model.PhoneNumber;
-                //    usermodel.LocationID = model.locationid;
-                //    usermodel.PasswordHash = usermodel2.PasswordHash;
-                //    usermodel.SecurityStamp = usermodel2.SecurityStamp;
-                //    usermodel.AllowDelete = usermodel2.AllowDelete;
-                //    usermodel.AllowUpdate = usermodel2.AllowUpdate;
-                //    usermodel.AllowPrint = usermodel2.AllowPrint;
-                //    setupServices.SaveUser(usermodel);
-                //}
-                //else
-                //{
-
-                //if (ModelState.IsValid)
-                //{
-                //    var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
-                //    var result = await UserManager.CreateAsync(user, model.Password);
-                //    if (result.Succeeded)
-                //    {
-                //        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                //        // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                //        // Send an email with this link 
-                //        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                //        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                //        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                            string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
 
-                //        //var userid = db.AspNetUsers.Where(m=>m.Email==model.Email).FirstOrDefault().UserID;
-                //        //var menucount = db.MenuItems.ToList();
-                //        //for (int i = 0; i < menucount.Count; i++)
-                //        //{
+                            var userid = db.AspNetUsers.Where(m => m.Email == model.registerViewModel.Email).FirstOrDefault().UserID;
+                            var menucount = db.MenuItems.ToList();
+                            for (int i = 0; i < menucount.Count; i++)
+                            {
 
-                //        //    var menuid = menucount[i].ID;
-                //        //    UsersMenu userm = new UsersMenu();
-                //        //    userm.UserID = (int)userid;
-                //        //    userm.MenuItemID = menuid;
-                //        //    userm.AllowUpdate = false;
-                //        //    userm.AllowRead = false;
-                //        //    userm.AllowDelete = false;
-                //        //    userm.AllowInsert = false;
-                //        //    userm.IsActive = false;
+                                var menuid = menucount[i].ID;
+                                UsersMenu userm = new UsersMenu();
+                                userm.UserID = (int)userid;
+                                userm.MenuItemID = menuid;
+                                userm.AllowUpdate = false;
+                                userm.AllowRead = false;
+                                userm.AllowDelete = false;
+                                userm.AllowInsert = false;
+                                userm.IsActive = false;
 
-                //        //    db.UsersMenu.Add(userm);
-                //        //    db.SaveChanges();
+                                db.UsersMenu.Add(userm);
+                                db.SaveChanges();
 
-                //        //}
+                            }
 
-                //        ViewBag.message = "User Added Successfully";
-                //        return View();
-                //    }
-                //    AddErrors(result);
-                //    if (result.Errors != null)
-                //    {
-                //        ViewBag.message = result.Errors.FirstOrDefault();
-                //    }
-                //}
-                //}
+                            ViewBag.message = "User Added Successfully";
+                            return View();
+                        }
+                        AddErrors(result);
+                        if (result.Errors != null)
+                        {
+                            ViewBag.message = result.Errors.FirstOrDefault();
+                        }
+                    }
+                }
                 // If we got this far, something failed, redisplay form
-                return Json("t",JsonRequestBehavior.AllowGet);
+                return View(model);
             }
             catch (Exception e)
             {
 
                 ViewBag.message = e.ToString();
-                return Json(ViewBag.message,JsonRequestBehavior.AllowGet);
+                return View("/Views/Shared/Error.cshtml");
                 throw;
             }
 

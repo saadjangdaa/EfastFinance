@@ -10,8 +10,8 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3" style="background-color:#5a5c69">
             <h4 class="m-0  font-weight-bold">
-                <strong style="color:white;">Manage User</strong>
-                <a href="~/Account/UsersList" id="backBtn" class="btn btn-success col-md-offset-10">Back</a>  
+                <strong style="color:white;">Manage User </strong>
+                @*<a href="~/Account/UsersList" id="backBtn" class="btn btn-success col-md-offset-10">Back</a>  *@
             </h4>
         </div>
         @*<div class="card-body">
@@ -60,71 +60,66 @@
         {
             <div class="card-body">
                 <div class="col-md-8">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg">
-                                @Html.AntiForgeryToken()
-                                @*<h4></h4>
-                                    <div class="alert alert-danger" id="msg" role="alert">
-                                        @ViewBag.message
-                                        @Html.ValidationSummary("", new { @class = "text-danger" })
 
-                                    </div>*@
-                                <input type="hidden" name="" id="selectUserId" value="@Model.registerViewModel.Userid" />
-                                @Html.HiddenFor(m => m.registerViewModel.Userid, new { @class = "form-control", @Id = "selectUserId", @value = Model.registerViewModel.Userid })
-                                <div class="form-group">
-                                    <lablel class="col-md-4" style="color:black"> UserName</lablel>
-                                    <div class="col-md-6">
-                                        @Html.TextBoxFor(m => m.registerViewModel.UserName, new { @class = "form-control" })
+                    @Html.AntiForgeryToken()
+                    @*<h4></h4>
+                        <div class="alert alert-danger" id="msg" role="alert">
+                            @ViewBag.message
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
 
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <lablel class="col-md-4" style="color:black"> Material Centre</lablel>
-                                    <div class="col-md-6">
-                                        @Html.DropDownListFor(m => m.registerViewModel.locationid, (IEnumerable<SelectListItem>)ViewBag.MaterialCentres, "---Select Location---", htmlAttributes: new { @class = " form-control ", @Id = "LocationID", @Value = Model.registerViewModel.locationid })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg">
-                                <div class="form-group">
-                                    <lablel class="col-md-4" style="color:black"> Email</lablel>
-                                    <div class="col-md-6">
-                                        @Html.TextBoxFor(m => m.registerViewModel.Email, new { @class = "form-control" })
-                                    </div>
-                                </div>
+                        </div>*@
+                    <input type="hidden" name="" id="selectUserId" value="@Model.registerViewModel.Userid" />
+                    @Html.HiddenFor(m => m.registerViewModel.Userid, new { @class = "form-control", @Id = "selectUserId", @value = Model.registerViewModel.Userid })
 
-                                <div class="form-group">
-                                    <lablel class="col-md-4" style="color:black"> Phone Number</lablel>
+                    <div class="form-group">
+                        <lablel class="col-md-2" style="color:black"> UserName</lablel>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.registerViewModel.UserName, new { @class = "form-control" })
 
-                                    <div class="col-md-6">
-                                        @Html.TextBoxFor(m => m.registerViewModel.PhoneNumber, new { @class = "form-control" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg">
-                                <div class="form-group">
-                                    <lablel class="col-md-4" style="color:black"> Password</lablel>
-
-                                    <div class="col-md-6">
-                                        @Html.PasswordFor(m => m.registerViewModel.Password, new { @class = "form-control" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <lablel class="col-md-4" style="color:black"> Confirm Password</lablel>
-                                    <div class="col-md-6">
-                                        @Html.PasswordFor(m => m.registerViewModel.ConfirmPassword, new { @class = "form-control" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-offset-6" >
-                                        <input type="submit" class="btn btn-success fa fa-save btnSaveUserPrivilege" value="Save User" />                                        
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-                    </div>                 
-                    
+                    </div>
+
+                    <div class="form-group">
+                        <lablel class="col-md-2" style="color:black"> Material Centre</lablel>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(m => m.registerViewModel.locationid, (IEnumerable<SelectListItem>)ViewBag.MaterialCentres, "---Select Location---", htmlAttributes: new { @class = " form-control ", @Id = "LocationID", @Value = Model.registerViewModel.locationid })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <lablel class="col-md-2" style="color:black"> Email</lablel>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.registerViewModel.Email, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <lablel class="col-md-2" style="color:black"> Phone Number</lablel>
+
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.registerViewModel.PhoneNumber, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <lablel class="col-md-2" style="color:black"> Password</lablel>
+
+                        <div class="col-md-4">
+                            @Html.PasswordFor(m => m.registerViewModel.Password, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <lablel class="col-md-2" style="color:black"> ConfirmPassword</lablel>
+                        <div class="col-md-4">
+                            @Html.PasswordFor(m => m.registerViewModel.ConfirmPassword, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2">
+                            <input type="submit" class="btn btn-primary btnSaveUserPrivilege col-md-4" value="Submit" />
+                        </div>
+                    </div>
                 </div>
             </div>
         }
