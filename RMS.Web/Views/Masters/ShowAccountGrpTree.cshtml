@@ -1,26 +1,19 @@
 ﻿
 @{
-    ViewBag.Title = "ItemTree";
+    ViewBag.Title = "AccountsTree";
 }
 <head>
     <meta charset="UTF-8">
     @*<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>*@
     <script src="~/startbootstrap-sb-admin-2-master/vendor/simple-tree-table/dist/jquery-simple-tree-table.js"></script>
-
-
 </head>
 <body>
-
-
-
-
-
 
     <button style="width:100px;" type="button" class="btn btn-success" id="expander">expand</button>
     <button style="width:100px;" type="button" class="btn btn-success" id="collapser">collapse</button>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h1 class="m-0 font-weight-bold  text-center" style="color:black;"> Chart Of Accounts</h1>
+            <h1 class="m-0 font-weight-bold  text-center" style="color:white;"> Chart Of Accounts</h1>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -28,7 +21,7 @@
 
                     @{
                         var i = 1;
-                        var i2 = 1;
+                        var i2 = 1; 
                         var i3 = 1;
                         var i4 = 1;
                         var i5 = 1;
@@ -72,8 +65,8 @@
                             if (dr["level"].ToString() == "0")
                             {
                                 <tr data-node-id="@i">
-                                    <td style="background-color:yellow;">@dr["childName"]</td>
-                                    <td style="background-color:yellow;">Group of @dr["childName"]</td>
+                                    <td style="background-color: #5a5c69;">@dr["childName"]</td>
+                                    <td style="background-color: #5a5c69;">Group of @dr["childName"]</td>
                                 </tr>
                             }
                             if (dr["level"].ToString() == "1")
