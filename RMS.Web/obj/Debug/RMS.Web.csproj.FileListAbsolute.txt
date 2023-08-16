@@ -580,7 +580,6 @@ C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\R
 C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\Microsoft.Owin.Security.OAuth.xml
-C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\obj\Debug\RMS.Web.csproj.AssemblyReference.cache
 C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\obj\Debug\RMS.Web.csproj.CoreCompileInputs.cache
 C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\obj\Debug\RMS.Web.csproj.CopyComplete
 C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\obj\Debug\RMS.Web.dll
@@ -693,3 +692,4 @@ E:\Mustafa\EfastFinanceNew\EfastFinance\RMS.Web\obj\Debug\RMS.Web.csproj.CoreCom
 E:\Mustafa\EfastFinanceNew\EfastFinance\RMS.Web\obj\Debug\RMS.Web.csproj.CopyComplete
 E:\Mustafa\EfastFinanceNew\EfastFinance\RMS.Web\obj\Debug\RMS.Web.dll
 E:\Mustafa\EfastFinanceNew\EfastFinance\RMS.Web\obj\Debug\RMS.Web.pdb
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\obj\Debug\RMS.Web.csproj.AssemblyReference.cache
