@@ -22,6 +22,7 @@
     <Property Name="Accunderprimarygroupid" Type="int" />
     <Property Name="DebitAmount" Type="float" />
     <Property Name="CreditAmount" Type="float" />
+    <Property Name="MainGroupID" Type="int" />
   </EntityType>
   <EntityType Name="Account">
     <Key>
@@ -108,6 +109,10 @@
     <Property Name="AccessFailedCount" Type="int" Nullable="false" />
     <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
     <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LocationID" Type="int" />
+    <Property Name="AllowUpdate" Type="bit" />
+    <Property Name="AllowDelete" Type="bit" />
+    <Property Name="AllowPrint" Type="bit" />
   </EntityType>
   <EntityType Name="BillSundry">
     <Key>
@@ -508,6 +513,18 @@ warning 6002: The table/view 'MVCDBLive.dbo.treetable' does not have a primary k
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_AspNetUsers_MaterialCentre">
+    <End Role="MaterialCentre" Type="Self.MaterialCentre" Multiplicity="0..1" />
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MaterialCentre">
+        <PropertyRef Name="MaterialcentreID" />
+      </Principal>
+      <Dependent Role="AspNetUsers">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_BillSundryChild_BillSundry">
     <End Role="BillSundry" Type="Self.BillSundry" Multiplicity="1" />
     <End Role="BillSundryChild" Type="Self.BillSundryChild" Multiplicity="*" />
@@ -864,6 +881,10 @@ warning 6002: The table/view 'MVCDBLive.dbo.treetable' does not have a primary k
     <AssociationSet Name="FK_Account_AccGroup" Association="Self.FK_Account_AccGroup">
       <End Role="AccGroup" EntitySet="AccGroup" />
       <End Role="Account" EntitySet="Account" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AspNetUsers_MaterialCentre" Association="Self.FK_AspNetUsers_MaterialCentre">
+      <End Role="MaterialCentre" EntitySet="MaterialCentre" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
     </AssociationSet>
     <AssociationSet Name="FK_BillSundryChild_BillSundry" Association="Self.FK_BillSundryChild_BillSundry">
       <End Role="BillSundry" EntitySet="BillSundry" />

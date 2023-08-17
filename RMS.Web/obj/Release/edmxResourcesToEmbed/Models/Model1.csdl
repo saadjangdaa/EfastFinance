@@ -23,6 +23,7 @@
     <Property Name="DebitAmount" Type="Double" />
     <Property Name="CreditAmount" Type="Double" />
     <NavigationProperty Name="Account" Relationship="Self.FK_Account_AccGroup" FromRole="AccGroup" ToRole="Account" />
+    <Property Name="MainGroupID" Type="Int32" />
   </EntityType>
   <EntityType Name="Account">
     <Key>
@@ -110,6 +111,11 @@
     <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
     <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
     <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+    <Property Name="LocationID" Type="Int32" />
+    <NavigationProperty Name="MaterialCentre" Relationship="MVCDBLiveModel.FK_AspNetUsers_MaterialCentre" FromRole="AspNetUsers" ToRole="MaterialCentre" />
+    <Property Name="AllowUpdate" Type="Boolean" />
+    <Property Name="AllowDelete" Type="Boolean" />
+    <Property Name="AllowPrint" Type="Boolean" />
   </EntityType>
   <EntityType Name="BillSundry">
     <Key>
@@ -715,6 +721,10 @@
       <End Role="Currency" EntitySet="Currency" />
       <End Role="JournalVoucherChild" EntitySet="JournalVoucherChild" />
     </AssociationSet>
+    <AssociationSet Name="FK_AspNetUsers_MaterialCentre" Association="MVCDBLiveModel.FK_AspNetUsers_MaterialCentre">
+      <End Role="MaterialCentre" EntitySet="MaterialCentre" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Customers">
     <Key>
@@ -887,6 +897,7 @@
     <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="VoucherMaster" Relationship="MVCDBLiveModel.FK_VoucherMaster_MaterialCentre" FromRole="MaterialCentre" ToRole="VoucherMaster" />
     <NavigationProperty Name="VoucherMaster1" Relationship="MVCDBLiveModel.FK_VoucherMaster_MaterialCentre1" FromRole="MaterialCentre" ToRole="VoucherMaster" />
+    <NavigationProperty Name="AspNetUsers" Relationship="MVCDBLiveModel.FK_AspNetUsers_MaterialCentre" FromRole="MaterialCentre" ToRole="AspNetUsers" />
   </EntityType>
   <Association Name="FK_VoucherMaster_MaterialCentre">
     <End Type="MVCDBLiveModel.MaterialCentre" Role="MaterialCentre" Multiplicity="0..1" />
@@ -932,6 +943,18 @@
       </Principal>
       <Dependent Role="JournalVoucherChild">
         <PropertyRef Name="CurrencyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AspNetUsers_MaterialCentre">
+    <End Type="MVCDBLiveModel.MaterialCentre" Role="MaterialCentre" Multiplicity="0..1" />
+    <End Type="MVCDBLiveModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MaterialCentre">
+        <PropertyRef Name="MaterialcentreID" />
+      </Principal>
+      <Dependent Role="AspNetUsers">
+        <PropertyRef Name="LocationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

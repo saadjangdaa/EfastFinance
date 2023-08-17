@@ -287,7 +287,7 @@
                                             <td><input disabled value="@item.ShortNarration" id="narration" class="form-control" /></td>
                                             <td>
                                                 @*<button type="button" class="btn btn-danger" id="btnremoveDr" onclick="removeDr(@rowid)"><i class="glyphicon glyphicon-minus"></i></button>*@
-                                                <button type='button' data-id="@rowid" id='btnremoveDr' class='btnremoveDr btn btn-danger' onclick="removeDr(@rowid)"><i class='glyphicon glyphicon-minus'></i></button>
+                                                <button type='button' data-id="@rowid" id='btnremoveDr' class='btnremoveDr btn btn-danger' onclick='removeDr(@rowid)'><i class='glyphicon glyphicon-minus'></i></button>
                                             </td>
 
                                             @{
@@ -631,7 +631,7 @@
         }
     });
     $("#btnSaveVoucher").focusin(function () {
-        $(this).css("background-color", "orange")
+        $(this).css("background-color", "darkgreen")
     });
     $("#btnSaveVoucher").focusout(function () {
         $(this).css("background-color", "lightgreen")
@@ -672,7 +672,7 @@
 
 
     $("#btnadd").focusin(function () {
-        $(this).css("background-color", "yellow")
+        $(this).css("background-color", "darkgreen")
     });
     $("#btnadd").focusout(function () {
         $(this).css("background-color", "lightgreen")
@@ -837,9 +837,9 @@
         debugger;
 
 
-            var accountname = $('#accountID option:selected').text();
-            var debitvalue = $('#debitID').val();
-            var creditvalue = $('#creditID').val();
+        var accountname = $('#accountID option:selected').text();
+        var debitvalue = parseFloat($('#debitID').val());
+        var creditvalue = parseFloat($('#creditID').val());
 
 
             var shortnarration = $('#narration').val();
@@ -866,7 +866,7 @@
         rowid = length + 1;
 
 
-        if (debitvalue == "0.00" && creditvalue == "0.00" ) {
+        if (isNaN(debitvalue) && isNaN(creditvalue)) {
 
                 alert("Please Fill Voucher Details First");
                 $('#DrCrID').focus();
@@ -876,11 +876,11 @@
             //    alert("Please Fill Voucher Details First");
             //    $('#DrCrID').focus();
 
-            //}
-            else if (drcrid == 1) {
-                var removebtn = "<button type='button' class='btn btn-danger ' data-id='" + rowid + "' id='btnremoveDr' onclick='removeDr(" + rowid + ")'><i class='glyphicon glyphicon-minus'></i></button>'";
+        //}
+        else if (drcrid == 1 && isNaN(debitvalue) != true) {
+                var removebtn = "<button type='button' class='btn btn-danger ' data-id='" + rowid + "' id='btnremoveDr' onclick='removeDr(" + rowid + ")'><i class='glyphicon glyphicon-minus'></i></button>";
                 if (modify == 1) {
-                // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
+                 // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
 
                     var row = ` <tr>
             <td hidden><input type="hidden" name="DrCrID" value="`+ drcrid + `" /></td>
@@ -1012,7 +1012,7 @@
 
 
             }
-            else if (drcrid == 2) {
+        else if (drcrid == 2 && isNaN(creditvalue) != true) {
 
 
                 var removebtn = "<button type='button' class='btn btn-danger ' data-id='" + rowid + "' id='btnremoveCr' onclick='removeDr(" + rowid + ")'><i class='glyphicon glyphicon-minus'></i></button>'";
@@ -1193,7 +1193,7 @@
 
         if ($("table > tbody > tr").length > 0) {
             $("table > tbody > tr").each(function () {
-                var rownum = parseFloat($(this).find('td:eq(15)').html());
+                var rownum = parseFloat($(this).find('td:eq(14)').html());
                 debugger;
 
                 if (rownum == rowid) {
@@ -1341,7 +1341,7 @@
 
                     }).done(function (data) {
                         alert("Voucher Save Successfully ");
-                        //location.reload();
+                        location.reload();
 
                         }).fail(function (jqXHR, textStatus) {
                             alert("Your Voucher cant be save,Contact Admin" + jqXHR.responseText);

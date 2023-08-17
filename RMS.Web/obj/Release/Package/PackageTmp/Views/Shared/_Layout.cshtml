@@ -3,7 +3,6 @@
 
     <div class="container-fluid body-content">
         @Scripts.Render("~/bundles/jquery")
-        <script src="http://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
         @RenderBody()
         <hr />
         <footer>
@@ -45,7 +44,6 @@
         <!--  <link href="~/startbootstrap-sb-admin-2-master/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
          @*<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">*@
     <!-- Custom styles for this template -->
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>*@
 
     <!-- Custom styles for this page-->
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
@@ -123,7 +121,6 @@
         }
     </style>
 
-
     <div class="se-pre-con"></div>
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -194,7 +191,7 @@
             <div id="content">
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" >
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1024px-Hamburger_icon.svg.png" style="width:30px;cursor:pointer;" id="hideandshow"/>
+                    @*<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1024px-Hamburger_icon.svg.png" style="width:30px;cursor:pointer;" id="hideandshow"/>*@
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
@@ -232,9 +229,9 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", style = "color:white;" })
+                            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
                         </li>
-                        <li><a href="@Url.Action("Login","Account")" style="color:white;">Log off</a></li>
+                        <li><a href="@Url.Action("Login","Account")" >Log off</a></li>
                     </ul>
                 </nav>
                 <!-- End of Topbar -->
@@ -358,47 +355,11 @@
         $("#hideandshow").click(function () {
             $("#accordionSidebar").fadeToggle();
         });
-    });
-
-
-
-    function DeleteBill() {
-        var accid = $(this).attr('data-id');
-
-
-        var con = confirm("Are u sure u want to delete");
-        $(this).parent().parent().remove();
-        if (con == true) {
-
-            $.ajax({
-                type: 'GET',
-                data: { id: accid},
-                url: "@Url.Action("DeleteSVoucher", "Vouchers")"
-
-            }).done(function (data) {
-                alert("Voucher Deleted  successfully");
-
-
-            }).fail(function (jqxhr, textStatus) {
-
-                alert("Voucher can't deleted  ");
-
-            });
 
 
 
 
-        }
-        else {
-            alert("ok");
-        }
-
-
-    });
-
-
-
-    function DeleteVoucher() {
+     @*function DeleteVoucher() {
         var accid = $(this).attr('data-id');
 
 
@@ -430,8 +391,51 @@
         }
 
 
+    };*@
+
+
+
     });
 
+
+
+    @*function DeleteBill() {
+        var accid = $(this).attr('data-id');
+
+
+        var con = confirm("Are u sure u want to delete");
+        $(this).parent().parent().remove();
+        if (con == true) {
+
+            $.ajax({
+                type: 'GET',
+                data: { id: accid},
+                url: "@Url.Action("DeleteSVoucher", "Vouchers")"
+
+            }).done(function (data) {
+                alert("Voucher Deleted  successfully");
+
+
+            }).fail(function (jqxhr, textStatus) {
+
+                alert("Voucher can't deleted  ");
+
+            });
+
+
+
+
+        }
+        else {
+            alert("ok");
+        }
+
+
+    };*@
+
+
+
+   
 
 </script>
 

@@ -1299,12 +1299,6 @@
     <Content Include="startbootstrap-sb-admin-2-master\Login_v3\images\Preloader_2.gif" />
     <Content Include="startbootstrap-sb-admin-2-master\Login_v3\index.html" />
     <Content Include="startbootstrap-sb-admin-2-master\Login_v3\js\main.js" />
-    <Content Include="startbootstrap-sb-admin-2-master\Login_v3\particles.js-master\demo\css\style.css" />
-    <Content Include="startbootstrap-sb-admin-2-master\Login_v3\particles.js-master\demo\index.html" />
-    <Content Include="startbootstrap-sb-admin-2-master\Login_v3\particles.js-master\demo\js\app.js" />
-    <Content Include="startbootstrap-sb-admin-2-master\Login_v3\particles.js-master\demo\js\lib\stats.js" />
-    <Content Include="startbootstrap-sb-admin-2-master\Login_v3\particles.js-master\particles.js" />
-    <Content Include="startbootstrap-sb-admin-2-master\Login_v3\particles.js-master\particles.min.js" />
     <Content Include="startbootstrap-sb-admin-2-master\Login_v3\vendor\animate\animate.css" />
     <Content Include="startbootstrap-sb-admin-2-master\Login_v3\vendor\animsition\css\animsition.css" />
     <Content Include="startbootstrap-sb-admin-2-master\Login_v3\vendor\animsition\css\animsition.min.css" />
@@ -3379,12 +3373,6 @@
     <Content Include="startbootstrap-sb-admin-2-master\Login_v3\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
     <Content Include="startbootstrap-sb-admin-2-master\Login_v3\vendor\bootstrap\css\bootstrap.css.map" />
     <Content Include="startbootstrap-sb-admin-2-master\Login_v3\vendor\bootstrap\css\bootstrap.min.css.map" />
-    <Content Include="startbootstrap-sb-admin-2-master\Login_v3\particles.js-master\.gitignore" />
-    <Content Include="startbootstrap-sb-admin-2-master\Login_v3\particles.js-master\bower.json" />
-    <Content Include="startbootstrap-sb-admin-2-master\Login_v3\particles.js-master\demo\particles.json" />
-    <Content Include="startbootstrap-sb-admin-2-master\Login_v3\particles.js-master\LICENSE.md" />
-    <Content Include="startbootstrap-sb-admin-2-master\Login_v3\particles.js-master\package.json" />
-    <Content Include="startbootstrap-sb-admin-2-master\Login_v3\particles.js-master\README.md" />
     <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\Home\AddMenu.cshtml" />
     <Content Include="Views\Account\UsersList.cshtml" />

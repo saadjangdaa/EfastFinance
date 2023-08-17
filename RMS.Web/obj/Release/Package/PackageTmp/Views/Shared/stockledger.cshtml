@@ -179,13 +179,13 @@
                                 <th style="padding: 4px!important;font-size: 16px;text-align: left;vertical-align: bottom;font-weight: bold;" colspan="7" id="itemname2">3 Star</th>
                             </tr>
                             <tr>
-                                <th style="padding: 4px!important;font-size: 14px;text-align: left;vertical-align: bottom;" colspan="7"><em id="sdate">16/06/2019 </em> To <em id="edate"> </em></th>
-                                <th style="padding: 4px!important;font-size: 14px;text-align: right;vertical-align: bottom;" colspan="7">Closing Balance <em id="balance222">16/06/2019 </em>  </th>
+                                <th style="padding: 4px!important;font-size: 14px;text-align: left;vertical-align: bottom;" colspan="7"><em id="sdate">16/06/2019 </em> To <em id="edate"> </em> <span style="float:right;">Closing Balance <em id="balance222">16/06/2019 </em></span></th>
+                                @*<th style="padding: 4px!important;font-size: 14px;text-align: right;vertical-align: bottom;" colspan="7">  </th>*@
                             </tr>
                             <tr>
                                 <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Type</th>
                                 <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">V.No</th>
-                                <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Location</th>
+                                @*<th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Location</th>*@
                                 <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Account</th>
                                 <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Description</th>
                                 <th style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Qty In</th>
@@ -208,72 +208,90 @@
                                     {
                                         if (item3 == item.vouchermasterid)
                                         {
-                                            <tr>
-                                                @{
-                                                    if (item.VoucherTypeID == 1)
-                                                    {
-                                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Sale</td>
+                            <tr>
+                                @{
+                                    if (item.VoucherTypeID == 1)
+                                    {
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Sale</td>
 
-                                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;"><a href="/Sales/detailSVoucher/@item.vouchermasterid"><u>SB  @item.vouchermasterid</u></a></td>
-                                                    }
-                                                    else if (item.VoucherTypeID == 2)
-                                                    {
-                                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Purchase</td>
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;"><a href="/Sales/detailSVoucher/@item.vouchermasterid"><u>SB  @item.vouchermasterid</u></a></td>
+                                    }
+                                    else if (item.VoucherTypeID == 2)
+                                    {
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Purchase</td>
 
-                                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;"><a href="/Purchase/detailPVoucher/@item.vouchermasterid"><u>PB @item.vouchermasterid</u></a></td>
-                                                    }
-                                                    else if (item.VoucherTypeID == 9)
-                                                    {
-                                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Sale Return</td>
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;"><a href="/Purchase/detailPVoucher/@item.vouchermasterid"><u>PB @item.vouchermasterid</u></a></td>
+                                    }
+                                    else if (item.VoucherTypeID == 9)
+                                    {
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Sale Return</td>
 
-                                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;"><a href="/Purchase/detailPVoucher/@item.vouchermasterid"><u>SR @item.vouchermasterid</u></a></td>
-                                                    }
-                                                    else if (item.VoucherTypeID == 10)
-                                                    {
-                                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Purchase Return</td>
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;"><a href="/Purchase/detailPVoucher/@item.vouchermasterid"><u>SR @item.vouchermasterid</u></a></td>
+                                    }
+                                    else if (item.VoucherTypeID == 10)
+                                    {
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Purchase Return</td>
 
-                                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;"><a href="/Purchase/detailPVoucher/@item.vouchermasterid"><u>PR @item.vouchermasterid</u></a></td>
-                                                    }
-                                                    else if (item.VoucherTypeID == 12)
-                                                    {
-                                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Stock Transfer</td>
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;"><a href="/Purchase/detailPVoucher/@item.vouchermasterid"><u>PR @item.vouchermasterid</u></a></td>
+                                    }
+                                    else if (item.VoucherTypeID == 12)
+                                    {
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Stock Transfer</td>
 
-                                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;"><a href="/Purchase/detailPVoucher/@item.vouchermasterid"><u>ST @item.vouchermasterid</u></a></td>
-                                                    }
-                                                    else if (item.VoucherTypeID == 13)
-                                                    {
-                                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Receive From</td>
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;"><a href="/Purchase/detailPVoucher/@item.vouchermasterid"><u>ST @item.vouchermasterid</u></a></td>
+                                    }
+                                    else if (item.VoucherTypeID == 13)
+                                    {
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">Receive From</td>
 
-                                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;"><a href="/Purchase/detailPVoucher/@item.vouchermasterid"><u>RF @item.vouchermasterid</u></a></td>
-                                                    }
-                                                }
+                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;"><a href="/Purchase/detailPVoucher/@item.vouchermasterid"><u>RF @item.vouchermasterid</u></a></td>
+                                    }
+                                }
 
-                                                <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item.MaterialCentre.MaterialCentreName</td>
-                                                <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item.Account.AccountName</td>
-                                                <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item.Narration</td>
-                                                @foreach (var item2 in Model.VoucherChildlist.Where(m => m.VoucherMasterID == item3.Value))
-                                                {
-                                                    if (item.DrCrType == 1)
-                                                    {
-                                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">0</td>
-                                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item2.Quantity</td>
-                                                    }
-                                                    else if (item.DrCrType == 2)
-                                                    {
+                              @*  <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item.MaterialCentre.MaterialCentreName</td>*@
+                                <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item.Account.AccountName</td>
+                                <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item.Narration</td>
+                                @foreach (var item2 in Model.VoucherChildlist.Where(m => m.VoucherMasterID == item3.Value))
+                                {
 
 
-                                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item2.Quantity</td>
-                                                        <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">0</td>
 
-                                                    }
-                                                    @*<td>@item2.Quantity</td>*@
+                                    if (Model.LocationID == item.LocationID2)
+                                    {
+                                        if (item.DrCrType == 2)
+                                        {
+                                            <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">0</td>
+                                            <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item2.Quantity</td>
+                                        }
+                                        else if (item.DrCrType == 1)
+                                        {
+                                            <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item2.Quantity</td>
+                                            <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">0</td>
 
-                                                }
-                                                <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;" id="@rowid"></td>
-                                                <td hidden>@rowid</td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (item.DrCrType == 1)
+                                        {
+                                            <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">0</td>
+                                            <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item2.Quantity</td>
+                                        }
+                                        else if (item.DrCrType == 2)
+                                        {
+                                            <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">@item2.Quantity</td>
+                                            <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;">0</td>
+
+                                        }
+                                    }
+                                    @*<td>@item2.Quantity</td>*@
+
+                                }
+                                <td style="padding: 4px!important;font-size: 12px;text-align: left;vertical-align: bottom;border: 1px solid black;" id="@rowid"></td>
+                                <td hidden>@rowid</td>
 
 
-                                            </tr>
+                            </tr>
                                             rowid = rowid + 1;
 
                                         }
@@ -294,7 +312,6 @@
                         <tbody>
                             <tr>
                                 <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border-left: 1px solid black;border-bottom: 1px solid black;"></td>
-                                <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border-bottom: 1px solid black;"></td>
                                 <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border-bottom: 1px solid black;"></td>
                                 <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border-bottom: 1px solid black;text-decoration: underline;">GRAND TOTAL</td>
                                 <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;border-bottom: 1px solid black;"></td>
@@ -329,15 +346,15 @@
                     var oldbalane = 0;
                     if ($("table > tbody > tr").length > 0) {
                         $("table > tbody > tr").each(function () {
-                            var rownum = parseFloat($(this).find('td:eq(8)').html());
+                            var rownum = parseFloat($(this).find('td:eq(7)').html());
 
 
 
                             debugger;
 
                             if (rownum == rowid) {
-                                debit = parseInt($(this).find('td:eq(5)').html());
-                                credit = parseInt($(this).find('td:eq(6)').html());
+                                debit = parseInt($(this).find('td:eq(4)').html());
+                                credit = parseInt($(this).find('td:eq(5)').html());
                                 balane = debit - credit;
                                 oldbalane += balane
                                 //var commaNum2 = numberWithCommas(num2);
@@ -401,9 +418,9 @@
                             var ffx = $(this).find('td:eq(7)').html();
 
 
-                            totalquantin += parseFloat($(this).find('td:eq(5)').html());
-                            totalquantout += parseFloat($(this).find('td:eq(6)').html());
-                            totalsp += parseFloat($(this).find('td:eq(8)').html());
+                            totalquantin += parseFloat($(this).find('td:eq(4)').html());
+                            totalquantout += parseFloat($(this).find('td:eq(5)').html());
+                            totalsp += parseFloat($(this).find('td:eq(7)').html());
 
                         });
                     }

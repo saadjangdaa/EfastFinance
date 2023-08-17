@@ -172,7 +172,38 @@
 
 
      $('.btndelete').click(function () {
-         DeleteVoucher();
+        var accid = $(this).attr('data-id');
+
+
+        var con = confirm("Are u sure u want to delete");
+        if (con == true) {
+            $(this).parent().parent().remove();
+
+            $.ajax({
+                type: 'GET',
+                data: { id: accid},
+                url: "@Url.Action("DeleteJVoucher", "Vouchers")"
+
+            }).done(function (data) {
+                alert("Voucher Deleted  successfully");
+
+
+            }).fail(function (jqxhr, textStatus) {
+
+                alert("Voucher can't deleted  ");
+
+            });
+
+
+
+
+        }
+        else {
+            alert("ok");
+        }
+
+
+
 
 
     });

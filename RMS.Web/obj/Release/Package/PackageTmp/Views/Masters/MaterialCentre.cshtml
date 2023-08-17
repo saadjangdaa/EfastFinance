@@ -19,8 +19,8 @@
                             <th style="color:white">Material CentreID</th>
                             <th style="color:white">Material Centre Name</th>
                             <th style="color:white">Material Centre Address </th>
-                            <th style="color:white">EDIT</th>
-                            <th style="color:white">Delete</th>
+                            <th style="color:white">Actions</th>
+
 
                         </tr>
                     </thead>
@@ -34,10 +34,9 @@
                                     <td>@item.MaterialCentreName</td>
                                     <td>@item.Address</td>
                                     <td>
-                                        <button data-id="@item.MaterialcentreID" data-target="#exampleModal" data-toggle="modal" class="btn btn-success btnedit"><i class="glyphicon glyphicon-edit"></i>Edit</button>
-                                    </td>
-                                    <td>
+                                        <button data-id="@item.MaterialcentreID" data-target="#exampleModal" data-toggle="modal" class="btn btn-primary btnedit"><i class="glyphicon glyphicon-edit"></i>Edit</button>
                                         <button data-id="@item.MaterialcentreID" class="btn btn-danger btndelete"><i class="glyphicon glyphicon-remove"></i>Delete</button>
+
                                     </td>
 
                                 </tr>

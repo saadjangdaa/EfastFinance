@@ -21,8 +21,7 @@
                                         <th style="color:white">Item Price</th>
                                         <th style="color:white">Item Parent Group </th>
                                         <th style="color:white">Item Decription </th>
-                                        <th style="color:white">EDIT</th>
-                                        <th style="color:white">Delete</th>
+                                        <th style="color:white">Actions</th>
 
                                     </tr>
                                 </thead>
@@ -38,10 +37,9 @@
                                         <td>@item.ItemGroup.ItemGroupName</td>
                                         <td>@item.ItemDescription</td>
                                         <td>
-                                            <button data-id="@item.ItemID" data-target="#exampleModal" data-toggle="modal" class="btn btn-success btnedit"><i class="glyphicon glyphicon-edit"></i>Edit</button>
-                                        </td>
-                                        <td>
+                                            <button data-id="@item.ItemID" data-target="#exampleModal" data-toggle="modal" class="btn btn-primary btnedit"><i class="glyphicon glyphicon-edit"></i>Edit</button>
                                             <button data-id="@item.ItemID" class="btn btn-danger btndelete"><i class="glyphicon glyphicon-remove"></i>Delete</button>
+
                                         </td>
 
                                     </tr>

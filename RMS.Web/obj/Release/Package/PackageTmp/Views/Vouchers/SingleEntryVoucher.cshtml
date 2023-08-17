@@ -935,7 +935,7 @@
         }
     });
     $("#btnadd").focusin(function () {
-        $(this).css("background-color","yellow")
+        $(this).css("background-color","darkgreen")
     })
     $("#btnadd").focusout(function () {
         $(this).css("background-color", "lightgreen")
@@ -973,7 +973,7 @@
         }
     });
     $("#btnSaveVoucher").focusin(function () {
-        $(this).css("background-color", "orange")
+        $(this).css("background-color", "darkgreen")
     });
     $("#btnSaveVoucher").focusout(function () {
         $(this).css("background-color", "lightgreen")
@@ -1123,22 +1123,24 @@
 
             var accountname = $('#accountID option:selected').text();
 
+            //var rowid = 1;
+            //if ($("table > tbody > tr").length > 0) {
+            //    $("table  tbody  tr").each(function () {
+
+            //        //var ffx = $(this).find('td:eq(5)').html();
+            //        //var new = $('#total').attr('value');
+
+            //        var oldrow = parseInt($(this).find('td:eq(9)').html());
+
+
+            //        //ftotal += $(t).find('input[name=Total]').val();a
+            //        rowid = oldrow + 1;
+            //    });
+            //}
+
+            var length = $("table > tbody > tr").length;
             var rowid = 1;
-            if ($("table > tbody > tr").length > 0) {
-                $("table  tbody  tr").each(function () {
-
-                    //var ffx = $(this).find('td:eq(5)').html();
-                    //var new = $('#total').attr('value');
-
-                    var oldrow = parseInt($(this).find('td:eq(9)').html());
-
-
-                    //ftotal += $(t).find('input[name=Total]').val();a
-                    rowid = oldrow + 1;
-                });
-            }
-
-
+            rowid = length + 1;
 
 
 
@@ -1986,11 +1988,11 @@ else if (Model.vouchertype == 6)
         }
     });
     $("#btnadd").focusin(function () {
-        $(this).css("background-color", "yellow")
+        $(this).css("background-color", "darkgreen")
     })
     $("#btnadd").focusout(function () {
-        $(this).css("background-color", "#1cc88a")
-        $(this).css("border-color", "#1cc88a")
+        $(this).css("background-color", "lightgreen")
+        //$(this).css("border-color", "#1cc88a")
     })
 
     $("#narration").on({
@@ -2024,10 +2026,10 @@ else if (Model.vouchertype == 6)
         }
     });
     $("#btnSaveVoucher").focusin(function () {
-        $(this).css("background-color", "orange")
+        $(this).css("background-color", "darkgreen")
     });
     $("#btnSaveVoucher").focusout(function () {
-        $(this).css("background-color", "#1cc88a")
+        $(this).css("background-color", "lightgreen")
     });
 
     $("#btnSaveVoucher").mousedown(function (e) {
@@ -2176,21 +2178,24 @@ else if (Model.vouchertype == 6)
                 });
             }
 
+        //var rowid = 1;
+        //if ($("table > tbody > tr").length > 0) {
+        //    $("table > tbody > tr").each(function () {
+
+        //        //var ffx = $(this).find('td:eq(5)').html();
+        //        //var new = $('#total').attr('value');
+
+        //        var oldrow = parseInt($(this).find('td:eq(9)').html());
+        //        debugger;
+
+        //        //ftotal += $(t).find('input[name=Total]').val();a
+        //        rowid = oldrow + 1;
+        //    });
+        //}
+
+        var length = $("table > tbody > tr").length;
         var rowid = 1;
-        if ($("table > tbody > tr").length > 0) {
-            $("table > tbody > tr").each(function () {
-
-                //var ffx = $(this).find('td:eq(5)').html();
-                //var new = $('#total').attr('value');
-
-                var oldrow = parseInt($(this).find('td:eq(9)').html());
-                debugger;
-
-                //ftotal += $(t).find('input[name=Total]').val();a
-                rowid = oldrow + 1;
-            });
-        }
-
+        rowid = length + 1;
 
 
         var accountname = $('#accountID option:selected').text();

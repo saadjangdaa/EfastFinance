@@ -14,6 +14,7 @@
     <EntitySetMapping Name="AccGroup">
       <EntityTypeMapping TypeName="MVCDBLiveModel.AccGroup">
         <MappingFragment StoreEntitySet="AccGroup">
+          <ScalarProperty Name="MainGroupID" ColumnName="MainGroupID" />
           <ScalarProperty Name="AccgroupID" ColumnName="AccgroupID" />
           <ScalarProperty Name="Accgroupname" ColumnName="Accgroupname" />
           <ScalarProperty Name="Accgroupalias" ColumnName="Accgroupalias" />
@@ -91,6 +92,10 @@
     <EntitySetMapping Name="AspNetUsers">
       <EntityTypeMapping TypeName="MVCDBLiveModel.AspNetUsers">
         <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="AllowPrint" ColumnName="AllowPrint" />
+          <ScalarProperty Name="AllowDelete" ColumnName="AllowDelete" />
+          <ScalarProperty Name="AllowUpdate" ColumnName="AllowUpdate" />
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
