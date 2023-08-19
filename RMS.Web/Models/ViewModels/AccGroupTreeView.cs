@@ -7,6 +7,8 @@ namespace RMS.Web.Models.ViewModels
 {
     public class AccGroupTreeView
     {
+        public int AccountID { get; set; }
+        public string AccountName { get; set; }
         public int AccgroupID { get; set; }
         public float CreditAmount { get; set; }
         public float DebitAmount { get; set; }
@@ -19,6 +21,7 @@ namespace RMS.Web.Models.ViewModels
         public string MainGroupName { get; set; }
         public List<AccGroupTreeView> parent { get; set; }
         public List<AccGroupTreeView> Child { get; set; }
-      
+        public List<AccGroupTreeView> ChildChild { get; set; }
+
     }
 }

@@ -9,7 +9,7 @@
 <div class="container mt-5">
     <div class="panel panel-default">
         <div>
-            <h2 class="ml-2" ><strong>Account Group Tree</strong></h2>
+            <h2 class="ml-2"><strong>Account Group Tree</strong></h2>
 
             <div class="panel panel-default">
                 <div class="panel-body" style="background-color: #5a5c69; color:white; "><strong>Chart Of Accounts</strong></div>
@@ -24,7 +24,7 @@
                                 if (Mainitem.MainGroupID != 0)
                                 {
                                     <ul class="tree">
-                                        <li>
+                                        <li >
                                             @Mainitem.MainGroupName
                                             @foreach (var item in Model.Child)
                                             {
@@ -38,7 +38,20 @@
                                                                 if (newitem.Accunderprimarygroupid == item.AccgroupID)
                                                                 {
                                                                     <ul class="tree">
-                                                                        <li>@newitem.Accgroupname</li>
+                                                                        <li>
+                                                                            @newitem.Accgroupname
+                                                                            @foreach (var newitemchild in Model.ChildChild)
+                                                                            {
+                                                                                if (newitemchild.AccgroupID == newitem.AccgroupID)
+                                                                                {
+                                                                                    <ul class="tree" >
+                                                                                        <li>
+                                                                                            @newitemchild.AccountName
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                }
+                                                                            }
+                                                                        </li>
                                                                     </ul>
                                                                 }
                                                             }
@@ -55,7 +68,7 @@
                     </div>
                 </div>
             </div>
-        </div>      
+        </div>
 
     </div>
 </div>
@@ -131,6 +144,9 @@
         margin: 0px 0px 0px 0px;
         padding: 0px 0px 0px 0px;
         outline: 0;
+    }
+    .tree{
+        cursor:pointer;
     }
 </style>
 <script>

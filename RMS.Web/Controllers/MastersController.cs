@@ -2624,17 +2624,17 @@ namespace RMS.Web.Controllers
 
         }
 
-        public ActionResult ShowAccountGrpTree()
-        {
+        //public ActionResult ShowAccountGrpTree()
+        //{
 
-            DataSet ds = treeservice.GetAccGrpData();
-            ViewBag.treedata = ds.Tables[0];
-            //---------------GET SUB ACCOUNTS---------------//
-            DataSet ds2 = treeservice.GetAccGrpData();
-            ViewBag.subaccoutns = ds2.Tables[0];
+        //    DataSet ds = treeservice.GetAccGrpData();
+        //    ViewBag.treedata = ds.Tables[0];
+        //    //---------------GET SUB ACCOUNTS---------------//
+        //    DataSet ds2 = treeservice.GetAccGrpData();
+        //    ViewBag.subaccoutns = ds2.Tables[0];
 
-            return View();
-        }
+        //    return View();
+        //}
 
         public ActionResult ShowAccountGrpTree2(AccGroupTreeView modal)
         {
@@ -2650,6 +2650,12 @@ namespace RMS.Web.Controllers
                 Accunderprimarygroupid = w.Accunderprimarygroupid,
                 AccunderprimarygroupName = w.AccunderprimarygroupName,
                 MainGroupID = w.MainGroupID,
+            }).ToList();
+            modal.ChildChild = db.Account.Select(w => new AccGroupTreeView
+            {
+                AccountID = w.AccountID,
+                AccountName = w.AccountName,
+                AccgroupID = w.Accgroupid,
             }).ToList();
             return View(modal);
         }
