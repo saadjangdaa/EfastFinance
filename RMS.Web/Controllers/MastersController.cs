@@ -2624,18 +2624,6 @@ namespace RMS.Web.Controllers
 
         }
 
-        //public ActionResult ShowAccountGrpTree()
-        //{
-
-        //    DataSet ds = treeservice.GetAccGrpData();
-        //    ViewBag.treedata = ds.Tables[0];
-        //    //---------------GET SUB ACCOUNTS---------------//
-        //    DataSet ds2 = treeservice.GetAccGrpData();
-        //    ViewBag.subaccoutns = ds2.Tables[0];
-
-        //    return View();
-        //}
-
         public ActionResult ShowAccountGrpTree2(AccGroupTreeView modal)
         {
             modal.parent = db.AccountMainHead.Select(w => new AccGroupTreeView

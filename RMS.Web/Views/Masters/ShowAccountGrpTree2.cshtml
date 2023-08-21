@@ -3,28 +3,26 @@
     ViewBag.Title = "ShowAccountGrpTree2";
 }
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<div class="container mt-5">
-    <div class="panel panel-default">
-        <div>
+<div class="container-fluid" >
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
             <h2 class="ml-2"><strong>Account Group Tree</strong></h2>
-
             <div class="panel panel-default">
                 <div class="panel-body" style="background-color: #5a5c69; color:white; "><strong>Chart Of Accounts</strong></div>
             </div>
-
+        </div>
+        <div class="card-body">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-12">
                             @foreach (var Mainitem in Model.parent)
                             {
                                 if (Mainitem.MainGroupID != 0)
                                 {
                                     <ul class="tree">
-                                        <li >
+                                        <li>
                                             @Mainitem.MainGroupName
                                             @foreach (var item in Model.Child)
                                             {
@@ -44,7 +42,7 @@
                                                                             {
                                                                                 if (newitemchild.AccgroupID == newitem.AccgroupID)
                                                                                 {
-                                                                                    <ul class="tree" >
+                                                                                    <ul class="tree">
                                                                                         <li>
                                                                                             @newitemchild.AccountName
                                                                                         </li>
@@ -69,9 +67,9 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
+
 <style>
     .tree, .tree ul {
         margin: 0;
@@ -79,53 +77,53 @@
         list-style: none
     }
 
-        .tree ul {
-            margin-left: 1em;
-            position: relative
-        }
+    .tree ul {
+        margin-left: 1em;
+        position: relative
+    }
 
-            .tree ul ul {
-                margin-left: .5em
-            }
+    .tree ul ul {
+        margin-left: .5em
+    }
 
-            .tree ul:before {
-                content: "";
-                display: block;
-                width: 0;
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                border-left: 1px solid
-            }
+    .tree ul:before {
+        content: "";
+        display: block;
+        width: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        border-left: 1px solid
+    }
 
-        .tree li {
-            margin: 0;
-            padding: 0 1em;
-            line-height: 2em;
-            color: #5a5c69;
-            font-weight: 700;
-            position: relative
-        }
+    .tree li {
+        margin: 0;
+        padding: 0 1em;
+        line-height: 2em;
+        color: #5a5c69;
+        font-weight: 700;
+        position: relative
+    }
 
-        .tree ul li:before {
-            content: "";
-            display: block;
-            width: 10px;
-            height: 0;
-            border-top: 1px solid;
-            margin-top: -1px;
-            position: absolute;
-            top: 1em;
-            left: 0
-        }
+    .tree ul li:before {
+        content: "";
+        display: block;
+        width: 10px;
+        height: 0;
+        border-top: 1px solid;
+        margin-top: -1px;
+        position: absolute;
+        top: 1em;
+        left: 0
+    }
 
-        .tree ul li:last-child:before {
-            background: #fff;
-            height: auto;
-            top: 1em;
-            bottom: 0
-        }
+    .tree ul li:last-child:before {
+        background: #fff;
+        height: auto;
+        top: 1em;
+        bottom: 0
+    }
 
     .indicator {
         margin-right: 5px;
