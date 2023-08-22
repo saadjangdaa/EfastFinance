@@ -43,88 +43,74 @@
 
 
 <div class="card shadow mb-4" id="table1">
-    @*<div class="card-header py-3" style="background-color:#5a5c69">
-        <h4 class="m-0 font-weight-bold  text-center" style="color:white;"> P&L</h4>
-    </div>*@
     <div class="card-body">
-        <table id="datatable" class="table-bordered table table-dark">
-            <thead style="background-color:grey;">
-                <tr>
-                    <th style="font-size:x-large;" class="text-center"><strong>Debit Rs</strong></th>
-                    <th style="font-size:x-large;" class="text-center"><strong>Credit Rs</strong></th>
-                </tr>
-            </thead>
+        <div class="container">
 
-            <tbody>
-                <tr >
-                    <td style="font-size:large" class="font-weight-bolder">Opening Stock<strong id="openingstock" class="col-md-offset-8">0.00</strong> </td>
-                    <td style="font-size:large" class="font-weight-bolder">Closing Stock<strong id="closingstock" class="col-md-offset-8">0.00</strong> </td>
-                </tr>
-                <tr>
-                    <td style="font-size:large"  class="font-weight-bolder">@Model.purchaseaccount.Accgroupname<td> <strong id="purchase"  >@Model.purchaseaccount.Accgroupbalance</strong><a href="~/Masters/getsubbacctrialB/@Model.purchaseaccount.AccgroupID" class="btn btn-success "><i class="glyphicon glyphicon-info-sign"></i></a></td>
-                    <td style="font-size:large" class="font-weight-bolder">@Model.salesaccount.Accgroupname <strong id="sales" style="padding-left:470px;">@Model.salesaccount.CreditAmount</strong><a href="~/Masters/getsubbacctrialB/@Model.salesaccount.AccgroupID" class="btn btn-success "><i class="glyphicon glyphicon-info-sign"></i></a></td>
-                </tr>
-                <tr>
-                  
-                    <td style="font-size:large" class="font-weight-bolder">@Model.expaccount.Accgroupname <strong id="expenses" style="padding-left:350px;">@Model.expaccount.Accgroupbalance</strong> <a href="~/Masters/getsubbacctrialB/@Model.expaccount.AccgroupID" class="btn btn-success "><i class="glyphicon glyphicon-info-sign"></i></a></td>
-                    <td style="font-size:large" class="font-weight-bolder">@Model.incomeaccount.Accgroupname <strong id="income" style="padding-left:350px;">@Model.incomeaccount.Accgroupbalance</strong><a href="~/Masters/getsubbacctrialB/@Model.incomeaccount.AccgroupID" class="btn btn-success "><i class="glyphicon glyphicon-info-sign"></i></a></td>
-                </tr>
-                <tr>
-                    <td id="grossprofitbd" style="font-size:large" class="font-weight-bolder">Gross Profit <strong id="grossproft" style="padding-left:500px; ">0.00</strong> </td>
-                    <td id="emptygrossprofitbd"></td>
+            <table id="datatable" class="table-bordered table table-dark">
+                <tbody>
+                   
+                    <tr>
+                        <td style="font-size:large" class="font-weight-bolder">@Model.expaccount.Accgroupname <strong id="expenses" style="padding-left:350px;">@Model.expaccount.Accgroupbalance</strong> <a href="~/Masters/getsubbacctrialB/@Model.expaccount.AccgroupID" class="btn btn-success "><i class="glyphicon glyphicon-info-sign"></i></a></td>
+                        <td style="font-size:large" class="font-weight-bolder">@Model.incomeaccount.Accgroupname <strong id="income" style="padding-left:350px;">@Model.incomeaccount.Accgroupbalance</strong><a href="~/Masters/getsubbacctrialB/@Model.incomeaccount.AccgroupID" class="btn btn-success "><i class="glyphicon glyphicon-info-sign"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td id="grossprofitbd" style="font-size:large" class="font-weight-bolder">Gross Profit <strong id="grossproft" style="padding-left:500px; ">0.00</strong> </td>
+                        <td id="emptygrossprofitbd"></td>
 
-                    <td id="emptygrosslossbd" style="display:none;"></td>
-                    <td id="grosslossbd" style="font-size:large;display:none;" class="font-weight-bolder">Gross Loss <strong id="grossloss" style="padding-left:400px; ">0.00</strong> </td>
-                </tr>
+                        <td id="emptygrosslossbd" style="display:none;"></td>
+                        <td id="grosslossbd" style="font-size:large;display:none;" class="font-weight-bolder">Gross Loss <strong id="grossloss" style="padding-left:400px; ">0.00</strong> </td>
+                    </tr>
 
-                <tr>
-                   <td style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
-                    <td  style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
+                    <tr>
+                        <td style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
+                        <td style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
 
-                </tr>
-                <tr>
-                    <td style="font-size:large" class="font-weight-bolder">Total <strong id="purchasetotal" style="padding-left:470px;">0.00</strong></td>
-                     <td style="font-size:large" class="font-weight-bolder">Total <strong id="salestotal" style="padding-left:470px;">0.00</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:large" class="font-weight-bolder">Total <strong id="purchasetotal" style="padding-left:470px;">0.00</strong></td>
+                        <td style="font-size:large" class="font-weight-bolder">Total <strong id="salestotal" style="padding-left:470px;">0.00</strong></td>
 
-                </tr>
-                <tr>
-                    <td  style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
-                    <td  style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
+                        <td style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
 
-                </tr>
-                <tr>
-                    <td id="emptygrossprofitbd2"></td>
-                    <td id="grossprofitbd2" style="font-size:large" class="font-weight-bolder">Gross Profit b/d <strong id="grossproft2" style="padding-left:350px;">0.00</strong> </td>
+                    </tr>
+                    <tr>
+                        <td id="emptygrossprofitbd2"></td>
+                        <td id="grossprofitbd2" style="font-size:large" class="font-weight-bolder">Gross Profit b/d <strong id="grossproft2" style="padding-left:350px;">0.00</strong> </td>
 
-                    <td style="font-size:large;display:none;" id="grosslossbd2" class="font-weight-bolder">Gross Loss b/d  <strong id="grossloss2" style="padding-left:450px;">0.00</strong> </td>
-                    <td style="display:none;" id="emptygrosslossbd2"></td>
+                        <td style="font-size:large;display:none;" id="grosslossbd2" class="font-weight-bolder">Gross Loss b/d  <strong id="grossloss2" style="padding-left:450px;">0.00</strong> </td>
+                        <td style="display:none;" id="emptygrosslossbd2"></td>
 
-                </tr>
-                <tr>
-                    <td style="font-size:large" class="font-weight-bolder">@Model.expaccount2.Accgroupname <strong id="expesnsesindirect2" style="padding-left:350px;">@Model.expaccount2.Accgroupbalance</strong><a href="~/Masters/getsubbacctrialB/@Model.expaccount2.AccgroupID" class="btn btn-success "><i class="glyphicon glyphicon-info-sign"></i></a></td>
-                    <td style="font-size:large" class="font-weight-bolder">@Model.incomeaccount2.Accgroupname <strong id="incomedirect2" style="padding-left:350px;">@Model.incomeaccount2.Accgroupbalance</strong><a href="~/Masters/getsubbacctrialB/@Model.incomeaccount2.AccgroupID" class="btn btn-success "><i class="glyphicon glyphicon-info-sign"></i></a></td>
-                </tr>
-                <tr>
+                    </tr>
+                    <tr>
+                        <td style="font-size:large" class="font-weight-bolder">@Model.expaccount2.Accgroupname <strong id="expesnsesindirect2" style="padding-left:350px;">@Model.expaccount2.Accgroupbalance</strong><a href="~/Masters/getsubbacctrialB/@Model.expaccount2.AccgroupID" class="btn btn-success "><i class="glyphicon glyphicon-info-sign"></i></a></td>
+                        <td style="font-size:large" class="font-weight-bolder">@Model.incomeaccount2.Accgroupname <strong id="incomedirect2" style="padding-left:350px;">@Model.incomeaccount2.Accgroupbalance</strong><a href="~/Masters/getsubbacctrialB/@Model.incomeaccount2.AccgroupID" class="btn btn-success "><i class="glyphicon glyphicon-info-sign"></i></a></td>
+                    </tr>
+                    <tr>
 
-                    <td id="NetProfit" style="font-size:large" class="font-weight-bolder">Net Profit <strong id="netprofit" style="padding-left:470px;">0.00</strong> </td>
-                    <td id="empty"></td>
-                    
-                    <td style="display:none;" id="empty2"></td>
-                    <td style="font-size:large;display:none;" id="Netloss" class="font-weight-bolder">Net Loss <strong id="netloss" style="padding-left:450px;">0.00</strong> </td>
-                </tr>
-                <tr>
-                    <td  style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
-                    <td  style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
+                        <td id="NetProfit" style="font-size:large" class="font-weight-bolder">Net Profit <strong id="netprofit" style="padding-left:470px;">0.00</strong> </td>
+                        <td id="empty"></td>
 
-                </tr>
-                <tr>
-                    <td style="font-size:large" class="font-weight-bolder">Total <strong class="number"  id="purchasetotal2" style="padding-left:470px;">0.00</strong></td>
+                        <td style="display:none;" id="empty2"></td>
+                        <td style="font-size:large;display:none;" id="Netloss" class="font-weight-bolder">Net Loss <strong id="netloss" style="padding-left:450px;">0.00</strong> </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
+                        <td style="background-color:yellow; color:black;" class="text-center font-weight-bolder">-----------------------------------------------------------------------------------------</td>
 
-                    <td style="font-size:large" class="font-weight-bolder">Total <strong class="number" id="salestotal2" style="padding-left:470px;">0.00</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:large" class="font-weight-bolder">Total <strong class="number" id="purchasetotal2" style="padding-left:470px;">0.00</strong></td>
 
-                </tr>
-            </tbody>
-        </table>
+                        <td style="font-size:large" class="font-weight-bolder">Total <strong class="number" id="salestotal2" style="padding-left:470px;">0.00</strong></td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
     </div>
 
 </div>

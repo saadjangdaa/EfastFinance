@@ -7,21 +7,22 @@
 
 <div class="container-fluid">
     <div class="card shadow mb-4">
-        @*@using (Html.BeginForm("ShowAccLedger", "Masters", FormMethod.Post))
-            {*@
+    
 
         @using (Ajax.BeginForm("ShowAccLedger", "Masters", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "report", OnBegin = "showloader()", OnComplete = "hideloader()", OnSuccess = "hideloader()" }, new { @Id = "accledger" }))
         {
             <form id="accledger">
                 <div class="card-header py-3" style="background-color:#5a5c69">
-
-                    <h4 class="m-0  font-weight-bold">
-                        <strong style="color:white;">General Ledger </strong>
-                        @*<input type="button" id="btnSubmit"  value="Preview" class="btn btn-success col-md-o  ffset-9" formtarget="_blank" />*@
-                        <button id="btnSubmit" class="btn btn-success col-md-offset-9" type="submit">Preview</button>
-
-
-                    </h4>
+                    <div class="row">
+                        <div class="col-11">
+                            <h3 class="m-0 font-weight-bold" style="color: white;">General Ledger</h3>
+                        </div>
+                        <div class="col-1 d-flex justify-content-end">
+                            <button type="submit" id="btnSubmit" class="btn btn-success ">
+                                <i class="glyphicon glyphicon-share"></i> Preview
+                            </button>
+                        </div>
+                    </div>
                     <p hidden id="vouchertypeid">9</p>
 
                 </div>
@@ -71,7 +72,6 @@
                     <br />
                     <br />
                     <div class="col-md-offset-9">
-                        @*<input type="submit" value="Preview" class=" btn-block btn btn-success" formtarget="_blank" />*@
                     </div>
                 </div>
             </form>

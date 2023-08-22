@@ -5,16 +5,24 @@
 }
 <div class="container-fluid">
     <form id="PaymentVoucher">
-        <a class="btn btn-success btn-block" href="@Url.Action("PaymentVoucherHistory","Vouchers")">Find</a>
         <br />
 
         <div class="card shadow mb-4">
             <div class="card-header py-3" style="background-color:#5a5c69">
-
+                <div class="row">
+                    <div class="col-11">
+                        <h1 class="m-0 font-weight-bold text-center" style="color:black;">Modify Payment Voucher </h1>
+                    </div>
+                    <div class="col-1 d-flex justify-content-end">
+                        <button type="button" onclick="history.back()" class="btn btn-success ">
+                            <i class="glyphicon glyphicon-arrow-left"></i> Back
+                        </button>
+                    </div>
+                </div>
                 @*<h3 class="m-0 font-weight-bold "><strong style="color:white;">Add Payment Voucher </strong> <button type="button" id="btnSaveVoucher" class="btn btn-success col-md-offset-8"> Update Voucher</button></h3>*@
-                <h3 class="m-0 font-weight-bold "><strong style="color:white;">Modify Payment Voucher </strong> <button type="button" id="btnSaveVoucher" class="btn btn-success col-md-offset-6"> Update Voucher</button></h3>
-                
-                <input hidden name="vouchertype" id="vouchertype" value="6"/>
+                @*<h3 class="m-0 font-weight-bold "><strong style="color:white;">Modify Payment Voucher </strong> <button type="button" id="btnSaveVoucher" class="btn btn-success col-md-offset-6"> Update Voucher</button></h3>*@
+
+                <input hidden name="vouchertype" id="vouchertype" value="6" />
             </div>
             <div class="card-body">
 

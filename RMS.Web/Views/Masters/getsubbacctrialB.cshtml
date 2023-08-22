@@ -7,10 +7,16 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3" style="background-color:#5a5c69">
-        @*<a href="~/Masters/TrialBalance" class="btn btn-success">Back</a>*@
-        <button id="backbtn" class="btn btn-success">Back</button>
-
-        <h1 class="m-0 font-weight-bold  text-center" style="color:white;">  Group Balances</h1>
+        <div class="row">
+            <div class="col-11">
+                <h1 class="m-0 font-weight-bold text-center" style="color: white;">Group Balances</h1>
+            </div>
+            <div class="col-1 d-flex justify-content-end">
+                <button type="button" onclick="history.back()" class="btn btn-success ">
+                    <i class="glyphicon glyphicon-arrow-left"></i> Back
+                </button>
+            </div>
+        </div>
     </div>
     <div class="card-body">
         <div class="">
