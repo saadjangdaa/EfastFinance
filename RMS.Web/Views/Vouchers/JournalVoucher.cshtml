@@ -11,31 +11,80 @@
 
                 @if (Model.vouchertype == 5)
                 {
+                    
                     if (Model.modify == 1)
                     {
-                        <h3 class="m-0 font-weight-bold "><strong style="color:white;">Modify Journal Voucher </strong><a href="@Url.Action("JournalVoucherHistory", "Vouchers")" class="btn btn-success col-md-offset-6">Find</a> <button type="button" id="btnSaveVoucher" class="btn btn-success "><i class="glyphicon glyphicon-save-file"></i> Update Voucher</button></h3>
-                        <input type="hidden" name="modify" id="modify" value="1" />
+                        <div class="row" >
+                            <div class="col-9">
+                                <h3 class="m-0 font-weight-bold "><strong style="color:white;">Modify Journal Voucher </strong></h3>
+                            </div>
+                            <div class="col-3 d-flex justify-content-end">
+                                <div class="pr-1">
+                                    <a href="@Url.Action("JournalVoucherHistory", "Vouchers")" class="btn btn-success">Find</a>
+                                </div>
+                                <div>
+                                    <button type="button" id="btnSaveVoucher" class="btn btn-success "><i class="glyphicon glyphicon-save-file"></i> Update Voucher</button>
+                                    <input type="hidden" name="modify" id="modify" value="1" />
+                                </div>
+                            </div>
+                        </div>
                     }
                     else
                     {
-                        <h3 class="m-0 font-weight-bold "><strong style="color:white;">Add Journal Voucher </strong><a href="@Url.Action("JournalVoucherHistory", "Vouchers")" class="btn btn-success col-md-offset-6">Find</a> <button type="button" id="btnSaveVoucher" class="btn btn-success "><i class="glyphicon glyphicon-save-file"></i> Save Voucher</button></h3>
-                        <input type="hidden" name="modify" id="modify" value="0" />
+                        <div class="row">
+                            <div class="col-9">
+                                <h3 class="m-0 font-weight-bold "><strong style="color:white;">Add Journal Voucher </strong></h3>
+                            </div>
+                            <div class="col-3 d-flex justify-content-end">
+                                <div class="pr-1">
+                                    <a href="@Url.Action("JournalVoucherHistory", "Vouchers")" class="btn btn-success">Find</a>
+                                </div>
+                                <div>
+                                    <button type="button" id="btnSaveVoucher" class="btn btn-success "><i class="glyphicon glyphicon-save-file"></i> Save Voucher</button>
+                                    <input type="hidden" name="modify" id="modify" value="0" />
+                                </div>
+                            </div>
+                        </div>   
                     }
                     <input type="hidden" name="vouchertype" id="vouchertype" value="@Model.vouchertype" />
 
                 }
                 else if (Model.vouchertype == 11)
                 {
-
+                    
                     if (Model.modify == 1)
                     {
-                        <h3 class="m-0 font-weight-bold "><strong style="color:white;">Modify Contra Voucher </strong><a href="@Url.Action("ContraVoucherHistory", "Vouchers")" class="btn btn-success col-md-offset-6">Find</a> <button type="button" id="btnSaveVoucher" class="btn btn-success "><i class="glyphicon glyphicon-save-file"></i> Update Voucher</button></h3>
-                        <input type="hidden" name="modify" id="modify" value="1" />
+                        <div class="row" >
+                            <div class="col-9" >
+                                <h3 class="m-0 font-weight-bold "><strong style="color:white;">Modify Contra Voucher </strong></h3>
+                            </div>
+                            <div class="col-3 d-flex justify-content-end" >
+                                <div class="pr-1">
+                                    <a href="@Url.Action("ContraVoucherHistory", "Vouchers")" class="btn btn-success">Find</a>
+                                </div>
+                                <div>
+                                    <button type="button" id="btnSaveVoucher" class="btn btn-success "><i class="glyphicon glyphicon-save-file"></i> Update Voucher</button>
+                                    <input type="hidden" name="modify" id="modify" value="1" />
+                                </div>
+                            </div>
+                        </div>
                     }
                     else
-                    {
-                        <h3 class="m-0 font-weight-bold "><strong style="color:white;">Add Contra Voucher </strong><a href="@Url.Action("ContraVoucherHistory", "Vouchers")" class="btn btn-success col-md-offset-6">Find</a> <button type="button" id="btnSaveVoucher" class="btn btn-success "><i class="glyphicon glyphicon-save-file"></i> Save Voucher</button></h3>
-                        <input type="hidden" name="modify" id="modify" value="0" />
+                    {                                       
+                        <div class="row">
+                            <div class="col-9">
+                                <h3 class="m-0 font-weight-bold "><strong style="color:white;">Add Contra Voucher </strong></h3>
+                            </div>
+                            <div class="col-3 d-flex justify-content-end">
+                                <div class="pr-1" >
+                                    <a href="@Url.Action("ContraVoucherHistory", "Vouchers")" class="btn btn-success">Find</a>
+                                </div>
+                                <div >
+                                    <button type="button" id="btnSaveVoucher" class="btn btn-success "><i class="glyphicon glyphicon-save-file"></i> Save Voucher</button>
+                                    <input type="hidden" name="modify" id="modify" value="0" />
+                                </div>                                                             
+                            </div>
+                        </div>
                     }
                     <input type="hidden" name="vouchertype" id="vouchertype" value="@Model.vouchertype" />
 

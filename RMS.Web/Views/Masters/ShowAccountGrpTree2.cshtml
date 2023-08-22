@@ -29,7 +29,7 @@
                                                 if (item.MainGroupID == Mainitem.MainGroupID)
                                                 {
                                                     <ul class="tree">
-                                                        <li>
+                                                        <li >
                                                             @item.Accgroupname
                                                             @foreach (var newitem in Model.Child)
                                                             {
@@ -74,7 +74,7 @@
     .tree, .tree ul {
         margin: 0;
         padding: 0;
-        list-style: none
+        list-style: none;
     }
 
     .tree ul {
@@ -98,7 +98,7 @@
     }
 
     .tree li {
-        margin: 0;
+        margin: 1px;
         padding: 0 1em;
         line-height: 2em;
         color: #5a5c69;
