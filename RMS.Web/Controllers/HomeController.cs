@@ -153,8 +153,6 @@ namespace RMS.Web.Controllers
             //var userid = 7;
             if (user != null)
             {
-
-
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["MVCDBADO"].ConnectionString);
 
                 con.Open();
@@ -166,24 +164,8 @@ namespace RMS.Web.Controllers
                 sda.Fill(ds);
 
                 DataTable ds2 = ds;
-                //Menu_List menumodel = new Menu_List();
-                //menumodel.ID = Convert.ToInt32(ds.Rows[0]);
-                //menumodel.ParentID = Convert.ToInt32(ds.Rows[4]);
-                //menumodel.MenuName = Convert.ToString(ds.Rows[1]);
-                //menumodel.Url = Convert.ToString(ds.Rows[2]);
-                //menumodel.Icon = Convert.ToString(ds.Rows[3]);
                 con.Close();
                 var userid2 = userid;
-                //Menu_List menumodel = new Menu_List();
-                //for (int i = 0; i < ds2.Rows.Count; i++)
-                //{
-                //    menumodel.ID = Convert.ToInt32(ds.Rows[i][0]);
-                //    menumodel.ParentID = Convert.ToInt32(ds.Rows[i][4]);    
-                //    menumodel.MenuName = Convert.ToString(ds.Rows[i][1]);
-                //    menumodel.Url = Convert.ToString(ds.Rows[i][2]);
-                //    menumodel.Icon = Convert.ToString(ds.Rows[i][3]);
-                //}
-
                 try
                 {
                     var result = (from p in db.MenuItems
@@ -192,6 +174,7 @@ namespace RMS.Web.Controllers
                                   join m in db.AspNetUsers on new { DID = (int?)d.UserID } equals new { DID = (int?)m.UserID } into diss
                                   from m in diss.DefaultIfEmpty()
                                   where d.UserID == userid2 && p.IsActive == true
+                                  orderby p.Sort
                                   select new RMS.Web.Models.ViewModels.DynamicMenuviewmodel.Menu_List
                                   {
                                       ID = p.ID,
@@ -199,6 +182,7 @@ namespace RMS.Web.Controllers
                                       MenuName = p.MenuName,
                                       Url = p.Url,
                                       Icon = p.Icon,
+                                      sort = p.Sort,
                                   }).ToList();
 
 

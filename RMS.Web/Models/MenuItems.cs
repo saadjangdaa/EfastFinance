@@ -28,6 +28,7 @@ namespace RMS.Web.Models
         public Nullable<bool> IsParent { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<System.DateTime> CreationDate { get; set; }
+        public Nullable<int> Sort { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsersMenu> UsersMenu { get; set; }

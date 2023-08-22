@@ -14,7 +14,23 @@
                     if (Model.modify == 1)
                     {
 
-                        <h4 class="m-0 font-weight-bold"><strong style="color:white;">Modify Stock Transfer </strong>  <a class="btn btn-success col-md-offset-6" href="@Url.Action("StockTransferHistory", "Stock")">Find</a> <button type="button" id="btnSaveVoucher" class="btn btn-success "><i class="glyphicon glyphicon-save-file"></i> Update Voucher</button></h4>
+                        <div class="row">
+                            <div class="col-9">
+                                <h4 class="m-0 font-weight-bold"><strong style="color:white;">Modify Stock Transfer</strong></h4>
+                            </div>
+                            <div class="col-3 d-flex justify-content-end">
+                                <div class="pr-1">
+                                    <button type="button" onclick="history.back()" class="btn btn-success ">
+                                        <i class="glyphicon glyphicon-arrow-left"></i> Back
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type="button" id="btnSaveVoucher" style="float:right;" class="btn btn-success ">
+                                        <i class="glyphicon glyphicon-save-file"></i> Update Voucher
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <p hidden id="vouchertypeid">12</p>
 
 
@@ -24,8 +40,23 @@
                     {
                         @*<h4 class="m-0 font-weight-bold"><strong style="color:white;"> </strong>  <a class="btn btn-success col-md-offset-6" href="@Url.Action("StockTransferHistory", "Stock")">Find</a> <button type="button" id="btnSaveVoucher" class="btn btn-success col-md-offset-8"><i class="glyphicon glyphicon-save-file"></i> Save Voucher</button></h4>*@
                         <p hidden id="vouchertypeid">12</p>
-                        <h3 class="m-0 font-weight-bold "><strong style="color:white;">Stock Transfer </strong> <a class="btn btn-success col-md-offset-6" href="@Url.Action("StockTransferHistory", "Stock")">Find</a> <button type="button" id="btnSaveVoucher" class="btn btn-success ">Save Voucher</button></h3>
-
+                        <div class="row">
+                            <div class="col-9">
+                                <h4 class="m-0 font-weight-bold"><strong style="color:white;">Stock Transfer </strong></h4>
+                            </div>
+                            <div class="col-3 d-flex justify-content-end">
+                                <div class="pr-1">
+                                    <a href="@Url.Action("StockTransferHistory", "Stock")" class="btn btn-success">
+                                        <i class="glyphicon glyphicon-search"></i> Find
+                                    </a>
+                                </div>
+                                <div>
+                                    <button type="button" id="btnSaveVoucher" class="btn btn-success">
+                                        <i class="glyphicon glyphicon-save-file"></i> Save Voucher
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <input type="hidden" id="modify" name="modify" value="0" />
                     }
                 }
@@ -33,19 +64,47 @@
                 {
                     if (Model.modify == 1)
                     {
-
-                        <h4 class="m-0 font-weight-bold"><strong style="color:white;">Modify Recieve From </strong>  <a class="btn btn-success col-md-offset-6" href="@Url.Action("RecieveFromVoucherHistory", "Stock")">Find</a> <button type="button" id="btnSaveVoucher" class="btn btn-success "><i class="glyphicon glyphicon-save-file"></i> Update Voucher</button></h4>
+                        <div class="row">
+                            <div class="col-9">
+                                <h4 class="m-0 font-weight-bold"><strong style="color:white;">Modify Recieve From</strong></h4>
+                            </div>
+                            <div class="col-3 d-flex justify-content-end">
+                                <div class="pr-1">
+                                    <button type="button" onclick="history.back()" class="btn btn-success ">
+                                        <i class="glyphicon glyphicon-arrow-left"></i> Back
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type="button" id="btnSaveVoucher" style="float:right;" class="btn btn-success ">
+                                        <i class="glyphicon glyphicon-save-file"></i> Update Voucher
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <p hidden id="vouchertypeid">13</p>
-
-
                         <input type="hidden" id="modify" name="modify" value="1" />
                     }
                     else
                     {
-                        @*<h4 class="m-0 font-weight-bold"><strong style="color:white;"> </strong>  <a class="btn btn-success col-md-offset-6" href="@Url.Action("StockTransferHistory", "Stock")">Find</a> <button type="button" id="btnSaveVoucher" class="btn btn-success col-md-offset-8"><i class="glyphicon glyphicon-save-file"></i> Save Voucher</button></h4>*@
                         <p hidden id="vouchertypeid">13</p>
-                        <h3 class="m-0 font-weight-bold "><strong style="color:white;">Recieve From  </strong> <a class="btn btn-success col-md-offset-6" href="@Url.Action("RecieveFromVoucherHistory", "Stock")">Find</a> <button type="button" id="btnSaveVoucher" class="btn btn-success ">Save Voucher</button></h3>
-
+                        
+                        <div class="row">
+                            <div class="col-9">
+                                <h4 class="m-0 font-weight-bold"><strong style="color:white;">Add Recieve From </strong></h4>
+                            </div>
+                            <div class="col-3 d-flex justify-content-end">
+                                <div class="pr-1">
+                                    <a href="@Url.Action("RecieveFromVoucherHistory", "Stock")" class="btn btn-success">
+                                        <i class="glyphicon glyphicon-search"></i> Find
+                                    </a>
+                                </div>
+                                <div>
+                                    <button type="button" id="btnSaveVoucher" class="btn btn-success">
+                                        <i class="glyphicon glyphicon-save-file"></i> Save Voucher
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <input type="hidden" id="modify" name="modify" value="0" />
                     }
                 }

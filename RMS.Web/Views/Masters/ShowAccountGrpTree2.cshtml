@@ -12,11 +12,17 @@
                 <div class="panel-body" style="background-color: #5a5c69; color:white; "><strong>Chart Of Accounts</strong></div>
             </div>
         </div>
+        
         <div class="card-body">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12">
+                            <div class="row">
+                                <div class="search-container col-md-4">
+                                    <input class="form-control " type="text" id="tree-search" placeholder="Search...">
+                                </div>
+                            </div>
                             @foreach (var Mainitem in Model.parent)
                             {
                                 if (Mainitem.MainGroupID != 0)
@@ -107,8 +113,7 @@
     }
 
     .tree ul li:before {
-        content: "";
-        display: block;
+        content: "";display: block;
         width: 10px;
         height: 0;
         border-top: 1px solid;
@@ -200,6 +205,20 @@
                 });
             });
         }
+    });
+
+    $(document).ready(function () {
+        $('#tree-search').on('input', function () {
+            var searchQuery = $(this).val().toLowerCase();
+            $('.tree li').each(function () {
+                var nodeText = $(this).text().toLowerCase();
+                if (nodeText.indexOf(searchQuery) > -1) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
     });
 
     //Initialization of treeviews
