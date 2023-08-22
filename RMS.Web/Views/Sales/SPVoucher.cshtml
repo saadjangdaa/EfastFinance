@@ -423,7 +423,10 @@
                                         <td> <input readonly type="number" class="form-control text-right" value="@item.ItemPrice" />  </td>
                                         <td><input readonly type="number" class="form-control text-right" value=" @item.TotalAmount" />  </td>
                                         <td><button type="button" class="btn btn-danger " id="btnremove" onclick="removeDr(@rowid)"><i class="glyphicon glyphicon-minus"></i></button></td>
-
+                                        <td>
+                                            <button type="button" class="btn btn-primary" id="btnedit" onclick="editRow(this)">Edit</button>
+                                            <button type="button" class="btn btn-success" id="btnupdate" style="display: none;" onclick="updateRow(this)">Update</button>
+                                        </td>
                                         <td hidden>@item.TotalAmount</td>
                                         <td hidden>@rowid</td>
                                         <td hidden>@item.VoucherchildID</td>
@@ -545,7 +548,6 @@
 
 
     });
-
 
     $(document).on({
         keydown: function (ev) {
@@ -1166,8 +1168,8 @@
         }
 
         else {
-            var removebtn = "<button type='button' class='btn btn-danger ' id='btnremove' onclick='removeDr(`" + rowid + "` )'><i class='glyphicon glyphicon-minus'></i></button>'";
-
+            var removebtn = "<button type='button' class='btn btn-danger' id='btnremove' onclick='removeDr(`" + rowid + "` )'><i class='glyphicon glyphicon-minus'></i></button>'";
+            var editUpdatebtn = "<button type='button' class='btn btn-primary' id='btnedit' onclick ='editRow(this)'>Edit</button><button type='button' class='btn btn-success' id='btnupdate' style='display: none;' onclick='updateRow(this)'>Update</button>";
             // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
             if (modifychild == 1) {
                 var row = ` <tr id='tr'>
@@ -1180,7 +1182,7 @@
             <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
             <td>`+ removebtn + `</td>
             <td hidden>` + total + `</td>
-          <td hidden>`+ rowid + `</td>
+            <td hidden>`+ rowid + `</td>
            <td hidden><input type="hidden" value="0" name="newchild2" id="newchild2" /></td>
             </tr>`;
 
@@ -1197,6 +1199,7 @@
             <td><input readonly  class='form-control text-right' type='number' value="`+ unitprice + `" name="ItemPrice" /></td>
             <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
             <td>`+ removebtn + `</td>
+            <td>`+ editUpdatebtn + `</td>
             <td hidden>` + total + `</td>
           <td hidden>`+ rowid + `</td>
             </tr>`;
@@ -1205,14 +1208,6 @@
                 //$('table tbody').append(row);
                 $('#itembody').append(row);
             }
-
-
-
-
-
-
-
-
 
             $('#ItemID').text();
             //$('#itemname option:selected').text("---Select Item---");
@@ -1277,6 +1272,58 @@
             }
         }
     };
+
+        function editRow(button) {
+
+            var row = $(button).closest('tr');
+            var itemid = row.find('input[name="ItemID"]').val();
+            var itemname = row.find('input[name="ItemName"]').val();
+            var quantity = row.find('input[name="Quantity"]').val();
+            var unitid = row.find('input[name="Unitid"]').val();
+            var unitname = row.find('input[name="UnitName"]').val();
+            var itemprice = row.find('input[name="ItemPrice"]').val();
+                var totalamount = row.find('input[name="TotalAmount"]').val();
+            alert(itemid);
+
+
+        // Populate edit fields
+        $('#itemname').val(itemid).trigger('change.select2');
+        //$('#itemname').val(itemid);
+        $('#Quantity').val(quantity);
+        $('#unitname').val(unitid);
+        $('#ItemPrice').val(itemprice);
+        $('#txttotal').val(totalamount);
+
+        // Hide "Edit" button and show "Update" button
+        row.find('#btnedit').hide();
+        row.find('#btnupdate').show();
+    }
+
+    function updateRow(button) {
+        var row = $(button).closest('tr');
+
+        // Get edited values
+        var editedItemID = $('#itemname').val();
+        var editedQuantity = $('#Quantity').val();
+        var editedUnitID = $('#unitname').val();
+        var editedItemPrice = $('#ItemPrice').val();
+        var editedTotalAmount = $('#txttotal').val();
+
+        // Update corresponding row's data
+        row.find('input[name="ItemID"]').val(editedItemID);
+        row.find('input[name="Quantity"]').val(editedQuantity);
+        row.find('input[name="Unitid"]').val(editedUnitID);
+        row.find('input[name="UnitName"]').val($("#unitname option:selected").text());
+        row.find('input[name="ItemPrice"]').val(editedItemPrice);
+        row.find('input[name="TotalAmount"]').val(editedTotalAmount);
+
+        // Hide "Update" button and show "Edit" button
+        row.find('#btnupdate').hide();
+        row.find('#btnedit').show();
+
+        // Clear edit fields
+        // ... Clear your edit fields here
+    }
 
 
     function remove() {
