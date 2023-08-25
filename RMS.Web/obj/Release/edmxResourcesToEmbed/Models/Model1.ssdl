@@ -260,6 +260,7 @@ warning 6002: The table/view 'MVCDBLive.dbo.Itemsnew' does not have a primary ke
     <Property Name="IsParent" Type="bit" />
     <Property Name="IsActive" Type="bit" />
     <Property Name="CreationDate" Type="datetime" />
+    <Property Name="Sort" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'MVCDBLive.dbo.Preferences' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->

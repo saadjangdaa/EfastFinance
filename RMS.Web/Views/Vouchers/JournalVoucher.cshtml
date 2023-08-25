@@ -262,12 +262,13 @@
                                         @Html.DropDownList("CurrencyId", (IEnumerable<SelectListItem>)ViewBag.currency, "--Select Currency---", htmlAttributes: new { @class = " form-control", @Id = "currencyid", @disabled = "true" })
 
                                     </th>
-                                    <th><input type="number" id="currate" class="form-control text-right" /></th>
+                                    <th><input type="number" disabled id="currate" class="form-control text-right" /></th>
                                     <th><input type="number" disabled id="debitID" class="form-control text-right" /></th>
                                     <th><input type="number" disabled id="creditID" class="form-control text-right" /></th>
                                     <th><input placeholder="Enter Narration" id="narration" class="form-control" /></th>
 
-                                    <th><button type="button" class="btn btn-success " id="btnadd"><i class="glyphicon glyphicon-plus"></i></button></th>
+                                    <th><button type="button" class="btn btn-success" id="btnadd" onclick="addOrUpdateRow()">Add</button></th>
+
 
                                 </tr>
                             </thead>
@@ -318,7 +319,7 @@
                                 foreach (var item in Model.Journalvoucherchildlist)
                                 {
                                     <tbody id="body">
-                                        <tr>
+                                        <tr onclick="editRow(this)" >
                                             <td hidden><input type="hidden" value=@item.DrCrID /></td>
                                             <td hidden><input   type="hidden" class='form-control' value='Debit' /></td>
 
@@ -703,24 +704,24 @@
 
 
 
-    $("#btnadd").on({
-        keydown: function (ev) {
-            if (ev.which === 13) {   // enter button
-                debugger;
-                btnadd();
+    //$("#btnadd").on({
+    //    keydown: function (ev) {
+    //        if (ev.which === 13) {   // enter button
+    //            debugger;
+    //            btnadd();
 
-            }
-        }
-    });
+    //        }
+    //    }
+    //});
     //$('#btnadd').click(function () {
     //    btnadd();
 
     //});
 
-    $('#btnadd').mousedown(function () {
-        debugger;
-        btnadd();
-    });
+    //$('#btnadd').mousedown(function () {
+    //    debugger;
+    //    btnadd();
+    //});
 
 
 
@@ -873,11 +874,11 @@
 
             var drcrid = $('#DrCrID option:selected').val();
             var drcrname = $('#DrCrID option:selected').text();
-        var accountID = $('#accountID option:selected').val();
-        var modify = parseInt($('#modify').val());
-        var currid = $('#currencyid option:selected').val();
-        var currname = $('#currencyid option:selected').text();
-        var currate = $('#currate ').val();
+            var accountID = $('#accountID option:selected').val();
+            var modify = parseInt($('#modify').val());
+            var currid = $('#currencyid option:selected').val();
+            var currname = $('#currencyid option:selected').text();
+            var currate = $('#currate ').val();
 
 
 
@@ -946,51 +947,50 @@
                 if (modify == 1) {
                  // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
 
-                    var row = ` <tr>
-            <td hidden><input type="hidden" name="DrCrID" value="`+ drcrid + `" /></td>
-            <td><input readonly class='form-control'  value='Debit' /></td>
-            <td hidden><input type="hidden" name="CurrencyID" value="`+ currid + `" /></td>
-            <td hidden><input type="hidden" name="AccountID" value="`+ accountID + `" /></td>
+                    var row = ` <tr  onclick='editRow(this)' >
+                    <td hidden><input type="hidden" name="DrCrID" value="`+ drcrid + `" /></td>
+                    <td><input readonly class='form-control'  value='Debit' /></td>
+                    <td hidden><input type="hidden" name="CurrencyID" value="`+ currid + `" /></td>
+                    <td hidden><input type="hidden" name="AccountID" value="`+ accountID + `" /></td>
 
-            <td><input readonly class='form-control'  value="`+ accountname + `" /></td>
-            <td><input readonly class='form-control'  value="`+ currname + `" /></td>
-            <td><input readonly class='form-control text-right'  name="FcRate"  value="`+ currate + `" /></td>
-            <td><input readonly class='form-control text-right' value="`+ debitvalue + `" name="DebitAmount" /></td>
-            <td><input type="hidden" readonly class='form-control text-right' value="`+ creditvalue + `" name="CreditAmount" /></td>
-            <td><input readonly class='form-control' value="`+ shortnarration + `" name="ShortNarration"  id='ShortNarration' /></td>
-            <td>`+ removebtn + `</td>
-            <td hidden>`+ debitvalue + `</td>
-            <td hidden>`+ creditvalue + `</td>
-            <td hidden>`+ accountID + `</td>
-            <td hidden>`+ rowid + `</td>
-            <td hidden>`+ currate + `</td>
+                    <td><input readonly class='form-control' name="accountname" value="`+ accountname + `" /></td>
+                    <td><input readonly class='form-control' name="currname" value="`+ currname + `" /></td>
+                    <td><input readonly class='form-control text-right' name="FcRate"  value="`+ currate + `" /></td>
+                    <td><input readonly class='form-control text-right' value="`+ debitvalue + `" name="DebitAmount" /></td>
+                    <td><input type="hidden" readonly class='form-control text-right' value="`+ creditvalue + `" name="CreditAmount" /></td>
+                    <td><input readonly class='form-control' value="`+ shortnarration + `" name="ShortNarration"  id='ShortNarration' /></td>
+                    <td>`+ removebtn + `</td>
+                    <td hidden>`+ debitvalue + `</td>
+                    <td hidden>`+ creditvalue + `</td>
+                    <td hidden>`+ accountID + `</td>
+                    <td hidden>`+ rowid + `</td>
+                    <td hidden>`+ currate + `</td>
 
-            <td hidden><input type="hidden" value="0" name="newchild2" id="newchild2" /></td>
-            </tr>`;
-
+                    <td hidden><input type="hidden" value="0" name="newchild2" id="newchild2" /></td>
+                    </tr>`;
 
                 }
                 else {
 
-                    var row = ` <tr>
-            <td hidden><input type="hidden" name="DrCrID" value="`+ drcrid + `" /></td>
-            <td><input readonly class='form-control'  value='Debit' /></td>
-            <td hidden><input type="hidden" name="CurrencyID" value="`+ currid + `" /></td>
-            <td hidden><input type="hidden" name="AccountID" value="`+ accountID + `" /></td>
+                    var row = ` <tr  onclick='editRow(this)' >
+                    <td hidden><input type="hidden" name="DrCrID" value="`+ drcrid + `" /></td>
+                    <td><input readonly class='form-control'  value='Debit' /></td>
+                    <td hidden><input type="hidden" name="CurrencyID" value="`+ currid + `" /></td>
+                    <td hidden><input type="hidden" name="AccountID" value="`+ accountID + `" /></td>
 
-            <td><input readonly class='form-control'  value="`+ accountname + `" /></td>
-            <td><input readonly class='form-control'   value="`+ currname + `" /></td>
-            <td><input readonly class='form-control text-right' name="FcRate"  value="`+ currate + `" /></td>
-            <td><input readonly class='form-control text-right' value="`+ debitvalue + `" name="DebitAmount" /></td>
-            <td><input type="hidden" readonly class='form-control text-right' value="`+ creditvalue + `" name="CreditAmount" /></td>
-            <td><input readonly class='form-control' value="`+ shortnarration + `" name="ShortNarration"  id='ShortNarration' /></td>
-            <td>`+ removebtn + `</td>
-            <td hidden>`+ debitvalue + `</td>
-            <td hidden>`+ creditvalue + `</td>
-            <td hidden>`+ accountID + `</td>
-            <td hidden>`+ rowid + `</td>
-            <td hidden>`+ currate + `</td>
-            </tr>`;
+                    <td><input readonly class='form-control' name="accountname" value="`+ accountname + `" /></td>
+                    <td><input readonly class='form-control' name="currname" value="`+ currname + `" /></td>
+                    <td><input readonly class='form-control text-right' name="FcRate"  value="`+ currate + `" /></td>
+                    <td><input readonly class='form-control text-right' value="`+ debitvalue + `" name="DebitAmount" /></td>
+                    <td><input type="hidden" readonly class='form-control text-right' value="`+ creditvalue + `" name="CreditAmount" /></td>
+                    <td><input readonly class='form-control' value="`+ shortnarration + `" name="ShortNarration"  id='ShortNarration' /></td>
+                    <td>`+ removebtn + `</td>
+                    <td hidden>`+ debitvalue + `</td>
+                    <td hidden>`+ creditvalue + `</td>
+                    <td hidden>`+ accountID + `</td>
+                    <td hidden>`+ rowid + `</td>
+                    <td hidden>`+ currate + `</td>
+                    </tr>`;
 
 
                 }
@@ -1063,13 +1063,14 @@
             $('#debitID').val("0");
             $('#creditID').val("0");
             $('#currate').val(" ");
-                $('#DrCrID ').text();
-                $('#accountID ').text();
-                $('#debitID').attr("placeholder","enter amount");
-                $('#creditID').attr("placeholder", "enter amount");
-                $('#select2-accountID-container').text("--Select Account---");
+            $('#DrCrID').val("");
+            $('#accountID ').text();
+            $('#debitID').attr("placeholder","enter amount");
+            $('#creditID').attr("placeholder", "enter amount");
+            $('#select2-accountID-container').text("--Select Account---");
+            $('#DrCrID').focus();
 
-                $('#DrCrID').focus();
+
                 $('#narration').val("");
 
 
@@ -1083,14 +1084,14 @@
 
                 // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
                 if (modify == 1) {
-                    var row = ` <tr>
+                    var row = ` <tr  onclick='editRow(this)' >
             <td hidden><input type="hidden" name="DrCrID" value="`+ drcrid + `" /></td>
             <td><input readonly class='form-control'  value='Credit' /></td>
              <td hidden><input type="hidden" name="CurrencyID" value="`+ currid + `" /></td>
             <td hidden><input type="hidden" name="AccountID" value="`+ accountID + `" /></td>
 
-            <td><input readonly class='form-control'  value="`+ accountname + `" /></td>
-            <td><input readonly class='form-control'    value="`+ currname + `" /></td>
+            <td><input readonly class='form-control'  name="accountname" value="`+ accountname + `" /></td>
+            <td><input readonly class='form-control'   name="currname"  value="`+ currname + `" /></td>
             <td><input readonly class='form-control text-right' name="FcRate"  value="`+ currate + `" /></td>
 
             <td><input type="hidden" readonly  class='form-control' value="`+ debitvalue + `" name="DebitAmount" /></td>
@@ -1109,14 +1110,14 @@
                     $('#body').append(row);
                 }
                 else {
-                    var row = ` <tr>
+                    var row = ` <tr  onclick='editRow(this)' >
             <td hidden><input type="hidden" name="DrCrID" value="`+ drcrid + `" /></td>
             <td><input readonly class='form-control'  value='Credit' /></td>
            <td hidden><input type="hidden" name="CurrencyID" value="`+ currid + `" /></td>
             <td hidden><input type="hidden" name="AccountID" value="`+ accountID + `" /></td>
 
-            <td><input readonly class='form-control'  value="`+ accountname + `" /></td>
-            <td><input readonly class='form-control'  value="`+ currname + `" /></td>
+            <td><input readonly class='form-control' name="accountname" value="`+ accountname + `" /></td>
+            <td><input readonly class='form-control' name="currname" value="`+ currname + `" /></td>
             <td><input readonly class='form-control text-right'  name="FcRate"   value="`+ currate + `" /></td>
 
             <td><input type="hidden" readonly  class='form-control' value="`+ debitvalue + `" name="DebitAmount" /></td>
@@ -1190,6 +1191,7 @@
                 $('#DrCrID ').text();
                 $('#accountID ').text();
                 $('#thdebit').html("Debit");
+                $('#DrCrID').val("");
                 $('#thcredit').html("Credit");
                 $('#debitID').attr("placeholder", "enter amount");
                 $('#creditID').attr("placeholder", "enter amount");
@@ -1215,6 +1217,72 @@
 
     };
 
+
+    function editRow(row) {
+        debugger;
+        $('.highlighted').removeClass('highlighted').removeAttr('data-editable');
+        var drcrid = $(row).find("input[name='DrCrID']").val();
+        var currencyid = $(row).find("input[name='CurrencyID']").val();
+        var accountid = $(row).find("input[name='AccountID']").val();
+        var accountname = $(row).find("input[name='accountname']").val();
+        /*var currname = $(row).find("input[name='currname']").val();*/
+        var currate = $(row).find("input[name='FcRate']").val();
+        var debitamount = $(row).find("input[name='DebitAmount']").val();
+        var creditamount = $(row).find("input[name='CreditAmount']").val();
+        var narration = $(row).find("input[name='ShortNarration']").val();
+
+        $('#select2-accountID-container').text(accountname);
+        $('#DrCrID').val(drcrid);
+        $('#accountID').val(accountid);
+        $('#currencyid').val(currencyid);
+        $('#currate').val(currate);
+        $('#debitID').val(debitamount);
+        $('#creditID').val(creditamount);
+        $('#narration').val(narration);
+        $('#btnadd').text('Update');
+        var drcrval = $('#DrCrID').val();
+        if (drcrval == 1) {
+            $('#debitID').prop("disabled", false);
+            $('#creditID').prop("disabled", true);
+        } else{
+            $('#creditID').prop("disabled", false);
+            $('#debitID').prop("disabled", true);
+        }
+
+        $(row).attr('data-editable', 'true');
+        $(row).addClass('highlighted');
+    }
+
+    function updateRow() {
+        debugger;
+        var drcrid = $('#DrCrID option:selected').val();
+        var drcrname = $('#DrCrID option:selected').text();
+        var accountID = $('#accountID option:selected').val();
+        var modify = parseInt($('#modify').val());
+        var currid = $('#currencyid option:selected').val();
+        var currname = $('#currencyid option:selected').text();
+        var currate = $('#currate ').val();
+        if (drcrid == 0 && accountID == "" && drcrname == "") {
+            alert("Please Fill Voucher Details First");
+            $('#DrCrID').focus();
+        } else {
+            $('.highlighted').remove();
+            btnadd();}
+        $('#btnadd').text('Add');
+        $('.highlighted').removeClass('highlighted').removeAttr('data-editable');
+
+    }
+
+    function addOrUpdateRow() {
+        debugger;
+        var btnLabel = $('#btnadd').text();
+
+        if (btnLabel === "Add") {
+            btnadd();
+        } else if (btnLabel === "Update") {
+            updateRow();
+        }
+    }
 
 
         $('#btnexchange').click(function () {

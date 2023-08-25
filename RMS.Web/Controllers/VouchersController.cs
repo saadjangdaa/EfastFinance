@@ -172,16 +172,23 @@ namespace RMS.Web.Controllers
             }
             else if (jvamsterfind.VoucherTypeID == 11)
             {
-                var cashinhand = db.AccGroup.Where(m => m.AccgroupID == 1038).FirstOrDefault();
-                var bankacc = db.AccGroup.Where(m => m.AccgroupID == 23).FirstOrDefault();
-                ViewBag.currency = new SelectList(db.Currency, "CurrencyID", "CurrencyShortName");
+                try
+                {
+                    var cashinhand = db.AccGroup.Where(m => m.AccgroupID == 1072).FirstOrDefault();
+                    var bankacc = db.AccGroup.Where(m => m.AccgroupID == 1073).FirstOrDefault();
+                    ViewBag.currency = new SelectList(db.Currency, "CurrencyID", "CurrencyShortName");
 
 
-                List<Account> cashacclist = db.Account.Where(a => a.Accgroupid == cashinhand.AccgroupID).ToList();
-                List<Account> bankacclist = db.Account.Where(a => a.Accgroupid == bankacc.AccgroupID).ToList();
+                    List<Account> cashacclist = db.Account.Where(a => a.Accgroupid == cashinhand.AccgroupID).ToList();
+                    List<Account> bankacclist = db.Account.Where(a => a.Accgroupid == bankacc.AccgroupID).ToList();
 
-                cashacclist.AddRange(bankacclist);
-                ViewBag.paymentmode = new SelectList(cashacclist, "AccountID", "AccountName");
+                    cashacclist.AddRange(bankacclist);
+                    ViewBag.paymentmode = new SelectList(cashacclist, "AccountID", "AccountName");
+                }
+                catch(Exception ex)
+                {
+
+                }
             }
             //ViewBag.currency = new SelectList(db.Currency, "CurrencyID", "CurrencyName");
             ViewBag.DrCrID = new SelectList(db.DrCr, "DrCrID", "DrCrShortName");

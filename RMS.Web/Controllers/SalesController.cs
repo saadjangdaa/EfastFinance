@@ -126,7 +126,7 @@ namespace RMS.Web.Controllers
         {
             VoucherMasterViewModel sales = new VoucherMasterViewModel();
 
-             sales.Vouchermasterlist = db.VoucherMaster.Where(m => m.VoucherTypeID == 1 && m.Partyid_Accountid != 1060).ToList();
+            sales.Vouchermasterlist = db.VoucherMaster.Where(m => m.VoucherTypeID == 1 && m.Partyid_Accountid != 1060).OrderByDescending(o => o.VoucherNum_BillNum).ToList();
             sales.vouchertypeid = 1;
             return View(sales);
         }
@@ -287,6 +287,7 @@ namespace RMS.Web.Controllers
                 }
                 VoucherMasterViewModel masterview = new VoucherMasterViewModel
                 {
+
                     VoucherNumber = (int)vouchermaster.vouchermasterid,
                     VoucherCreateDate = vouchermaster.VoucherCreateDate,
                     Partyid = vouchermaster.Partyid_Accountid,
@@ -301,16 +302,7 @@ namespace RMS.Web.Controllers
                     BillSundrychildlist = billsundrychild,
                     LocationID= vouchermaster.LocationID
 
-
                 };
-
-
-
-
-
-
-
-
 
                 return View("~/Views/Sales/SPVoucher.cshtml", masterview);
             }
@@ -323,7 +315,6 @@ namespace RMS.Web.Controllers
    
         [HttpPost]
         public ActionResult SaveSVoucher(VoucherMasterViewModel vouchermaster)
-
         {
             try { 
             if ( vouchermaster.modify == 0)

@@ -244,6 +244,7 @@
     <Property Name="IsActive" Type="Boolean" />
     <Property Name="CreationDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="UsersMenu" Relationship="Self.FK_UsersMenu_MenuItems" FromRole="MenuItems" ToRole="UsersMenu" />
+    <Property Name="Sort" Type="Int32" />
   </EntityType>
   <EntityType Name="Purchase">
     <Key>
