@@ -265,6 +265,7 @@ warning 6002: The table/view 'MVCDBLive.dbo.Itemsnew' does not have a primary ke
           <Property Name="IsParent" Type="bit" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="CreationDate" Type="datetime" />
+          <Property Name="Sort" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MVCDBLive.dbo.Preferences' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1232,6 +1233,7 @@ warning 6002: The table/view 'MVCDBLive.dbo.treetable' does not have a primary k
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="CreationDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="UsersMenu" Relationship="Self.FK_UsersMenu_MenuItems" FromRole="MenuItems" ToRole="UsersMenu" />
+          <Property Name="Sort" Type="Int32" />
         </EntityType>
         <EntityType Name="Purchase">
           <Key>
@@ -2180,6 +2182,7 @@ warning 6002: The table/view 'MVCDBLive.dbo.treetable' does not have a primary k
           <EntitySetMapping Name="MenuItems">
             <EntityTypeMapping TypeName="MVCDBLiveModel.MenuItems">
               <MappingFragment StoreEntitySet="MenuItems">
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="MenuName" ColumnName="MenuName" />
                 <ScalarProperty Name="Url" ColumnName="Url" />

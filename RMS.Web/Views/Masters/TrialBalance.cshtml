@@ -13,37 +13,39 @@
 {
     <div class="card shadow mb-4">
         <div class="card-header py-3" style="background-color:#5a5c69">
-            <h1 class="m-0 font-weight-bold  text-center" style="color:white;"> TrialBalance</h1>
+            
+            <div class="row">
+                    <h3 class="m-0 font-weight-bold mx-1" style="color: white;">Trial Balance</h3>
+               
+            </div>
         </div>
         <div class="card-body">
             <div class="">
                 @using (Ajax.BeginForm("TrialBalance", "Masters", new AjaxOptions { HttpMethod = "POST", OnBegin = "showloader()", OnComplete = "hideloader()", OnSuccess = "hideloader()" }, new { @Id = "reportform" }))
                 {
 
-                    <form id="reportform">
-                        <label class="col-md-2">To Date</label>
-                        <div class="col-md-4">
-                            <input required name="enddate" type="date" class="form-control" />
+                <form id="reportform">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row my-3">
+                                    <label class="col-2 mt-2 d-flex justify-content-end">To Date</label>
+                                    <div class="col-8">
+                                        <input required name="enddate" type="date" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-2"></div>
+                                    <div class="col-4">
+                                        <button type="submit" class="btn btn-success btn-block">Show</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col"></div>
                         </div>
-
-                        @*<label class="col-md-2">Display Type</label>
-                            <div class="col-md-4">
-                                <select id="ddltype" class="form-control">
-                                    <option value="0">---Select Display Type---</option>
-                                    <option value="1"> Group Wise</option>
-                                    <option value="2">Hierchal</option>
-                                </select>
-                            </div>*@
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <div class="">
-
-                            <button type="submit" class="btn btn-success btn-block">Show</button>
-
-                        </div>
-                    </form>
+                       
+                    </div>
+                </form>
                 }
 
             </div>
@@ -56,16 +58,18 @@
 
         <div class="card shadow mb-4">
             <div class="card-header py-3" style="background-color:#5a5c69">
-                <h4 class="m-0 font-weight-bold  text-center" style="color:white;"> </h4>
-
-                <button type="button" onclick="printJS({
-            printable: 'printtable',
-            // properties: ['name', 'email', 'phone', 'hello'],
-            type: 'html',
-            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
-            gridStyle: 'border: 2px solid #3971A5;'})">
-                    Print Report
-                </button>
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button type="button" id="btnSubmit" class="btn btn-success " onclick="printJS({
+                            printable: 'printtable',
+                            // properties: ['name', 'email', 'phone', 'hello'],
+                            type: 'html',
+                            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
+                            gridStyle: 'border: 2px solid #3971A5;'})">
+                            <i class="glyphicon glyphicon-print"></i>Print Report
+                        </button>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <div class="container" style="box-shadow: 5px 5px 2px 2px grey;min-height: 100vh;">
@@ -268,7 +272,7 @@ else if (Model.reporttypeid == 3)
             <h1 class="m-0 font-weight-bold  text-center" style="color:white;"> Payable Report</h1>
         </div>
         <div class="card-body">
-            <div class="">
+            <div class="my-3">
                 @using (Ajax.BeginForm("PayablesReport", "Masters", new AjaxOptions { HttpMethod = "POST", OnBegin = "showloader()", OnComplete = "hideloader()", OnSuccess = "hideloader()" }, new { @Id = "reportform" }))
                 {
 
@@ -282,12 +286,10 @@ else if (Model.reporttypeid == 3)
                         <div class="col-md-4">
                             <input required name="enddate" type="date" class="form-control" />
                         </div>
-
                         <br />
                         <br />
                         <br />
-                        <br />
-                        <div class="">
+                        <div class="col-md-offset-2 col-4">
 
                             <button type="submit" class="btn btn-success btn-block">Show</button>
 
@@ -306,15 +308,17 @@ else if (Model.reporttypeid == 3)
     {
         <div class="card shadow mb-4">
             <div class="card-header py-3" style="background-color:#5a5c69">
-                <h4 class="m-0 font-weight-bold  text-center" style="color:white;"> </h4>
-                <button type="button" onclick="printJS({
-            printable: 'printtable',
-            // properties: ['name', 'email', 'phone', 'hello'],
-            type: 'html',
-            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
-            gridStyle: 'border: 2px solid #3971A5;'})">
-                    Print Report
-                </button>
+                <div class="row">                   
+                    <div class="col-12 d-flex justify-content-end">
+                        <button type="button" id="btnSubmit" class="btn btn-success " onclick="printJS({
+                            printable: 'printtable',
+                            type: 'html',
+                            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
+                            gridStyle: 'border: 2px solid #3971A5;'})">
+                            <i class="glyphicon glyphicon-print"></i>Print Report
+                        </button>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <div class="container" style="box-shadow: 5px 5px 2px 2px grey;min-height: 100vh;">
@@ -495,7 +499,7 @@ else if (Model.reporttypeid == 4)
                         <br />
                         <br />
                         <br />
-                        <div class="">
+                        <div class="col-md-offset-2 col-4">
 
                             <button type="submit" class="btn btn-success btn-block">Show</button>
 
@@ -514,15 +518,19 @@ else if (Model.reporttypeid == 4)
     {
         <div class="card shadow mb-4">
             <div class="card-header py-3" style="background-color:#5a5c69">
-                <h4 class="m-0 font-weight-bold  text-center" style="color:white;"> </h4>
-                <button type="button" onclick="printJS({
-            printable: 'printtable',
-            // properties: ['name', 'email', 'phone', 'hello'],
-            type: 'html',
-            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
-            gridStyle: 'border: 2px solid #3971A5;'})">
-                    Print Report
-                </button>
+                 <div class="row">                   
+                    <div class="col-12 d-flex justify-content-end">
+                        <button type="button" id="btnSubmit" class="btn btn-success " onclick="printJS({
+                            printable: 'printtable',
+                            // properties: ['name', 'email', 'phone', 'hello'],
+                            type: 'html',
+                            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
+                            gridStyle: 'border: 2px solid #3971A5;'})">
+                            <i class="glyphicon glyphicon-print"></i>Print Report
+                        </button>
+                    </div>
+                </div>
+                
             </div>
             <div class="card-body">
                 <div class="container" style="box-shadow: 5px 5px 2px 2px grey;min-height: 100vh;">
@@ -678,7 +686,7 @@ else if (Model.reporttypeid == 5)
 {
     <div class="card shadow mb-4">
         <div class="card-header py-3" style="background-color:#5a5c69">
-            <h1 class="m-0 font-weight-bold  text-center" style="color:white;">Combined TrialBalance</h1>
+            <h1 class="m-0 font-weight-bold  text-center" style="color:white;">Combined Trial Balance</h1>
         </div>
         <div class="card-body">
             <div class="">
@@ -703,7 +711,7 @@ else if (Model.reporttypeid == 5)
                         <br />
                         <br />
                         <br />
-                        <div class="">
+                        <div class="col-md-offset-2 col-4">
 
                             <button type="submit" class="btn btn-success btn-block">Show</button>
 
@@ -721,16 +729,18 @@ else if (Model.reporttypeid == 5)
 
         <div class="card shadow mb-4">
             <div class="card-header py-3" style="background-color:#5a5c69">
-                <h4 class="m-0 font-weight-bold  text-center" style="color:white;"> </h4>
-
-                <button type="button" onclick="printJS({
-            printable: 'printtable',
-            // properties: ['name', 'email', 'phone', 'hello'],
-            type: 'html',
-            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
-            gridStyle: 'border: 2px solid #3971A5;'})">
-                    Print Report
-                </button>
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button type="button" id="btnSubmit" class="btn btn-success " onclick="printJS({
+                            printable: 'printtable',
+                            // properties: ['name', 'email', 'phone', 'hello'],
+                            type: 'html',
+                            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
+                            gridStyle: 'border: 2px solid #3971A5;'})">
+                            <i class="glyphicon glyphicon-print"></i>Print Report
+                        </button>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <div class="container" style="box-shadow: 5px 5px 2px 2px grey;min-height: 100vh;">

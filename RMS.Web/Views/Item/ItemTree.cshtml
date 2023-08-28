@@ -16,11 +16,26 @@
 
 
 
-    <button style="width:100px;" type="button" class="btn btn-success" id="expander">expand</button>
-    <button style="width:100px;" type="button" class="btn btn-success" id="collapser">collapse</button>
+    @*<button style="width:100px;" type="button" class="btn btn-success" id="expander">expand</button>
+    <button style="width:100px;" type="button" class="btn btn-success" id="collapser">collapse</button>*@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h1 class="m-0 font-weight-bold  text-center" style="color:black;"> Chart Of Items</h1>
+            <div class="row">
+                <div class="col-10">
+                    <h1 class="m-0 font-weight-bold" style="color: black;">Chart Of Items</h1>
+                </div>
+                <div class="col-1 d-flex justify-content-end">
+                    <button type="button" class="btn btn-success " id="expander">
+                        <i class="glyphicon glyphicon-expand"></i> Expand
+                    </button>
+                </div>
+                <div class="col-1 d-flex justify-content-end">
+                    <button type="button" class="btn btn-success " id="collapser">
+                        <i class="glyphicon glyphicon-collapse-up"></i> Collapse
+                    </button>
+                </div>
+            </div>
+            @*<h1 class="m-0 font-weight-bold  text-center" style="color:black;"> Chart Of Items</h1>*@
         </div>
         <div class="card-body">
             <div class="table-responsive">

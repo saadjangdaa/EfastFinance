@@ -27,6 +27,7 @@ namespace RMS.Web.Controllers
         Ptofitlossviewmodel proftlossmodel = new Ptofitlossviewmodel();
         AccGroupTreeView Tree = new AccGroupTreeView();
 
+       
         // GET: Masters
         //------------------Account Groups------------------//
         #region AccountGroup
@@ -2623,7 +2624,6 @@ namespace RMS.Web.Controllers
             return View();
 
         }
-
         public ActionResult ShowAccountGrpTree2(AccGroupTreeView modal)
         {
             modal.parent = db.AccountMainHead.Select(w => new AccGroupTreeView

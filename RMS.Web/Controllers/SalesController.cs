@@ -1,4 +1,5 @@
-﻿using RMS.Web.Models;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using RMS.Web.Models;
 using RMS.Web.Models.ViewModels;
 using RMS.Web.Services;
 using System;
@@ -299,18 +300,11 @@ namespace RMS.Web.Controllers
                     modify = 1,
                     vouchertypeid = vouchermaster.VoucherTypeID,
                     BillSundrychildlist = billsundrychild,
-                    LocationID= vouchermaster.LocationID
+                    LocationID= vouchermaster.LocationID,
+                    VoucherMasterID = vouchermaster.vouchermasterid
 
 
                 };
-
-
-
-
-
-
-
-
 
                 return View("~/Views/Sales/SPVoucher.cshtml", masterview);
             }
@@ -319,8 +313,72 @@ namespace RMS.Web.Controllers
                 return RedirectToAction("Addsalevoucher");
             }
         }
+       public ActionResult PrintSaveVoucher(int? MasterID)
+        {
+            var Units = db.Units.ToList();
+            var items = db.Items.ToList();
+            VoucherChildViewModel model = new VoucherChildViewModel();
+            model.VoucherChildList = db.VoucherChild.Where(x => x.VoucherMasterID == MasterID && x.VoucherTypeID == 1).Select(w => new VoucherChildViewModel
+            {
+                ItemID = w.ItemID,
+                Quantity = w.Quantity,
+                Unitid = w.Unitid,
+                ItemPrice = w.ItemPrice,
+                ItemName = db.Items.Where(i => i.ItemID == w.ItemID).Select(q => q.ItemName).FirstOrDefault(),
+                UnitName = db.Units.Where(u => u.UnitID == w.Unitid).Select(q => q.UnitName).FirstOrDefault(),
+                TotalAmount = w.TotalAmount
+            }).ToList();
+            model.VoucherMasterID = MasterID;
+            model.VoucherMasterList = db.VoucherMaster.Where(w => w.vouchermasterid == MasterID).Select(s => new VoucherMasterViewModel
+            {
+                Partyid = s.Partyid_Accountid,
+                Narration = s.Narration,
+                VoucherNumber = s.VoucherNum_BillNum,
+                VoucherCreateDate = s.VoucherCreateDate,
+                PartyName = db.Account.Where(i => i.AccountID == s.Partyid_Accountid).Select(q => q.AccountName).FirstOrDefault(),
+            }).FirstOrDefault();
+            return View(model);
+        }
+        public ActionResult ReportSaleVoucher(int? MasterID)
+        {
+            ReportDocument report = new ReportDocument();
+            report.Load(Server.MapPath("~/Reports/SaleVoucher.rpt"));
+            var ReportData = db.Database.SqlQuery<VoucherMaster>("Sp_Salevoucher").ToList();
+            
+            report.SetDataSource(ReportData);
 
-   
+            report.SetParameterValue("VoucherMasterID", MasterID);
+
+            ViewBag.Report = report;
+            return View();
+        }
+        //public ActionResult _PrintSaveVoucher2(int? MasterID)
+        //{
+        //    var Units = db.Units.ToList();
+        //    var items = db.Items.ToList();
+        //    VoucherChildViewModel model = new VoucherChildViewModel();
+        //    model.VoucherChildList = db.VoucherChild.Where(x => x.VoucherMasterID == MasterID && x.VoucherTypeID == 1).Select(w => new VoucherChildViewModel
+        //    {
+        //        ItemID = w.ItemID,
+        //        Quantity = w.Quantity,
+        //        Unitid = w.Unitid,
+        //        ItemPrice = w.ItemPrice,
+        //        ItemName = db.Items.Where(i => i.ItemID == w.ItemID).Select(q => q.ItemName).FirstOrDefault(),
+        //        UnitName = db.Units.Where(u => u.UnitID == w.Unitid).Select(q => q.UnitName).FirstOrDefault()
+        //    }).ToList();
+        //    model.VoucherMasterID = MasterID;
+        //    model.VoucherMasterList = db.VoucherMaster.Where(w => w.vouchermasterid == MasterID).Select(s => new VoucherMasterViewModel
+        //    {
+        //        Partyid = s.Partyid_Accountid,
+        //        Narration = s.Narration,
+        //        VoucherNumber = s.VoucherNum_BillNum,
+        //        VoucherCreateDate = s.VoucherCreateDate,
+        //        PartyName = db.Account.Where(i => i.Accgroupid == s.Partyid_Accountid).Select(q => q.AccountName).FirstOrDefault(),
+        //    }).FirstOrDefault();
+
+        //    return PartialView("_PrintSaveVoucher2", model);
+        //}
+
         [HttpPost]
         public ActionResult SaveSVoucher(VoucherMasterViewModel vouchermaster)
 

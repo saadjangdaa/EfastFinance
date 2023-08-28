@@ -792,7 +792,7 @@ function enableEnter(event) {
             $('#txbillsundry').val();
         });
 
-   function btnadd() {
+    function btnadd() {
 
         var itemid = $('#itemname option:selected').val();
        var itemname = $('#itemname option:selected').text();
@@ -831,37 +831,43 @@ function enableEnter(event) {
             // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
 
             if (modifychild == 1) {
-                var row = ` <tr>
-            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
-            <td><input readonly class='form-control'   value="`+ itemname + `" /></td>
-            <td><input readonly class='form-control'  value="`+ quantity + `" name="Quantity" /></td>
-            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
-            <td><input readonly class='form-control'  value="`+ Unittext + `"  /></td>
-            <td><input readonly type='number'  class='form-control' value="`+ unitprice + `" name="ItemPrice" /></td>
-            <td><input readonly class='form-control' value="`+ total + `" name="TotalAmount" id='total' /></td>
-            <td>`+ removebtn + `</td>
-            <td hidden>` + total + `</td>
-          <td hidden>`+ rowid + `</td>
-           <td hidden><input type="hidden" value="0" name="newchild2" id="newchild2" /></td>
-            </tr>`;
-            }
-            else if(modifychild == 0) {
-                var row = ` <tr>
-            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
-            <td><input readonly class='form-control'   value="`+ itemname + `" /></td>
-            <td><input readonly class='form-control'  value="`+ quantity + `" name="Quantity" /></td>
-            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
-            <td><input readonly class='form-control'  value="`+ Unittext + `"  /></td>
-            <td><input type='number' readonly  class='form-control' value="`+ unitprice + `" name="ItemPrice" /></td>
-            <td><input readonly class='form-control' value="`+ total + `" name="TotalAmount" id='total' /></td>
-            <td>`+ removebtn + `</td>
-            <td hidden>` + total + `</td>
-          <td hidden>`+ rowid + `</td>
+                var row = ` <tr id='tr' onclick='editRow(this)' >
+                            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
+                            <td><input readonly class='form-control' name="itemname"   value="`+ itemname + `" /></td>
+                            <td><input   readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
+                            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
+                            <td><input readonly class='form-control' name="UnitName" value="`+ Unittext + `"  /></td>
+                            <td><input readonly  class='form-control text-right' type='number' value="`+ unitprice + `" name="ItemPrice" /></td>
+                            <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
+                            <td>`+ removebtn + `</td>
+                            <td hidden>` + total + `</td>
+                            <td hidden>`+ rowid + `</td>
+                            <td hidden><input type="hidden" value="0" name="newchild2" id="newchild2" /></td>
+                            </tr>`;
 
-            </tr>`;                    
+                $('#body').append(row);
+
+            }
+            else if (modifychild == 0) {
+                var row = ` <tr id='tr' onclick='editRow(this)' >
+                            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
+                            <td><input readonly class='form-control' name="itemname"  value="`+ itemname + `" /></td>
+                            <td><input readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
+                            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
+                            <td><input readonly class='form-control' name="UnitName"  value="`+ Unittext + `"  /></td>
+                            <td><input readonly  class='form-control text-right' type='number' value="`+ unitprice + `" name="ItemPrice" /></td>
+                            <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
+                            <td>`+ removebtn + `</td>
+                            <td hidden>` + total + `</td>
+                            <td hidden>`+ rowid + `</td>
+                            </tr>`;
+
+
+                //$('table tbody').append(row);
+                $('#itembody').append(row);
             }
 
-            $('#itembody').append(row);
+            //$('#itembody').append(row);
 
 
 
@@ -904,6 +910,74 @@ function enableEnter(event) {
         }
     };
 
+    function editRow(row) {
+        debugger;
+        $('.highlighted').removeClass('highlighted').removeAttr('data-editable');
+
+        var itemid = $(row).find("input[name='ItemID']").val();
+        var itemname = $(row).find("input[name='itemname']").val();
+        var quantity = $(row).find("input[name='Quantity']").val();
+        var unitid = $(row).find("input[name='Unitid']").val();
+        var unitname = $(row).find("input[name='UnitName']").val();
+        var itemprice = $(row).find("input[name='ItemPrice']").val();
+        var totalamount = $(row).find("input[name='TotalAmount']").val();
+
+        $('#select2-itemname-container').text(itemname);
+
+        $('#itemname').val(itemid);
+        $('#Quantity').val(quantity);
+        $('#unitname').val(unitid);
+        $('#ItemPrice').val(itemprice);
+        $('#txttotal').val(totalamount);
+        $('#btnadd').text('Update');
+
+        $(row).attr('data-editable', 'true');
+        $(row).addClass('highlighted');
+    }
+
+    function updateRow() {
+
+        var itemid = $('#itemname option:selected').val();
+        var itemname = $('#itemname option:selected').text();
+        var unitprice = parseFloat($('#ItemPrice').val());
+        var quantity = $('#Quantity').val();
+        var Unitid = $('#unitname option:selected').val();
+        var Unittext = $('#unitname option:selected').text();
+        //var discount = $('#txtdiscount').val();
+        var modifychild = parseInt($('#modify').val());
+        if (itemid == "" || itemname == "" || unitprice == "" || quantity == 0 || Unitid == 0) {
+            alert("Please Fill Item Details");
+        } else {
+            $('.highlighted').remove();
+            btnadd()
+        }
+        resetForm();
+        $('#btnadd').text('Add');
+        $('.highlighted').removeClass('highlighted').removeAttr('data-editable');
+
+    }
+
+    function addOrUpdateRow() {
+        debugger;
+        var btnLabel = $('#btnadd').text();
+
+        if (btnLabel === "Add") {
+            btnadd();
+        } else if (btnLabel === "Update") {
+            updateRow();
+        }
+    }
+
+    function resetForm() {
+
+        $('#ItemID').text();
+        $('#select2-itemname-container').text("---Select Item---");
+        $('#Quantity').val('');
+        $('#unitname').val('');
+        $('#ItemPrice').val('');
+        $('#txttotal').val('');
+
+    }
 
     function removee() {
 

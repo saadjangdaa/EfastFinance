@@ -14,67 +14,68 @@
             <div class="">
                 @using (Ajax.BeginForm("SalesRegister", "Masters", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "report", OnBegin = "showloader()", OnComplete = "hideloader()", OnSuccess = "hideloader()" }, new { @Id = "reportform" }))
                 {
-                    <form id="reportform">
+                <form id="reportform">
 
 
 
-                        <lablel class="col-md-2" style="color:black">Account Name</lablel>
-                        <div class="col-md-4">
-                            @Html.DropDownList("AccountID", (IEnumerable<SelectListItem>)ViewBag.accounts, "---Select AccountName---", htmlAttributes: new { @required = true, @class = "form-control ", @Id = "Partyid_Accountid" })
-                        </div>
-                        <label class="col-md-2">Item List</label>
-                        <div class="col-md-4">
-                            @Html.DropDownList("ItemID", (IEnumerable<SelectListItem>)ViewBag.ItemLists, "---Select Items---", htmlAttributes: new { @required = true, @class = " form-control ", @Id = "txtItems" })
+                    <lablel class="col-md-2" style="color:black">Account Name</lablel>
+                    <div class="col-md-4">
+                        @Html.DropDownList("AccountID", (IEnumerable<SelectListItem>)ViewBag.accounts, "---Select AccountName---", htmlAttributes: new { @required = true, @class = "form-control ", @Id = "Partyid_Accountid" })
+                    </div>
+                    <label class="col-md-2">Item List</label>
+                    <div class="col-md-4">
+                        @Html.DropDownList("ItemID", (IEnumerable<SelectListItem>)ViewBag.ItemLists, "---Select Items---", htmlAttributes: new { @required = true, @class = " form-control ", @Id = "txtItems" })
 
-                        </div>
-                        <br />
-                        <br />
-
-
-
-                        <label class="col-md-2">From Date</label>
-                        <div class="col-md-4">
-                            <input type="date" required class="form-control" id="startdate" name="startdate" />
-
-                        </div>
-
-                        <label class="col-md-2">To Date</label>
-                        <div class="col-md-4">
-                            <input required class="form-control" id="enddate" name="enddate" type="date" />
+                    </div>
+                    <br />
+                    <br />
 
 
 
-                        </div>
-                        <br />
-                        <br />
-                        <label class="col-md-2">Location</label>
-                        <div class="col-md-4">
-                            @Html.DropDownList("LocationID", (IEnumerable<SelectListItem>)ViewBag.MaterialCentres, "---Select Location---", htmlAttributes: new { @required = true, @class = " form-control ", @Id = "LocationID" })
+                    <label class="col-md-2">From Date</label>
+                    <div class="col-md-4">
+                        <input type="date" required class="form-control" id="startdate" name="startdate" />
+
+                    </div>
+
+                    <label class="col-md-2">To Date</label>
+                    <div class="col-md-4">
+                        <input required class="form-control" id="enddate" name="enddate" type="date" />
 
 
-                        </div>
-                        <label class="col-md-2">Voucher Type</label>
-                        <div class="col-md-4">
-                            @*@Html.DropDownList("vouchertypeid", (IEnumerable<SelectListItem>)ViewBag.VoucherTypes, "---Select VoucherType---", htmlAttributes: new { @class = " form-control ", @Id = "vouchertypeid" })*@
 
-                            <select id="vouchertypeid" name="vouchertypeid" class="form-control">
-                                <option value="1">Sales</option>
-                                <option value="2">Purchase</option>
-                                <option value="9">Sales Return</option>
-                                <option value="10">Purchase Return</option>
-                            </select>
+                    </div>
+                    <br />
+                    <br />
+                    <label class="col-md-2">Location</label>
+                    <div class="col-md-4">
+                        @Html.DropDownList("LocationID", (IEnumerable<SelectListItem>)ViewBag.MaterialCentres, "---Select Location---", htmlAttributes: new { @required = true, @class = " form-control ", @Id = "LocationID" })
 
-                        </div>
-                        <br />
-                        <br />
 
-                        <div class="">
+                    </div>
+                    <label class="col-md-2">Voucher Type</label>
+                    <div class="col-md-4">
+                        @*@Html.DropDownList("vouchertypeid", (IEnumerable<SelectListItem>)ViewBag.VoucherTypes, "---Select VoucherType---", htmlAttributes: new { @class = " form-control ", @Id = "vouchertypeid" })*@
 
-                            <button type="submit" id="btnshow" class="btn btn-success btn-block">Show</button>
+                        <select id="vouchertypeid" name="vouchertypeid" class="form-control">
+                            <option value="1">Sales</option>
+                            <option value="2">Purchase</option>
+                            <option value="9">Sales Return</option>
+                            <option value="10">Purchase Return</option>
+                        </select>
 
-                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
 
-                    </form>
+                    <div class="col-md-offset-2 col-4">
+
+                        <button type="submit" id="btnshow" class="btn btn-success btn-block">Show</button>
+
+                    </div>
+
+                </form>
                 }
 
             </div>
@@ -156,7 +157,7 @@ else
                         <br />
                         <br />
 
-                        <div class="">
+                        <div class="col-md-offset-2 col-4">
 
                             <button type="submit" id="btnshow" class="btn btn-success btn-block">Show</button>
 
