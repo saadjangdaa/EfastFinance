@@ -2626,6 +2626,17 @@ namespace RMS.Web.Controllers
         }
         public ActionResult ShowAccountGrpTree2(AccGroupTreeView modal)
         {
+            AccGroup accg = new AccGroup();
+            AccountMainHead accm = new AccountMainHead();
+            ViewBag.Accundergroup = new SelectList(db.AccGroup, "AccgroupID", "Accgroupname", 0);
+            ViewBag.accundergroup = new SelectList(db.AccGroup, "AccgroupID", "Accgroupname", accg.AccunderprimarygroupName);
+            ViewBag.Accmain = new SelectList(db.AccountMainHead, "MainGroupID", "MainAccGroupName", accm.MainAccGroupName);
+
+            ViewBag.Ledgertype = new SelectList(db.ledgertype, "LegerID", "LedgerName");
+            ViewBag.AccGroup = new SelectList(db.AccGroup, "AccgroupID", "Accgroupname");
+            ViewBag.Currency = new SelectList(db.Currency, "CurrencyID", "CurrencyName");
+            ViewBag.Country = new SelectList(db.Country, "CountryID", "CountryName");
+            ViewBag.accounts = new SelectList(db.Account, "AccountID", "AccountName");
             modal.parent = db.AccountMainHead.Select(w => new AccGroupTreeView
             {
                 MainGroupID=w.MainGroupID,

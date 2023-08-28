@@ -4,7 +4,49 @@
 }
 
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<div class="container-fluid" >
+<div class="container-fluid">
+    <form id="accgroupform">
+        <div class="modal fade" id="AccountGroupModal" tabindex="-1" role="dialog" aria-labelledby="AccountGroupModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="AccountGroupModalLabel"><strong>Add Account Group</strong></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @Html.Partial("accgroupartial")
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btnSave" type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form id="accountform">
+        <div class="modal fade" id="AccountsModal" tabindex="-1" role="dialog" aria-labelledby="AccountsModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="AccountsModalLabel"><strong>Add Account </strong></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @Html.Partial("Accountpartial")
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btnSaveMe" type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h2 class="ml-2"><strong>Account Group Tree</strong></h2>
@@ -12,7 +54,7 @@
                 <div class="panel-body" style="background-color: #5a5c69; color:white; "><strong>Chart Of Accounts</strong></div>
             </div>
         </div>
-        
+
         <div class="card-body">
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -28,15 +70,17 @@
                                 if (Mainitem.MainGroupID != 0)
                                 {
                                     <ul class="tree">
-                                        <li>
+                                        <li id="@Mainitem.MainGroupID">
                                             @Mainitem.MainGroupName
+
                                             @foreach (var item in Model.Child)
                                             {
                                                 if (item.MainGroupID == Mainitem.MainGroupID)
                                                 {
                                                     <ul class="tree">
-                                                        <li >
+                                                        <li>
                                                             @item.Accgroupname
+                                                            <i data-id="@item.AccgroupID" typeof="button" data-target="#AccountGroupModal" data-toggle="modal" class="btnedit glyphicon glyphicon-edit"></i>
                                                             @foreach (var newitem in Model.Child)
                                                             {
                                                                 if (newitem.Accunderprimarygroupid == item.AccgroupID)
@@ -44,13 +88,15 @@
                                                                     <ul class="tree">
                                                                         <li>
                                                                             @newitem.Accgroupname
+                                                                            <i data-id="@newitem.AccgroupID" typeof="button" data-target="#AccountGroupModal" data-toggle="modal" class="btnedit glyphicon glyphicon-edit"></i>
                                                                             @foreach (var newitemchild in Model.ChildChild)
                                                                             {
                                                                                 if (newitemchild.AccgroupID == newitem.AccgroupID)
                                                                                 {
-                                                                                    <ul class="tree">
+                                                                                    <ul class="tree" style="margin-left:30px">
                                                                                         <li>
                                                                                             @newitemchild.AccountName
+                                                                                            <i data-id="@newitemchild.AccountID" typeof="button" data-target="#AccountsModal" data-toggle="modal" class="btnedits glyphicon glyphicon-edit"></i>
                                                                                         </li>
                                                                                     </ul>
                                                                                 }
@@ -229,4 +275,163 @@
 
     $('.tree').treed({ openedClass: 'glyphicon-chevron-right', closedClass: 'glyphicon-chevron-down' });
 
+
+    $('.btnedit').click(function () {
+        var accgid = $(this).attr('data-id');
+        ;
+       $.ajax({
+            type: 'GET',
+           data: { AccgroupID: accgid },
+            url: "@Url.Action("Getaccgroup", "Masters")"
+        }).done(function (data) {
+            $('#AccgroupID').val(data.AccgroupID);
+            $('#Accgroupname').val(data.Accgroupname);
+
+            if (data.Accgroupalias == null) {
+                $('#Accgroupalias').val("no alias");
+            }
+            else {
+                $('#Accgroupalias').val(data.Accgroupalias);
+            }
+
+            if (data.Accunderprimarygroupid != null) {
+                $('#primarygroup').val(2);
+                $('#child2').show();
+                $('#child2L').show();
+                $('#child3').hide();
+                $('#child3L').hide();
+                $('#AccUnderGroup2').val(data.Accunderprimarygroupid);
+            }
+            else {
+                $('#primarygroup').val(1);
+                $('#child2').hide();
+                $('#child2L').hide();
+                $('#child3').show();
+                $('#child3L').show();
+                $('#Accmaingrp').val(data.MainGroupID);
+            }
+            $('#AccountGroupModal').modal('show');
+
+        }).fail(function (jqxhr,textStatus)  {
+
+            alert("Cant get Accgroup details" + textStatus);
+
+        });
+    });
+
+    $('#btnSave').click(function () {
+        var accgid = $(this).attr('data-id');
+        ;
+       var accid = $('#AccgroupID').val();
+       var accgname = $('#Accgroupname').val();
+       var accgalias = $('#Accgroupalias').val();
+        var accundergroup = $('#AccUnderGroup').val();
+        var accunderprimarygroup = $('#AccUnderGroup2 option:selected').text();
+        var accunderprimarygroupid = $('#AccUnderGroup2 option:selected').val()
+        var maingroupid = $('#Accmaingrp option:selected').val()
+            $.ajax({
+                type: 'POST',
+                data: { AccgroupID: accid, Accgroupname: accgname, Accgroupalias: accgalias, Accundergroup: accundergroup, Accunderprimarygroup: accunderprimarygroup, Accprimarygroupid: accunderprimarygroupid, MainGroupId:maingroupid },
+                url: "@Url.Action("SaveAccgroup", "Masters")"
+
+            }).done(function (data) {
+                if (accid == 0) {
+                    alert("account group added successdully");
+                    location.reload();
+                }
+                else {
+                    alert("account group updated successdully");
+                    location.reload();
+                    $('#btnadd').focusin();
+                }
+            }).fail(function (jqxhr, textStatus) {
+
+                alert("Cant add Account Group ");
+            });
+    });
+
+
+    //Acounts()
+
+    $('#btnSaveMe').click(function () {
+        var accgid = $(this).attr('data-id');
+
+        var con = confirm("Are u sure u want to add");
+        if (con == true) {
+
+
+
+        $.ajax({
+            type: 'POST',
+            data: $('#accountform').serialize(),
+            url: "@Url.Action("SaveAccounts", "Masters")"
+
+        }).done(function (data) {
+            if (accgid = 0) {
+                alert("Account Added Successfully")
+
+            }
+            else {
+                alert("Account  Updated Successfully")
+            }
+            location.reload();
+            $('#btnadd').click();
+
+        }).fail(function (jqxhr, textStatus) {
+
+            alert("Cant add Account");
+
+        });
+        }
+
+
+    });
+    $('.btnedits').click(function () {
+        var accgid = $(this).attr('data-id');
+        debugger;
+       $.ajax({
+            type: 'GET',
+           data: { AccgroupID: accgid },
+            url: "@Url.Action("getaccounts", "Masters")"
+        }).done(function (data) {
+            $('#AccountID').val(data.AccountID);
+            $('#AccountName').val(data.AccountName);
+            $('#Alias').val(data.Alias);
+            $('#Print_Name').val(data.Print_Name);
+            $('#email').val(data.email);
+            $('#CurrencyID').val(data.CurrencyID);
+            $('#mobileNum').val(data.mobileNum);
+            $('#CNIC').val(data.CNIC);
+            $('#Address').val(data.Address);
+            $('#Opening_Balance').val(data.Opening_Balance);
+            //$('child3').hide(300);
+            //$('child2').hide(300);
+            //$('child').removeAttr('style');
+
+            //$('child2').show(300);
+            $('#Accgroupid').val(data.Accgroupid);
+
+            if (data.Accgroupid > 0) {
+                $('#child2').show();
+
+            }
+            else {
+                $('#child').hide();
+                $('#child3').hide();
+
+            }
+            $('#LedgerTypeid').val(data.LedgerTypeid);
+            $('#LedgerTypeid').attr('disabled', true);
+
+            $('#CountryID').val(data.CountryID);
+            $('#BeneficiaryName').val(data.BeneficiaryName);
+
+            $('#AccountsModal').modal('show');
+
+        }).fail(function (jqxhr,textStatus)  {
+
+            alert("Cant get Accgroup details");
+
+        });
+    });
 </script>

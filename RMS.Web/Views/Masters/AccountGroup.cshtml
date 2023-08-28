@@ -21,19 +21,19 @@
                             <th style="color:white">Account Group Name</th>
                             <th style="color:white">Acount Parent Group </th>
                             @*<th style="color:white">Acount Group Balance</th>
-                            <th style="color:white">Acount Debit Total</th>
-                            <th style="color:white">Acount Credit Total</th>*@
+                                <th style="color:white">Acount Debit Total</th>
+                                <th style="color:white">Acount Credit Total</th>*@
                             <th style="color:white">Actions</th>
                         </tr>
                     </thead>
-                     <tfoot class="thead-dark">
+                    <tfoot class="thead-dark">
                         <tr>
                             <th style="color:white">Account ID</th>
                             <th style="color:white">Account Group Name</th>
                             <th style="color:white">Acount Parent Group </th>
                             @*<th style="color:white">Acount Group Balance</th>
-                            <th style="color:white">Acount Debit Total</th>
-                            <th style="color:white">Acount Credit Total</th>*@
+                                <th style="color:white">Acount Debit Total</th>
+                                <th style="color:white">Acount Credit Total</th>*@
                             <th style="color:white">Actions</th>
                         </tr>
                     </tfoot>
@@ -42,47 +42,47 @@
                         {
                             foreach (var item in Model)
                             {
-                        <tr>
-                            <td>@item.AccgroupID</td>
-                            <td>@item.Accgroupname</td>
-                            <td>@item.AccunderprimarygroupName</td>
+                                <tr>
+                                    <td>@item.AccgroupID</td>
+                                    <td>@item.Accgroupname</td>
+                                    <td>@item.AccunderprimarygroupName</td>
 
 
-                            @*@if (item.AccUnderGroup == "NULL")
-        {
-            <td>   </td>
-        }
-        else
-        {
-            <td> @item.AccUnderGroup  </td>
+                                    @*@if (item.AccUnderGroup == "NULL")
+                                        {
+                                            <td>   </td>
+                                        }
+                                        else
+                                        {
+                                            <td> @item.AccUnderGroup  </td>
 
-        }
-        @if (item.AccunderprimarygroupName == "NULL")
-        {
-            <td>  </td>
-        }
-        else
-        {
-            <td>
-                @item.AccunderprimarygroupName
-            </td>
+                                        }
+                                        @if (item.AccunderprimarygroupName == "NULL")
+                                        {
+                                            <td>  </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                @item.AccunderprimarygroupName
+                                            </td>
 
-        }*@
+                                        }*@
 
-                            @*<td>@item.Accgroupbalance</td>
-                            <td>@item.DebitAmount</td>
-                            <td>@item.CreditAmount</td>*@
+                                    @*<td>@item.Accgroupbalance</td>
+                                        <td>@item.DebitAmount</td>
+                                        <td>@item.CreditAmount</td>*@
 
-                            <td>
-                                <button class="btn btn-primary btnedit" data-id="@item.AccgroupID" data-target="#exampleModal" data-toggle="modal"><i class="glyphicon glyphicon-edit"></i>Edit</button>
-                                @if (item.Accgroupbalance == 0 && item.DebitAmount == 0 && item.CreditAmount == 0)
-                                {
-                                    <button data-id="@item.AccgroupID" class="btn btn-danger btndelete"><i class="glyphicon glyphicon-remove"></i>Delete</button>
+                                    <td>
+                                        <button class="btn btn-primary btnedit" data-id="@item.AccgroupID" data-target="#exampleModal" data-toggle="modal"><i class="glyphicon glyphicon-edit"></i>Edit</button>
+                                        @if (item.Accgroupbalance == 0 && item.DebitAmount == 0 && item.CreditAmount == 0)
+                                        {
+                                            <button data-id="@item.AccgroupID" class="btn btn-danger btndelete"><i class="glyphicon glyphicon-remove"></i>Delete</button>
 
-                                }
+                                        }
 
-                            </td>
-                        </tr>
+                                    </td>
+                                </tr>
                             }
                         }
                     </tbody>
@@ -157,20 +157,6 @@
         var accunderprimarygroup = $('#AccUnderGroup2 option:selected').text();
         var accunderprimarygroupid = $('#AccUnderGroup2 option:selected').val()
         var maingroupid = $('#Accmaingrp option:selected').val()
-
-
-        //if (accgid == 0) {
-        //    confirm("Are U sure u want to Add");
-
-        //}
-        //else {
-        //    confirm("ok");
-        //    location.reload();
-        //}
-
-
-
-
             $.ajax({
                 type: 'POST',
                 data: { AccgroupID: accid, Accgroupname: accgname, Accgroupalias: accgalias, Accundergroup: accundergroup, Accunderprimarygroup: accunderprimarygroup, Accprimarygroupid: accunderprimarygroupid, MainGroupId:maingroupid },
@@ -180,28 +166,20 @@
                 if (accid == 0) {
                     alert("account group added successdully");
                     location.reload();
-
-
                 }
                 else {
                     alert("account group updated successdully");
                     location.reload();
                     $('#btnadd').focusin();
                 }
-
-
             }).fail(function (jqxhr, textStatus) {
 
                 alert("Cant add Account Group ");
             });
-
-
     });
     $('.btnedit').click(function () {
         var accgid = $(this).attr('data-id');
         debugger;
-
-
        $.ajax({
             type: 'GET',
            data: { AccgroupID: accgid },
@@ -218,7 +196,7 @@
                 $('#Accgroupalias').val(data.Accgroupalias);
             }
             debugger
-            if (data.Accunderprimarygroupid != null) {               
+            if (data.Accunderprimarygroupid != null) {
                 $('#primarygroup').val(2);
                 $('#child2').show();
                 $('#child2L').show();
@@ -243,15 +221,10 @@
             alert("Cant get Accgroup details" + textStatus);
 
         });
-
-
-
     });
 
     $('.btndelete').click(function () {
         var accid = $(this).attr('data-id');
-
-
         var con = confirm("Are u sure u want to delete");
         $(this).parent().parent().remove();
         if (con == true) {
@@ -270,16 +243,10 @@
                 alert("Cant Deleted  Accgroup ");
 
             });
-
-
-
-
         }
         else {
             alert("ok");
         }
-
-
     });
 
     $('#primarygroup').change(function () {
