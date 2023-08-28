@@ -801,6 +801,7 @@ E:\Mustafa\Efastlatest\EfastFinance\RMS.Web\obj\Debug\RMS.Web.csproj.CoreCompile
 E:\Mustafa\Efastlatest\EfastFinance\RMS.Web\obj\Debug\RMS.Web.csproj.CopyComplete
 E:\Mustafa\Efastlatest\EfastFinance\RMS.Web\obj\Debug\RMS.Web.dll
 E:\Mustafa\Efastlatest\EfastFinance\RMS.Web\obj\Debug\RMS.Web.pdb
+E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\obj\Debug\RMS.Web.csproj.CoreCompileInputs.cache
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\RMS.Web.dll.config
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\RMS.Web.dll
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\RMS.Web.pdb
@@ -854,6 +855,8 @@ E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\roslyn\vbc.rsp
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\roslyn\VBCSCompiler.exe
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\roslyn\VBCSCompiler.exe.config
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\Antlr3.Runtime.dll
+E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\CrystalDecisions.CrystalReports.Engine.dll
+E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportSource.dll
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\EntityFramework.dll
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\EntityFramework.SqlServer.dll
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\Microsoft.AspNet.Identity.Core.dll
@@ -880,6 +883,17 @@ E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\System.Web.WebPages.Deploym
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\System.Web.WebPages.dll
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\System.Web.WebPages.Razor.dll
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\WebGrease.dll
+E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.ClientDoc.dll
+E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.ReportDefModel.dll
+E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.CommLayer.dll
+E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.DataSetConversion.dll
+E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.Prompting.dll
+E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.XmlSerialize.dll
+E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.CubeDefModel.dll
+E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.CommonObjectModel.dll
+E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.ObjectFactory.dll
+E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.CommonControls.dll
+E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\stdole.dll
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\System.Web.Helpers.xml
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\System.Web.Mvc.xml
@@ -905,7 +919,6 @@ E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\Microsoft.Owin.Security.Twi
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\bin\Microsoft.Owin.Security.OAuth.xml
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\obj\Debug\RMS.Web.csproj.AssemblyReference.cache
-E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\obj\Debug\RMS.Web.csproj.CoreCompileInputs.cache
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\obj\Debug\RMS.Web.csproj.CopyComplete
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\obj\Debug\RMS.Web.dll
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\obj\Debug\RMS.Web.pdb

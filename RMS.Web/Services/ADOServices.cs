@@ -87,8 +87,6 @@ namespace RMS.Web.Services
             con.Close();
 
             return ds;
-
-
         }
         
         public DataSet GetTrialBHierchal()

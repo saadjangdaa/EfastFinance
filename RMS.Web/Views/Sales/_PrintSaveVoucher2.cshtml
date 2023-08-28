@@ -1,0 +1,101 @@
+﻿@model RMS.Web.Models.ViewModels.VoucherChildViewModel
+
+@{
+    ViewBag.Title = "PrintSaveVoucher";
+}
+
+<h2>Sale Voucher : @Model.VoucherMasterID</h2>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3" style="background-color:#5a5c69">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-end">
+                <button type="button" id="btnSubmit" class="btn btn-success" onclick="printJS({
+                            printable: 'printtable',
+                            type: 'html',
+                            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
+                            gridStyle: 'border: 2px solid #3971A5;'})">
+                    <i class="glyphicon glyphicon-print"></i>Print Report
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container" style="box-shadow: 5px 5px 2px 2px grey;min-height: 100vh;">
+        @Model.VoucherMasterList.PartyName
+            
+            <table id="printtable" style="width: 100%;max-width: 100%;margin-bottom: 1rem;background-color: #fff;border-collapse: collapse; text-align: center">
+                <thead>
+                    <tr>
+                        <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;">ItemID</th>
+                        <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;">Quantity</th>
+                        <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;">Unitid</th>
+                        <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;">ItemPrice</th>
+                        @*<th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;"> Ex Rate</th>
+                            <th style="padding: 0.6px!important;font-size: 14px;text-align: left;vertical-align: bottom;border-bottom: 2px solid black;border-top:2px solid black;">Fc Balance </th>*@
+                    </tr>
+                </thead>
+                <tbody id="printbody">
+                    @{
+                        foreach (var item in Model.VoucherChildList)
+                        {
+                            <tr id="printtr">
+                                <td>@item.ItemName</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.UnitName</td>
+                                <td>@item.ItemPrice</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+                @*<tbody>
+                        <tr>
+                            <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                            <td style="padding: 4px!important;text-align: left;vertical-align: bottom;border: 1px solid black;">Total Dr/Cr</td>
+                            <td id="debittotal" style="padding: 4px!important;text-align: left;vertical-align: bottom;border: 1px solid black;">0.00</td>
+                            <td id="credittotal" style="padding: 4px!important;text-align: left;vertical-align: bottom;border: 1px solid black;">0.00</td>
+                            <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                            <td style="padding: 4px!important;font-size: 11px;text-align: left;vertical-align: bottom;"></td>
+                        </tr>
+
+                    </tbody>*@
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function numberWithCommas(number) {
+        var parts = number.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return parts.join(".");
+    }
+
+    var rtotal = 0;
+    if ($("table > tbody > tr").length > 0) {
+        $("table  tbody  tr").each(function () {
+
+            var ffx = $(this).find('td:eq(2)').html();
+
+            rtotal += parseFloat($(this).find('td:eq(2)').html());
+
+
+
+            $(this).find('td:eq(2)').html(numberWithCommas(ffx));
+        });
+    }
+    $('#debittotal').text(numberWithCommas(rtotal));
+    var credittotal = 0;
+    if ($("table > tbody > tr").length > 0) {
+        $("table  tbody  tr").each(function () {
+            var ffx = $(this).find('td:eq(3)').html();
+            credittotal += Math.abs(parseFloat($(this).find('td:eq(3)').html()));
+            $(this).find('td:eq(3)').html(numberWithCommas(ffx));
+        });
+    }
+
+    $('#credittotal').text(numberWithCommas(credittotal));
+</script>

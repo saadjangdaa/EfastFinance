@@ -20,19 +20,22 @@ namespace RMS.Web.Models.ViewModels
         public double FinalTotal { get; set; }
         public int VoucherType_IDddddd { get; set; }
         public int DrCrType { get; set; }
+        public string PartyName { get; set; }
 
         //----------------VoucherChild------------------//
 
         public Nullable<int> VoucherchildID { get; set; }
         public List<int> ItemID { get; set; }
+        public List<string> Itemname { get; set; }
         public List<int> Quantity { get; set; }
         public List<int> Unitid { get; set; }
+        public List<int> UnitName { get; set; }
         public List<float> ItemPrice { get; set; }
         public List<float> TotalAmount { get; set; }
         //public List<int> VoucherchildTypeID { get; set; }
-        //public int VoucherMasterID { get; set; }
+        public int? VoucherMasterID { get; set; }
 
-        
+
         //---------------- Bill Sundry------------------//
         public List<double> BillSundryAmount { get; set; }
         public List<int> BillSundryID { get; set; }
@@ -47,6 +50,7 @@ namespace RMS.Web.Models.ViewModels
         public virtual Account Accountname { get; set; }
         public virtual BillSundryChild BillSuundrychild4 { get; set; }
 
+        
 
         //--------Prefrences------------------//
         public int modify { get; set; }

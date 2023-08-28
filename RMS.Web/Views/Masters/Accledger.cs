@@ -14,8 +14,8 @@ namespace RMS.Web.Views.Masters {
     using CrystalDecisions.Shared;
     using CrystalDecisions.ReportSource;
     using CrystalDecisions.CrystalReports.Engine;
-    
-    
+
+
     public class Accledger : ReportClass {
         
         public Accledger() {
