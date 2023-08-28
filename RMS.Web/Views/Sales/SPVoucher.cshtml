@@ -1309,7 +1309,6 @@
                 $('.highlighted').remove();
                 btnadd()
             }
-            resetForm();
             $('#btnadd').text('Add');
             $('.highlighted').removeClass('highlighted').removeAttr('data-editable');
 
@@ -1324,17 +1323,6 @@
             } else if (btnLabel === "Update") {
                 updateRow();
             }
-        }
-
-        function resetForm() {
-
-            $('#ItemID').text();
-            $('#select2-itemname-container').text("---Select Item---");
-            $('#Quantity').val('');
-            $('#unitname').val('');
-            $('#ItemPrice').val('');
-            $('#txttotal').val('');
-
         }
 
         function remove() {
@@ -2363,7 +2351,6 @@ function enableEnter(event) {
             } else {
                 $('.highlighted').remove();
                 btnadd();}
-            resetForm();
             $('#btnadd').text('Add');
             $('.highlighted').removeClass('highlighted').removeAttr('data-editable');
 
@@ -2380,16 +2367,6 @@ function enableEnter(event) {
             }
         }
 
-        function resetForm() {
-
-            $('#ItemID').text();
-            $('#select2-itemname-container').text("---Select Item---");
-            $('#Quantity').val('');
-            $('#unitname').val('');
-            $('#ItemPrice').val('');
-            $('#txttotal').val('');
-
-        }
 
 
     function removee() {
