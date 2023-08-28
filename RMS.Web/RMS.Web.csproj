@@ -3422,10 +3422,7 @@
     <Content Include="Views\Shared\SPRegister.cshtml" />
     <Content Include="Views\Masters\Currency.cshtml" />
     <Content Include="Views\Masters\ShowAccountGrpTree2.cshtml" />
-    <Content Include="Views\Sales\_PrintSaveVoucher2.cshtml" />
     <Content Include="Views\Sales\PrintSaveVoucher.cshtml" />
-    <Content Include="Views\Sales\DisplaySaleVoucherRpt.cshtml" />
-    <Content Include="Views\Sales\ReportSaleVoucher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
