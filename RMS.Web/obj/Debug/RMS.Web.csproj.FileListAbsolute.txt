@@ -922,3 +922,19 @@ E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\obj\Debug\RMS.Web.csproj.Assemb
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\obj\Debug\RMS.Web.csproj.CopyComplete
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\obj\Debug\RMS.Web.dll
 E:\Mustafa\WallsoftProjects\EfastFinance\RMS.Web\obj\Debug\RMS.Web.pdb
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.CrystalReports.Engine.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportSource.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.ClientDoc.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.ReportDefModel.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.CommLayer.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.DataSetConversion.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.Prompting.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.XmlSerialize.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.CubeDefModel.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.CommonObjectModel.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.ObjectFactory.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.CommonControls.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\stdole.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.Shared.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.DataDefModel.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.Controllers.dll
