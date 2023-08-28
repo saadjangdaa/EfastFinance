@@ -319,7 +319,7 @@
                                     }
                                     <th><input placeholder="Enter Narration" id="narration" class="form-control" /></th>
 
-                                    <th><button type="button" class="btn btn-success " id="btnadd"><i class="glyphicon glyphicon-plus"></i></button></th>
+                                    <th><button type="button" class="btn btn-success" id="btnadd" onclick="addOrUpdateRow()">Add</button></th>
 
                                 </tr>
                             </thead>
@@ -530,10 +530,10 @@
 {
     <script>
 
-        $('#btnadd').mousedown(function () {
-            debugger;
-            btnadd();
-        });
+        //$('#btnadd').mousedown(function () {
+        //    debugger;
+        //    btnadd();
+        //});
     //$('.js-example-basic-single').select2();
     $('#accountID').select2();
 
@@ -1643,10 +1643,10 @@ else if (Model.vouchertype == 6)
 {
     <script>
 
-        $('#btnadd').mousedown(function () {
-            debugger;
-            btnadd();
-        });
+        //$('#btnadd').mousedown(function () {
+        //    debugger;
+        //    btnadd();
+        //});
     $('#accountID').select2();
 
     $('#accountID').change(function () {
