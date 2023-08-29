@@ -356,53 +356,53 @@
                                         {
 
 
-                                    <tr>
-                                        <td hidden><input type="hidden" name="DrCrID" value="@item.DrCrID" /></td>
+                                            <tr>
+                                                <td hidden><input type="hidden" name="DrCrID" value="@item.DrCrID" /></td>
 
-                                        <td hidden><input type="hidden" value="@item.AccountID" /></td>
-                                        <td><input readonly class='form-control' value="@item.Account.AccountName" /></td>
-                                        <td>
-                                            @Html.DropDownList("CurrencyId", (IEnumerable<SelectListItem>)ViewBag.currency, "--Select Currency---", htmlAttributes: new { @value = item.CurrencyID, @class = " form-control", @Id = "currencyid", @disabled = "true" })
+                                                <td hidden><input type="hidden" name="AccountID" value="@item.AccountID" /></td>
+                                                <td><input readonly class='form-control' name="Accountnameee" value="@item.Account.AccountName" /></td>
+                                                <td>
+                                                    @Html.DropDownList("CurrencyId", (IEnumerable<SelectListItem>)ViewBag.currency, "--Select Currency---", htmlAttributes: new { @value = item.CurrencyID, @class = " form-control", @Id = "currencyid", @disabled = "true" , @name= "CurrencyID" })
 
-                                        </td>
-                                        <td><input readonly class='form-control' value="@item.FcRate" /></td>
+                                                </td>
+                                                <td><input readonly class='form-control'  name="FcRate" value="@item.FcRate" /></td>
 
-                                        @if (Model.vouchertype == 8)
-                                        {
-                                            <td><input readonly class='form-control' value="@item.CreditAmount" /></td>
-                                            <td hidden><input type="hidden" readonly class='form-control' value="@item.DebitAmount" /></td>
-                                        }
-                                        else if (Model.vouchertype == 6)
-                                        {
-                                            <td><input readonly class='form-control' value="@item.DebitAmount" /></td>
-                                            <td hidden><input type="hidden" readonly class='form-control' value="@item.CreditAmount" /></td>
-                                        }
-                                        <td>
-                                            <textarea readonly class='form-control'>@item.ShortNarration</textarea>
-                                        </td>
-                                        <td>
-                                            <button type='button' id='btnremoveDr' class='btnremoveDr btn btn-danger' onclick="removeDr(@rowid)"><i class='glyphicon glyphicon-minus'></i></button>
-                                        </td>
-                                        <td hidden>@item.AccountID</td>
+                                                @if (Model.vouchertype == 8)
+                                                {
+                                                    <td><input readonly class='form-control' name="CreditAmount" value="@item.CreditAmount" /></td>
+                                                    <td hidden><input type="hidden" readonly class='form-control' name="DebitAmount"  value="@item.DebitAmount" /></td>
+                                                }
+                                                else if (Model.vouchertype == 6)
+                                                {
+                                                    <td><input readonly class='form-control' name="DebitAmount" value="@item.DebitAmount" /></td>
+                                                    <td hidden><input type="hidden" readonly class='form-control' name="CreditAmount" value="@item.CreditAmount" /></td>
+                                                }
+                                                <td>
+                                                    <textarea readonly class='form-control' name="ShortNarration" >@item.ShortNarration</textarea>
+                                                </td>
+                                                <td>
+                                                    <button type='button' id='btnremoveDr' class='btnremoveDr btn btn-danger' onclick="removeDr(@rowid)"><i class='glyphicon glyphicon-minus'></i></button>
+                                                </td>
+                                                <td hidden>@item.AccountID</td>
 
-                                        @if (Model.vouchertype == 8)
-                                        {
-                                            <td hidden>@item.CreditAmount</td>
-                                        }
-                                        else
-                                        {
-                                            <td hidden>@item.DebitAmount</td>
+                                                @if (Model.vouchertype == 8)
+                                                {
+                                                    <td hidden>@item.CreditAmount</td>
+                                                }
+                                                else
+                                                {
+                                                    <td hidden>@item.DebitAmount</td>
 
-                                        }
+                                                }
 
-                                        <td hidden><input type="number" value="@item.JVchildID" name="jvchildid2" id="jvchildid2" /></td>
-                                        <td hidden>@rowid</td>
+                                                <td hidden><input type="number" value="@item.JVchildID" name="jvchildid2" id="jvchildid2" /></td>
+                                                <td hidden>@rowid</td>
 
-                                        <td hidden>@item.FcRate</td>
-                                        <td hidden>@item.CurrencyID</td>
-                                        <td hidden>@item.JVchildID</td>
+                                                <td hidden>@item.FcRate</td>
+                                                <td hidden>@item.CurrencyID</td>
+                                                <td hidden>@item.JVchildID</td>
 
-                                    </tr>
+                                            </tr>
                                             rowid = rowid + 1;
 
                                         }
@@ -541,7 +541,7 @@
 
         var accid = $('#accountID option:selected').val();
         debugger;
-     
+
         $.ajax({
 
             type: 'GET',
@@ -1234,13 +1234,13 @@
                 // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";  <td><input readonly class='form-control'  value='Debit' /></td>//// <td><input type="hidden" readonly class='form-control' value="`+ creditvalue + `" name="CreditAmount" /></td>
 
                 if (modifychild == 1) {
-                    var row = ` <tr>
+                    var row = ` <tr onclick='editRow(this)' >
             <td hidden><input type="hidden" name="DrCrID" value="2" /></td>
             <td hidden><input type="hidden" name="CurrencyID" value="`+ currid + `" /></td>
 
             <td hidden><input type="hidden" name="AccountID" value="`+ accountID + `"  /></td>
             <td><input readonly class='form-control'  value="`+ accountname + `" name="Accountnameee" /></td>
-           <td><input readonly class='form-control'    value="`+ currname + `" /></td>
+           <td><input readonly class='form-control'    value="`+ currname + `" name="CurrencyName" /></td>
             <td><input readonly class='form-control text-right' name="FcRate"  value="`+ currate + `" /></td>
             <td hidden><input  type="hidden" readonly class='form-control' value="0.00" name="DebitAmount" /></td>
            <td ><input readonly class='form-control' value="` + creditvalue + `" name="CreditAmount" /></td>
@@ -1258,13 +1258,13 @@
 
                 }
                 else {
-                    var row = ` <tr>
+                    var row = ` <tr onclick='editRow(this)' >
             <td hidden><input type="hidden" name="DrCrID" value="2" /></td>
             <td hidden><input type="hidden" name="CurrencyID" value="`+ currid + `" /></td>
 
             <td hidden><input type="hidden" name="AccountID" value="`+ accountID + `"  /></td>
             <td><input readonly class='form-control'  value="`+ accountname + `" name="Accountnameee" /></td>
-            <td><input readonly class='form-control'  value="`+ currname + `" /></td>
+            <td><input readonly class='form-control'  value="`+ currname + `" name="CurrencyName" /></td>
             <td><input readonly class='form-control text-right'  name="FcRate"   value="`+ currate + `" /></td>
             <td hidden><input  type="hidden" readonly class='form-control' value="0.00" name="DebitAmount" /></td>
            <td ><input readonly class='form-control' value="` + creditvalue + `" name="CreditAmount" /></td>
@@ -1357,7 +1357,7 @@
                 //    });
                 //}
 
-      
+
 
 
 
@@ -1398,7 +1398,63 @@
 
         };
 
+        function editRow(row) {
+            $('.highlighted').removeClass('highlighted').removeAttr('data-editable');
 
+            debugger;
+            var drcrid = $(row).find("input[name='DrCrID']").val();
+            var AccountID = $(row).find("input[name='AccountID']").val();
+            var CurrencyID = $(row).find("input[name='CurrencyID']").val();
+            var Accountnameee = $(row).find("input[name='Accountnameee']").val();
+            var CurrencyName = $(row).find("input[name='CurrencyName']").val();
+            var FcRate = $(row).find("input[name='FcRate']").val();
+            var DebitAmount = $(row).find("input[name='DebitAmount']").val();
+            var ShortNarration = $(row).find("input[name='ShortNarration']").val();
+            var CreditAmount = $(row).find("input[name='CreditAmount']").val();
+
+            $('#select2-accountID-container').text(Accountnameee);
+            $('#select2-accountID-container').val(AccountID);
+            $('#currencyid').val(CurrencyID);
+            $('#currate').val(FcRate);
+            $('#narration').val(ShortNarration);
+            $('#creditID').val(CreditAmount);
+            $('#btnadd').text('Update');
+
+            $(row).attr('data-editable', 'true');
+            $(row).addClass('highlighted');
+        }
+
+        function updateRow() {
+            debugger;
+            var accountid = $('#accountID option:selected').val();
+            var accountname = $('#accountID option:selected').text();
+            var creditamount = parseFloat($('#creditID').val());
+            var currencyid = $('#currencyid').val();
+            var narration = $('#narration').val();
+            var rate = $('#currate').val();
+            //var discount = $('#txtdiscount').val();
+            var modifychild = parseInt($('#modify').val());
+            if (accountid == 0 || accountname == "" || creditamount == 0 || currencyid == 0 || narration == "") {
+                alert("Please Fill Item Details");
+            } else {
+                $('.highlighted').remove();
+                btnadd()
+            }
+            $('#btnadd').text('Add');
+            $('.highlighted').removeClass('highlighted').removeAttr('data-editable');
+
+        }
+
+        function addOrUpdateRow() {
+            debugger;
+            var btnLabel = $('#btnadd').text();
+
+            if (btnLabel === "Add") {
+                btnadd();
+            } else if (btnLabel === "Update") {
+                updateRow();
+            }
+        }
 
         $('#btnexchange').click(function () {
             debugger;
@@ -1506,7 +1562,7 @@
 
                 if (rownum == rowid) {
                     debugger;
-             
+
 
 
 
@@ -2219,11 +2275,11 @@ else if (Model.vouchertype == 6)
 
             var drcrid = $('#DrCrID option:selected').val();
             var drcrname = $('#DrCrID option:selected').text();
-        var accountID = $('#accountID option:selected').val();
-        var modifychild = parseInt($('#modify').html());
-        var currid = $('#currencyid option:selected').val();
-        var currname = $('#currencyid option:selected').text();
-        var currate = $('#currate ').val();
+            var accountID = $('#accountID option:selected').val();
+            var modifychild = parseInt($('#modify').html());
+            var currid = $('#currencyid option:selected').val();
+            var currname = $('#currencyid option:selected').text();
+            var currate = $('#currate ').val();
             var accountID2 = 0;
             account1 = $("table  tbody  tr ").find('td:eq(10)').html();
             debugger;
@@ -2337,7 +2393,7 @@ else if (Model.vouchertype == 6)
                 //} else {
                 //    var ftotal = 0;
                 //}
-               
+
                 var fcrate = 0;
                 var fcid = 0;
                 var fcamount = 0;
@@ -2454,7 +2510,7 @@ else if (Model.vouchertype == 6)
         var CreditAmount = $(row).find("input[name='CreditAmount']").val();
 
         $('#select2-accountID-container').text(Accountnameee);
-        $('#accountID').val(AccountID);
+        $('#select2-accountID-container').val(AccountID);
         $('#currencyid').val(CurrencyID);
         $('#currate').val(FcRate);
         $('#narration').val(ShortNarration);
@@ -2465,12 +2521,13 @@ else if (Model.vouchertype == 6)
         $(row).addClass('highlighted');
     }
 
-    function updateRow() {
-        var accountid = $('#accountID option:selected').val();
+        function updateRow() {
+            debugger;
+            var accountid = $('#accountID option:selected').val();
         var accountname = $('#accountID option:selected').text();
         var debitamount = parseFloat($('#debitID').val());
         var currencyid = $('#currencyid').val();
-        var narration = $('#narration option:selected').val();
+        var narration = $('#narration').val();
         var rate = $('#currate').val();
         //var discount = $('#txtdiscount').val();
         var modifychild = parseInt($('#modify').val());
@@ -2586,7 +2643,7 @@ else if (Model.vouchertype == 6)
                 var rownum = parseFloat($(this).find('td:eq(12)').html());
 
                 if (rownum == rowid) {
-          
+
 
 
                     fcid = parseInt($(this).find('td:eq(14)').html());
@@ -2765,7 +2822,7 @@ else if (Model.vouchertype == 6)
            alert("please fill details")
        }
 
-      
+
    };
 
 
