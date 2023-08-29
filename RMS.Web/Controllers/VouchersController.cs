@@ -172,8 +172,8 @@ namespace RMS.Web.Controllers
             }
             else if (jvamsterfind.VoucherTypeID == 11)
             {
-                var cashinhand = db.AccGroup.Where(m => m.AccgroupID == 1038).FirstOrDefault();
-                var bankacc = db.AccGroup.Where(m => m.AccgroupID == 23).FirstOrDefault();
+                var cashinhand = db.AccGroup.Where(m => m.AccgroupID == 1072).FirstOrDefault();
+                var bankacc = db.AccGroup.Where(m => m.AccgroupID == 1073).FirstOrDefault();
                 ViewBag.currency = new SelectList(db.Currency, "CurrencyID", "CurrencyShortName");
 
 

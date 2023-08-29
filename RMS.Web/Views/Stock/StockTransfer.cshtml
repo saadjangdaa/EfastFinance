@@ -293,7 +293,7 @@
                                         </th>
                                         @*<th style="width:150px;"><input class="form-control" readonly="readonly" type="number" id="unitname" placeholder="Item units" /></th> js-example-basic-single*@
                                         <th>@Html.DropDownList("unitname", (IEnumerable<SelectListItem>)ViewBag.Units, "---Item Unit---", htmlAttributes: new { @class = "form-control", @Id = "unitname", @disabled = "true" })</th>
-                                        <th><button type="button" class="btn btn-success " id="btnadd"><i class="glyphicon glyphicon-plus"></i></button></th>
+                                        <th><button type="button" class="btn btn-success" id="btnadd" onclick="addOrUpdateRow()">Add</button></th>
                                     </tr>
                                 </thead>
                             }
@@ -351,7 +351,7 @@
                                         <th><input class="form-control text-right" type="number" placeholder="Con Factor" id="ItemPrice" /></th>
                                         <th><input class="form-control text-right" type="number" placeholder="Carrier Rates" id="carrierrates" /></th>
                                         <th><input class="form-control text-right" type="number" placeholder="Total Amount" id="txttotal" value="0.00" /></th>
-                                        <th><button type="button" class="btn btn-success " id="btnadd"><i class="glyphicon glyphicon-plus"></i></button></th>
+                                        <th><button type="button" class="btn btn-success" id="btnadd" onclick="addOrUpdateRow()">Add</button></th>
                                     </tr>
                                 </thead>
 
@@ -370,20 +370,18 @@
                                 {
                                     <tbody id="body">
                                         <tr id="tr">
-                                            <td hidden><input type="number" value="@item.ItemID" />  </td>
-                                            <td> <input readonly type="text" class="form-control" value="@item.Items.ItemName" /></td>
-                                            <td><input readonly type="text" class="form-control text-right" value=" @item.Quantity" />  </td>
-                                            <td hidden>@item.Unitid</td>
-                                            <td><input readonly type="text" class="form-control" value=" @item.Units.UnitName" /> </td>
-                                            <td><button type="button" class="btn btn-danger " id="btnremove" onclick="removeDr(@rowid)"><i class="glyphicon glyphicon-minus"></i></button></td>
+                                            <td hidden><input type="number" name="ItemID" value="@item.ItemID" />  </td>
+                                            <td> <input readonly type="text" name="ItemName" class="form-control" value="@item.Items.ItemName" /></td>
+                                            <td><input readonly type="text" name="Quantity" class="form-control text-right" value=" @item.Quantity" />  </td>
+                                            <td hidden><input type="number" name="Unitid" value="@item.Unitid"/> </td>
+                                            <td><input readonly type="text" class="form-control" name="UnitText" value=" @item.Units.UnitName" /> </td>
+                                            <td><button type="button" class="btn btn-danger " id="btnremove" onclick="remove(@rowid)"><i class="glyphicon glyphicon-minus"></i></button></td>
                                             <td hidden></td>
                                             <td hidden></td>
                                             <td hidden></td>
                                             <td hidden>@item.TotalAmount</td>
                                             <td hidden>@rowid</td>
                                             <td hidden>@item.VoucherchildID</td>
-
-
 
                                         </tr>
                                     </tbody>
@@ -398,15 +396,15 @@
                                     var confactor = item.TotalAmount / item.ItemPrice;
                                     <tbody id="body">
                                         <tr id="tr">
-                                            <td hidden><input type="number" value="@item.ItemID" />  </td>
-                                            <td> <input readonly type="text" class="form-control" value="@item.Items.ItemName" /></td>
-                                            <td><input readonly type="text" class="form-control text-right" value=" @item.Quantity" />  </td>
-                                            <td hidden>@item.Unitid</td>
-                                            <td><input readonly type="text" class="form-control" value=" @item.Units.UnitName" /> </td>
-                                            <td> <input readonly type="number" class="form-control text-right" value="@confactor" />  </td>
-                                            <td> <input readonly type="number" class="form-control text-right" value="@item.ItemPrice" />  </td>
-                                            <td><input readonly type="number" class="form-control text-right" value=" @item.TotalAmount" />  </td>
-                                            <td><button type="button" class="btn btn-danger " id="btnremove" onclick="removeDr(@rowid)"><i class="glyphicon glyphicon-minus"></i></button></td>
+                                            <td hidden><input type="number" name="ItemID" value="@item.ItemID" />  </td>
+                                            <td> <input readonly type="text" name="ItemName" class="form-control" value="@item.Items.ItemName" /></td>
+                                            <td><input readonly type="text" name="Quantity" class="form-control text-right" value=" @item.Quantity" />  </td>
+                                            <td hidden> <input readonly type="number" name="Unitid" value="@item.Unitid" /></td>
+                                            <td><input readonly type="text" class="form-control" name="UnitText" value=" @item.Units.UnitName" /> </td>
+                                            <td> <input readonly type="number" name="UnitPrice" class="form-control text-right" value="@confactor" />  </td>
+                                            <td> <input readonly type="number" name="ItemPrice" class="form-control text-right" value="@item.ItemPrice" />  </td>
+                                            <td><input readonly type="number" class="form-control text-right" name="TotalAmount" value=" @item.TotalAmount" />  </td>
+                                            <td><button type="button" class="btn btn-danger" id="btnremove" onclick="removeDr(@rowid)"><i class="glyphicon glyphicon-minus"></i></button></td>
                                             <td hidden>@item.TotalAmount</td>
                                             <td hidden>@rowid</td>
 
@@ -594,7 +592,7 @@
 <script src="~/Scripts/chosen/select2-4.1.0-beta.1/dist/js/select2.full.js"></script>
 @if (Model.vouchertypeid == 12 || Model.vouchertypeid == 13)
 {
-    <script>
+<script>
 
         //window.onbeforeunload = function () {
         //    debugger;
@@ -836,7 +834,7 @@
 
         $("#txttotal").on({
             keydown: function (ev) {
-                if (ev.which === 13) {   // enter button 
+                if (ev.which === 13) {   // enter button
                     debugger;
                     $('#btnadd').focus();
                 }
@@ -894,10 +892,10 @@
     //    btnSaveVoucher();
 
         //});
-        $('#btnadd').mousedown(function () {
-            debugger;
-            btnadd();
-        });
+        //$('#btnadd').mousedown(function () {
+        //    debugger;
+        //    btnadd();
+        //});
 
 
     $("#btnadd").on({
@@ -1074,9 +1072,6 @@
 
         });
 
-
-
-
         if (itemid != "" && LocID != "") {
 
             debugger;
@@ -1100,13 +1095,6 @@
             alert("Please select Location");
 
         }
-        
-
-
-
-
-
-
 
     });
 
@@ -1268,18 +1256,18 @@
 
         else {
             var removebtn = "<button type='button' class='btn btn-danger ' id='btnremove' onclick='removeDr(`" + rowid + "` )'><i class='glyphicon glyphicon-minus'></i></button>'";
-
+            var rbtn = "<button type='button' class='btn btn-danger ' id='btnremove' onclick='remove(`" + rowid + "`)'><i class='glyphicon glyphicon-minus'></i></button>'";
             // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
             if (modifychild == 1) {
 
                 if (vouchertypid == 12) {
-                    var row = ` <tr id='tr'>
+                    var row = ` <tr id='tr' onclick='editRow(this)' >
             <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
-            <td><input readonly class='form-control'   value="`+ itemname + `" /></td>
+            <td><input readonly class='form-control' name="ItemName" value="`+ itemname + `" /></td>
             <td><input   readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
             <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
-            <td><input readonly class='form-control'  value="`+ Unittext + `"  /></td>
-            <td><input readonly  class='form-control text-right' type='number' value="`+ unitprice + `"  /></td>
+            <td><input readonly class='form-control' name="UnitText" value="`+ Unittext + `"  /></td>
+            <td><input readonly  class='form-control text-right' name="UnitPrice" type='number' value="`+ unitprice + `"  /></td>
             <td><input readonly  class='form-control text-right' type='number' value="`+ carrierrate + `" name="ItemPrice" /></td>
             <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
             <td>`+ removebtn + `</td>
@@ -1289,13 +1277,13 @@
             </tr>`;
                 }
                 else {
-                    var row = ` <tr id='tr'>
+                    var row = ` <tr id='tr' onclick='editRow(this)' >
             <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
-            <td><input readonly class='form-control'   value="`+ itemname + `" /></td>
+            <td><input readonly class='form-control' name="ItemName"  value="`+ itemname + `" /></td>
             <td><input   readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
             <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
-            <td><input readonly class='form-control'  value="`+ Unittext + `"  /></td>
-            <td>`+ removebtn + `</td>
+            <td><input readonly class='form-control' name="UnitText" value="`+ Unittext + `"  /></td>
+            <td>`+ rbtn + `</td>
             <td hidden>` + total + `</td>
           <td hidden>`+ rowid + `</td>
            <td hidden><input type="hidden" value="0" name="newchild2" id="newchild2" /></td>
@@ -1309,13 +1297,13 @@
             else if (modifychild == 0) {
                 debugger;
                 if (vouchertypid == 12) {
-                    var row = ` <tr id='tr'>
+                    var row = ` <tr id='tr' onclick='editRow(this)' >
             <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
-            <td><input readonly class='form-control'   value="`+ itemname + `" /></td>
+            <td><input readonly class='form-control' name="ItemName"  value="`+ itemname + `" /></td>
             <td><input   readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
             <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
-            <td><input readonly class='form-control'  value="`+ Unittext + `"  /></td>
-            <td><input readonly  class='form-control text-right' type='number' value="`+ unitprice + `" /></td>
+            <td><input readonly class='form-control' name="UnitText" value="`+ Unittext + `"  /></td>
+            <td><input readonly  class='form-control text-right' name="UnitPrice" type='number' value="`+ unitprice + `" /></td>
             <td><input readonly  class='form-control text-right' type='number' value="`+ carrierrate + `" name="ItemPrice" /></td>
             <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
             <td>`+ removebtn + `</td>
@@ -1325,13 +1313,13 @@
 
                 }
                 else {
-                    var row = ` <tr id='tr'>
+                    var row = ` <tr id='tr' onclick='editRow(this)' >
             <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
-            <td><input readonly class='form-control'   value="`+ itemname + `" /></td>
+            <td><input readonly class='form-control' name="ItemName"  value="`+ itemname + `" /></td>
             <td><input   readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
             <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
-            <td><input readonly class='form-control'  value="`+ Unittext + `"  /></td>
-            <td>`+ removebtn + `</td>
+            <td><input readonly class='form-control' name="UnitText" value="`+ Unittext + `"  /></td>
+            <td>`+ rbtn + `</td>
             <td hidden>` + total + `</td>
           <td hidden>`+ rowid + `</td>
             </tr>`;
@@ -1417,6 +1405,67 @@
         }
     };
 
+    function editRow(row) {
+        $('.highlighted').removeClass('highlighted').removeAttr('data-editable');
+
+        debugger;
+        var ItemID = $(row).find("input[name='ItemID']").val();
+        var ItemName = $(row).find("input[name='ItemName']").val();
+        var Quantity = $(row).find("input[name='Quantity']").val();
+        var Unitid = $(row).find("input[name='Unitid']").val();
+        var UnitText = $(row).find("input[name='UnitText']").val();
+        var UnitPrice = $(row).find("input[name='UnitPrice']").val();
+        var ItemPrice = $(row).find("input[name='ItemPrice']").val();
+        var totalamount = $(row).find("input[name='TotalAmount']").val();
+
+        $('#select2-itemname-container').text(ItemName);
+
+        $('#itemname').val(ItemID);
+        $('#Quantity').val(Quantity);
+        $('#unitname').val(Unitid);
+        $('#ItemPrice').val(UnitPrice);
+        $('#carrierrates').val(ItemPrice);
+        $('#txttotal').val(totalamount);
+        $('#btnadd').text('Update');
+
+        $(row).attr('data-editable', 'true');
+        $(row).addClass('highlighted');
+    }
+
+    function updateRow() {
+        debugger;
+        var itemid = $('#itemname option:selected').val();
+        var itemname = $('#itemname option:selected').text();
+        var unitprice = $('#ItemPrice').val();
+        var carrierrate = $('#carrierrates').val();
+        var quantity = $('#Quantity').val();
+        var Unitid = $('#unitname option:selected').val();
+        var Unittext = $('#unitname option:selected').text();
+        var vouchertypid = $('#vouchertypeid').text();
+        var availquantity = $('#availQuantity').html();
+        var modifychild = parseInt($('#modify').val());
+
+        if (itemid == "" || itemname == "" || unitprice == "" || quantity == 0 || Unitid == 0) {
+            alert("Please Fill Item Details");
+        } else {
+            $('.highlighted').remove();
+            btnadd()
+        }
+        $('#btnadd').text('Add');
+        $('.highlighted').removeClass('highlighted').removeAttr('data-editable');
+
+    }
+
+    function addOrUpdateRow() {
+        debugger;
+        var btnLabel = $('#btnadd').text();
+
+        if (btnLabel === "Add") {
+            btnadd();
+        } else if (btnLabel === "Update") {
+            updateRow();
+        }
+    }
 
     function remove() {
 
@@ -1775,7 +1824,7 @@
 
 
 
-    </script>
+</script>
 }
 
 
