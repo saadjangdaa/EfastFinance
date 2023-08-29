@@ -72,37 +72,47 @@
                                             <input type="hidden" class="form-control" name="itemid" id="itemid" />
                                             <div class="row">
                                                 <label class="col-sm-5">ITEM Name</label>
-                                                <input class="form-control" id="ItemName" name="ItemName" />
+                                                <div class="col-sm-12">
+                                                    <input class="form-control" id="ItemName" name="ItemName" />
+                                                </div>
                                                 <br />
                                                 <br />
                                                 <label class="col-sm-5">ITEM Group Name</label>
-                                                @Html.DropDownList("ItemGroupID", (IEnumerable<SelectListItem>)ViewBag.itemgroups,"---select itemgroup---", htmlAttributes: new { @class = "form-control", @Id = "ItemGroupID" })
+                                                <div class="col-sm-12">
+                                                    @Html.DropDownList("ItemGroupID", (IEnumerable<SelectListItem>)ViewBag.itemgroups, "---select itemgroup---", htmlAttributes: new { @class = "form-control", @Id = "ItemGroupID" })
+                                                </div>
                                                 <br />
                                                 <br />
                                                 <label class="col-sm-5">ITEM Unit</label>
-                                                @Html.DropDownList("ItemUnitID", (IEnumerable<SelectListItem>)ViewBag.itemunits, "---select itemunit---", htmlAttributes: new { @class = "form-control", @Id = "ItemUnitID" })
+                                                <div class="col-sm-12">
+                                                    @Html.DropDownList("ItemUnitID", (IEnumerable<SelectListItem>)ViewBag.itemunits, "---select itemunit---", htmlAttributes: new { @class = "form-control", @Id = "ItemUnitID" })
+                                                </div>
                                                 <br />
                                                 <br />
                                                 <label class="col-sm-5">ITEM Price</label>
-                                                <input class="form-control" id="ItemPrice" name="ItemPrice" />
+                                                <div class="col-sm-12">
+                                                    <input class="form-control" id="ItemPrice" name="ItemPrice" />
+                                                </div>
                                                 <br />
                                                 <br />
                                                 <label class="col-sm-5">ITEM Max Discount</label>
-                                                <input class="form-control" value="0.00" type="number" id="ItemMaxDiscount" name="ItemMaxDiscount" />
+                                                <div class="col-sm-12">
+                                                    <input class="form-control" value="0.00" type="number" id="ItemMaxDiscount" name="ItemMaxDiscount" />
+                                                </div>
                                                 <br />
                                                 <br />
                                                 <label class="col-sm-5">ITEM Min Discount</label>
-                                                <input class="form-control" value="0.00" id="ItemMinDiscount" type="number" name="ItemMinDiscount" />
+                                                <div class="col-sm-12">
+                                                    <input class="form-control" value="0.00" id="ItemMinDiscount" type="number" name="ItemMinDiscount" />
+                                                </div>
                                                 <br />
                                                 <br />
                                                 <label class="col-sm-5">ITEM Description</label>
-                                                <textarea id="ItemDescription" name="ItemDescription" class="form-control"></textarea>
-
-
-
-
+                                                <div class="col-sm-12">
+                                                    <textarea id="ItemDescription" name="ItemDescription" class="form-control"></textarea>
+                                                </div>
                                             </div>
-                                        </div>
+                                            </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             <button id="btnSave" type="button" class="btn btn-primary">Save changes</button>
