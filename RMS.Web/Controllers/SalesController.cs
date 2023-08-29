@@ -342,6 +342,7 @@ namespace RMS.Web.Controllers
         public ActionResult ReportSaleVoucher(int? MasterID)
         {
             ReportDocument report = new ReportDocument();
+
             report.Load(Server.MapPath("~/Reports/SaleVoucher.rpt"));
             var ReportData = db.Database.SqlQuery<VoucherMaster>("Sp_Salevoucher").ToList();
             

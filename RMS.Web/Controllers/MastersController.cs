@@ -2628,6 +2628,7 @@ namespace RMS.Web.Controllers
         {
             AccGroup accg = new AccGroup();
             AccountMainHead accm = new AccountMainHead();
+            var accountgrouplist = db.AccGroup.ToList();
             ViewBag.Accundergroup = new SelectList(db.AccGroup, "AccgroupID", "Accgroupname", 0);
             ViewBag.accundergroup = new SelectList(db.AccGroup, "AccgroupID", "Accgroupname", accg.AccunderprimarygroupName);
             ViewBag.Accmain = new SelectList(db.AccountMainHead, "MainGroupID", "MainAccGroupName", accm.MainAccGroupName);
