@@ -1,4 +1,4 @@
-﻿using CrystalDecisions.CrystalReports.Engine;
+﻿//using CrystalDecisions.CrystalReports.Engine;
 using RMS.Web.Models;
 using RMS.Web.Models.ViewModels;
 using RMS.Web.Services;
@@ -339,20 +339,20 @@ namespace RMS.Web.Controllers
             }).FirstOrDefault();
             return View(model);
         }
-        public ActionResult ReportSaleVoucher(int? MasterID)
-        {
-            ReportDocument report = new ReportDocument();
+        //public ActionResult ReportSaleVoucher(int? MasterID)
+        //{
+        //    ReportDocument report = new ReportDocument();
 
-            report.Load(Server.MapPath("~/Reports/SaleVoucher.rpt"));
-            var ReportData = db.Database.SqlQuery<VoucherMaster>("Sp_Salevoucher").ToList();
+        //    report.Load(Server.MapPath("~/Reports/SaleVoucher.rpt"));
+        //    var ReportData = db.Database.SqlQuery<VoucherMaster>("Sp_Salevoucher").ToList();
             
-            report.SetDataSource(ReportData);
+        //    report.SetDataSource(ReportData);
 
-            report.SetParameterValue("VoucherMasterID", MasterID);
+        //    report.SetParameterValue("VoucherMasterID", MasterID);
 
-            ViewBag.Report = report;
-            return View();
-        }
+        //    ViewBag.Report = report;
+        //    return View();
+        //}
         //public ActionResult _PrintSaveVoucher2(int? MasterID)
         //{
         //    var Units = db.Units.ToList();
