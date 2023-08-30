@@ -14,13 +14,18 @@
                         if (Model.modify == 1)
                         {
                             <div class="row">
-                                <div class="col-9">
+                                <div class="col-8">
                                     <h4 class="m-0 font-weight-bold"><strong style="color:white;">Modify Sales Voucher </strong></h4>
                                 </div>
-                                <div class="col-3 d-flex justify-content-end">
+                                <div class="col-4 d-flex justify-content-end">
                                     <div class="pr-1">
                                         <button type="button" onclick="history.back()" class="btn btn-success ">
                                             <i class="glyphicon glyphicon-arrow-left"></i> Back
+                                        </button>
+                                    </div>
+                                    <div class="pr-1">
+                                        <button type="button" onclick="PrintVoucher()" class="btn btn-success ">
+                                            <i class="glyphicon glyphicon-print"></i> Preview
                                         </button>
                                     </div>
                                     <div>
@@ -35,6 +40,7 @@
                         }
                         else
                         {
+
                             <div class="row">
                                 <div class="col-9">
                                     <h4 class="m-0 font-weight-bold"><strong style="color:white;">Add Sales Voucher </strong></h4>
@@ -49,6 +55,26 @@
                                         <button type="button" id="btnSaveVoucher" class="btn btn-success">
                                             <i class="glyphicon glyphicon-save-file"></i> Save Voucher
                                         </button>
+
+                                        <div class="modal fade" id="printViewModal1" tabindex="-1" role="dialog" aria-labelledby="pintViewModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="printViewModal1Label">Preview Voucher</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Preview Voucher?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" onclick="PrintVoucher()" class="btn btn-secondary" data-dismiss="modal">Preview</button>
+                                                        <button type="button" onclick="reloadPage()" class="btn btn-primary">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -218,20 +244,16 @@
                     {
                         <lablel class="col-md-2" style="color:black">Voucher Number</lablel>
                         <div class="col-md-4">
-                            <input class="form-control" name="VoucherNumber" readonly="readonly" type="text" value="@Model.VoucherNumber  " />
+                            <input class="form-control" name="VoucherNumber" id="VoucherNumber" readonly="readonly" type="text" value="@Model.VoucherNumber  " />
                         </div>
-
                         <lablel class="col-md-2" style="color:black">Voucher Date</lablel>
                         <div class="col-md-4">
                             <input class="form-control" id="VoucherCreateDate" name="VoucherCreateDate" readonly="readonly" value="@Model.VoucherCreateDate" />
                         </div>
-
-                        <!---->
                         <br />
                         <br />
                         <lablel class="col-md-2" style="color:black">
                             Party Name
-
                         </lablel>
                         <div class="col-md-4">
                             @Html.DropDownList("Partyid", (IEnumerable<SelectListItem>)ViewBag.Accountname, "---Select PartyName---", htmlAttributes: new { @class = " form-control ", @Id = "Partyid_Accountid", @Name = "Partyid" })
@@ -240,17 +262,12 @@
 
                         <lablel class="col-md-2" style="color:black">Material Centre</lablel>
                         <div class="col-md-4">
-
                             @Html.DropDownList("LocationID", (IEnumerable<SelectListItem>)ViewBag.MaterialCentres, "---Select Location---", htmlAttributes: new { @class = " form-control ", @Id = "LocationID", @Value = Model.LocationID })
-
-
-
                         </div>
                         <br />
                         <br />
                         <lablel class="col-md-2" style="color:black">
                             Curr Balance:
-                            @*<em style="color:blue" id="balance"></em>*@
                         </lablel>
                         <div class="col-md-4">
 
@@ -265,14 +282,13 @@
                     {
                         <lablel class="col-md-2" style="color:black">Voucher Number</lablel>
                         <div class="col-md-4">
-                            <input class="form-control" name="VoucherNumber" readonly="readonly" type="number" value="@ViewBag.ordernumber" />
+                            <input class="form-control" name="VoucherNumber" id="VoucherNumber" readonly="readonly" type="number" value="@ViewBag.ordernumber" />
                         </div>
 
                         <lablel class="col-md-2" style="color:black">Voucher Date</lablel>
                         <div class="col-md-4">
                             <input class="form-control" id="VoucherCreateDate" name="VoucherCreateDate" readonly="readonly" value="@DateTime.Now" />
                         </div>
-
                         <br />
                         <br />
                         <lablel class="col-md-2" style="color:black">
@@ -285,11 +301,7 @@
 
                         <lablel class="col-md-2" style="color:black">Material Centre</lablel>
                         <div class="col-md-4">
-
                             @Html.DropDownList("LocationID", (IEnumerable<SelectListItem>)ViewBag.MaterialCentres, "---Select Location---", htmlAttributes: new { @class = " form-control ", @Id = "LocationID", @Value = Model.LocationID })
-
-
-
                         </div>
                         <br />
                         <br />
@@ -357,7 +369,7 @@
                                 <thead style="background-color:orange">
                                     <tr>
                                         <th>
-                                            @Html.DropDownList("itemname", (IEnumerable<SelectListItem>)ViewBag.Items, "---Select Item---", htmlAttributes: new { @class = "form-control ", @Id = "itemname" })
+                                            @Html.DropDownList("itemname", (IEnumerable<SelectListItem>)ViewBag.Items, "---Select Item---", htmlAttributes: new { @class = "form-control select2", @Id = "itemname" })
                                         </th>
                                         <th>
                                             <input class="form-control text-right" type="number" id="Quantity" placeholder="Enter Quantity" />
@@ -367,7 +379,9 @@
                                         <th>@Html.DropDownList("unitname", (IEnumerable<SelectListItem>)ViewBag.Units, "---Item Unit---", htmlAttributes: new { @class = "form-control", @Id = "unitname", @disabled = "true" })</th>
                                         <th><input class="form-control text-right" type="number" placeholder="item Price" id="ItemPrice" /></th>
                                         <th><input class="form-control text-right" type="number" placeholder="total Amount" id="txttotal" /></th>
-                                        <th><button type="button" class="btn btn-success " id="btnadd"><i class="glyphicon glyphicon-plus"></i></button></th>
+                                        @*<th><button type="button" class="btn btn-success " id="btnadd"><i class="glyphicon glyphicon-plus"></i></button></th>*@
+                                        <th><button type="button" class="btn btn-success" id="btnadd" onclick="addOrUpdateRow()">Add</button></th>
+
                                     </tr>
                                 </thead>
                             }
@@ -388,7 +402,7 @@
                                     <tr>
                                         <th>
                                             <div class="col-md-10">
-                                                @Html.DropDownList("itemname", (IEnumerable<SelectListItem>)ViewBag.Items, "---Select Item---", htmlAttributes: new { @class = "form-control ", @Id = "itemname" })
+                                                @Html.DropDownList("itemname", (IEnumerable<SelectListItem>)ViewBag.Items, "---Select Item---", htmlAttributes: new { @class = "form-control select2", @Id = "itemname" })
                                             </div>
                                             <div class="col-md-2">
                                                 <a href="@Url.Action("Index","Item")" class="btn btn-dark"><i class="glyphicon glyphicon-plus-sign"></i></a>
@@ -399,7 +413,10 @@
                                         <th>@Html.DropDownList("unitname", (IEnumerable<SelectListItem>)ViewBag.Units, "---Select Unit---", htmlAttributes: new { @class = "form-control", @Id = "unitname", @disabled = "true" })</th>
                                         <th><input class="form-control text-right" type="number" placeholder="item Price" id="ItemPrice" /></th>
                                         <th><input class="form-control text-right" placeholder="total Amount" type="number" id="txttotal" /></th>
-                                        <th><button type="button" class="btn btn-success " id="btnadd"><i class="glyphicon glyphicon-plus"></i></button></th>
+                                        <th><button type="button" class="btn btn-success" id="btnadd" onclick="addOrUpdateRow()">Add</button></th>
+
+
+
                                     </tr>
                                 </thead>
                                 <tfoot><tr><th hidden>1</th></tr></tfoot>
@@ -414,22 +431,31 @@
                             foreach (var item in Model.VoucherChildlist)
                             {
                                 <tbody id="body">
+                                    @*<tr id="tr" onclick="editRow(this)">
+                                            <td hidden name="ItemID">@item.ItemID</td>
+                                            <td> <input readonly type="text" name="itemname" class="form-control" value="@item.Items.ItemName" /></td>
+                                            <td><input readonly type="text" name="Quantity" class="form-control text-right" value=" @item.Quantity" /></td>
+                                            <td hidden><input readonly type="number" name="UnitId" class="form-control" value="@item.Unitid" /></td>
+                                            <td><input readonly type="text" class="form-control" name="UnitName" value="@item.Units.UnitName" /></td>
+                                            <td> <input readonly type="number" class="form-control text-right" name="Itemprice" value="@item.ItemPrice" /></td>
+                                            <td><input readonly type="number" class="form-control text-right" name="TotalAmount" value=" @item.TotalAmount" /> </td>
+                                            <td><button type="button" class="btn btn-danger " id="btnremove" onclick="removeDr(@rowid)"><i class="glyphicon glyphicon-minus"></i></button></td>
+                                            <td hidden>@item.TotalAmount</td>
+                                            <td hidden>@rowid</td>
+                                            <td hidden>@item.VoucherchildID</td>
+                                        </tr>*@
                                     <tr id="tr">
-                                        <td hidden><input type="number" value="@item.ItemID" />  </td>
-                                        <td> <input readonly type="text" class="form-control" value="@item.Items.ItemName" /></td>
-                                        <td><input readonly type="text" class="form-control text-right" value=" @item.Quantity" />  </td>
-                                        <td hidden>@item.Unitid</td>
-                                        <td><input readonly type="text" class="form-control" value=" @item.Units.UnitName" /> </td>
-                                        <td> <input readonly type="number" class="form-control text-right" value="@item.ItemPrice" />  </td>
-                                        <td><input readonly type="number" class="form-control text-right" value=" @item.TotalAmount" />  </td>
+                                        <td hidden><input type="hidden" name="ItemID" value="@item.ItemID" /></td>
+                                        <td><input readonly class='form-control' name="itemname" value="@item.Items.ItemName" /></td>
+                                        <td><input readonly class='form-control text-right' value="@item.Quantity" name="Quantity" /></td>
+                                        <td hidden><input name="Unitid" value="@item.Unitid" /></td>
+                                        <td><input readonly class='form-control' name="UnitName" value="@item.Units.UnitName" /></td>
+                                        <td><input readonly class='form-control text-right' type='number' value="@item.ItemPrice" name="ItemPrice" /></td>
+                                        <td><input readonly class='form-control text-right' value="@item.TotalAmount" name="TotalAmount" id="total" /></td>
                                         <td><button type="button" class="btn btn-danger " id="btnremove" onclick="removeDr(@rowid)"><i class="glyphicon glyphicon-minus"></i></button></td>
-
                                         <td hidden>@item.TotalAmount</td>
                                         <td hidden>@rowid</td>
-                                        <td hidden>@item.VoucherchildID</td>
-
-
-
+                                        <td hidden><input type="hidden" value="@item.VoucherchildID" name="newchild2" id="newchild2" /></td>
                                     </tr>
                                 </tbody>
                                 rowid = rowid + 1;
@@ -461,7 +487,7 @@
                             @if (Model.modify == 1)
                             {
                                 var total = Model.FinalTotal + Model.BillSundryAmount2;
-                                <input value=" @total" class="form-control font-weight-bolder text-right" id="txttotal1"
+                                <input value=" @total" class="form-control font-weight-bolder text-right .TotalAmount" id="txttotal1"
                                        readonly="readonly" style="background-color:orange; color:white;" />
                             }
                             else
@@ -471,7 +497,7 @@
                             }
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-10 d-flex justify-content-end">
                             <lablel style="color:black;" class="pt-2"> Final Total</lablel>
@@ -522,7 +548,7 @@
 
 @if (Model.vouchertypeid == 1 || Model.vouchertypeid == 9)
 {
-    <script>
+<script>
 
     $('#Partyid_Accountid').change(function () {
 
@@ -545,7 +571,6 @@
 
 
     });
-
 
     $(document).on({
         keydown: function (ev) {
@@ -796,21 +821,21 @@
     //    btnSaveVoucher();
 
         //});
-        $('#btnadd').mousedown(function () {
-            debugger;
-            btnadd();
-        });
+    //    $('#btnadd').mousedown(function () {
+    //        debugger;
+    //        btnadd();
+    //    });
 
 
-    $("#btnadd").on({
-        keydown: function (ev) {
-            if (ev.which === 13) {   // enter button
-                debugger;
-                btnadd();
+    //$("#btnadd").on({
+    //    keydown: function (ev) {
+    //        if (ev.which === 13) {   // enter button
+    //            debugger;
+    //            btnadd();
 
-            }
-        }
-        });
+    //        }
+    //    }
+    //    });
 
 
     $("#btnadd").focusin(function () {
@@ -1133,7 +1158,7 @@
             //$('#txbillsundry').val();
         });
 
-    function btnadd() {
+        function btnadd() {
 
         var itemid = $('#itemname option:selected').val();
         var itemname = $('#itemname option:selected').text();
@@ -1166,53 +1191,45 @@
         }
 
         else {
-            var removebtn = "<button type='button' class='btn btn-danger ' id='btnremove' onclick='removeDr(`" + rowid + "` )'><i class='glyphicon glyphicon-minus'></i></button>'";
-
+            var removebtn = "<button type='button' class='btn btn-danger' id='btnremove' onclick='removeDr(`" + rowid + "` )'><i class='glyphicon glyphicon-minus'></i></button>'";
+            //var editUpdatebtn = "<button type='button' class='btn btn-primary' id='btnedit' onclick ='editRow(this)'>Edit</button><button type='button' class='btn btn-success' id='btnupdate' style='display: none;' onclick='updateRow(this)'>Update</button>";
             // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
             if (modifychild == 1) {
-                var row = ` <tr id='tr'>
-            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
-            <td><input readonly class='form-control'   value="`+ itemname + `" /></td>
-            <td><input   readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
-            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
-            <td><input readonly class='form-control'  value="`+ Unittext + `"  /></td>
-            <td><input readonly  class='form-control text-right' type='number' value="`+ unitprice + `" name="ItemPrice" /></td>
-            <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
-            <td>`+ removebtn + `</td>
-            <td hidden>` + total + `</td>
-          <td hidden>`+ rowid + `</td>
-           <td hidden><input type="hidden" value="0" name="newchild2" id="newchild2" /></td>
-            </tr>`;
+                var row = ` <tr id='tr' onclick='editRow(this)' >
+                            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
+                            <td><input readonly class='form-control' name="itemname"   value="`+ itemname + `" /></td>
+                            <td><input   readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
+                            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
+                            <td><input readonly class='form-control' name="UnitName" value="`+ Unittext + `"  /></td>
+                            <td><input readonly  class='form-control text-right' type='number' value="`+ unitprice + `" name="ItemPrice" /></td>
+                            <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
+                            <td>`+ removebtn + `</td>
+                            <td hidden>` + total + `</td>
+                            <td hidden>`+ rowid + `</td>
+                            <td hidden><input type="hidden" value="0" name="newchild2" id="newchild2" /></td>
+                            </tr>`;
 
                 $('#body').append(row);
 
             }
             else if (modifychild == 0) {
-                var row = ` <tr id='tr'>
-            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
-            <td><input readonly class='form-control'   value="`+ itemname + `" /></td>
-            <td><input   readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
-            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
-            <td><input readonly class='form-control'  value="`+ Unittext + `"  /></td>
-            <td><input readonly  class='form-control text-right' type='number' value="`+ unitprice + `" name="ItemPrice" /></td>
-            <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
-            <td>`+ removebtn + `</td>
-            <td hidden>` + total + `</td>
-          <td hidden>`+ rowid + `</td>
-            </tr>`;
+                var row = ` <tr id='tr' onclick='editRow(this)' >
+                            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
+                            <td><input readonly class='form-control' name="itemname"  value="`+ itemname + `" /></td>
+                            <td><input readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
+                            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
+                            <td><input readonly class='form-control' name="UnitName"  value="`+ Unittext + `"  /></td>
+                            <td><input readonly  class='form-control text-right' type='number' value="`+ unitprice + `" name="ItemPrice" /></td>
+                            <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
+                            <td>`+ removebtn + `</td>
+                            <td hidden>` + total + `</td>
+                            <td hidden>`+ rowid + `</td>
+                            </tr>`;
 
 
                 //$('table tbody').append(row);
                 $('#itembody').append(row);
             }
-
-
-
-
-
-
-
-
 
             $('#ItemID').text();
             //$('#itemname option:selected').text("---Select Item---");
@@ -1276,79 +1293,134 @@
 
             }
         }
-    };
+        };
 
+        function editRow(row) {
+            $('.highlighted').removeClass('highlighted').removeAttr('data-editable');
 
-    function remove() {
+            debugger;
+            var itemid = $(row).find("input[name='ItemID']").val();
+            var itemname = $(row).find("input[name='itemname']").val();
+            var quantity = $(row).find("input[name='Quantity']").val();
+            var unitid = $(row).find("input[name='Unitid']").val();
+            var unitname = $(row).find("input[name='UnitName']").val();
+            var itemprice = $(row).find("input[name='ItemPrice']").val();
+            var totalamount = $(row).find("input[name='TotalAmount']").val();
 
-        $('#btnremove').parent().parent().remove();
+            $('#select2-itemname-container').text(itemname);
 
-        var ftotal = 0.00;//+ $('#txttotal').val();
-        var pt = 0.00;
-        debugger;
-        if ($("table > tbody > tr").length > 0) {
-            $("table > tbody > tr").each(function () {
-                var ot = parseFloat($(this).find('td:eq(8)').html());
-                pt = ot - parseFloat(ftotal);
-                var ototal = ftotal;
-                ototal += ftotal;
-            })
+            $('#itemname').val(itemid);
+            $('#Quantity').val(quantity);
+            $('#unitname').val(unitid);
+            $('#ItemPrice').val(itemprice);
+            $('#txttotal').val(totalamount);
+            $('#btnadd').text('Update');
+
+            $(row).attr('data-editable', 'true');
+            $(row).addClass('highlighted');
         }
 
+        function updateRow() {
+            var itemid = $('#itemname option:selected').val();
+            var itemname = $('#itemname option:selected').text();
+            var unitprice = parseFloat($('#ItemPrice').val());
+            var quantity = $('#Quantity').val();
+            var Unitid = $('#unitname option:selected').val();
+            var Unittext = $('#unitname option:selected').text();
+            //var discount = $('#txtdiscount').val();
+            var modifychild = parseInt($('#modify').val());
+            if (itemid == "" || itemname == "" || unitprice == "" || quantity == 0 || Unitid == 0) {
+                alert("Please Fill Item Details");
+            } else {
+                $('.highlighted').remove();
+                btnadd()
+            }
+            $('#btnadd').text('Add');
+            $('.highlighted').removeClass('highlighted').removeAttr('data-editable');
 
-        $('#txtfinaltotal').val(parseFloat(pt));
+        }
 
+        function addOrUpdateRow() {
+                debugger;
+            var btnLabel = $('#btnadd').text();
 
-    }
+            if (btnLabel === "Add") {
+                btnadd();
+            } else if (btnLabel === "Update") {
+                updateRow();
+            }
+        }
 
-    function removeDr(rowid) {
-        var cc = $(this).parent().html();
+        function remove() {
 
-        var test = $('table tbody tr').parent().parent().find('td:eq(7)').html();
+            $('#btnremove').parent().parent().remove();
 
-        var ftotal = 0.00;//+ $('#txttotal').val();
-        var oldtotal = $('#txtfinaltotal').val();
-        var pt = 0.00;
-
-
-        if ($("table > tbody > tr").length > 0) {
-            $("table > tbody > tr").each(function () {
-                var rownum = parseFloat($(this).find('td:eq(9)').html());
-
-                if (rownum == rowid) {
-                    debugger;
+            var ftotal = 0.00;//+ $('#txttotal').val();
+            var pt = 0.00;
+            debugger;
+            if ($("table > tbody > tr").length > 0) {
+                $("table > tbody > tr").each(function () {
                     var ot = parseFloat($(this).find('td:eq(8)').html());
                     pt = ot - parseFloat(ftotal);
-                    var newpt = oldtotal - pt;
-                    //var ototal = ftotal;
-                    //ototal += ftotal;
-                    //$(this).children().children().children().remove();
-                    //$('#btnremoveDr').parent().parent().remove();
-                    $('#txtfinaltotal').val(newpt);
-                    $('#txttotal1').val(newpt);
+                    var ototal = ftotal;
+                    ototal += ftotal;
+                })
+            }
 
 
-                    var deletedid = parseInt($(this).find('td:eq(10)').html());
-                    var check = $('#modify').val();
-                    if (isNaN(deletedid)) {
-                        var ff = 0;
-                    }
-                   else if (check == 1 ) {
-                        //var row2 = "<td ><input type='number' value='0' name='deletedchild' id='deletedchild /></td>";
-                        var row2 = "<th hidden><input type='hidden' name='deletedchild' value=" + deletedid + " /></th>";
-                        $('table tfoot tr').append(row2);
-
-                    }
+            $('#txtfinaltotal').val(parseFloat(pt));
 
 
-                    $(this).find('td:eq(9)').parent().remove();
-
-
-                }
-
-            })
         }
 
+        function removeDr(rowid) {
+
+            var cc = $(this).parent().html();
+
+            var test = $('table tbody tr').parent().parent().find('td:eq(7)').html();
+
+            var ftotal = 0.00;//+ $('#txttotal').val();
+            var oldtotal = $('#txtfinaltotal').val();
+            var pt = 0.00;
+
+
+            if ($("table > tbody > tr").length > 0) {
+                $("table > tbody > tr").each(function () {
+                    var rownum = parseFloat($(this).find('td:eq(9)').html());
+
+                    if (rownum == rowid) {
+                        debugger;
+                        var ot = parseFloat($(this).find('td:eq(8)').html());
+                        pt = ot - parseFloat(ftotal);
+                        var newpt = oldtotal - pt;
+                        //var ototal = ftotal;
+                        //ototal += ftotal;
+                        //$(this).children().children().children().remove();
+                        //$('#btnremoveDr').parent().parent().remove();
+                        $('#txtfinaltotal').val(newpt);
+                        $('#txttotal1').val(newpt);
+
+
+                        var deletedid = parseInt($(this).find('td:eq(10)').html());
+                        var check = $('#modify').val();
+                        if (isNaN(deletedid)) {
+                            var ff = 0;
+                        }
+                        else if (check == 1 ) {
+                            //var row2 = "<td ><input type='number' value='0' name='deletedchild' id='deletedchild /></td>";
+                            var row2 = "<th hidden><input type='hidden' name='deletedchild' value=" + deletedid + " /></th>";
+                            $('table tfoot tr').append(row2);
+
+                        }
+
+
+                        $(this).find('td:eq(9)').parent().remove();
+
+
+                    }
+
+                })
+            }
 
 
 
@@ -1356,38 +1428,25 @@
 
 
 
-        //var ftotal = 0.00;//+ $('#txttotal').val();
-        //var pt = 0.00;
-        //debugger;
-        //if ($("table > tbody > tr").length > 0) {
-        //    $("table > tbody > tr").each(function () {
-        //        var ot = parseFloat($(this).find('td:eq(7)').html());
-        //        pt = ot - parseFloat(ftotal);
-        //        //var ototal = ftotal;
-        //        //ototal += ftotal;
-        //    })
-        //}
+
+                //var ftotal = 0.00;//+ $('#txttotal').val();
+                //var pt = 0.00;
+                //debugger;
+                //if ($("table > tbody > tr").length > 0) {
+                //    $("table > tbody > tr").each(function () {
+                //        var ot = parseFloat($(this).find('td:eq(7)').html());
+                //        pt = ot - parseFloat(ftotal);
+                //        //var ototal = ftotal;
+                //        //ototal += ftotal;
+                //    })
+                //}
 
 
-        //$('#debittotal').val(parseFloat(pt));
-        //$('#txtDebitTotal').val(parseFloat(pt));
+                //$('#debittotal').val(parseFloat(pt));
+                //$('#txtDebitTotal').val(parseFloat(pt));
 
 
     }
-
-
-
-
-
-        //$('#txbillsundry').change(function () {
-        //    debugger;
-        //    var sundryid = $('#txbillsundry option:selected').val();
-
-
-
-        //});
-
-
 
         function btnaddbillsundry() {
 
@@ -1477,8 +1536,6 @@
             }
         };
 
-
-
         function removeBillSundry(rowid) {
             var cc = $(this).parent().html();
 
@@ -1548,14 +1605,7 @@
                 })
             }
 
-
-
         }
-
-
-
-
-
 
         function btnSaveVoucher() {
             var form = $('#VoucherForm').serialize();
@@ -1564,53 +1614,55 @@
 
             debugger;
             if (childlen > 0) {
+                if (check == 1) {
+                    var con = confirm("Are u sure u want to Update Voucher");
 
+                }
+                else {
+                    var con = confirm("Are u sure u want Add  Voucher");
+                }
+                if (con == true) {
+                    debugger;
+                    $.ajax({
+                        type: 'POST',
+                        data: form,
+                        beforeSend: function () { $(".se-pre-con").fadeIn("slow"); },
+                        complete: function () { $(".se-pre-con").fadeOut("slow"); },
+                        url: "@Url.Action("SaveSVoucher", "Sales")"
 
-            if (check == 1) {
-                var con = confirm("Are u sure u want to Update Voucher");
+                    }).done(function (data) {
+                        alert("Voucher Save Successfully ");
+                        Test();
+                    }).fail(function (jqXHR, textStatus) {
+                        alert("Your Voucher cant be save,Contact Admin");
 
+                    });
+
+                }
+                else {
+                    alert("Ok");
+                }
             }
             else {
-                var con = confirm("Are u sure u want Add  Voucher");
-
+                    alert("Please Fill details");
             }
-            if (con == true) {
-                debugger;
-                $.ajax({
-                    type: 'POST',
-                    data: form,
-                    beforeSend: function () { $(".se-pre-con").fadeIn("slow"); },
-                    //complete: function () { $(".se-pre-con").fadeOut("slow"); },
-                    url: "@Url.Action("SaveSVoucher", "Sales")"
+        };
+        function reloadPage() {
+            location.reload(true);
+        };
 
-                }).done(function (data) {
-                    alert("Voucher Save Successfully ");
-                    location.reload();
-                }).fail(function (jqXHR, textStatus) {
-                    alert("Your Voucher cant be save,Contact Admin");
-
-                });
-
-            }
-            else {
-                alert("Ok");
-            }
-        }
-        else {
-                alert("Please Fill details");
-
-        }
-
-
-    };
-
-
-
-
-
-
-
-    </script>
+        function Test() {
+            $('#printViewModal1').removeClass("fade");
+            $('#printViewModal1').modal('show');
+            $('#printViewModal1').fadeIn(1000);
+        };
+        function PrintVoucher() {
+            var id = $('#VoucherNumber').val();
+            var url = '@Url.Action("PrintSaveVoucher", "Sales")';
+            url += '?MasterID=' + id;
+            window.location.href = url;
+        };
+</script>
 }
 else if (Model.vouchertypeid == 2 || Model.vouchertypeid == 10)
 {
@@ -1779,19 +1831,19 @@ else if (Model.vouchertypeid == 2 || Model.vouchertypeid == 10)
             }
         }
     });
-        $('#btnadd').mousedown(function () {
-            debugger;
-            btnadd();
-        });
-    $("#btnadd").on({
-        keydown: function (ev) {
-            if (ev.which === 13) {   // enter button
-                debugger;
-                btnadd();
+    //    $('#btnadd').mousedown(function () {
+    //        debugger;
+    //        btnadd();
+    //    });
+    //$("#btnadd").on({
+    //    keydown: function (ev) {
+    //        if (ev.which === 13) {   // enter button
+    //            debugger;
+    //            btnadd();
 
-            }
-        }
-    });
+    //        }
+    //    }
+    //});
     $("#btnadd").focusin(function () {
         $(this).css("background-color", "darkgreen")
     })
@@ -2156,176 +2208,197 @@ function enableEnter(event) {
         });
 
         function btnadd() {
-            debugger;
-        var itemid = $('#itemname option:selected').val();
-       var itemname = $('#itemname option:selected').text();
-       var unitprice = parseFloat($('#ItemPrice').val());
-        var quantity = $('#Quantity').val();
-        var Unitid = $('#unitname option:selected').val();
-        var Unittext = $('#unitname option:selected').text();
-        //var discount = $('#txtdiscount').val();
-       var modifychild = parseInt($('#modify').val());
+
+            var itemid = $('#itemname option:selected').val();
+            var itemname = $('#itemname option:selected').text();
+            var unitprice = $('#ItemPrice').val();
+            var quantity = $('#Quantity').val();
+            var Unitid = $('#unitname option:selected').val();
+            var Unittext = $('#unitname option:selected').text();
+            var availquantity = $('#availQuantity').html();
+            var modifychild = parseInt($('#modify').val());
+
+            //var discount = $('#txtdiscount').val();
+            var rowid = 1;
+            if ($("table > tbody > tr").length > 0) {
+                $("table  tbody  tr").each(function () {
+
+                    //var ffx = $(this).find('td:eq(5)').html();
+                    //var new = $('#total').attr('value');
+
+                    var oldrow = parseInt($(this).find('td:eq(9)').html());
 
 
-       var rowid = 1;
-       if ($("table > tbody > tr").length > 0) {
-           $("table  tbody  tr").each(function () {
-
-               //var ffx = $(this).find('td:eq(5)').html();
-               //var new = $('#total').attr('value');
-               debugger;
-
-               var oldrow = parseInt($(this).find('td:eq(9)').html());
-
-
-               //ftotal += $(t).find('input[name=Total]').val();a
-               rowid = oldrow + 1;
-           });
-       }
-
-        var total = $('#txttotal').val();
-        //var btn = $('#btnadd').hasClass("disabled");
-        if (itemid == "" || itemname == "" || unitprice == "" || quantity == 0 || Unitid== 0) {
-            alert("Please Fill Item Details");
-        }
-
-        else {
-            var removebtn = "<button type='button' class='btn btn-danger ' id='btnremove' onclick='removeDr(" + rowid + ")'><i class='glyphicon glyphicon-minus'></i></button>'";
-
-            // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
-
-            if (modifychild == 1) {
-                var row = ` <tr id='tr'>
-            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
-            <td><input readonly class='form-control'   value="`+ itemname + `" /></td>
-            <td><input readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
-            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
-            <td><input readonly class='form-control'  value="`+ Unittext + `"  /></td>
-            <td><input readonly type='number'  class='form-control text-right' value="`+ unitprice + `" name="ItemPrice" /></td>
-            <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
-            <td>`+ removebtn + `</td>
-            <td hidden>` + total + `</td>
-          <td hidden>`+ rowid + `</td>
-           <td hidden><input type="hidden" value="0" name="newchild2" id="newchild2" /></td>
-            </tr>`;
-
-                $('#body').append(row);
-
+                    //ftotal += $(t).find('input[name=Total]').val();a
+                    rowid = oldrow + 1;
+                });
             }
-            else if(modifychild == 0) {
-                var row = ` <tr id='tr'>
-            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
-            <td><input readonly class='form-control'   value="`+ itemname + `" /></td>
-            <td><input readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
-            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
-            <td><input readonly class='form-control'  value="`+ Unittext + `"  /></td>
-            <td><input type='number' readonly  class='form-control text-right' value="`+ unitprice + `" name="ItemPrice" /></td>
-            <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
-            <td>`+ removebtn + `</td>
-            <td hidden>` + total + `</td>
-          <td hidden>`+ rowid + `</td>
-
-            </tr>`;
-
-                $('#itembody').append(row);
+            var total = $('#txttotal').val();
+            //var btn = $('#btnadd').hasClass("disabled");
+            if (itemid == "" || itemname == "" || unitprice == "" || quantity == 0 || Unitid == 0) {
+                alert("Please Fill Item Details");
             }
 
-
-
-
-            //var ftotal = 0;//+ $('#txttotal').val();
-            //    if ($("table > tbody > tr").length > 0) {
-            //    $("table  tbody  tr").each(function () {
-            //        var ffx = $(this).find('td:eq(5)').html();
-            //        //var new = $('#total').attr('value');
-            //        debugger;
-            //        ftotal += parseFloat($(this).find('td:eq(8)').html());
-
-            //        //ftotal += $(t).find('input[name=Total]').val();a
-
-            //    });
-            //    }
-            //debugger;
-            $('#txtfinaltotal').val(ftotal);
-
-            $('#txttotal1').val(ftotal);
-
-            $('#itemname option:selected').val(0);
-
-            //$('#ItemID').text();
-            //$('#ItemPrice').val();
-            //$('#Quantity').val(0);
-            ////$('#txtdiscount').val("0.00");
-            //$('#txttotal').val("0.00");
-            //$('#Unitid').val();
-            //$('#itemname').focus();
-
-            ////////////////////////
-            $('#ItemID').text();
-            //$('#itemname option:selected').val(0);
-            $('#select2-itemname-container').text("---Select Item---");
-
-            $('#ItemPrice').val("");
-            $('#Quantity').val("");
-            //$('#txtdiscount').val("0.00");
-            $('#txttotal').val("0.00");
-            $('#unitname ').val("");
-            $('#itemname').focus();
-
-
-            var ftotal = 0;
-            if (modifychild == 1) {
-
-                var rowcheck = $('#newchild2').length;
-                if (rowcheck == 1) {
-                    ftotal = 0;
-                } else {
-                    ftotal = parseFloat($('#txtfinaltotal').val());
-
-                }
-                if ($("#table > #body > #tr").length > 0) {
-                    $("#table > #body > #tr").each(function () {
-
-
-
-                        var ffx = $(this).find('td:eq(8)').html();
-                        //var new = $('#total').attr('value');
-                        debugger;
-                        if (ffx != null) {
-                            ftotal += parseFloat(ffx);
-                        }
-
-
-                        //ftotal += $(t).find('input[name=Total]').val();a
-
-                    });
-                }
-                $('#txtfinaltotal').val(ftotal);
-                $('#txttotal1').val(ftotal);
-            }
             else {
-                if ($("#table > #itembody > #tr").length > 0) {
-                    $("#table > #itembody >  #tr").each(function () {
+                var removebtn = "<button type='button' class='btn btn-danger' id='btnremove' onclick='removeDr(`" + rowid + "` )'><i class='glyphicon glyphicon-minus'></i></button>'";
+                //var editUpdatebtn = "<button type='button' class='btn btn-primary' id='btnedit' onclick ='editRow(this)'>Edit</button><button type='button' class='btn btn-success' id='btnupdate' style='display: none;' onclick='updateRow(this)'>Update</button>";
+                // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
+                if (modifychild == 1) {
+                    var row = ` <tr id='tr' onclick='editRow(this)' >
+                            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
+                            <td><input readonly class='form-control' name="itemname"   value="`+ itemname + `" /></td>
+                            <td><input   readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
+                            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
+                            <td><input readonly class='form-control' name="UnitName" value="`+ Unittext + `"  /></td>
+                            <td><input readonly  class='form-control text-right' type='number' value="`+ unitprice + `" name="ItemPrice" /></td>
+                            <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
+                            <td>`+ removebtn + `</td>
+                            <td hidden>` + total + `</td>
+                            <td hidden>`+ rowid + `</td>
+                            <td hidden><input type="hidden" value="0" name="newchild2" id="newchild2" /></td>
+                            </tr>`;
 
-                        var lengthh = $("#table > #itembody >  #tr").length;
-                        var ffx = $(this).find('td:eq(8)').html();
-                        //var new = $('#total').attr('value');
-                        debugger;
-                        if (ffx != null) {
-                            ftotal += parseFloat(ffx);
-                        }
+                    $('#body').append(row);
 
-                        //ftotal += $(t).find('input[name=Total]').val();
-
-                    });
                 }
-                $('#txtfinaltotal').val(ftotal);
-                $('#txttotal1').val(ftotal);
+                else if (modifychild == 0) {
+                    var row = ` <tr id='tr' onclick='editRow(this)' >
+                            <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
+                            <td><input readonly class='form-control' name="itemname"  value="`+ itemname + `" /></td>
+                            <td><input readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
+                            <td hidden><input name="Unitid" value="`+ Unitid + `"/></td>
+                            <td><input readonly class='form-control' name="UnitName"  value="`+ Unittext + `"  /></td>
+                            <td><input readonly  class='form-control text-right' type='number' value="`+ unitprice + `" name="ItemPrice" /></td>
+                            <td><input readonly class='form-control text-right' value="`+ total + `" name="TotalAmount" id='total' /></td>
+                            <td>`+ removebtn + `</td>
+                            <td hidden>` + total + `</td>
+                            <td hidden>`+ rowid + `</td>
+                            </tr>`;
 
+
+                    //$('table tbody').append(row);
+                    $('#itembody').append(row);
+                }
+
+                $('#ItemID').text();
+                //$('#itemname option:selected').text("---Select Item---");
+                $('#select2-itemname-container').text("---Select Item---");
+
+                $('#ItemPrice').val("");
+                $('#Quantity').val("");
+                //$('#txtdiscount').val("0.00");
+                $('#txttotal').val("0.00");
+                debugger;
+                $('#unitname ').val("");
+                $('#itemname').focus();
+                var ftotal = 0;
+                if (modifychild == 1) {
+
+                    var rowcheck = $('#newchild2').length;
+                    if (rowcheck == 1) {
+                        ftotal = 0;
+                    } else {
+                        ftotal = parseFloat($('#txtfinaltotal').val());
+
+                    }
+                    if ($("#table > #body > #tr").length > 0) {
+                        $("#table > #body > #tr").each(function () {
+
+
+
+                            var ffx = $(this).find('td:eq(8)').html();
+                            //var new = $('#total').attr('value');
+                            debugger;
+                            if (ffx != null) {
+                                ftotal += parseFloat(ffx);
+                            }
+
+
+                            //ftotal += $(t).find('input[name=Total]').val();a
+
+                        });
+                    }
+                    $('#txtfinaltotal').val(ftotal);
+                    $('#txttotal1').val(ftotal);
+                }
+                else {
+                    if ($("#table > #itembody > #tr").length > 0) {
+                        $("#table > #itembody >  #tr").each(function () {
+
+                            var lengthh = $("#table > #itembody >  #tr").length;
+                            var ffx = $(this).find('td:eq(8)').html();
+                            //var new = $('#total').attr('value');
+                            debugger;
+                            if (ffx != null) {
+                                ftotal += parseFloat(ffx);
+                            }
+
+                            //ftotal += $(t).find('input[name=Total]').val();
+
+                        });
+                    }
+                    $('#txtfinaltotal').val(ftotal);
+                    $('#txttotal1').val(ftotal);
+
+                }
             }
+        };
+
+        function editRow(row) {
+            $('.highlighted').removeClass('highlighted').removeAttr('data-editable');
+
+            debugger;
+            var itemid = $(row).find("input[name='ItemID']").val();
+            var itemname = $(row).find("input[name='itemname']").val();
+            var quantity = $(row).find("input[name='Quantity']").val();
+            var unitid = $(row).find("input[name='Unitid']").val();
+            var unitname = $(row).find("input[name='UnitName']").val();
+            var itemprice = $(row).find("input[name='ItemPrice']").val();
+            var totalamount = $(row).find("input[name='TotalAmount']").val();
+
+            $('#select2-itemname-container').text(itemname);
+
+            $('#itemname').val(itemid);
+            $('#Quantity').val(quantity);
+            $('#unitname').val(unitid);
+            $('#ItemPrice').val(itemprice);
+            $('#txttotal').val(totalamount);
+            $('#btnadd').text('Update');
+
+            $(row).attr('data-editable', 'true');
+            $(row).addClass('highlighted');
+        }
+
+        function updateRow() {
+            var itemid = $('#itemname option:selected').val();
+            var itemname = $('#itemname option:selected').text();
+            var unitprice = parseFloat($('#ItemPrice').val());
+            var quantity = $('#Quantity').val();
+            var Unitid = $('#unitname option:selected').val();
+            var Unittext = $('#unitname option:selected').text();
+            //var discount = $('#txtdiscount').val();
+            var modifychild = parseInt($('#modify').val());
+            if (itemid == "" || itemname == "" || unitprice == "" || quantity == 0 || Unitid == 0) {
+                alert("Please Fill Item Details");
+            } else {
+                $('.highlighted').remove();
+                btnadd();}
+            $('#btnadd').text('Add');
+            $('.highlighted').removeClass('highlighted').removeAttr('data-editable');
 
         }
-    };
+
+        function addOrUpdateRow() {
+            debugger;
+            var btnLabel = $('#btnadd').text();
+
+            if (btnLabel === "Add") {
+                btnadd();
+            } else if (btnLabel === "Update") {
+                updateRow();
+            }
+        }
+
 
 
     function removee() {
@@ -2661,13 +2734,6 @@ function enableEnter(event) {
             alert("Please Fill Details")
         }
     };
-
-
-
-
-
-
-
     </script>
 }
 

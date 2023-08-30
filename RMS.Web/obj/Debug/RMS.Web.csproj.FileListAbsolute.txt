@@ -936,3 +936,5 @@ C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\R
 C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.CommonControls.dll
 C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\stdole.dll
 C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.Shared.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.DataDefModel.dll
+C:\Users\WSPC1\OneDrive\Desktop\New Projects\EfastFinanceAccounts\EfastFinance\RMS.Web\bin\CrystalDecisions.ReportAppServer.Controllers.dll

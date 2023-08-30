@@ -154,7 +154,7 @@
 
                     <lablel class="col-md-2" style="color:black">Narration</lablel>
                     <div class="col-md-4">
-                        <textarea class="form-control" id="Narration" name="Narration" placeholder="Enter Voucher Narration">@Model.Narration</textarea>
+                        <input type="text" class="form-control" id="Narration" name="Narration" placeholder="Enter Voucher Narration">@Model.Narration/>
                     </div>
                 }
                 else
@@ -198,7 +198,7 @@
                     </div>
                     <lablel class="col-md-2" style="color:black">Narration</lablel>
                     <div class="col-md-4">
-                        <textarea class="form-control" id="Narration" name="Narration" placeholder="Enter Voucher Narration"></textarea>
+                        <input  type="text" class="form-control" id="Narration" name="Narration" placeholder="Enter Voucher Narration"/>
                     </div>
                 }
 
@@ -619,73 +619,123 @@
 
 
     });
+    @if(Model.vouchertypeid == 13)
+     {
 
-
+     }
     $(document).on({
         keydown: function (ev) {
-            if (ev.which === 13) {   // enter button
+            if (ev.which === 13) {
                 debugger;
-
-                var acccid = $('#Quantity').val();
-                if (acccid == 0 || acccid == "") {
-
-
-                    //$('.select2-selectio  n--single').focus();
-                    //$('table tfoot tr th span').attr("aria-labelledby", "select2-itemname-container").focus()
-                    var accountid = $('#select2-Partyid_Accountid-container').text();
-                    if (accountid == "---Select PartyName---") {
-                        $('#Partyid_Accountid').focus();
-
-                    }
-
-
-                }
-            }
-        }
-    });
-
-    $("#Partyid_Accountid").on({
-        keydown: function (ev) {
-            if (ev.which === 13) {   // enter button
-                var accid = $('#Partyid_Accountid option:selected').val();
+                var locationid = $('#LocationID').val();
+                var partyid = $('#select2-Partyid_Accountid-container').text();
+                var partyval = $('#Partyid_Accountid').val();
+                var locationid2 = $('#LocationID2').val();
+                var narration = $('#Narration').val();
+                var itemid = $('#select2-itemname-container').text();
+                var itemval = $('#itemname').val();
+                var quantity = $('#Quantity').val();
+                var itemprice = $('#ItemPrice').val();
                 debugger;
-                if (accid != 0) {
-                    console.log('enter button pressed');
+                if (locationid == '') {
                     $('#LocationID').focus();
-                }
-                else {
-                    $('#Partyid_Accountid').focus();
-                }
-
-            }
-        }
-    });
-        $("#LocationID").on({
-            keydown: function (ev) {
-                if (ev.which === 13) {   // enter button
-                    var accid2 = $('#LocationID option:selected').val();
-                    debugger;
-                    if (accid2 != 0) {
-                        console.log('enter button pressed');
-                        $('#Narration').focus();
+                } else if (partyval == '') {
+                    if (partyid == '---Select PartyName---') {
+                        $('#Partyid_Accountid').focus();
                     }
-                    else {
-                        $('#LocationID').focus();
+                } else if (locationid2 == '') {
+                    if (locationid2 == '') {
+                        $('#LocationID2').focus();
                     }
-
+                } else if (narration == '') {
+                    $('#Narration').focus();
+                } else if (itemval == '') {
+                    if (itemid == '---Select Item---') {
+                        $('#itemname').focus();
+                    }
+                } else if (quantity == '') {
+                    if (quantity == '') {
+                        $('#Quantity').focus();
+                    }
+                } else if (itemprice == '') {
+                    if (itemprice == '') {
+                        $('#ItemPrice').focus();
+                    }
                 }
+                
+            } else if (ev.which === 16) {
+                $('#btnSaveVoucher').focus();
             }
-        });
-    $("#Narration").on({
-        keydown: function (ev) {
-            if (ev.which === 13) {   // enter button
-                console.log('enter button pressed');
-                var narr = $('#Narration').val();
 
-                $('#itemname').focus();
-            }
         }
-    });
+      }
+    );
+
+    //$(document).on({
+    //    keydown: function (ev) {
+    //        if (ev.which === 13) {   // enter button
+    //            debugger;
+
+    //            var acccid = $('#Quantity').val();
+    //            if (acccid == 0 || acccid == "") {
+
+
+    //                //$('.select2-selectio  n--single').focus();
+    //                //$('table tfoot tr th span').attr("aria-labelledby", "select2-itemname-container").focus()
+    //                var accountid = $('#select2-Partyid_Accountid-container').text();
+    //                if (accountid == "---Select PartyName---") {
+    //                    $('#Partyid_Accountid').focus();
+
+    //                }
+
+
+    //            }
+    //        }
+    //    }
+    //});
+
+    //$("#Partyid_Accountid").on({
+    //    keydown: function (ev) {
+    //        if (ev.which === 13) {   // enter button
+    //            var accid = $('#Partyid_Accountid option:selected').val();
+    //            debugger;
+    //            if (accid != 0) {
+    //                console.log('enter button pressed');
+    //                $('#LocationID').focus();
+    //            }
+    //            else {
+    //                $('#Partyid_Accountid').focus();
+    //            }
+
+    //        }
+    //    }
+    //});
+    //    $("#LocationID").on({
+    //        keydown: function (ev) {
+    //            if (ev.which === 13) {   // enter button
+    //                var accid2 = $('#LocationID option:selected').val();
+    //                debugger;
+    //                if (accid2 != 0) {
+    //                    console.log('enter button pressed');
+    //                    $('#Narration').focus();
+    //                }
+    //                else {
+    //                    $('#LocationID').focus();
+    //                }
+
+    //            }
+    //        }
+    //    });
+    //$("#Narration").on({
+    //    keydown: function (ev) {
+    //        if (ev.which === 13) {   // enter button
+    //            console.log('enter button pressed');
+    //            var narr = $('#Narration').val();
+
+    //            $('#itemname').focus();
+    //        }
+    //    }
+    //});
 
     //$("#itemname").on({
     //    keydown: function (ev) {
@@ -764,29 +814,29 @@
                 //}
 
             }
-            //else if (ev.which === 9) {
-            //    var quantt = parseInt($('#Quantity').val());
-            //    debugger;
-            //    var avstock = parseInt($('#availQuantity').html());
+                //else if (ev.which === 9) {
+                //    var quantt = parseInt($('#Quantity').val());
+                //    debugger;
+                //    var avstock = parseInt($('#availQuantity').html());
 
-            //    if (quantt == 0 && quantt < 0) {
-            //        $('#Quantity').focus();
-            //        $('#Quantity').val(0);
-            //    }
-            //    else if (quantt > avstock) {
-            //        alert("your item has no available stock");
-            //        $('#Quantity').val(0);
-            //        $('#itemname ').focus();
+                //    if (quantt == 0 && quantt < 0) {
+                //        $('#Quantity').focus();
+                //        $('#Quantity').val(0);
+                //    }
+                //    else if (quantt > avstock) {
+                //        alert("your item has no available stock");
+                //        $('#Quantity').val(0);
+                //        $('#itemname ').focus();
 
-            //    }
-            //    else {
-            //        console.log('enter button pressed');
-            //        $('#ItemPrice').focus();
-            //    }
+                //    }
+                //    else {
+                //        console.log('enter button pressed');
+                //        $('#ItemPrice').focus();
+                //    }
 
 
 
-            //}
+                //}
         }
     });
 
@@ -1201,7 +1251,6 @@
                 $('#child2').hide();
                 $('#child3').show();
             }
-
 
            else if (discount != "" && total != "0.00") {
                 var result = parseFloat(total) - parseFloat(discount);
