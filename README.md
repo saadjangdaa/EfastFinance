@@ -1,1 +1,1 @@
-"# EfastFinance" 
+Efast Finance - Robust Accounting Software
