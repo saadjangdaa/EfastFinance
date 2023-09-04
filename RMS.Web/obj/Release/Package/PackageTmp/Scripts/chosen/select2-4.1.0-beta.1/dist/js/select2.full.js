@@ -6000,21 +6000,26 @@
                   }
                 }
 
-                else if (vouchertype == 9) {
+                else if (vouchertype == 9 || vouchertype == 12 || vouchertype == 13) {
 
                   var currid = $('#currencyid ').val();
 
                   var accid = $('#select2-Partyid_Accountid-container').text();
+                  var itemid = $('#select2-itemname-container').text();
 
-                  if (accid == "---Select AccountName---") {
+                  if (accid == "---Select AccountName---" || accid == "---Select PartyName---") {
                     self.open();
 
+                  }
+                  else if (itemid == "---Select Item---") {
+                    self.open();
                   }
                   else {
                     $('#startdate').focus();
 
                   }
                 }
+               
               });
               self.close();
 

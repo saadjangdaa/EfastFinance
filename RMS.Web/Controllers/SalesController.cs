@@ -1,4 +1,6 @@
-﻿//using CrystalDecisions.CrystalReports.Engine;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.ReportSource;
+using CrystalDecisions.Shared;
 using RMS.Web.Models;
 using RMS.Web.Models.ViewModels;
 using RMS.Web.Services;
@@ -30,7 +32,7 @@ namespace RMS.Web.Controllers
                 var vouchercount = db.VoucherMaster.Where(x => x.VoucherTypeID == 1 && x.Partyid_Accountid != 1060).Count();
                 if (vouchercount > 0)
                 {
-                    ViewBag.sales =  (int)db.VoucherMaster.Where(m => m.VoucherTypeID == 1 && m.Partyid_Accountid != 1060).Sum(m => m.VoucherFinalTotal);
+                    ViewBag.sales = (int)db.VoucherMaster.Where(m => m.VoucherTypeID == 1 && m.Partyid_Accountid != 1060).Sum(m => m.VoucherFinalTotal);
                     VoucherMasterViewModel sales = new VoucherMasterViewModel();
                     sales.Vouchermasterlist = db.VoucherMaster.Where(m => m.VoucherTypeID == 1 && m.Partyid_Accountid != 1060).ToList();
 
@@ -89,7 +91,7 @@ namespace RMS.Web.Controllers
             try
             {
                 var quantity = ms.FinalStock(ItemId);
-            return Json(quantity, JsonRequestBehavior.AllowGet);
+                return Json(quantity, JsonRequestBehavior.AllowGet);
 
             }
             catch (Exception e)
@@ -127,7 +129,7 @@ namespace RMS.Web.Controllers
         {
             VoucherMasterViewModel sales = new VoucherMasterViewModel();
 
-             sales.Vouchermasterlist = db.VoucherMaster.Where(m => m.VoucherTypeID == 1 && m.Partyid_Accountid != 1060).ToList();
+            sales.Vouchermasterlist = db.VoucherMaster.Where(m => m.VoucherTypeID == 1 && m.Partyid_Accountid != 1060).ToList();
             sales.vouchertypeid = 1;
             return View(sales);
         }
@@ -188,7 +190,7 @@ namespace RMS.Web.Controllers
                     };
                     return View(masterview);
                 }
-                else 
+                else
                 {
                     var masterid = db.VoucherMaster.Where(m => m.vouchermasterid == id && m.DrCrType == 2).FirstOrDefault().VoucherNum_BillNum;
                     var vouchermaster = db.VoucherMaster.Find(masterid);
@@ -239,7 +241,7 @@ namespace RMS.Web.Controllers
                     };
                     return View(masterview);
                 }
-            
+
             }
             else
             {
@@ -256,7 +258,7 @@ namespace RMS.Web.Controllers
 
 
                 var vouchermaster = db.VoucherMaster.Find(masterid);
-                var voucherhild = db.VoucherChild.Where(m => m.VoucherMasterID == id ).ToList();
+                var voucherhild = db.VoucherChild.Where(m => m.VoucherMasterID == id).ToList();
                 List<BillSundryChild> billsundrychild = new List<BillSundryChild>();
                 if (vouchermaster.vouchermasterid != 0)
                 {
@@ -300,7 +302,7 @@ namespace RMS.Web.Controllers
                     modify = 1,
                     vouchertypeid = vouchermaster.VoucherTypeID,
                     BillSundrychildlist = billsundrychild,
-                    LocationID= vouchermaster.LocationID,
+                    LocationID = vouchermaster.LocationID,
                     VoucherMasterID = vouchermaster.vouchermasterid
 
 
@@ -313,7 +315,7 @@ namespace RMS.Web.Controllers
                 return RedirectToAction("Addsalevoucher");
             }
         }
-       public ActionResult PrintSaveVoucher(int? MasterID)
+        public ActionResult PrintSaveVoucher(int? MasterID)
         {
             var Units = db.Units.ToList();
             var items = db.Items.ToList();
@@ -324,8 +326,8 @@ namespace RMS.Web.Controllers
                 Quantity = w.Quantity,
                 Unitid = w.Unitid,
                 ItemPrice = w.ItemPrice,
-                ItemName = db.Items.Where(i => i.ItemID == w.ItemID).Select(q => q.ItemName).FirstOrDefault(),
                 UnitName = db.Units.Where(u => u.UnitID == w.Unitid).Select(q => q.UnitName).FirstOrDefault(),
+                ItemName = db.Items.Where(i => i.ItemID == w.ItemID).Select(q => q.ItemName).FirstOrDefault(),
                 TotalAmount = w.TotalAmount
             }).ToList();
             model.VoucherMasterID = MasterID;
@@ -339,13 +341,14 @@ namespace RMS.Web.Controllers
             }).FirstOrDefault();
             return View(model);
         }
-        //public ActionResult ReportSaleVoucher(int? MasterID)
+        //public ActionResult ReportSaleVoucher(string MasterID)
         //{
         //    ReportDocument report = new ReportDocument();
 
         //    report.Load(Server.MapPath("~/Reports/SaleVoucher.rpt"));
+
         //    var ReportData = db.Database.SqlQuery<VoucherMaster>("Sp_Salevoucher").ToList();
-            
+
         //    report.SetDataSource(ReportData);
 
         //    report.SetParameterValue("VoucherMasterID", MasterID);
@@ -353,6 +356,23 @@ namespace RMS.Web.Controllers
         //    ViewBag.Report = report;
         //    return View();
         //}
+        public ActionResult ReportSaleVoucher(int? MasterID)
+        {
+            ReportDocument rd = new ReportDocument();
+            rd.Load(Server.MapPath("~/Reports/SaleVoucher.rpt"));
+            rd.SetParameterValue("@vouchermasterid", MasterID);
+
+            var parameter = new SqlParameter("@vouchermasterid", SqlDbType.Int);
+            parameter.Value = MasterID == null ? 0 : MasterID; //?? (object)DBNull.Value;
+            var data = db.Database.SqlQuery<VoucherMaster>("EXEC Sp_Salevoucher @vouchermasterid", parameter).ToList();
+
+            rd.SetDataSource(data);
+            var stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            return File(stream, "application/pdf");
+        }
+
+
+
         //public ActionResult _PrintSaveVoucher2(int? MasterID)
         //{
         //    var Units = db.Units.ToList();
@@ -384,952 +404,953 @@ namespace RMS.Web.Controllers
         public ActionResult SaveSVoucher(VoucherMasterViewModel vouchermaster)
 
         {
-            try { 
-            if ( vouchermaster.modify == 0)
+            try
             {
-                var vouchermasterid2 = db.VoucherMaster.Count() + 1;
+                if (vouchermaster.modify == 0)
+                {
+                    var vouchermasterid2 = db.VoucherMaster.Count() + 1;
                     //var itemid = vouchermaster.ItemID; 
                     //var orderMasterId = 0;
                     int billsid = 0;
-                int billsundrynumber = db.BillSundryChild.Count() + 1;
-                double billsundrytotalamount = 0;
-                double billsamount = 0;
+                    int billsundrynumber = db.BillSundryChild.Count() + 1;
+                    double billsundrytotalamount = 0;
+                    double billsamount = 0;
 
-                //if (vouchermaster.BillSundryId == 0) 
-                //{
-                //    billsid = 3;
-                //}
-                //else if (vouchermaster.BillSundryId != 0)
-                //{
-                //    billsid = vouchermaster.BillSundryId;
-                //}
+                    //if (vouchermaster.BillSundryId == 0) 
+                    //{
+                    //    billsid = 3;
+                    //}
+                    //else if (vouchermaster.BillSundryId != 0)
+                    //{
+                    //    billsid = vouchermaster.BillSundryId;
+                    //}
 
-                //---------------------add billsundry----------------//
-                if (vouchermaster.BillSundryID != null && vouchermaster.BillSundryID.Count > 0)
-                {
-                    for (int i = 0; i < vouchermaster.BillSundryAmount.Count; i++)
+                    //---------------------add billsundry----------------//
+                    if (vouchermaster.BillSundryID != null && vouchermaster.BillSundryID.Count > 0)
                     {
-                        billsundrytotalamount += vouchermaster.BillSundryAmount[i];
-                    }
-
-                    for (int i = 0; i < vouchermaster.BillSundryID.Count; i++)
-                    {
-                        BillSundryChild billSundryChild = new BillSundryChild
+                        for (int i = 0; i < vouchermaster.BillSundryAmount.Count; i++)
                         {
-                            BillSundryID = vouchermaster.BillSundryID[i],
-                            BillSundryAmount = vouchermaster.BillSundryAmount[i],
-                            Vouchermasterid = vouchermasterid2,
-                            BillSundryNumber = billsundrynumber
-                        };
-                        db.BillSundryChild.Add(billSundryChild);
-                        db.SaveChanges();
+                            billsundrytotalamount += vouchermaster.BillSundryAmount[i];
+                        }
+
+                        for (int i = 0; i < vouchermaster.BillSundryID.Count; i++)
+                        {
+                            BillSundryChild billSundryChild = new BillSundryChild
+                            {
+                                BillSundryID = vouchermaster.BillSundryID[i],
+                                BillSundryAmount = vouchermaster.BillSundryAmount[i],
+                                Vouchermasterid = vouchermasterid2,
+                                BillSundryNumber = billsundrynumber
+                            };
+                            db.BillSundryChild.Add(billSundryChild);
+                            db.SaveChanges();
+                        }
                     }
-                }
-                else
-                {
-                    billsundrynumber = 0;
-                    billsundrytotalamount = 0;
-                }
-             
-                //---------------------Add VoucherChild---------------//
-                for (int i = 0; i < vouchermaster.ItemID.Count; i++)
-                {
+                    else
+                    {
+                        billsundrynumber = 0;
+                        billsundrytotalamount = 0;
+                    }
+
+                    //---------------------Add VoucherChild---------------//
+                    for (int i = 0; i < vouchermaster.ItemID.Count; i++)
+                    {
+                        if (vouchermaster.vouchertypeid == 1)
+                        {
+                            VoucherChild voucherchild = new VoucherChild
+                            {
+                                //VoucherchildID = 0,
+                                ItemID = vouchermaster.ItemID[i],
+                                Quantity = vouchermaster.Quantity[i],
+                                Unitid = vouchermaster.Unitid[i],
+                                ItemPrice = vouchermaster.ItemPrice[i],
+                                TotalAmount = vouchermaster.TotalAmount[i],
+                                BillsundryID = billsundrynumber,
+                                VoucherMasterID = vouchermasterid2,
+                                VoucherTypeID = 1,
+
+
+
+                            };
+                            db.VoucherChild.Add(voucherchild);
+                            db.SaveChanges();
+
+                        }
+                        else if (vouchermaster.vouchertypeid == 9)
+                        {
+                            VoucherChild voucherchild = new VoucherChild
+                            {
+                                //VoucherchildID = 0,
+                                ItemID = vouchermaster.ItemID[i],
+                                Quantity = vouchermaster.Quantity[i],
+                                Unitid = vouchermaster.Unitid[i],
+                                ItemPrice = vouchermaster.ItemPrice[i],
+                                TotalAmount = vouchermaster.TotalAmount[i],
+                                BillsundryID = billsundrynumber,
+                                VoucherMasterID = vouchermasterid2,
+                                VoucherTypeID = 9
+
+
+                            };
+                            db.VoucherChild.Add(voucherchild);
+                            db.SaveChanges();
+                        }
+
+
+                        Transactions trans = new Transactions
+                        {
+                            //TransactionID = 0,
+                            ItemID = vouchermaster.ItemID[i],
+                            Quantity = (-1) * vouchermaster.Quantity[i],
+                            TransDate = DateTime.Now,
+                            PayTypeID = 1,
+                            ItemPrice = vouchermaster.ItemPrice[i],
+                            TransType = 1
+                        };
+                        db.Transactions.Add(trans);
+                        db.SaveChanges();
+                        OrderServices orderServices = new OrderServices();
+
+                        try
+                        {
+                            //---update Stonks---//
+                            if (vouchermaster.vouchertypeid == 1)
+                            {
+                                var StockValues = orderServices.GetStockById(vouchermaster.ItemID[i]);
+                                StockValues.Quantity = StockValues.Quantity - vouchermaster.Quantity[i];
+                                orderServices.UpdateStock(StockValues);
+                            }
+                            else if (vouchermaster.vouchertypeid == 9)
+                            {
+                                var StockValues = orderServices.GetStockById(vouchermaster.ItemID[i]);
+                                StockValues.Quantity = StockValues.Quantity + vouchermaster.Quantity[i];
+                                orderServices.UpdateStock(StockValues);
+                            }
+                            //---update Stonks---//
+
+                        }
+                        catch (Exception)
+                        {
+
+                            var StockValues = orderServices.GetStockById(vouchermaster.ItemID[i]);
+                            StockValues.Quantity = 0;
+                            orderServices.UpdateStock(StockValues);
+                        }
+
+                    }
+
+                    //---------------------Add VoucherMaster---------------//
+
                     if (vouchermaster.vouchertypeid == 1)
                     {
-                        VoucherChild voucherchild = new VoucherChild
+
+                        VoucherMaster salemaster = new VoucherMaster
                         {
-                            //VoucherchildID = 0,
-                            ItemID = vouchermaster.ItemID[i],
-                            Quantity = vouchermaster.Quantity[i],
-                            Unitid = vouchermaster.Unitid[i],
-                            ItemPrice = vouchermaster.ItemPrice[i],
-                            TotalAmount = vouchermaster.TotalAmount[i],
-                            BillsundryID = billsundrynumber,
-                            VoucherMasterID = vouchermasterid2,
+                            //VoucherNum_BillNum = 0,
+                            VoucherCreateDate = vouchermaster.VoucherCreateDate,
+                            Partyid_Accountid = 1060,
+                            Narration = "sale account credit",
+                            VoucherFinalTotal = vouchermaster.FinalTotal,
                             VoucherTypeID = 1,
-                           
+                            DrCrType = 2,
+                            vouchermasterid = vouchermasterid2,
+                            LocationID = vouchermaster.LocationID
+
 
 
                         };
-                        db.VoucherChild.Add(voucherchild);
+                        db.VoucherMaster.Add(salemaster);
                         db.SaveChanges();
+                        ////////////////////////
+
+                        VoucherMaster vouchermsterr = new VoucherMaster
+                        {
+                            //VoucherNum_BillNum = 0,
+                            VoucherCreateDate = vouchermaster.VoucherCreateDate,
+                            Partyid_Accountid = vouchermaster.Partyid,
+                            Narration = vouchermaster.Narration,
+                            BillSundryId = billsundrynumber,
+                            BillSundryAmount = billsundrytotalamount,
+                            VoucherFinalTotal = vouchermaster.FinalTotal,
+                            VoucherTypeID = 1,
+                            DrCrType = 1,
+                            vouchermasterid = vouchermasterid2,
+                            LocationID = vouchermaster.LocationID
+
+
+                        };
+                        db.VoucherMaster.Add(vouchermsterr);
+                        db.SaveChanges();
+                    }
+                    else if (vouchermaster.vouchertypeid == 9)
+                    {
+                        VoucherMaster salemaster = new VoucherMaster
+                        {
+                            //VoucherNum_BillNum = 0,
+                            VoucherCreateDate = vouchermaster.VoucherCreateDate,
+                            Partyid_Accountid = 1060,
+                            Narration = "sale account debit",
+                            BillSundryAmount = billsundrytotalamount,
+                            VoucherFinalTotal = vouchermaster.FinalTotal,
+                            VoucherTypeID = 9,
+                            DrCrType = 1,
+                            vouchermasterid = vouchermasterid2,
+                            LocationID = vouchermaster.LocationID
+
+                        };
+                        db.VoucherMaster.Add(salemaster);
+                        db.SaveChanges();
+                        ////////////////////////
+                        VoucherMaster vouchermsterr = new VoucherMaster
+                        {
+                            //VoucherNum_BillNum = 0,
+                            VoucherCreateDate = vouchermaster.VoucherCreateDate,
+                            Partyid_Accountid = vouchermaster.Partyid,
+                            Narration = vouchermaster.Narration,
+                            BillSundryId = billsundrynumber,
+                            BillSundryAmount = billsundrytotalamount,
+                            VoucherFinalTotal = vouchermaster.FinalTotal,
+                            VoucherTypeID = 9,
+                            DrCrType = 2,
+                            vouchermasterid = vouchermasterid2,
+                            LocationID = vouchermaster.LocationID
+
+                        };
+                        db.VoucherMaster.Add(vouchermsterr);
+                        db.SaveChanges();
+                    }
+
+
+
+
+                    if (vouchermaster.vouchertypeid == 1)
+                    {
+                        //var masterid = db.VoucherMaster.Where(m => m.vouchermasterid == 76).FirstOrDefault().VoucherNum_BillNum;
+                        //var updatesalesvoucher = db.VoucherMaster.Find(masterid);
+                        //updatesalesvoucher.VoucherFinalTotal = updatesalesvoucher.VoucherFinalTotal + vouchermaster.FinalTotal;
+                        //db.Entry(updatesalesvoucher).State = System.Data.Entity.EntityState.Modified;
+                        //db.SaveChanges();
+
+
+                        //-------------------Update Revenue Group----------------------//
+
+                        var findaccidsales = db.AccGroup.Where(m => m.AccgroupID == 24).FirstOrDefault().AccgroupID;
+                        var findaccgroupsales = ms.Getaccgroupbyid(findaccidsales);
+                        var oldcreditsales = db.AccGroup.Where(m => m.AccgroupID == findaccgroupsales.AccgroupID).FirstOrDefault().CreditAmount;
+                        var oldbalancesales = db.AccGroup.Where(m => m.AccgroupID == findaccgroupsales.AccgroupID).FirstOrDefault().Accgroupbalance;
+
+                        findaccgroupsales.CreditAmount = oldcreditsales + vouchermaster.FinalTotal;
+                        findaccgroupsales.Accgroupbalance = oldbalancesales - vouchermaster.FinalTotal;
+                        ms.UpdateAccgroup(findaccgroupsales);
+
+
+                        //-------------------Update Sales Group----------------------//
+
+                        var findaccidsales2 = db.AccGroup.Where(m => m.AccgroupID == 1063).FirstOrDefault().AccgroupID;
+                        var findaccgroupsales2 = ms.Getaccgroupbyid(findaccidsales2);
+                        var oldcreditsales2 = db.AccGroup.Where(m => m.AccgroupID == findaccgroupsales2.AccgroupID).FirstOrDefault().CreditAmount;
+                        var oldbalancesales2 = db.AccGroup.Where(m => m.AccgroupID == findaccgroupsales2.AccgroupID).FirstOrDefault().Accgroupbalance;
+
+                        findaccgroupsales2.CreditAmount = oldcreditsales2 + vouchermaster.FinalTotal;
+                        findaccgroupsales2.Accgroupbalance = oldbalancesales2 - vouchermaster.FinalTotal;
+                        ms.UpdateAccgroup(findaccgroupsales2);
+
+
+                        ////-------------------Update Sales accouint----------------------//
+
+                        var findaccidsales3 = db.Account.Where(m => m.Accgroupid == findaccidsales2).FirstOrDefault().AccountID;
+                        var findaccgroupsales3 = ms.Getaccountbyid(findaccidsales3);
+                        var oldcreditsales3 = db.Account.Where(m => m.AccountID == findaccgroupsales3.AccountID).FirstOrDefault().CreditTotal;
+                        var oldbalancesales3 = db.Account.Where(m => m.AccountID == findaccgroupsales3.AccountID).FirstOrDefault().ClosingBalance;
+
+                        findaccgroupsales3.CreditTotal = oldcreditsales3 + vouchermaster.FinalTotal;
+                        findaccgroupsales3.ClosingBalance = oldbalancesales3 - vouchermaster.FinalTotal;
+                        ms.Updateaccount(findaccgroupsales3);
+
+
+                        //----------Update account Balance----------//
+                        var findaccount = ms.Getaccountbyid(vouchermaster.Partyid);
+                        var oldbalance = db.Account.Where(x => x.AccountID == vouchermaster.Partyid).FirstOrDefault().ClosingBalance;
+                        var olddebit = db.Account.Where(x => x.AccountID == vouchermaster.Partyid).FirstOrDefault().DebitTotal;
+
+                        findaccount.ClosingBalance = oldbalance + vouchermaster.FinalTotal;
+                        findaccount.DebitTotal = olddebit + vouchermaster.FinalTotal;
+                        ms.Updateaccount(findaccount);
+
+
+
+
+                        //----------Update account Group 1 Balance----------//
+                        var findaccgroup = ms.Getaccgroupbyid(findaccount.Accgroupid);
+                        var oldaccgrupdebit1 = db.AccGroup.Where(m => m.AccgroupID == findaccgroup.AccgroupID).FirstOrDefault().DebitAmount;
+                        var oldaccgrupbalance = db.AccGroup.Where(m => m.AccgroupID == findaccgroup.AccgroupID).FirstOrDefault().Accgroupbalance;
+
+                        if (findaccgroup.Accunderprimarygroupid != 0 && findaccgroup.Accunderprimarygroupid != null)
+                        {
+                            findaccgroup.Accgroupbalance = oldaccgrupbalance + vouchermaster.FinalTotal;
+                            findaccgroup.DebitAmount = oldaccgrupdebit1 + vouchermaster.FinalTotal;
+                            ms.UpdateAccgroup(findaccgroup);
+
+                            //---------------------Update Account primary group 2 credit----------------------------//
+
+                            var findaccprimgroupDr = ms.Getaccgroupbyid(findaccgroup.Accunderprimarygroupid);
+                            var oldaccprimgrupdebit2 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr.AccgroupID).FirstOrDefault().DebitAmount;
+                            var oldaccprimbalance2 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr.AccgroupID).FirstOrDefault().Accgroupbalance;
+
+                            if (findaccprimgroupDr.Accunderprimarygroupid != 0 && findaccprimgroupDr.Accunderprimarygroupid != null)
+                            {
+                                findaccprimgroupDr.Accgroupbalance = oldaccprimbalance2 + vouchermaster.FinalTotal;
+                                findaccprimgroupDr.DebitAmount = oldaccprimgrupdebit2 + vouchermaster.FinalTotal;
+                                ms.UpdateAccgroup(findaccprimgroupDr);
+
+
+                                //---------------------Update Account group 3 debit----------------------------//
+
+                                var findaccprimgroupDr3 = ms.Getaccgroupbyid(findaccprimgroupDr.Accunderprimarygroupid);
+                                var oldaccprimgrupdebit3 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr3.AccgroupID).FirstOrDefault().DebitAmount;
+                                var oldaccprimbalance3 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr3.AccgroupID).FirstOrDefault().Accgroupbalance;
+
+                                if (findaccprimgroupDr3.Accunderprimarygroupid != 0 && findaccprimgroupDr3.Accunderprimarygroupid != null)
+                                {
+                                    findaccprimgroupDr3.Accgroupbalance = oldaccprimbalance3 + vouchermaster.FinalTotal;
+                                    findaccprimgroupDr3.DebitAmount = oldaccprimgrupdebit3 + vouchermaster.FinalTotal;
+                                    ms.UpdateAccgroup(findaccprimgroupDr3);
+
+
+                                    //---------------------Update Account group 4 debit----------------------------//
+                                    var findaccprimgroupDr4 = ms.Getaccgroupbyid(findaccprimgroupDr3.Accunderprimarygroupid);
+                                    var oldaccprimgrupdebit4 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr4.AccgroupID).FirstOrDefault().DebitAmount;
+                                    var oldaccprimbalance4 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr4.AccgroupID).FirstOrDefault().Accgroupbalance;
+
+                                    if (findaccprimgroupDr4.Accunderprimarygroupid != 0 && findaccprimgroupDr4.Accunderprimarygroupid != null)
+                                    {
+                                        findaccprimgroupDr4.Accgroupbalance = oldaccprimbalance4 + vouchermaster.FinalTotal;
+                                        findaccprimgroupDr4.DebitAmount = oldaccprimgrupdebit4 + vouchermaster.FinalTotal;
+                                        ms.UpdateAccgroup(findaccprimgroupDr4);
+
+                                        //---------------------Update Account group 5 debit----------------------------//
+                                        var findaccprimgroupDr5 = ms.Getaccgroupbyid(findaccprimgroupDr4.Accunderprimarygroupid);
+                                        var oldaccprimgrupdebit5 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr5.AccgroupID).FirstOrDefault().DebitAmount;
+                                        var oldaccprimbalance5 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr5.AccgroupID).FirstOrDefault().Accgroupbalance;
+                                        if (findaccprimgroupDr5.Accunderprimarygroupid != 0 && findaccprimgroupDr5.Accunderprimarygroupid != null)
+                                        {
+                                            findaccprimgroupDr5.Accgroupbalance = oldaccprimbalance5 + vouchermaster.FinalTotal;
+                                            findaccprimgroupDr5.DebitAmount = oldaccprimgrupdebit5 + vouchermaster.FinalTotal;
+                                            ms.UpdateAccgroup(findaccprimgroupDr5);
+
+
+                                            //---------------------Update Account group 6 debit----------------------------//
+                                            var findaccprimgroupDr6 = ms.Getaccgroupbyid(findaccprimgroupDr5.Accunderprimarygroupid);
+                                            var oldaccprimgrupdebit6 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr6.AccgroupID).FirstOrDefault().DebitAmount;
+                                            var oldaccprimbalance6 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr6.AccgroupID).FirstOrDefault().Accgroupbalance;
+                                            if (findaccprimgroupDr6.Accunderprimarygroupid != 0 && findaccprimgroupDr6.Accunderprimarygroupid != null)
+                                            {
+                                                findaccprimgroupDr6.Accgroupbalance = oldaccprimbalance6 + vouchermaster.FinalTotal;
+                                                findaccprimgroupDr6.DebitAmount = oldaccprimgrupdebit6 + vouchermaster.FinalTotal;
+                                                ms.UpdateAccgroup(findaccprimgroupDr6);
+
+                                                //---------------------Update Account group 7 debit----------------------------//
+                                                var findaccprimgroupDr7 = ms.Getaccgroupbyid(findaccprimgroupDr6.Accunderprimarygroupid);
+                                                var oldaccprimgrupdebit7 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr7.AccgroupID).FirstOrDefault().DebitAmount;
+                                                var oldaccprimbalance7 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr7.AccgroupID).FirstOrDefault().Accgroupbalance;
+                                                if (findaccprimgroupDr7.Accunderprimarygroupid != 0 && findaccprimgroupDr7.Accunderprimarygroupid != null)
+                                                {
+                                                    findaccprimgroupDr7.Accgroupbalance = oldaccprimbalance7 + vouchermaster.FinalTotal;
+                                                    findaccprimgroupDr7.DebitAmount = oldaccprimgrupdebit7 + vouchermaster.FinalTotal;
+                                                    ms.UpdateAccgroup(findaccprimgroupDr7);
+
+
+                                                    //---------------------Update Account group 8 debit----------------------------//
+                                                    var findaccprimgroupDr8 = ms.Getaccgroupbyid(findaccprimgroupDr7.Accunderprimarygroupid);
+                                                    var oldaccprimgrupdebit8 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr8.AccgroupID).FirstOrDefault().DebitAmount;
+                                                    var oldaccprimbalance8 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr8.AccgroupID).FirstOrDefault().Accgroupbalance;
+                                                    if (findaccprimgroupDr8.Accunderprimarygroupid != 0 && findaccprimgroupDr8.Accunderprimarygroupid != null)
+                                                    {
+                                                        findaccprimgroupDr8.Accgroupbalance = oldaccprimbalance8 + vouchermaster.FinalTotal;
+                                                        findaccprimgroupDr8.DebitAmount = oldaccprimgrupdebit8 + vouchermaster.FinalTotal;
+                                                        ms.UpdateAccgroup(findaccprimgroupDr8);
+
+
+                                                        //---------------------Update Account group 9 debit----------------------------//
+                                                        var findaccprimgroupDr9 = ms.Getaccgroupbyid(findaccprimgroupDr8.Accunderprimarygroupid);
+                                                        var oldaccprimgrupdebit9 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr9.AccgroupID).FirstOrDefault().DebitAmount;
+                                                        var oldaccprimbalance9 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr9.AccgroupID).FirstOrDefault().Accgroupbalance;
+                                                        if (findaccprimgroupDr9.Accunderprimarygroupid != 0 && findaccprimgroupDr9.Accunderprimarygroupid != null)
+                                                        {
+                                                            findaccprimgroupDr9.Accgroupbalance = oldaccprimbalance9 + vouchermaster.FinalTotal;
+                                                            findaccprimgroupDr9.DebitAmount = oldaccprimgrupdebit9 + vouchermaster.FinalTotal;
+                                                            ms.UpdateAccgroup(findaccprimgroupDr9);
+
+                                                            //---------------------Update Account group 10 debit----------------------------//
+                                                            var findaccprimgroupDr10 = ms.Getaccgroupbyid(findaccprimgroupDr9.Accunderprimarygroupid);
+                                                            var oldaccprimgrupdebit10 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr10.AccgroupID).FirstOrDefault().DebitAmount;
+                                                            var oldaccprimbalance10 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr10.AccgroupID).FirstOrDefault().Accgroupbalance;
+                                                            if (findaccprimgroupDr10.Accunderprimarygroupid != 0 && findaccprimgroupDr10.Accunderprimarygroupid != null)
+                                                            {
+                                                                findaccprimgroupDr10.Accgroupbalance = oldaccprimbalance10 + vouchermaster.FinalTotal;
+                                                                findaccprimgroupDr10.DebitAmount = oldaccprimgrupdebit10 + vouchermaster.FinalTotal;
+                                                                ms.UpdateAccgroup(findaccprimgroupDr10);
+
+
+
+
+                                                            }
+                                                            else
+                                                            {
+                                                                findaccprimgroupDr10.Accgroupbalance = oldaccprimbalance10 + vouchermaster.FinalTotal;
+                                                                findaccprimgroupDr10.DebitAmount = oldaccprimgrupdebit10 + vouchermaster.FinalTotal;
+                                                                ms.UpdateAccgroup(findaccprimgroupDr10);
+
+                                                            }
+
+
+                                                        }
+                                                        else
+                                                        {
+                                                            findaccprimgroupDr9.Accgroupbalance = oldaccprimbalance9 + vouchermaster.FinalTotal;
+                                                            findaccprimgroupDr9.DebitAmount = oldaccprimgrupdebit9 + vouchermaster.FinalTotal;
+                                                            ms.UpdateAccgroup(findaccprimgroupDr9);
+
+                                                        }
+
+
+                                                    }
+                                                    else
+                                                    {
+                                                        findaccprimgroupDr8.Accgroupbalance = oldaccprimbalance8 + vouchermaster.FinalTotal;
+                                                        findaccprimgroupDr8.DebitAmount = oldaccprimgrupdebit8 + vouchermaster.FinalTotal;
+                                                        ms.UpdateAccgroup(findaccprimgroupDr8);
+
+                                                    }
+
+
+                                                }
+                                                else
+                                                {
+                                                    findaccprimgroupDr7.Accgroupbalance = oldaccprimbalance7 + vouchermaster.FinalTotal;
+                                                    findaccprimgroupDr7.DebitAmount = oldaccprimgrupdebit7 + vouchermaster.FinalTotal;
+                                                    ms.UpdateAccgroup(findaccprimgroupDr7);
+
+                                                }
+
+
+
+                                            }
+                                            else
+                                            {
+                                                findaccprimgroupDr6.Accgroupbalance = oldaccprimbalance6 + vouchermaster.FinalTotal;
+                                                findaccprimgroupDr6.DebitAmount = oldaccprimgrupdebit6 + vouchermaster.FinalTotal;
+                                                ms.UpdateAccgroup(findaccprimgroupDr6);
+
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            findaccprimgroupDr5.Accgroupbalance = oldaccprimbalance5 + vouchermaster.FinalTotal;
+                                            findaccprimgroupDr5.DebitAmount = oldaccprimgrupdebit5 + vouchermaster.FinalTotal;
+                                            ms.UpdateAccgroup(findaccprimgroupDr5);
+
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        findaccprimgroupDr4.Accgroupbalance = oldaccprimbalance4 + vouchermaster.FinalTotal;
+                                        findaccprimgroupDr4.DebitAmount = oldaccprimgrupdebit4 + vouchermaster.FinalTotal;
+                                        ms.UpdateAccgroup(findaccprimgroupDr4);
+
+                                    }
+
+                                }
+                                else
+                                {
+                                    findaccprimgroupDr3.Accgroupbalance = oldaccprimbalance3 + vouchermaster.FinalTotal;
+                                    findaccprimgroupDr3.DebitAmount = oldaccprimgrupdebit3 + vouchermaster.FinalTotal;
+                                    ms.UpdateAccgroup(findaccprimgroupDr3);
+
+                                }
+
+                            }
+                            else
+                            {
+                                findaccprimgroupDr.Accgroupbalance = oldaccprimbalance2 + vouchermaster.FinalTotal;
+                                findaccprimgroupDr.DebitAmount = oldaccprimgrupdebit2 + vouchermaster.FinalTotal;
+                                ms.UpdateAccgroup(findaccprimgroupDr);
+
+                            }
+
+
+                        }
+                        else
+                        {
+                            findaccgroup.Accgroupbalance = oldaccgrupbalance + vouchermaster.FinalTotal;
+                            findaccgroup.DebitAmount = oldaccgrupdebit1 + vouchermaster.FinalTotal;
+                            ms.UpdateAccgroup(findaccgroup);
+                        }
+
+
 
                     }
                     else if (vouchermaster.vouchertypeid == 9)
                     {
-                        VoucherChild voucherchild = new VoucherChild
+                        //var masterid = db.VoucherMaster.Where(m => m.vouchermasterid == 76).FirstOrDefault().VoucherNum_BillNum;
+                        //var updatesalesvoucher = db.VoucherMaster.Find(masterid);
+                        //updatesalesvoucher.VoucherFinalTotal = updatesalesvoucher.VoucherFinalTotal - vouchermaster.FinalTotal;
+                        //db.Entry(updatesalesvoucher).State = System.Data.Entity.EntityState.Modified;
+                        //db.SaveChanges();
+
+
+
+                        //-------------------Update Revenue Group----------------------//
+
+                        var findaccidsales = db.AccGroup.Where(m => m.AccgroupID == 24).FirstOrDefault().AccgroupID;
+                        var findaccgroupsales = ms.Getaccgroupbyid(findaccidsales);
+                        var olddebitsales = db.AccGroup.Where(m => m.AccgroupID == findaccgroupsales.AccgroupID).FirstOrDefault().DebitAmount;
+                        var oldbalancesales = db.AccGroup.Where(m => m.AccgroupID == findaccgroupsales.AccgroupID).FirstOrDefault().Accgroupbalance;
+
+                        findaccgroupsales.DebitAmount = olddebitsales + vouchermaster.FinalTotal;
+                        findaccgroupsales.Accgroupbalance = oldbalancesales + vouchermaster.FinalTotal;
+                        ms.UpdateAccgroup(findaccgroupsales);
+
+
+                        //-------------------Update Sales Group----------------------//
+
+                        var findaccidsales2 = db.AccGroup.Where(m => m.AccgroupID == 1063).FirstOrDefault().AccgroupID;
+                        var findaccgroupsales2 = ms.Getaccgroupbyid(findaccidsales2);
+                        var olddebitsales2 = db.AccGroup.Where(m => m.AccgroupID == findaccgroupsales2.AccgroupID).FirstOrDefault().DebitAmount;
+                        var oldbalancesales2 = db.AccGroup.Where(m => m.AccgroupID == findaccgroupsales2.AccgroupID).FirstOrDefault().Accgroupbalance;
+
+                        findaccgroupsales2.DebitAmount = olddebitsales2 + vouchermaster.FinalTotal;
+                        findaccgroupsales2.Accgroupbalance = oldbalancesales2 + vouchermaster.FinalTotal;
+                        ms.UpdateAccgroup(findaccgroupsales2);
+
+
+                        ////-------------------Update Sales accouint----------------------//
+
+                        var findaccidsales3 = db.Account.Where(m => m.Accgroupid == findaccidsales2).FirstOrDefault().AccountID;
+                        var findaccgroupsales3 = ms.Getaccountbyid(findaccidsales3);
+                        var olddebitsales3 = db.Account.Where(m => m.AccountID == findaccgroupsales3.AccountID).FirstOrDefault().DebitTotal;
+                        var oldbalancesales3 = db.Account.Where(m => m.AccountID == findaccgroupsales3.AccountID).FirstOrDefault().ClosingBalance;
+
+                        findaccgroupsales3.DebitTotal = olddebitsales3 + vouchermaster.FinalTotal;
+                        findaccgroupsales3.ClosingBalance = oldbalancesales3 + vouchermaster.FinalTotal;
+                        ms.Updateaccount(findaccgroupsales3);
+
+
+                        //----------Update account Balance----------//
+                        var findaccount = ms.Getaccountbyid(vouchermaster.Partyid);
+                        var oldbalance = db.Account.Where(x => x.AccountID == vouchermaster.Partyid).FirstOrDefault().ClosingBalance;
+                        var olddebit = db.Account.Where(x => x.AccountID == vouchermaster.Partyid).FirstOrDefault().DebitTotal;
+
+                        findaccount.ClosingBalance = oldbalance + vouchermaster.FinalTotal;
+                        findaccount.DebitTotal = olddebit + vouchermaster.FinalTotal;
+                        ms.Updateaccount(findaccount);
+
+
+
+
+
+
+
+
+
+
+                        //----------Update account Group 1 Balance----------//
+                        var findaccgroup = ms.Getaccgroupbyid(findaccount.Accgroupid);
+                        var oldaccgrupdebit1 = db.AccGroup.Where(m => m.AccgroupID == findaccgroup.AccgroupID).FirstOrDefault().CreditAmount;
+                        var oldaccgrupbalance = db.AccGroup.Where(m => m.AccgroupID == findaccgroup.AccgroupID).FirstOrDefault().Accgroupbalance;
+
+                        if (findaccgroup.Accunderprimarygroupid != 0 && findaccgroup.Accunderprimarygroupid != null)
                         {
-                            //VoucherchildID = 0,
-                            ItemID = vouchermaster.ItemID[i],
-                            Quantity = vouchermaster.Quantity[i],
-                            Unitid = vouchermaster.Unitid[i],
-                            ItemPrice = vouchermaster.ItemPrice[i],
-                            TotalAmount = vouchermaster.TotalAmount[i],
-                            BillsundryID = billsundrynumber,
-                            VoucherMasterID = vouchermasterid2,
-                            VoucherTypeID = 9
+                            findaccgroup.Accgroupbalance = oldaccgrupbalance - vouchermaster.FinalTotal;
+                            findaccgroup.CreditAmount = oldaccgrupdebit1 + vouchermaster.FinalTotal;
+                            ms.UpdateAccgroup(findaccgroup);
+
+                            //---------------------Update Account primary group 2 credit----------------------------//
+
+                            var findaccprimgroupDr = ms.Getaccgroupbyid(findaccgroup.Accunderprimarygroupid);
+                            var oldaccprimgrupdebit2 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr.AccgroupID).FirstOrDefault().CreditAmount;
+                            var oldaccprimbalance2 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr.AccgroupID).FirstOrDefault().Accgroupbalance;
+
+                            if (findaccprimgroupDr.Accunderprimarygroupid != 0 && findaccprimgroupDr.Accunderprimarygroupid != null)
+                            {
+                                findaccprimgroupDr.Accgroupbalance = oldaccprimbalance2 - vouchermaster.FinalTotal;
+                                findaccprimgroupDr.CreditAmount = oldaccprimgrupdebit2 + vouchermaster.FinalTotal;
+                                ms.UpdateAccgroup(findaccprimgroupDr);
 
 
-                        };
-                        db.VoucherChild.Add(voucherchild);
-                        db.SaveChanges();
+                                //---------------------Update Account group 3 debit----------------------------//
+
+                                var findaccprimgroupDr3 = ms.Getaccgroupbyid(findaccprimgroupDr.Accunderprimarygroupid);
+                                var oldaccprimgrupdebit3 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr3.AccgroupID).FirstOrDefault().CreditAmount;
+                                var oldaccprimbalance3 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr3.AccgroupID).FirstOrDefault().Accgroupbalance;
+
+                                if (findaccprimgroupDr3.Accunderprimarygroupid != 0 && findaccprimgroupDr3.Accunderprimarygroupid != null)
+                                {
+                                    findaccprimgroupDr3.Accgroupbalance = oldaccprimbalance3 - vouchermaster.FinalTotal;
+                                    findaccprimgroupDr3.CreditAmount = oldaccprimgrupdebit3 + vouchermaster.FinalTotal;
+                                    ms.UpdateAccgroup(findaccprimgroupDr3);
+
+
+                                    //---------------------Update Account group 4 debit----------------------------//
+                                    var findaccprimgroupDr4 = ms.Getaccgroupbyid(findaccprimgroupDr3.Accunderprimarygroupid);
+                                    var oldaccprimgrupdebit4 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr4.AccgroupID).FirstOrDefault().CreditAmount;
+                                    var oldaccprimbalance4 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr4.AccgroupID).FirstOrDefault().Accgroupbalance;
+
+                                    if (findaccprimgroupDr4.Accunderprimarygroupid != 0 && findaccprimgroupDr4.Accunderprimarygroupid != null)
+                                    {
+                                        findaccprimgroupDr4.Accgroupbalance = oldaccprimbalance4 - vouchermaster.FinalTotal;
+                                        findaccprimgroupDr4.CreditAmount = oldaccprimgrupdebit4 + vouchermaster.FinalTotal;
+                                        ms.UpdateAccgroup(findaccprimgroupDr4);
+
+                                        //---------------------Update Account group 5 debit----------------------------//
+                                        var findaccprimgroupDr5 = ms.Getaccgroupbyid(findaccprimgroupDr4.Accunderprimarygroupid);
+                                        var oldaccprimgrupdebit5 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr5.AccgroupID).FirstOrDefault().CreditAmount;
+                                        var oldaccprimbalance5 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr5.AccgroupID).FirstOrDefault().Accgroupbalance;
+                                        if (findaccprimgroupDr5.Accunderprimarygroupid != 0 && findaccprimgroupDr5.Accunderprimarygroupid != null)
+                                        {
+                                            findaccprimgroupDr5.Accgroupbalance = oldaccprimbalance5 - vouchermaster.FinalTotal;
+                                            findaccprimgroupDr5.CreditAmount = oldaccprimgrupdebit5 + vouchermaster.FinalTotal;
+                                            ms.UpdateAccgroup(findaccprimgroupDr5);
+
+
+                                            //---------------------Update Account group 6 debit----------------------------//
+                                            var findaccprimgroupDr6 = ms.Getaccgroupbyid(findaccprimgroupDr5.Accunderprimarygroupid);
+                                            var oldaccprimgrupdebit6 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr6.AccgroupID).FirstOrDefault().CreditAmount;
+                                            var oldaccprimbalance6 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr6.AccgroupID).FirstOrDefault().Accgroupbalance;
+                                            if (findaccprimgroupDr6.Accunderprimarygroupid != 0 && findaccprimgroupDr6.Accunderprimarygroupid != null)
+                                            {
+                                                findaccprimgroupDr6.Accgroupbalance = oldaccprimbalance6 - vouchermaster.FinalTotal;
+                                                findaccprimgroupDr6.CreditAmount = oldaccprimgrupdebit6 + vouchermaster.FinalTotal;
+                                                ms.UpdateAccgroup(findaccprimgroupDr6);
+
+                                                //---------------------Update Account group 7 debit----------------------------//
+                                                var findaccprimgroupDr7 = ms.Getaccgroupbyid(findaccprimgroupDr6.Accunderprimarygroupid);
+                                                var oldaccprimgrupdebit7 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr7.AccgroupID).FirstOrDefault().CreditAmount;
+                                                var oldaccprimbalance7 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr7.AccgroupID).FirstOrDefault().Accgroupbalance;
+                                                if (findaccprimgroupDr7.Accunderprimarygroupid != 0 && findaccprimgroupDr7.Accunderprimarygroupid != null)
+                                                {
+                                                    findaccprimgroupDr7.Accgroupbalance = oldaccprimbalance7 - vouchermaster.FinalTotal;
+                                                    findaccprimgroupDr7.CreditAmount = oldaccprimgrupdebit7 + vouchermaster.FinalTotal;
+                                                    ms.UpdateAccgroup(findaccprimgroupDr7);
+
+
+                                                    //---------------------Update Account group 8 debit----------------------------//
+                                                    var findaccprimgroupDr8 = ms.Getaccgroupbyid(findaccprimgroupDr7.Accunderprimarygroupid);
+                                                    var oldaccprimgrupdebit8 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr8.AccgroupID).FirstOrDefault().CreditAmount;
+                                                    var oldaccprimbalance8 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr8.AccgroupID).FirstOrDefault().Accgroupbalance;
+                                                    if (findaccprimgroupDr8.Accunderprimarygroupid != 0 && findaccprimgroupDr8.Accunderprimarygroupid != null)
+                                                    {
+                                                        findaccprimgroupDr8.Accgroupbalance = oldaccprimbalance8 - vouchermaster.FinalTotal;
+                                                        findaccprimgroupDr8.CreditAmount = oldaccprimgrupdebit8 + vouchermaster.FinalTotal;
+                                                        ms.UpdateAccgroup(findaccprimgroupDr8);
+
+
+                                                        //---------------------Update Account group 9 debit----------------------------//
+                                                        var findaccprimgroupDr9 = ms.Getaccgroupbyid(findaccprimgroupDr8.Accunderprimarygroupid);
+                                                        var oldaccprimgrupdebit9 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr9.AccgroupID).FirstOrDefault().CreditAmount;
+                                                        var oldaccprimbalance9 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr9.AccgroupID).FirstOrDefault().Accgroupbalance;
+                                                        if (findaccprimgroupDr9.Accunderprimarygroupid != 0 && findaccprimgroupDr9.Accunderprimarygroupid != null)
+                                                        {
+                                                            findaccprimgroupDr9.Accgroupbalance = oldaccprimbalance9 - vouchermaster.FinalTotal;
+                                                            findaccprimgroupDr9.CreditAmount = oldaccprimgrupdebit9 + vouchermaster.FinalTotal;
+                                                            ms.UpdateAccgroup(findaccprimgroupDr9);
+
+                                                            //---------------------Update Account group 10 debit----------------------------//
+                                                            var findaccprimgroupDr10 = ms.Getaccgroupbyid(findaccprimgroupDr9.Accunderprimarygroupid);
+                                                            var oldaccprimgrupdebit10 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr10.AccgroupID).FirstOrDefault().CreditAmount;
+                                                            var oldaccprimbalance10 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr10.AccgroupID).FirstOrDefault().Accgroupbalance;
+                                                            if (findaccprimgroupDr10.Accunderprimarygroupid != 0 && findaccprimgroupDr10.Accunderprimarygroupid != null)
+                                                            {
+                                                                findaccprimgroupDr10.Accgroupbalance = oldaccprimbalance10 - vouchermaster.FinalTotal;
+                                                                findaccprimgroupDr10.CreditAmount = oldaccprimgrupdebit10 + vouchermaster.FinalTotal;
+                                                                ms.UpdateAccgroup(findaccprimgroupDr10);
+
+
+
+
+                                                            }
+                                                            else
+                                                            {
+                                                                findaccprimgroupDr10.Accgroupbalance = oldaccprimbalance10 - vouchermaster.FinalTotal;
+                                                                findaccprimgroupDr10.CreditAmount = oldaccprimgrupdebit10 + vouchermaster.FinalTotal;
+                                                                ms.UpdateAccgroup(findaccprimgroupDr10);
+
+                                                            }
+
+
+                                                        }
+                                                        else
+                                                        {
+                                                            findaccprimgroupDr9.Accgroupbalance = oldaccprimbalance9 - vouchermaster.FinalTotal;
+                                                            findaccprimgroupDr9.CreditAmount = oldaccprimgrupdebit9 + vouchermaster.FinalTotal;
+                                                            ms.UpdateAccgroup(findaccprimgroupDr9);
+
+                                                        }
+
+
+                                                    }
+                                                    else
+                                                    {
+                                                        findaccprimgroupDr8.Accgroupbalance = oldaccprimbalance8 - vouchermaster.FinalTotal;
+                                                        findaccprimgroupDr8.CreditAmount = oldaccprimgrupdebit8 + vouchermaster.FinalTotal;
+                                                        ms.UpdateAccgroup(findaccprimgroupDr8);
+
+                                                    }
+
+
+                                                }
+                                                else
+                                                {
+                                                    findaccprimgroupDr7.Accgroupbalance = oldaccprimbalance7 - vouchermaster.FinalTotal;
+                                                    findaccprimgroupDr7.CreditAmount = oldaccprimgrupdebit7 + vouchermaster.FinalTotal;
+                                                    ms.UpdateAccgroup(findaccprimgroupDr7);
+
+                                                }
+
+
+
+                                            }
+                                            else
+                                            {
+                                                findaccprimgroupDr6.Accgroupbalance = oldaccprimbalance6 - vouchermaster.FinalTotal;
+                                                findaccprimgroupDr6.CreditAmount = oldaccprimgrupdebit6 + vouchermaster.FinalTotal;
+                                                ms.UpdateAccgroup(findaccprimgroupDr6);
+
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            findaccprimgroupDr5.Accgroupbalance = oldaccprimbalance5 - vouchermaster.FinalTotal;
+                                            findaccprimgroupDr5.CreditAmount = oldaccprimgrupdebit5 + vouchermaster.FinalTotal;
+                                            ms.UpdateAccgroup(findaccprimgroupDr5);
+
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        findaccprimgroupDr4.Accgroupbalance = oldaccprimbalance4 - vouchermaster.FinalTotal;
+                                        findaccprimgroupDr4.CreditAmount = oldaccprimgrupdebit4 + vouchermaster.FinalTotal;
+                                        ms.UpdateAccgroup(findaccprimgroupDr4);
+
+                                    }
+
+                                }
+                                else
+                                {
+                                    findaccprimgroupDr3.Accgroupbalance = oldaccprimbalance3 - vouchermaster.FinalTotal;
+                                    findaccprimgroupDr3.CreditAmount = oldaccprimgrupdebit3 + vouchermaster.FinalTotal;
+                                    ms.UpdateAccgroup(findaccprimgroupDr3);
+
+                                }
+
+                            }
+                            else
+                            {
+                                findaccprimgroupDr.Accgroupbalance = oldaccprimbalance2 - vouchermaster.FinalTotal;
+                                findaccprimgroupDr.CreditAmount = oldaccprimgrupdebit2 + vouchermaster.FinalTotal;
+                                ms.UpdateAccgroup(findaccprimgroupDr);
+
+                            }
+
+
+                        }
+                        else
+                        {
+                            findaccgroup.Accgroupbalance = oldaccgrupbalance - vouchermaster.FinalTotal;
+                            findaccgroup.CreditAmount = oldaccgrupdebit1 + vouchermaster.FinalTotal;
+                            ms.UpdateAccgroup(findaccgroup);
+                        }
                     }
 
 
-                    Transactions trans = new Transactions
-                    {
-                        //TransactionID = 0,
-                        ItemID = vouchermaster.ItemID[i],
-                        Quantity = (-1) * vouchermaster.Quantity[i],
-                        TransDate = DateTime.Now,
-                        PayTypeID = 1,
-                        ItemPrice = vouchermaster.ItemPrice[i],
-                        TransType = 1
-                    };
-                    db.Transactions.Add(trans);
-                    db.SaveChanges();
-                    OrderServices orderServices = new OrderServices();
 
-                    try
+
+
+
+
+                    //var oldbalanceaccprgroupid = db.AccGroup.Where(m=>m.)
+
+                }
+                else if (vouchermaster.modify == 1)
+                {
+                    var oldmasterfind = db.VoucherMaster.Where(m => m.vouchermasterid == vouchermaster.VoucherNumber && m.Partyid_Accountid != 1060).FirstOrDefault();
+                    var oldmastersales = db.VoucherMaster.Where(m => m.vouchermasterid == vouchermaster.VoucherNumber && m.Partyid_Accountid == 1060).FirstOrDefault();
+
+                    var oldchildfind = db.VoucherChild.Where(m => m.VoucherMasterID == oldmasterfind.vouchermasterid).ToList();
+                    int billsundrynumber = db.BillSundryChild.Count() + 1;
+
+
+                    double billsamount = 0;
+                    int billsid = 0;
+                    double billsundrytotalamount = 0;
+                    //-------update billsundrychild----------//
+                    if (vouchermaster.deletebillsundrychild != null)
                     {
-                        //---update Stonks---//
-                        if (vouchermaster.vouchertypeid == 1)
+                        for (int i = 0; i < vouchermaster.deletebillsundrychild.Count; i++)
                         {
+                            //List<int> ttas = JVmastermodel.deletedchild;
+
+                            //int findid = db.JournalVoucherChild.Where(m =>k m.JVchildID == ttas[i]).FirstOrDefault().JVchildID;
+
+                            //var oldchildfind2 = db.JournalVoucherChild.Find(db.JournalVoucherChild.Where(m => m.JVMasterID == JVmastermodel.deletedchild[i]).FirstOrDefault().JVchildID);
+
+
+                            var olddbillsundrychild = db.BillSundryChild.Find(vouchermaster.deletebillsundrychild[i]);
+                            olddbillsundrychild.BillSundryNumber = 0;
+                            olddbillsundrychild.Vouchermasterid = 0;
+                            db.Entry(olddbillsundrychild).State = System.Data.Entity.EntityState.Modified;
+                            //db.BillSundryChild.Remove(olddbillsundrychild);
+
+                            db.SaveChanges();
+
+                            billsundrytotalamount += olddbillsundrychild.BillSundryAmount;
+
+
+
+                        }
+
+                        oldmasterfind.BillSundryAmount = oldmasterfind.BillSundryAmount - billsundrytotalamount;
+                        oldmasterfind.BillSundryId = billsundrynumber;
+
+                    }
+                    if (vouchermaster.newbillsundrychild2 != null && vouchermaster.newbillsundrychild2.Count > 0)
+                    {
+                        for (int i = 0; i < vouchermaster.newbillsundrychild2.Count; i++)
+                        {
+                            var vouchermasterid2 = vouchermaster.VoucherNumber;
+
+
+                            billsundrytotalamount += vouchermaster.BillSundryAmount[i];
+
+                            BillSundryChild billSundryChild = new BillSundryChild
+                            {
+                                BillSundryID = vouchermaster.BillSundryID[i],
+                                BillSundryAmount = vouchermaster.BillSundryAmount[i],
+                                Vouchermasterid = vouchermasterid2,
+                                BillSundryNumber = billsundrynumber
+                            };
+                            db.BillSundryChild.Add(billSundryChild);
+                            db.SaveChanges();
+
+                            //---Stockss---//
+                            //var oldquantity = (int)db.Stock.Find(vouchermaster.ItemID[i]).Quantity;
+                            // int? oldquantity = db.Stock.Where(m=>m.ItemID== vouchermaster.ItemID[i]).FirstOrDefault().Quantity;
+                            //OrderServices orderServices = new OrderServices();
+                            //var StockValues = orderServices.GetStockById(vouchermaster.ItemID[i]);
+                            //StockValues.Quantity = StockValues.Quantity + vouchermaster.Quantity[i];
+                            //orderServices.UpdateStock(StockValues);
+                            // orderServices.UpdateStock(StockValues);
+                            //---Stockss---//
+
+                        }
+
+                        oldmasterfind.BillSundryAmount = oldmasterfind.BillSundryAmount + billsundrytotalamount;
+
+                        oldmasterfind.BillSundryId = billsundrynumber;
+
+                    }
+
+
+                    //-------update vouchermaster----------//
+                    oldmasterfind.Narration = vouchermaster.Narration;
+                    oldmasterfind.VoucherFinalTotal = vouchermaster.FinalTotal;
+                    oldmasterfind.Partyid_Accountid = vouchermaster.Partyid;
+                    oldmasterfind.LocationID = vouchermaster.LocationID;
+
+                    db.Entry(oldmasterfind).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+
+                    oldmastersales.VoucherFinalTotal = vouchermaster.FinalTotal;
+                    db.Entry(oldmastersales).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+
+                    //-------update voucherchild----------//
+
+                    if (vouchermaster.deletedchild != null)
+                    {
+
+                        for (int i = 0; i < vouchermaster.deletedchild.Count; i++)
+                        {
+                            //List<int> ttas = JVmastermodel.deletedchild;
+
+                            //int findid = db.JournalVoucherChild.Where(m =>k m.JVchildID == ttas[i]).FirstOrDefault().JVchildID;
+
+                            //var oldchildfind2 = db.JournalVoucherChild.Find(db.JournalVoucherChild.Where(m => m.JVMasterID == JVmastermodel.deletedchild[i]).FirstOrDefault().JVchildID);
+                            var olddchild = db.VoucherChild.Find(vouchermaster.deletedchild[i]);
+                            db.VoucherChild.Remove(olddchild);
+                            db.SaveChanges();
+
+                            //---Stockss---//
+                            //var oldquantity = (int)db.Stock.Find(vouchermaster.ItemID[i]).Quantity;
+                            // int? oldquantity = db.Stock.Where(m=>m.ItemID== vouchermaster.ItemID[i]).FirstOrDefault().Quantity;
+                            OrderServices orderServices = new OrderServices();
+
+                            var deleteditemid = olddchild.ItemID;
+                            var deletedquantity = olddchild.Quantity;
+                            var StockValues = orderServices.GetStockById(deleteditemid);
+                            StockValues.Quantity = StockValues.Quantity + deletedquantity;
+                            orderServices.UpdateStock(StockValues);
+                            //---Stockss---//
+
+                        }
+                    }
+                    if (vouchermaster.newchild2 != null && vouchermaster.newchild2.Count > 0)
+                    {
+                        for (int i = 0; i < vouchermaster.newchild2.Count; i++)
+                        {
+                            var vouchermasterid = vouchermaster.VoucherNumber;
+
+
+                            /* if (JVmastermodel.CreditAmount[i] == 0.00)
+                             {
+
+                             }
+
+                            else if (JVmastermodel.DrCrID[i] == 2)
+                            {
+                                creditamount = JVmastermodel.CreditAmount[i];
+                                debitamount = 0.00;
+                            }*/
+                            VoucherChild voucherchild = new VoucherChild
+                            {
+                                //VoucherchildID = 0,
+                                ItemID = vouchermaster.ItemID[i],
+                                Quantity = vouchermaster.Quantity[i],
+                                Unitid = vouchermaster.Unitid[i],
+                                ItemPrice = vouchermaster.ItemPrice[i],
+                                TotalAmount = vouchermaster.TotalAmount[i],
+                                BillsundryID = billsid,
+                                VoucherMasterID = vouchermasterid
+
+
+                            };
+                            db.VoucherChild.Add(voucherchild);
+                            db.SaveChanges();
+
+
+                            //---Stockss---//
+                            //var oldquantity = (int)db.Stock.Find(vouchermaster.ItemID[i]).Quantity;
+                            // int? oldquantity = db.Stock.Where(m=>m.ItemID== vouchermaster.ItemID[i]).FirstOrDefault().Quantity;
+                            OrderServices orderServices = new OrderServices();
                             var StockValues = orderServices.GetStockById(vouchermaster.ItemID[i]);
                             StockValues.Quantity = StockValues.Quantity - vouchermaster.Quantity[i];
                             orderServices.UpdateStock(StockValues);
-                        }
-                        else if (vouchermaster.vouchertypeid == 9)
-                        {
-                            var StockValues = orderServices.GetStockById(vouchermaster.ItemID[i]);
-                            StockValues.Quantity = StockValues.Quantity + vouchermaster.Quantity[i];
-                            orderServices.UpdateStock(StockValues);
-                        }
-                        //---update Stonks---//
-
-                    }
-                    catch (Exception)
-                    {
-
-                        var StockValues = orderServices.GetStockById(vouchermaster.ItemID[i]);
-                        StockValues.Quantity = 0;
-                        orderServices.UpdateStock(StockValues);
-                    }
-                    
-                }
-               
-                //---------------------Add VoucherMaster---------------//
-
-                if (vouchermaster.vouchertypeid == 1)
-                {
-
-                    VoucherMaster salemaster = new VoucherMaster
-                    {
-                        //VoucherNum_BillNum = 0,
-                        VoucherCreateDate = vouchermaster.VoucherCreateDate,
-                        Partyid_Accountid = 1060,
-                        Narration = "sale account credit",
-                        VoucherFinalTotal = vouchermaster.FinalTotal,
-                        VoucherTypeID = 1,
-                        DrCrType = 2,
-                        vouchermasterid = vouchermasterid2,
-                        LocationID = vouchermaster.LocationID
-
-
-
-                    };
-                    db.VoucherMaster.Add(salemaster);
-                    db.SaveChanges();
-                    ////////////////////////
-
-                    VoucherMaster vouchermsterr = new VoucherMaster
-                    {
-                        //VoucherNum_BillNum = 0,
-                        VoucherCreateDate = vouchermaster.VoucherCreateDate,
-                        Partyid_Accountid = vouchermaster.Partyid,
-                        Narration = vouchermaster.Narration,
-                        BillSundryId = billsundrynumber,
-                        BillSundryAmount = billsundrytotalamount,
-                        VoucherFinalTotal = vouchermaster.FinalTotal,
-                        VoucherTypeID = 1,
-                        DrCrType = 1,
-                        vouchermasterid = vouchermasterid2,
-                        LocationID = vouchermaster.LocationID
-
-
-                    };
-                    db.VoucherMaster.Add(vouchermsterr);
-                    db.SaveChanges();
-                }
-                else if (vouchermaster.vouchertypeid == 9)
-                {
-                    VoucherMaster salemaster = new VoucherMaster
-                    {
-                        //VoucherNum_BillNum = 0,
-                        VoucherCreateDate = vouchermaster.VoucherCreateDate,
-                        Partyid_Accountid = 1060,
-                        Narration = "sale account debit",
-                        BillSundryAmount = billsundrytotalamount,
-                        VoucherFinalTotal = vouchermaster.FinalTotal,
-                        VoucherTypeID = 9,
-                        DrCrType = 1,
-                        vouchermasterid = vouchermasterid2,
-                        LocationID = vouchermaster.LocationID
-
-                    };
-                    db.VoucherMaster.Add(salemaster);
-                    db.SaveChanges();
-                    ////////////////////////
-                    VoucherMaster vouchermsterr = new VoucherMaster
-                    {
-                        //VoucherNum_BillNum = 0,
-                        VoucherCreateDate = vouchermaster.VoucherCreateDate,
-                        Partyid_Accountid = vouchermaster.Partyid,
-                        Narration = vouchermaster.Narration,
-                        BillSundryId = billsundrynumber,
-                        BillSundryAmount = billsundrytotalamount,
-                        VoucherFinalTotal = vouchermaster.FinalTotal,
-                        VoucherTypeID = 9,
-                        DrCrType = 2,
-                        vouchermasterid = vouchermasterid2,
-                        LocationID = vouchermaster.LocationID
-
-                    };
-                    db.VoucherMaster.Add(vouchermsterr);
-                    db.SaveChanges();
-                }
-
-
-
-
-                if (vouchermaster.vouchertypeid == 1)
-                {
-                    //var masterid = db.VoucherMaster.Where(m => m.vouchermasterid == 76).FirstOrDefault().VoucherNum_BillNum;
-                    //var updatesalesvoucher = db.VoucherMaster.Find(masterid);
-                    //updatesalesvoucher.VoucherFinalTotal = updatesalesvoucher.VoucherFinalTotal + vouchermaster.FinalTotal;
-                    //db.Entry(updatesalesvoucher).State = System.Data.Entity.EntityState.Modified;
-                    //db.SaveChanges();
-
-
-                    //-------------------Update Revenue Group----------------------//
-
-                    var findaccidsales = db.AccGroup.Where(m => m.AccgroupID == 24).FirstOrDefault().AccgroupID;
-                    var findaccgroupsales = ms.Getaccgroupbyid(findaccidsales);
-                    var oldcreditsales = db.AccGroup.Where(m => m.AccgroupID == findaccgroupsales.AccgroupID).FirstOrDefault().CreditAmount;
-                    var oldbalancesales = db.AccGroup.Where(m => m.AccgroupID == findaccgroupsales.AccgroupID).FirstOrDefault().Accgroupbalance;
-
-                    findaccgroupsales.CreditAmount = oldcreditsales + vouchermaster.FinalTotal;
-                    findaccgroupsales.Accgroupbalance = oldbalancesales - vouchermaster.FinalTotal;
-                    ms.UpdateAccgroup(findaccgroupsales);
-
-
-                    //-------------------Update Sales Group----------------------//
-
-                    var findaccidsales2 = db.AccGroup.Where(m => m.AccgroupID == 1063).FirstOrDefault().AccgroupID;
-                    var findaccgroupsales2 = ms.Getaccgroupbyid(findaccidsales2);
-                    var oldcreditsales2 = db.AccGroup.Where(m => m.AccgroupID == findaccgroupsales2.AccgroupID).FirstOrDefault().CreditAmount;
-                    var oldbalancesales2 = db.AccGroup.Where(m => m.AccgroupID == findaccgroupsales2.AccgroupID).FirstOrDefault().Accgroupbalance;
-
-                    findaccgroupsales2.CreditAmount = oldcreditsales2 + vouchermaster.FinalTotal;
-                    findaccgroupsales2.Accgroupbalance = oldbalancesales2 - vouchermaster.FinalTotal;
-                    ms.UpdateAccgroup(findaccgroupsales2);
-
-
-                    ////-------------------Update Sales accouint----------------------//
-
-                    var findaccidsales3 = db.Account.Where(m => m.Accgroupid == findaccidsales2).FirstOrDefault().AccountID;
-                    var findaccgroupsales3 = ms.Getaccountbyid(findaccidsales3);
-                    var oldcreditsales3 = db.Account.Where(m => m.AccountID == findaccgroupsales3.AccountID).FirstOrDefault().CreditTotal;
-                    var oldbalancesales3 = db.Account.Where(m => m.AccountID == findaccgroupsales3.AccountID).FirstOrDefault().ClosingBalance;
-
-                    findaccgroupsales3.CreditTotal = oldcreditsales3 + vouchermaster.FinalTotal;
-                    findaccgroupsales3.ClosingBalance = oldbalancesales3 - vouchermaster.FinalTotal;
-                    ms.Updateaccount(findaccgroupsales3);
-
-
-                    //----------Update account Balance----------//
-                    var findaccount = ms.Getaccountbyid(vouchermaster.Partyid);
-                    var oldbalance = db.Account.Where(x => x.AccountID == vouchermaster.Partyid).FirstOrDefault().ClosingBalance;
-                    var olddebit = db.Account.Where(x => x.AccountID == vouchermaster.Partyid).FirstOrDefault().DebitTotal;
-
-                    findaccount.ClosingBalance = oldbalance + vouchermaster.FinalTotal;
-                    findaccount.DebitTotal = olddebit + vouchermaster.FinalTotal;
-                    ms.Updateaccount(findaccount);
-
-
-
-
-                    //----------Update account Group 1 Balance----------//
-                    var findaccgroup = ms.Getaccgroupbyid(findaccount.Accgroupid);
-                    var oldaccgrupdebit1 = db.AccGroup.Where(m => m.AccgroupID == findaccgroup.AccgroupID).FirstOrDefault().DebitAmount;
-                    var oldaccgrupbalance = db.AccGroup.Where(m => m.AccgroupID == findaccgroup.AccgroupID).FirstOrDefault().Accgroupbalance;
-
-                    if (findaccgroup.Accunderprimarygroupid != 0 && findaccgroup.Accunderprimarygroupid != null)
-                    {
-                        findaccgroup.Accgroupbalance = oldaccgrupbalance + vouchermaster.FinalTotal;
-                        findaccgroup.DebitAmount = oldaccgrupdebit1 + vouchermaster.FinalTotal;
-                        ms.UpdateAccgroup(findaccgroup);
-
-                        //---------------------Update Account primary group 2 credit----------------------------//
-
-                        var findaccprimgroupDr = ms.Getaccgroupbyid(findaccgroup.Accunderprimarygroupid);
-                        var oldaccprimgrupdebit2 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr.AccgroupID).FirstOrDefault().DebitAmount;
-                        var oldaccprimbalance2 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr.AccgroupID).FirstOrDefault().Accgroupbalance;
-
-                        if (findaccprimgroupDr.Accunderprimarygroupid != 0 && findaccprimgroupDr.Accunderprimarygroupid != null)
-                        {
-                            findaccprimgroupDr.Accgroupbalance = oldaccprimbalance2 + vouchermaster.FinalTotal;
-                            findaccprimgroupDr.DebitAmount = oldaccprimgrupdebit2 + vouchermaster.FinalTotal;
-                            ms.UpdateAccgroup(findaccprimgroupDr);
-
-
-                            //---------------------Update Account group 3 debit----------------------------//
-
-                            var findaccprimgroupDr3 = ms.Getaccgroupbyid(findaccprimgroupDr.Accunderprimarygroupid);
-                            var oldaccprimgrupdebit3 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr3.AccgroupID).FirstOrDefault().DebitAmount;
-                            var oldaccprimbalance3 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr3.AccgroupID).FirstOrDefault().Accgroupbalance;
-
-                            if (findaccprimgroupDr3.Accunderprimarygroupid != 0 && findaccprimgroupDr3.Accunderprimarygroupid != null)
-                            {
-                                findaccprimgroupDr3.Accgroupbalance = oldaccprimbalance3 + vouchermaster.FinalTotal;
-                                findaccprimgroupDr3.DebitAmount = oldaccprimgrupdebit3 + vouchermaster.FinalTotal;
-                                ms.UpdateAccgroup(findaccprimgroupDr3);
-
-
-                                //---------------------Update Account group 4 debit----------------------------//
-                                var findaccprimgroupDr4 = ms.Getaccgroupbyid(findaccprimgroupDr3.Accunderprimarygroupid);
-                                var oldaccprimgrupdebit4 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr4.AccgroupID).FirstOrDefault().DebitAmount;
-                                var oldaccprimbalance4 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr4.AccgroupID).FirstOrDefault().Accgroupbalance;
-
-                                if (findaccprimgroupDr4.Accunderprimarygroupid != 0 && findaccprimgroupDr4.Accunderprimarygroupid != null)
-                                {
-                                    findaccprimgroupDr4.Accgroupbalance = oldaccprimbalance4 + vouchermaster.FinalTotal;
-                                    findaccprimgroupDr4.DebitAmount = oldaccprimgrupdebit4 + vouchermaster.FinalTotal;
-                                    ms.UpdateAccgroup(findaccprimgroupDr4);
-
-                                    //---------------------Update Account group 5 debit----------------------------//
-                                    var findaccprimgroupDr5 = ms.Getaccgroupbyid(findaccprimgroupDr4.Accunderprimarygroupid);
-                                    var oldaccprimgrupdebit5 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr5.AccgroupID).FirstOrDefault().DebitAmount;
-                                    var oldaccprimbalance5 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr5.AccgroupID).FirstOrDefault().Accgroupbalance;
-                                    if (findaccprimgroupDr5.Accunderprimarygroupid != 0 && findaccprimgroupDr5.Accunderprimarygroupid != null)
-                                    {
-                                        findaccprimgroupDr5.Accgroupbalance = oldaccprimbalance5 + vouchermaster.FinalTotal;
-                                        findaccprimgroupDr5.DebitAmount = oldaccprimgrupdebit5 + vouchermaster.FinalTotal;
-                                        ms.UpdateAccgroup(findaccprimgroupDr5);
-
-
-                                        //---------------------Update Account group 6 debit----------------------------//
-                                        var findaccprimgroupDr6 = ms.Getaccgroupbyid(findaccprimgroupDr5.Accunderprimarygroupid);
-                                        var oldaccprimgrupdebit6 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr6.AccgroupID).FirstOrDefault().DebitAmount;
-                                        var oldaccprimbalance6 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr6.AccgroupID).FirstOrDefault().Accgroupbalance;
-                                        if (findaccprimgroupDr6.Accunderprimarygroupid != 0 && findaccprimgroupDr6.Accunderprimarygroupid != null)
-                                        {
-                                            findaccprimgroupDr6.Accgroupbalance = oldaccprimbalance6 + vouchermaster.FinalTotal;
-                                            findaccprimgroupDr6.DebitAmount = oldaccprimgrupdebit6 + vouchermaster.FinalTotal;
-                                            ms.UpdateAccgroup(findaccprimgroupDr6);
-
-                                            //---------------------Update Account group 7 debit----------------------------//
-                                            var findaccprimgroupDr7 = ms.Getaccgroupbyid(findaccprimgroupDr6.Accunderprimarygroupid);
-                                            var oldaccprimgrupdebit7 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr7.AccgroupID).FirstOrDefault().DebitAmount;
-                                            var oldaccprimbalance7 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr7.AccgroupID).FirstOrDefault().Accgroupbalance;
-                                            if (findaccprimgroupDr7.Accunderprimarygroupid != 0 && findaccprimgroupDr7.Accunderprimarygroupid != null)
-                                            {
-                                                findaccprimgroupDr7.Accgroupbalance = oldaccprimbalance7 + vouchermaster.FinalTotal;
-                                                findaccprimgroupDr7.DebitAmount = oldaccprimgrupdebit7 + vouchermaster.FinalTotal;
-                                                ms.UpdateAccgroup(findaccprimgroupDr7);
-
-
-                                                //---------------------Update Account group 8 debit----------------------------//
-                                                var findaccprimgroupDr8 = ms.Getaccgroupbyid(findaccprimgroupDr7.Accunderprimarygroupid);
-                                                var oldaccprimgrupdebit8 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr8.AccgroupID).FirstOrDefault().DebitAmount;
-                                                var oldaccprimbalance8 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr8.AccgroupID).FirstOrDefault().Accgroupbalance;
-                                                if (findaccprimgroupDr8.Accunderprimarygroupid != 0 && findaccprimgroupDr8.Accunderprimarygroupid != null)
-                                                {
-                                                    findaccprimgroupDr8.Accgroupbalance = oldaccprimbalance8 + vouchermaster.FinalTotal;
-                                                    findaccprimgroupDr8.DebitAmount = oldaccprimgrupdebit8 + vouchermaster.FinalTotal;
-                                                    ms.UpdateAccgroup(findaccprimgroupDr8);
-
-
-                                                    //---------------------Update Account group 9 debit----------------------------//
-                                                    var findaccprimgroupDr9 = ms.Getaccgroupbyid(findaccprimgroupDr8.Accunderprimarygroupid);
-                                                    var oldaccprimgrupdebit9 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr9.AccgroupID).FirstOrDefault().DebitAmount;
-                                                    var oldaccprimbalance9 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr9.AccgroupID).FirstOrDefault().Accgroupbalance;
-                                                    if (findaccprimgroupDr9.Accunderprimarygroupid != 0 && findaccprimgroupDr9.Accunderprimarygroupid != null)
-                                                    {
-                                                        findaccprimgroupDr9.Accgroupbalance = oldaccprimbalance9 + vouchermaster.FinalTotal;
-                                                        findaccprimgroupDr9.DebitAmount = oldaccprimgrupdebit9 + vouchermaster.FinalTotal;
-                                                        ms.UpdateAccgroup(findaccprimgroupDr9);
-
-                                                        //---------------------Update Account group 10 debit----------------------------//
-                                                        var findaccprimgroupDr10 = ms.Getaccgroupbyid(findaccprimgroupDr9.Accunderprimarygroupid);
-                                                        var oldaccprimgrupdebit10 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr10.AccgroupID).FirstOrDefault().DebitAmount;
-                                                        var oldaccprimbalance10 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr10.AccgroupID).FirstOrDefault().Accgroupbalance;
-                                                        if (findaccprimgroupDr10.Accunderprimarygroupid != 0 && findaccprimgroupDr10.Accunderprimarygroupid != null)
-                                                        {
-                                                            findaccprimgroupDr10.Accgroupbalance = oldaccprimbalance10 + vouchermaster.FinalTotal;
-                                                            findaccprimgroupDr10.DebitAmount = oldaccprimgrupdebit10 + vouchermaster.FinalTotal;
-                                                            ms.UpdateAccgroup(findaccprimgroupDr10);
-
-
-
-
-                                                        }
-                                                        else
-                                                        {
-                                                            findaccprimgroupDr10.Accgroupbalance = oldaccprimbalance10 + vouchermaster.FinalTotal;
-                                                            findaccprimgroupDr10.DebitAmount = oldaccprimgrupdebit10 + vouchermaster.FinalTotal;
-                                                            ms.UpdateAccgroup(findaccprimgroupDr10);
-
-                                                        }
-
-
-                                                    }
-                                                    else
-                                                    {
-                                                        findaccprimgroupDr9.Accgroupbalance = oldaccprimbalance9 + vouchermaster.FinalTotal;
-                                                        findaccprimgroupDr9.DebitAmount = oldaccprimgrupdebit9 + vouchermaster.FinalTotal;
-                                                        ms.UpdateAccgroup(findaccprimgroupDr9);
-
-                                                    }
-
-
-                                                }
-                                                else
-                                                {
-                                                    findaccprimgroupDr8.Accgroupbalance = oldaccprimbalance8 + vouchermaster.FinalTotal;
-                                                    findaccprimgroupDr8.DebitAmount = oldaccprimgrupdebit8 + vouchermaster.FinalTotal;
-                                                    ms.UpdateAccgroup(findaccprimgroupDr8);
-
-                                                }
-
-
-                                            }
-                                            else
-                                            {
-                                                findaccprimgroupDr7.Accgroupbalance = oldaccprimbalance7 + vouchermaster.FinalTotal;
-                                                findaccprimgroupDr7.DebitAmount = oldaccprimgrupdebit7 + vouchermaster.FinalTotal;
-                                                ms.UpdateAccgroup(findaccprimgroupDr7);
-
-                                            }
-
-
-
-                                        }
-                                        else
-                                        {
-                                            findaccprimgroupDr6.Accgroupbalance = oldaccprimbalance6 + vouchermaster.FinalTotal;
-                                            findaccprimgroupDr6.DebitAmount = oldaccprimgrupdebit6 + vouchermaster.FinalTotal;
-                                            ms.UpdateAccgroup(findaccprimgroupDr6);
-
-                                        }
-
-                                    }
-                                    else
-                                    {
-                                        findaccprimgroupDr5.Accgroupbalance = oldaccprimbalance5 + vouchermaster.FinalTotal;
-                                        findaccprimgroupDr5.DebitAmount = oldaccprimgrupdebit5 + vouchermaster.FinalTotal;
-                                        ms.UpdateAccgroup(findaccprimgroupDr5);
-
-                                    }
-
-                                }
-                                else
-                                {
-                                    findaccprimgroupDr4.Accgroupbalance = oldaccprimbalance4 + vouchermaster.FinalTotal;
-                                    findaccprimgroupDr4.DebitAmount = oldaccprimgrupdebit4 + vouchermaster.FinalTotal;
-                                    ms.UpdateAccgroup(findaccprimgroupDr4);
-
-                                }
-
-                            }
-                            else
-                            {
-                                findaccprimgroupDr3.Accgroupbalance = oldaccprimbalance3 + vouchermaster.FinalTotal;
-                                findaccprimgroupDr3.DebitAmount = oldaccprimgrupdebit3 + vouchermaster.FinalTotal;
-                                ms.UpdateAccgroup(findaccprimgroupDr3);
-
-                            }
-
-                        }
-                        else
-                        {
-                            findaccprimgroupDr.Accgroupbalance = oldaccprimbalance2 + vouchermaster.FinalTotal;
-                            findaccprimgroupDr.DebitAmount = oldaccprimgrupdebit2 + vouchermaster.FinalTotal;
-                            ms.UpdateAccgroup(findaccprimgroupDr);
+                            // orderServices.UpdateStock(StockValues);
+                            //---Stockss---//
 
                         }
 
 
-                    }
-                    else
-                    {
-                        findaccgroup.Accgroupbalance = oldaccgrupbalance + vouchermaster.FinalTotal;
-                        findaccgroup.DebitAmount = oldaccgrupdebit1 + vouchermaster.FinalTotal;
-                        ms.UpdateAccgroup(findaccgroup);
-                    }
-
-
-
-                }
-                else if (vouchermaster.vouchertypeid == 9)
-                {
-                    //var masterid = db.VoucherMaster.Where(m => m.vouchermasterid == 76).FirstOrDefault().VoucherNum_BillNum;
-                    //var updatesalesvoucher = db.VoucherMaster.Find(masterid);
-                    //updatesalesvoucher.VoucherFinalTotal = updatesalesvoucher.VoucherFinalTotal - vouchermaster.FinalTotal;
-                    //db.Entry(updatesalesvoucher).State = System.Data.Entity.EntityState.Modified;
-                    //db.SaveChanges();
-
-
-
-                    //-------------------Update Revenue Group----------------------//
-
-                    var findaccidsales = db.AccGroup.Where(m => m.AccgroupID == 24).FirstOrDefault().AccgroupID;
-                    var findaccgroupsales = ms.Getaccgroupbyid(findaccidsales);
-                    var olddebitsales = db.AccGroup.Where(m => m.AccgroupID == findaccgroupsales.AccgroupID).FirstOrDefault().DebitAmount;
-                    var oldbalancesales = db.AccGroup.Where(m => m.AccgroupID == findaccgroupsales.AccgroupID).FirstOrDefault().Accgroupbalance;
-
-                    findaccgroupsales.DebitAmount = olddebitsales + vouchermaster.FinalTotal;
-                    findaccgroupsales.Accgroupbalance = oldbalancesales + vouchermaster.FinalTotal;
-                    ms.UpdateAccgroup(findaccgroupsales);
-
-
-                    //-------------------Update Sales Group----------------------//
-
-                    var findaccidsales2 = db.AccGroup.Where(m => m.AccgroupID == 1063).FirstOrDefault().AccgroupID;
-                    var findaccgroupsales2 = ms.Getaccgroupbyid(findaccidsales2);
-                    var olddebitsales2 = db.AccGroup.Where(m => m.AccgroupID == findaccgroupsales2.AccgroupID).FirstOrDefault().DebitAmount;
-                    var oldbalancesales2 = db.AccGroup.Where(m => m.AccgroupID == findaccgroupsales2.AccgroupID).FirstOrDefault().Accgroupbalance;
-
-                    findaccgroupsales2.DebitAmount = olddebitsales2 + vouchermaster.FinalTotal;
-                    findaccgroupsales2.Accgroupbalance = oldbalancesales2 + vouchermaster.FinalTotal;
-                    ms.UpdateAccgroup(findaccgroupsales2);
-
-
-                    ////-------------------Update Sales accouint----------------------//
-
-                    var findaccidsales3 = db.Account.Where(m => m.Accgroupid == findaccidsales2).FirstOrDefault().AccountID;
-                    var findaccgroupsales3 = ms.Getaccountbyid(findaccidsales3);
-                    var olddebitsales3 = db.Account.Where(m => m.AccountID == findaccgroupsales3.AccountID).FirstOrDefault().DebitTotal;
-                    var oldbalancesales3 = db.Account.Where(m => m.AccountID == findaccgroupsales3.AccountID).FirstOrDefault().ClosingBalance;
-
-                    findaccgroupsales3.DebitTotal = olddebitsales3 + vouchermaster.FinalTotal;
-                    findaccgroupsales3.ClosingBalance = oldbalancesales3 + vouchermaster.FinalTotal;
-                    ms.Updateaccount(findaccgroupsales3);
-
-
-                    //----------Update account Balance----------//
-                    var findaccount = ms.Getaccountbyid(vouchermaster.Partyid);
-                    var oldbalance = db.Account.Where(x => x.AccountID == vouchermaster.Partyid).FirstOrDefault().ClosingBalance;
-                    var olddebit = db.Account.Where(x => x.AccountID == vouchermaster.Partyid).FirstOrDefault().DebitTotal;
-
-                    findaccount.ClosingBalance = oldbalance + vouchermaster.FinalTotal;
-                    findaccount.DebitTotal = olddebit + vouchermaster.FinalTotal;
-                    ms.Updateaccount(findaccount);
-
-
-
-
-
-
-
-
-
-
-                    //----------Update account Group 1 Balance----------//
-                    var findaccgroup = ms.Getaccgroupbyid(findaccount.Accgroupid);
-                    var oldaccgrupdebit1 = db.AccGroup.Where(m => m.AccgroupID == findaccgroup.AccgroupID).FirstOrDefault().CreditAmount;
-                    var oldaccgrupbalance = db.AccGroup.Where(m => m.AccgroupID == findaccgroup.AccgroupID).FirstOrDefault().Accgroupbalance;
-
-                    if (findaccgroup.Accunderprimarygroupid != 0 && findaccgroup.Accunderprimarygroupid != null)
-                    {
-                        findaccgroup.Accgroupbalance = oldaccgrupbalance - vouchermaster.FinalTotal;
-                        findaccgroup.CreditAmount = oldaccgrupdebit1 + vouchermaster.FinalTotal;
-                        ms.UpdateAccgroup(findaccgroup);
-
-                        //---------------------Update Account primary group 2 credit----------------------------//
-
-                        var findaccprimgroupDr = ms.Getaccgroupbyid(findaccgroup.Accunderprimarygroupid);
-                        var oldaccprimgrupdebit2 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr.AccgroupID).FirstOrDefault().CreditAmount;
-                        var oldaccprimbalance2 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr.AccgroupID).FirstOrDefault().Accgroupbalance;
-
-                        if (findaccprimgroupDr.Accunderprimarygroupid != 0 && findaccprimgroupDr.Accunderprimarygroupid != null)
-                        {
-                            findaccprimgroupDr.Accgroupbalance = oldaccprimbalance2 - vouchermaster.FinalTotal;
-                            findaccprimgroupDr.CreditAmount = oldaccprimgrupdebit2 + vouchermaster.FinalTotal;
-                            ms.UpdateAccgroup(findaccprimgroupDr);
-
-
-                            //---------------------Update Account group 3 debit----------------------------//
-
-                            var findaccprimgroupDr3 = ms.Getaccgroupbyid(findaccprimgroupDr.Accunderprimarygroupid);
-                            var oldaccprimgrupdebit3 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr3.AccgroupID).FirstOrDefault().CreditAmount;
-                            var oldaccprimbalance3 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr3.AccgroupID).FirstOrDefault().Accgroupbalance;
-
-                            if (findaccprimgroupDr3.Accunderprimarygroupid != 0 && findaccprimgroupDr3.Accunderprimarygroupid != null)
-                            {
-                                findaccprimgroupDr3.Accgroupbalance = oldaccprimbalance3 - vouchermaster.FinalTotal;
-                                findaccprimgroupDr3.CreditAmount = oldaccprimgrupdebit3 + vouchermaster.FinalTotal;
-                                ms.UpdateAccgroup(findaccprimgroupDr3);
-
-
-                                //---------------------Update Account group 4 debit----------------------------//
-                                var findaccprimgroupDr4 = ms.Getaccgroupbyid(findaccprimgroupDr3.Accunderprimarygroupid);
-                                var oldaccprimgrupdebit4 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr4.AccgroupID).FirstOrDefault().CreditAmount;
-                                var oldaccprimbalance4 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr4.AccgroupID).FirstOrDefault().Accgroupbalance;
-
-                                if (findaccprimgroupDr4.Accunderprimarygroupid != 0 && findaccprimgroupDr4.Accunderprimarygroupid != null)
-                                {
-                                    findaccprimgroupDr4.Accgroupbalance = oldaccprimbalance4 - vouchermaster.FinalTotal;
-                                    findaccprimgroupDr4.CreditAmount = oldaccprimgrupdebit4 + vouchermaster.FinalTotal;
-                                    ms.UpdateAccgroup(findaccprimgroupDr4);
-
-                                    //---------------------Update Account group 5 debit----------------------------//
-                                    var findaccprimgroupDr5 = ms.Getaccgroupbyid(findaccprimgroupDr4.Accunderprimarygroupid);
-                                    var oldaccprimgrupdebit5 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr5.AccgroupID).FirstOrDefault().CreditAmount;
-                                    var oldaccprimbalance5 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr5.AccgroupID).FirstOrDefault().Accgroupbalance;
-                                    if (findaccprimgroupDr5.Accunderprimarygroupid != 0 && findaccprimgroupDr5.Accunderprimarygroupid != null)
-                                    {
-                                        findaccprimgroupDr5.Accgroupbalance = oldaccprimbalance5 - vouchermaster.FinalTotal;
-                                        findaccprimgroupDr5.CreditAmount = oldaccprimgrupdebit5 + vouchermaster.FinalTotal;
-                                        ms.UpdateAccgroup(findaccprimgroupDr5);
-
-
-                                        //---------------------Update Account group 6 debit----------------------------//
-                                        var findaccprimgroupDr6 = ms.Getaccgroupbyid(findaccprimgroupDr5.Accunderprimarygroupid);
-                                        var oldaccprimgrupdebit6 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr6.AccgroupID).FirstOrDefault().CreditAmount;
-                                        var oldaccprimbalance6 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr6.AccgroupID).FirstOrDefault().Accgroupbalance;
-                                        if (findaccprimgroupDr6.Accunderprimarygroupid != 0 && findaccprimgroupDr6.Accunderprimarygroupid != null)
-                                        {
-                                            findaccprimgroupDr6.Accgroupbalance = oldaccprimbalance6 - vouchermaster.FinalTotal;
-                                            findaccprimgroupDr6.CreditAmount = oldaccprimgrupdebit6 + vouchermaster.FinalTotal;
-                                            ms.UpdateAccgroup(findaccprimgroupDr6);
-
-                                            //---------------------Update Account group 7 debit----------------------------//
-                                            var findaccprimgroupDr7 = ms.Getaccgroupbyid(findaccprimgroupDr6.Accunderprimarygroupid);
-                                            var oldaccprimgrupdebit7 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr7.AccgroupID).FirstOrDefault().CreditAmount;
-                                            var oldaccprimbalance7 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr7.AccgroupID).FirstOrDefault().Accgroupbalance;
-                                            if (findaccprimgroupDr7.Accunderprimarygroupid != 0 && findaccprimgroupDr7.Accunderprimarygroupid != null)
-                                            {
-                                                findaccprimgroupDr7.Accgroupbalance = oldaccprimbalance7 - vouchermaster.FinalTotal;
-                                                findaccprimgroupDr7.CreditAmount = oldaccprimgrupdebit7 + vouchermaster.FinalTotal;
-                                                ms.UpdateAccgroup(findaccprimgroupDr7);
-
-
-                                                //---------------------Update Account group 8 debit----------------------------//
-                                                var findaccprimgroupDr8 = ms.Getaccgroupbyid(findaccprimgroupDr7.Accunderprimarygroupid);
-                                                var oldaccprimgrupdebit8 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr8.AccgroupID).FirstOrDefault().CreditAmount;
-                                                var oldaccprimbalance8 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr8.AccgroupID).FirstOrDefault().Accgroupbalance;
-                                                if (findaccprimgroupDr8.Accunderprimarygroupid != 0 && findaccprimgroupDr8.Accunderprimarygroupid != null)
-                                                {
-                                                    findaccprimgroupDr8.Accgroupbalance = oldaccprimbalance8 - vouchermaster.FinalTotal;
-                                                    findaccprimgroupDr8.CreditAmount = oldaccprimgrupdebit8 + vouchermaster.FinalTotal;
-                                                    ms.UpdateAccgroup(findaccprimgroupDr8);
-
-
-                                                    //---------------------Update Account group 9 debit----------------------------//
-                                                    var findaccprimgroupDr9 = ms.Getaccgroupbyid(findaccprimgroupDr8.Accunderprimarygroupid);
-                                                    var oldaccprimgrupdebit9 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr9.AccgroupID).FirstOrDefault().CreditAmount;
-                                                    var oldaccprimbalance9 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr9.AccgroupID).FirstOrDefault().Accgroupbalance;
-                                                    if (findaccprimgroupDr9.Accunderprimarygroupid != 0 && findaccprimgroupDr9.Accunderprimarygroupid != null)
-                                                    {
-                                                        findaccprimgroupDr9.Accgroupbalance = oldaccprimbalance9 - vouchermaster.FinalTotal;
-                                                        findaccprimgroupDr9.CreditAmount = oldaccprimgrupdebit9 + vouchermaster.FinalTotal;
-                                                        ms.UpdateAccgroup(findaccprimgroupDr9);
-
-                                                        //---------------------Update Account group 10 debit----------------------------//
-                                                        var findaccprimgroupDr10 = ms.Getaccgroupbyid(findaccprimgroupDr9.Accunderprimarygroupid);
-                                                        var oldaccprimgrupdebit10 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr10.AccgroupID).FirstOrDefault().CreditAmount;
-                                                        var oldaccprimbalance10 = db.AccGroup.Where(m => m.AccgroupID == findaccprimgroupDr10.AccgroupID).FirstOrDefault().Accgroupbalance;
-                                                        if (findaccprimgroupDr10.Accunderprimarygroupid != 0 && findaccprimgroupDr10.Accunderprimarygroupid != null)
-                                                        {
-                                                            findaccprimgroupDr10.Accgroupbalance = oldaccprimbalance10 - vouchermaster.FinalTotal;
-                                                            findaccprimgroupDr10.CreditAmount = oldaccprimgrupdebit10 + vouchermaster.FinalTotal;
-                                                            ms.UpdateAccgroup(findaccprimgroupDr10);
-
-
-
-
-                                                        }
-                                                        else
-                                                        {
-                                                            findaccprimgroupDr10.Accgroupbalance = oldaccprimbalance10 - vouchermaster.FinalTotal;
-                                                            findaccprimgroupDr10.CreditAmount = oldaccprimgrupdebit10 + vouchermaster.FinalTotal;
-                                                            ms.UpdateAccgroup(findaccprimgroupDr10);
-
-                                                        }
-
-
-                                                    }
-                                                    else
-                                                    {
-                                                        findaccprimgroupDr9.Accgroupbalance = oldaccprimbalance9 - vouchermaster.FinalTotal;
-                                                        findaccprimgroupDr9.CreditAmount = oldaccprimgrupdebit9 + vouchermaster.FinalTotal;
-                                                        ms.UpdateAccgroup(findaccprimgroupDr9);
-
-                                                    }
-
-
-                                                }
-                                                else
-                                                {
-                                                    findaccprimgroupDr8.Accgroupbalance = oldaccprimbalance8 - vouchermaster.FinalTotal;
-                                                    findaccprimgroupDr8.CreditAmount = oldaccprimgrupdebit8 + vouchermaster.FinalTotal;
-                                                    ms.UpdateAccgroup(findaccprimgroupDr8);
-
-                                                }
-
-
-                                            }
-                                            else
-                                            {
-                                                findaccprimgroupDr7.Accgroupbalance = oldaccprimbalance7 - vouchermaster.FinalTotal;
-                                                findaccprimgroupDr7.CreditAmount = oldaccprimgrupdebit7 + vouchermaster.FinalTotal;
-                                                ms.UpdateAccgroup(findaccprimgroupDr7);
-
-                                            }
-
-
-
-                                        }
-                                        else
-                                        {
-                                            findaccprimgroupDr6.Accgroupbalance = oldaccprimbalance6 - vouchermaster.FinalTotal;
-                                            findaccprimgroupDr6.CreditAmount = oldaccprimgrupdebit6 + vouchermaster.FinalTotal;
-                                            ms.UpdateAccgroup(findaccprimgroupDr6);
-
-                                        }
-
-                                    }
-                                    else
-                                    {
-                                        findaccprimgroupDr5.Accgroupbalance = oldaccprimbalance5 - vouchermaster.FinalTotal;
-                                        findaccprimgroupDr5.CreditAmount = oldaccprimgrupdebit5 + vouchermaster.FinalTotal;
-                                        ms.UpdateAccgroup(findaccprimgroupDr5);
-
-                                    }
-
-                                }
-                                else
-                                {
-                                    findaccprimgroupDr4.Accgroupbalance = oldaccprimbalance4 - vouchermaster.FinalTotal;
-                                    findaccprimgroupDr4.CreditAmount = oldaccprimgrupdebit4 + vouchermaster.FinalTotal;
-                                    ms.UpdateAccgroup(findaccprimgroupDr4);
-
-                                }
-
-                            }
-                            else
-                            {
-                                findaccprimgroupDr3.Accgroupbalance = oldaccprimbalance3 - vouchermaster.FinalTotal;
-                                findaccprimgroupDr3.CreditAmount = oldaccprimgrupdebit3 + vouchermaster.FinalTotal;
-                                ms.UpdateAccgroup(findaccprimgroupDr3);
-
-                            }
-
-                        }
-                        else
-                        {
-                            findaccprimgroupDr.Accgroupbalance = oldaccprimbalance2 - vouchermaster.FinalTotal;
-                            findaccprimgroupDr.CreditAmount = oldaccprimgrupdebit2 + vouchermaster.FinalTotal;
-                            ms.UpdateAccgroup(findaccprimgroupDr);
-
-                        }
-
 
                     }
-                    else
-                    {
-                        findaccgroup.Accgroupbalance = oldaccgrupbalance - vouchermaster.FinalTotal;
-                        findaccgroup.CreditAmount = oldaccgrupdebit1 + vouchermaster.FinalTotal;
-                        ms.UpdateAccgroup(findaccgroup);
-                    }
-                }
-
-               
-
-
-
-
-
-                //var oldbalanceaccprgroupid = db.AccGroup.Where(m=>m.)
-
-            }
-            else if (vouchermaster.modify == 1)
-            {
-                var oldmasterfind = db.VoucherMaster.Where(m => m.vouchermasterid == vouchermaster.VoucherNumber && m.Partyid_Accountid != 1060).FirstOrDefault();
-                var oldmastersales = db.VoucherMaster.Where(m => m.vouchermasterid == vouchermaster.VoucherNumber && m.Partyid_Accountid == 1060).FirstOrDefault();
-
-                var oldchildfind = db.VoucherChild.Where(m => m.VoucherMasterID == oldmasterfind.vouchermasterid).ToList();
-                int billsundrynumber = db.BillSundryChild.Count() + 1;
-
-
-                double billsamount = 0;
-                int billsid = 0;
-                double billsundrytotalamount = 0;
-                //-------update billsundrychild----------//
-                if (vouchermaster.deletebillsundrychild != null)
-                {
-                    for (int i = 0; i < vouchermaster.deletebillsundrychild.Count; i++)
-                    {
-                        //List<int> ttas = JVmastermodel.deletedchild;
-
-                        //int findid = db.JournalVoucherChild.Where(m =>k m.JVchildID == ttas[i]).FirstOrDefault().JVchildID;
-
-                        //var oldchildfind2 = db.JournalVoucherChild.Find(db.JournalVoucherChild.Where(m => m.JVMasterID == JVmastermodel.deletedchild[i]).FirstOrDefault().JVchildID);
-
-
-                        var olddbillsundrychild = db.BillSundryChild.Find(vouchermaster.deletebillsundrychild[i]);
-                        olddbillsundrychild.BillSundryNumber = 0;
-                        olddbillsundrychild.Vouchermasterid = 0;
-                        db.Entry(olddbillsundrychild).State = System.Data.Entity.EntityState.Modified;
-                        //db.BillSundryChild.Remove(olddbillsundrychild);
-
-                        db.SaveChanges();
-
-                        billsundrytotalamount += olddbillsundrychild.BillSundryAmount;
-
-
-
-                    }
-
-                    oldmasterfind.BillSundryAmount = oldmasterfind.BillSundryAmount - billsundrytotalamount;
-                    oldmasterfind.BillSundryId = billsundrynumber;
-
-                }
-                if (vouchermaster.newbillsundrychild2 != null && vouchermaster.newbillsundrychild2.Count > 0)
-                {
-                    for (int i = 0; i < vouchermaster.newbillsundrychild2.Count; i++)
-                    {
-                        var vouchermasterid2 = vouchermaster.VoucherNumber;
-
-
-                        billsundrytotalamount += vouchermaster.BillSundryAmount[i];
-
-                        BillSundryChild billSundryChild = new BillSundryChild
-                        {
-                            BillSundryID = vouchermaster.BillSundryID[i],
-                            BillSundryAmount = vouchermaster.BillSundryAmount[i],
-                            Vouchermasterid = vouchermasterid2,
-                            BillSundryNumber = billsundrynumber
-                        };
-                        db.BillSundryChild.Add(billSundryChild);
-                        db.SaveChanges();
-
-                        //---Stockss---//
-                        //var oldquantity = (int)db.Stock.Find(vouchermaster.ItemID[i]).Quantity;
-                        // int? oldquantity = db.Stock.Where(m=>m.ItemID== vouchermaster.ItemID[i]).FirstOrDefault().Quantity;
-                        //OrderServices orderServices = new OrderServices();
-                        //var StockValues = orderServices.GetStockById(vouchermaster.ItemID[i]);
-                        //StockValues.Quantity = StockValues.Quantity + vouchermaster.Quantity[i];
-                        //orderServices.UpdateStock(StockValues);
-                        // orderServices.UpdateStock(StockValues);
-                        //---Stockss---//
-
-                    }
-
-                    oldmasterfind.BillSundryAmount = oldmasterfind.BillSundryAmount + billsundrytotalamount;
-
-                    oldmasterfind.BillSundryId = billsundrynumber;
 
                 }
 
-
-                //-------update vouchermaster----------//
-                oldmasterfind.Narration = vouchermaster.Narration;
-                oldmasterfind.VoucherFinalTotal = vouchermaster.FinalTotal;
-                oldmasterfind.Partyid_Accountid = vouchermaster.Partyid;
-                oldmasterfind.LocationID = vouchermaster.LocationID;
-
-                db.Entry(oldmasterfind).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-
-                oldmastersales.VoucherFinalTotal = vouchermaster.FinalTotal;
-                db.Entry(oldmastersales).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-
-                //-------update voucherchild----------//
-
-                if (vouchermaster.deletedchild != null)
-                {
-
-                    for (int i = 0; i < vouchermaster.deletedchild.Count; i++)
-                    {
-                        //List<int> ttas = JVmastermodel.deletedchild;
-
-                        //int findid = db.JournalVoucherChild.Where(m =>k m.JVchildID == ttas[i]).FirstOrDefault().JVchildID;
-
-                        //var oldchildfind2 = db.JournalVoucherChild.Find(db.JournalVoucherChild.Where(m => m.JVMasterID == JVmastermodel.deletedchild[i]).FirstOrDefault().JVchildID);
-                        var olddchild = db.VoucherChild.Find(vouchermaster.deletedchild[i]);
-                        db.VoucherChild.Remove(olddchild);
-                        db.SaveChanges();
-
-                        //---Stockss---//
-                        //var oldquantity = (int)db.Stock.Find(vouchermaster.ItemID[i]).Quantity;
-                        // int? oldquantity = db.Stock.Where(m=>m.ItemID== vouchermaster.ItemID[i]).FirstOrDefault().Quantity;
-                        OrderServices orderServices = new OrderServices();
-
-                        var deleteditemid = olddchild.ItemID;
-                        var deletedquantity = olddchild.Quantity;
-                        var StockValues = orderServices.GetStockById(deleteditemid);
-                        StockValues.Quantity = StockValues.Quantity + deletedquantity;
-                        orderServices.UpdateStock(StockValues);
-                        //---Stockss---//
-
-                    }
-                }
-                if (vouchermaster.newchild2 != null && vouchermaster.newchild2.Count > 0)
-                {
-                    for (int i = 0; i < vouchermaster.newchild2.Count; i++)
-                    {
-                        var vouchermasterid = vouchermaster.VoucherNumber;
-
-
-                        /* if (JVmastermodel.CreditAmount[i] == 0.00)
-                         {
-
-                         }
-
-                        else if (JVmastermodel.DrCrID[i] == 2)
-                        {
-                            creditamount = JVmastermodel.CreditAmount[i];
-                            debitamount = 0.00;
-                        }*/
-                        VoucherChild voucherchild = new VoucherChild
-                        {
-                            //VoucherchildID = 0,
-                            ItemID = vouchermaster.ItemID[i],
-                            Quantity = vouchermaster.Quantity[i],
-                            Unitid = vouchermaster.Unitid[i],
-                            ItemPrice = vouchermaster.ItemPrice[i],
-                            TotalAmount = vouchermaster.TotalAmount[i],
-                            BillsundryID = billsid,
-                            VoucherMasterID = vouchermasterid
-
-
-                        };
-                        db.VoucherChild.Add(voucherchild);
-                        db.SaveChanges();
-
-
-                        //---Stockss---//
-                        //var oldquantity = (int)db.Stock.Find(vouchermaster.ItemID[i]).Quantity;
-                        // int? oldquantity = db.Stock.Where(m=>m.ItemID== vouchermaster.ItemID[i]).FirstOrDefault().Quantity;
-                        OrderServices orderServices = new OrderServices();
-                        var StockValues = orderServices.GetStockById(vouchermaster.ItemID[i]);
-                        StockValues.Quantity = StockValues.Quantity - vouchermaster.Quantity[i];
-                        orderServices.UpdateStock(StockValues);
-                        // orderServices.UpdateStock(StockValues);
-                        //---Stockss---//
-
-                    }
-
-
-
-                }
-
-            }
-
-            return RedirectToAction("salehistory");
+                return RedirectToAction("salehistory");
             }
             catch (Exception e)
             {
@@ -1360,7 +1381,7 @@ namespace RMS.Web.Controllers
 
             return View("~/Views/Sales/SPVoucher.cshtml", vmmodel);
 
-        }   
+        }
 
         public ActionResult SaleReturnHistoy()
         {
@@ -1370,7 +1391,7 @@ namespace RMS.Web.Controllers
 
             if (vouchercount > 0)
             {
-                 sales.Vouchermasterlist = db.VoucherMaster.Where(m => m.VoucherTypeID == 9 && m.Partyid_Accountid != 1060).ToList();
+                sales.Vouchermasterlist = db.VoucherMaster.Where(m => m.VoucherTypeID == 9 && m.Partyid_Accountid != 1060).ToList();
                 sales.vouchertypeid = 9;
                 ViewBag.sales = db.VoucherMaster.Where(m => m.VoucherTypeID == 9 && m.Partyid_Accountid != 1060).Sum(m => m.VoucherFinalTotal);
             }
@@ -1379,7 +1400,7 @@ namespace RMS.Web.Controllers
                 sales.vouchertypeid = 9;
                 ViewBag.sales = 0;
             }
-            
+
             return View("~/Views/Sales/salehistory.cshtml", sales);
         }
 
