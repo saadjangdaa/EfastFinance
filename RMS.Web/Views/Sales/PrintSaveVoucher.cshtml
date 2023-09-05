@@ -8,7 +8,8 @@
     <div class="card-header py-3" style="background-color:#5a5c69">
         <div class="row">
             <div class="col-5">
-                <input  type="text" readonly disabled id="voucherno" value="@Model.VoucherMasterID" />
+                <input  type="text" style="background: #5a5c69; color: white;" readonly disabled id="voucherno" value="@Model.VoucherMasterID" />
+               <input  type="text" style="background: #5a5c69; color: white;" readonly disabled id="vouchertypid" value="@Model.VoucherTypeID" />
                 <p style="color:white;">Party Name : @Model.VoucherMasterList.PartyName</p>
             </div>
             <div class="col-5">
@@ -107,10 +108,11 @@
 
     function PrintVoucher() {
         debugger;
-            var id = $('#voucherno').val();
-            var url = '@Url.Action("ReportSaleVoucher", "Sales")';
-            url += '?MasterID=' + id;
-            window.location.href = url;
+        var id = $('#voucherno').val();
+        var typeid = $('#vouchertypid').val();
+        var url = '@Url.Action("ReportSaleVoucher", "Sales")';
+            url += '?MasterID=' + id + '&TypeID=' + typeid;
+        window.open(url, '_blank');
         };
 </script>
 

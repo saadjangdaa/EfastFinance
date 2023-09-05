@@ -315,12 +315,12 @@ namespace RMS.Web.Controllers
                 return RedirectToAction("Addsalevoucher");
             }
         }
-        public ActionResult PrintSaveVoucher(int? MasterID)
+        public ActionResult PrintSaveVoucher(int? MasterID,int TypeID)
         {
             var Units = db.Units.ToList();
             var items = db.Items.ToList();
             VoucherChildViewModel model = new VoucherChildViewModel();
-            model.VoucherChildList = db.VoucherChild.Where(x => x.VoucherMasterID == MasterID && x.VoucherTypeID == 1).Select(w => new VoucherChildViewModel
+            model.VoucherChildList = db.VoucherChild.Where(x => x.VoucherMasterID == MasterID && x.VoucherTypeID == TypeID).Select(w => new VoucherChildViewModel
             {
                 ItemID = w.ItemID,
                 Quantity = w.Quantity,
@@ -331,6 +331,7 @@ namespace RMS.Web.Controllers
                 TotalAmount = w.TotalAmount
             }).ToList();
             model.VoucherMasterID = MasterID;
+            model.VoucherTypeID = TypeID;
             model.VoucherMasterList = db.VoucherMaster.Where(w => w.vouchermasterid == MasterID).Select(s => new VoucherMasterViewModel
             {
                 Partyid = s.Partyid_Accountid,
@@ -341,38 +342,74 @@ namespace RMS.Web.Controllers
             }).FirstOrDefault();
             return View(model);
         }
-        //public ActionResult ReportSaleVoucher(string MasterID)
-        //{
-        //    ReportDocument report = new ReportDocument();
-
-        //    report.Load(Server.MapPath("~/Reports/SaleVoucher.rpt"));
-
-        //    var ReportData = db.Database.SqlQuery<VoucherMaster>("Sp_Salevoucher").ToList();
-
-        //    report.SetDataSource(ReportData);
-
-        //    report.SetParameterValue("VoucherMasterID", MasterID);
-
-        //    ViewBag.Report = report;
-        //    return View();
-        //}
-        public ActionResult ReportSaleVoucher(int? MasterID)
+        public ActionResult ReportSaleVoucher(int? MasterID,int? TypeID)
         {
-            ReportDocument rd = new ReportDocument();
-            rd.Load(Server.MapPath("~/Reports/SaleVoucher.rpt"));
-            rd.SetParameterValue("@vouchermasterid", MasterID);
+            ReportDocument report = new ReportDocument();
+          
+            report.Load(Server.MapPath("~/Reports/SaleVoucher.rpt"));
 
-            var parameter = new SqlParameter("@vouchermasterid", SqlDbType.Int);
-            parameter.Value = MasterID == null ? 0 : MasterID; //?? (object)DBNull.Value;
-            var data = db.Database.SqlQuery<VoucherMaster>("EXEC Sp_Salevoucher @vouchermasterid", parameter).ToList();
+            report.SetParameterValue("@vouchermasterid", MasterID);
+            report.SetParameterValue("@typeid", TypeID);
 
-            rd.SetDataSource(data);
-            var stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            var ReportData = db.Database.SqlQuery<VoucherMasterReport>("Sp_Salevoucher @vouchermasterid, @typeid",
+            new SqlParameter("vouchermasterid", MasterID),
+            new SqlParameter("typeid", TypeID)).ToList();
+
+            report.SetDataSource(ReportData);
+
+            var stream = report.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
             return File(stream, "application/pdf");
         }
 
 
 
+        //public ActionResult ReportSaleVoucher(int? MasterID)
+        //{
+        //    ReportDocument rd = new ReportDocument();
+        //    rd.Load(Server.MapPath("~/Reports/SaleVoucher.rpt"));
+        //    rd.SetParameterValue("@vouchermasterid", MasterID);
+
+        //    var parameter = new SqlParameter("@vouchermasterid", SqlDbType.Int);
+        //    parameter.Value = MasterID == null ? 0 : MasterID; //?? (object)DBNull.Value;
+        //    var data = db.Database.SqlQuery<VoucherMaster>("EXEC Sp_Salevoucher @vouchermasterid", parameter).ToList();
+
+        //    rd.SetDataSource(data);
+        //    var stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+        //    return File(stream, "application/pdf");
+        //}
+        //public ActionResult ReportSaleVoucher(int? MasterID)
+        //{
+        //    ReportDocument rd = new ReportDocument();
+        //    rd.Load(Server.MapPath("~/Reports/SaleVoucher.rpt"));
+        //    rd.SetParameterValue("@vouchermasterid", MasterID);
+
+        //    var parameter = new SqlParameter("@vouchermasterid", SqlDbType.Int);
+        //    parameter.Value = MasterID == null ? 0 : MasterID;
+
+        //    var data = db.Database.SqlQuery<VoucherMaster>("EXEC Sp_Salevoucher @vouchermasterid", parameter)
+        //    .Select(item => new VoucherMaster
+        //    {
+        //        vouchermasterid = item.vouchermasterid,
+        //        LocationID2= item.LocationID2,
+        //    })
+        //    .ToList();
+
+        //    var dataSet = new DataSet();
+        //    var dataTable = new DataTable();
+        //    dataTable.TableName = "VoucherMaster";
+        //    dataTable.Columns.Add("vouchermasterid", typeof(int));
+
+        //    foreach (var item in data)
+        //    {
+        //        dataTable.Rows.Add(item.vouchermasterid);
+        //    }
+
+        //    dataSet.Tables.Add(dataTable);
+        //    rd.SetDataSource(dataSet);
+
+        //    var stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+        //    return File(stream, "application/pdf");
+        //}
         //public ActionResult _PrintSaveVoucher2(int? MasterID)
         //{
         //    var Units = db.Units.ToList();
@@ -402,7 +439,6 @@ namespace RMS.Web.Controllers
 
         [HttpPost]
         public ActionResult SaveSVoucher(VoucherMasterViewModel vouchermaster)
-
         {
             try
             {

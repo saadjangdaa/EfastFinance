@@ -33,4 +33,27 @@ namespace RMS.Web.Models
         public virtual MaterialCentre MaterialCentre { get; set; }
         public virtual MaterialCentre MaterialCentre1 { get; set; }
     }
+    public class VoucherMasterReport
+    {
+        public int VoucherNum_BillNum { get; set; }
+        public DateTime VoucherCreateDate { get; set; }
+        public string AccountName { get; set; }
+        public int DrCrType { get; set; }
+        public string Narration { get; set; }
+        public int vouchermasterid { get; set; }
+        public int Itemid { get; set; }
+        public int Quantity { get; set; }
+        public double TotalPrice { get; set; }
+        public double totalamount { get; set; }
+        public string UnitName { get; set; }
+        public string itemName { get; set; }
+        public int Partyid_Accountid { get; set; }
+        public int BillSundryID { get; set; }
+        public double BillSundryAmount { get; set; }
+        public double VoucherFinalTotal { get; set; }
+        public int VoucherTypeID { get; set; }
+        public int LocationID { get; set; }
+        public int LocationID2 { get; set; }
+    }
+
 }
