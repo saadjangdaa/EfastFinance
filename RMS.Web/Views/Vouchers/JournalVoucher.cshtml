@@ -8,7 +8,7 @@
     <form id="JournalVoucher" class="JournalVoucher">
         <div class="card shadow mb-4">
             <div class="card-header py-3" style="background-color:#5a5c69">
-
+                <input  type="text" id="vouchertype" value=@Model.vouchertype hidden readonly />
                 @if (Model.vouchertype == 5)
                 {
                     if (Model.modify == 1)
@@ -21,6 +21,11 @@
                                 <div class="pr-1">
                                     <button type="button" onclick="history.back()" class="btn btn-success ">
                                         <i class="glyphicon glyphicon-arrow-left"></i> Back
+                                    </button>
+                                </div>
+                                <div class="pr-1">
+                                    <button type="button" onclick="PrintVoucher()" class="btn btn-success ">
+                                        <i class="glyphicon glyphicon-print"></i> Preview
                                     </button>
                                 </div>
                                 <div>
@@ -71,6 +76,11 @@
                                         <i class="glyphicon glyphicon-arrow-left"></i> Back
                                     </button>
                                 </div>
+                                <div class="pr-1">
+                                    <button type="button" onclick="PrintVoucher()" class="btn btn-success ">
+                                        <i class="glyphicon glyphicon-print"></i> Preview
+                                    </button>
+                                </div>
                                 <div>
                                     <button type="button" id="btnSaveVoucher" style="float:right;" class="btn btn-success ">
                                         <i class="glyphicon glyphicon-save-file"></i> Update Voucher
@@ -115,7 +125,7 @@
                     {
                         <lablel class="col-md-2" style="color:black">Voucher Number</lablel>
                         <div class="col-md-4">
-                            <input class="form-control text-right" id="" readonly="readonly" name="JVMasterID" type="number" value="@Model.JvID_VoucherNo" />
+                            <input class="form-control text-right" id="voucherno" readonly="readonly" name="JVMasterID" type="number" value="@Model.JvID_VoucherNo" />
                         </div>
 
                         <lablel class="col-md-2" style="color:black">Voucher Date</lablel>
@@ -501,7 +511,16 @@
 <script src="~/Scripts/chosen/select2-4.1.0-beta.1/dist/js/select2.full.js"></script>
 
 <link href="~/Scripts/chosen/select2-4.1.0-beta.1/dist/css/select2.css" rel="stylesheet" />
-
+<script>
+     function PrintVoucher() {
+        debugger;
+         var id = $('#voucherno').val();
+         var typeid = $('#vouchertype').val();
+        var url = '@Url.Action("ReportJVVoucher", "Vouchers")';
+            url += '?MasterID=' + id + '&TypeID=' + typeid;
+        window.open(url, '_blank');
+        };
+</script>
 <script>
     $('#accountID').change(function () {
 

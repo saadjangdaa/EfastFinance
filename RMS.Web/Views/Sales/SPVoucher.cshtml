@@ -270,6 +270,25 @@
                                         <button type="button" id="btnSaveVoucher" class="btn btn-success ">
                                             <i class="glyphicon glyphicon-save-file"></i> Save Voucher
                                         </button>
+                                        <div class="modal fade" id="printViewModal1" tabindex="-1" role="dialog" aria-labelledby="pintViewModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="printViewModal1Label">Preview Voucher</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Preview Voucher?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" onclick="PrintVoucher()" class="btn btn-secondary" data-dismiss="modal">Preview</button>
+                                                        <button type="button" onclick="reloadPage()" class="btn btn-primary">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

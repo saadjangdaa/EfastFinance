@@ -1,10 +1,14 @@
-﻿using RMS.Web.Models;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.ReportSource;
+using CrystalDecisions.Shared;
+using RMS.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using RMS.Web.Models.ViewModels;
-
+using System.Data;
+using System.Data.SqlClient;
 using System.Web.Mvc;
 using RMS.Web.Services;
 
@@ -1819,11 +1823,7 @@ namespace RMS.Web.Controllers
 
 
 
-                }
-
-
-
-
+                 }
                 return RedirectToAction("PaymentVoucher");
 
             }
@@ -2596,15 +2596,25 @@ namespace RMS.Web.Controllers
         }
         #endregion Receipt Voucher
 
+        public ActionResult ReportJVVoucher(int? MasterID, int? TypeID)
+        {
+            ReportDocument report = new ReportDocument();
 
+            report.Load(Server.MapPath("~/Reports/VoucherRpt.rpt"));
 
+            report.SetParameterValue("@vouchermasterid", MasterID);
+            report.SetParameterValue("@typeid", TypeID);
 
+            var ReportData = db.Database.SqlQuery<JournalVMasterReportViewModel>("Sp_VoucherRpt @vouchermasterid, @typeid",
+            new SqlParameter("vouchermasterid", MasterID),
+            new SqlParameter("typeid", TypeID)).ToList();
 
+            report.SetDataSource(ReportData);
 
+            var stream = report.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            return File(stream, "application/pdf");
+        }
 
-
-
-
-
+        
     }
 }

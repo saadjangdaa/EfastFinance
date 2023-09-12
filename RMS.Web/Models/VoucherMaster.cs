@@ -54,6 +54,8 @@ namespace RMS.Web.Models
         public int VoucherTypeID { get; set; }
         public int LocationID { get; set; }
         public int LocationID2 { get; set; }
+        public string VoucherTypeName { get; set; }
+        public string VoucherTypeShortName { get; set; }
     }
 
 }

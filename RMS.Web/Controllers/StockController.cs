@@ -1,4 +1,7 @@
-﻿using RMS.Web.Models;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.ReportSource;
+using CrystalDecisions.Shared;
+using RMS.Web.Models;
 using RMS.Web.Models.ViewModels;
 using RMS.Web.Services;
 using System;
@@ -6,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace RMS.Web.Controllers
 {
@@ -167,7 +172,6 @@ namespace RMS.Web.Controllers
         public ActionResult StockTransfer()
         {
             ViewBag.MaterialCentres = new SelectList(db.MaterialCentre, "MaterialcentreID", "MaterialCentreName");
-
 
             ViewBag.Accountname = new SelectList(db.Account, "AccountID", "AccountName");
             ViewBag.Units = new SelectList(db.Units, "UnitID", "UnitName");
@@ -511,20 +515,10 @@ namespace RMS.Web.Controllers
                             LocationID = vouchermaster.LocationID2,
                             LocationID2 = vouchermaster.LocationID
 
-
                         };
                         db.VoucherMaster.Add(stocktransferTo);
                         db.SaveChanges();
                     }
-
-
-
-
-                
-
-
-
-
 
                     return RedirectToAction("StockTransfer");
                 }
@@ -876,6 +870,44 @@ namespace RMS.Web.Controllers
 
 
         #endregion RecieveFromVoucher
+
+        public ActionResult ReportStockVoucher(int? MasterID, int? TypeID)
+        {
+            ReportDocument report = new ReportDocument();
+
+            report.Load(Server.MapPath("~/Reports/StockVoucherRpt.rpt"));
+
+            report.SetParameterValue("@vouchermasterid", MasterID);
+            report.SetParameterValue("@typeid", TypeID);
+
+            var ReportData = db.Database.SqlQuery<StockVoucherViewModel>("Sp_Stockvoucher @vouchermasterid, @typeid",
+            new SqlParameter("vouchermasterid", MasterID),
+            new SqlParameter("typeid", TypeID)).ToList();
+
+            report.SetDataSource(ReportData);
+
+            var stream = report.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            return File(stream, "application/pdf");
+        }
+
+        public ActionResult ReportStockReceiveVoucher(int? MasterID, int? TypeID)
+        {
+            ReportDocument report = new ReportDocument();
+
+            report.Load(Server.MapPath("~/Reports/StockVoucherReceiveRpt.rpt"));
+
+            report.SetParameterValue("@vouchermasterid", MasterID);
+            report.SetParameterValue("@typeid", TypeID);
+
+            var ReportData = db.Database.SqlQuery<StockVoucherViewModel>("Sp_Stockvoucher @vouchermasterid, @typeid",
+            new SqlParameter("vouchermasterid", MasterID),
+            new SqlParameter("typeid", TypeID)).ToList();
+
+            report.SetDataSource(ReportData);
+
+            var stream = report.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            return File(stream, "application/pdf");
+        }
 
     }
 }

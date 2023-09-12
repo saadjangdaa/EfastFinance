@@ -24,6 +24,11 @@
                                         <i class="glyphicon glyphicon-arrow-left"></i> Back
                                     </button>
                                 </div>
+                                <div class="pr-1">
+                                    <button type="button" onclick="PrintVoucher()" class="btn btn-success ">
+                                        <i class="glyphicon glyphicon-print"></i> Preview
+                                    </button>
+                                </div>
                                 <div>
                                     <button type="button" id="btnSaveVoucher" style="float:right;" class="btn btn-success ">
                                         <i class="glyphicon glyphicon-save-file"></i> Update Voucher
@@ -74,6 +79,11 @@
                                         <i class="glyphicon glyphicon-arrow-left"></i> Back
                                     </button>
                                 </div>
+                                <div class="pr-1">
+                                    <button type="button" onclick="PrintVoucher()" class="btn btn-success ">
+                                        <i class="glyphicon glyphicon-print"></i> Preview
+                                    </button>
+                                </div>
                                 <div>
                                     <button type="button" id="btnSaveVoucher" style="float:right;" class="btn btn-success ">
                                         <i class="glyphicon glyphicon-save-file"></i> Update Voucher
@@ -115,7 +125,7 @@
                 {
                     <lablel class="col-md-2" style="color:black">Voucher Number</lablel>
                     <div class="col-md-4">
-                        <input class="form-control" name="VoucherNumber" readonly="readonly" type="text" value="@Model.VoucherNumber  " />
+                        <input class="form-control" id="voucherno" name="VoucherNumber" readonly="readonly" type="text" value="@Model.VoucherNumber  " />
                     </div>
 
                     <lablel class="col-md-2" style="color:black">Voucher Date</lablel>
@@ -382,7 +392,6 @@
                                             <td hidden>@item.TotalAmount</td>
                                             <td hidden>@rowid</td>
                                             <td hidden>@item.VoucherchildID</td>
-
                                         </tr>
                                     </tbody>
                                     rowid = rowid + 1;
@@ -590,6 +599,24 @@
     <link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
     <link href="~/Scripts/jquery-ui.min.css" rel="stylesheet" />*@
 <script src="~/Scripts/chosen/select2-4.1.0-beta.1/dist/js/select2.full.js"></script>
+<script>
+     function PrintVoucher() {
+         debugger;
+         var id = $('#voucherno').val();
+         var typeid = $('#vouchertypeidddd').val();
+         if (typeid == 12) {
+             var url = '@Url.Action("ReportStockVoucher", "Stock")';
+             url += '?MasterID=' + id + '&TypeID=' + typeid;
+             window.open(url, '_blank');
+         }
+         else if (typeid == 13) {
+             var url = '@Url.Action("ReportStockReceiveVoucher", "Stock")';
+             url += '?MasterID=' + id + '&TypeID=' + typeid;
+             window.open(url, '_blank');
+         }
+
+        };
+</script>
 @if (Model.vouchertypeid == 12 || Model.vouchertypeid == 13)
 {
 <script>
