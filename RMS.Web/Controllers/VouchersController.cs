@@ -30,19 +30,20 @@ namespace RMS.Web.Controllers
 
         public JsonResult DeleteSVoucher(int id)
         {
-            try { 
-            if (id != 0)
+            try
             {
-                ms.DeleteSPVoucher(id);
+                if (id != 0)
+                {
+                    ms.DeleteSPVoucher(id);
 
 
-                return Json("Reverse Successfully", JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json("failed", JsonRequestBehavior.AllowGet);
+                    return Json("Reverse Successfully", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json("failed", JsonRequestBehavior.AllowGet);
 
-            }
+                }
 
             }
             catch (Exception e)
@@ -52,27 +53,25 @@ namespace RMS.Web.Controllers
                 throw;
             }
 
-
-
         }
 
         public JsonResult DeleteJVoucher(int id)
         {
             try
             {
-         
-            if (id != 0)
-            {
-                ms.DeleteJVoucher(id);
+
+                if (id != 0)
+                {
+                    ms.DeleteJVoucher(id);
 
 
-                return Json("success", JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json("fail", JsonRequestBehavior.AllowGet);
+                    return Json("success", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json("fail", JsonRequestBehavior.AllowGet);
 
-            }
+                }
 
 
             }
@@ -90,19 +89,19 @@ namespace RMS.Web.Controllers
             try
             {
 
-          
-            ViewBag.Account = new SelectList(db.Account, "AccountID", "AccountName");
-            ViewBag.currency = new SelectList(db.Currency, "CurrencyID", "CurrencyShortName");
-            ViewBag.vouchernumber = db.JournalVoucherMaster.Count() + 1;
-            ViewBag.DrCrID = new SelectList(db.DrCr, "DrCrID", "DrCrShortName");
 
-            JournalVMasterViewModel viewmodel = new JournalVMasterViewModel();
-            viewmodel.vouchertype = 5;
-            viewmodel.modify = 0;
+                ViewBag.Account = new SelectList(db.Account, "AccountID", "AccountName");
+                ViewBag.currency = new SelectList(db.Currency, "CurrencyID", "CurrencyShortName");
+                ViewBag.vouchernumber = db.JournalVoucherMaster.Count() + 1;
+                ViewBag.DrCrID = new SelectList(db.DrCr, "DrCrID", "DrCrShortName");
+
+                JournalVMasterViewModel viewmodel = new JournalVMasterViewModel();
+                viewmodel.vouchertype = 5;
+                viewmodel.modify = 0;
 
 
 
-            return View(viewmodel);
+                return View(viewmodel);
             }
             catch (Exception e)
             {
@@ -114,47 +113,48 @@ namespace RMS.Web.Controllers
         public ActionResult JournalVoucherHistory()
         {
 
-            try {
-
-    
-            var vouchercount = db.JournalVoucherMaster.Where(x => x.VoucherTypeID == 5).Count();
-            List<JournalVoucherMaster> jvlist;
-            JournalVMasterViewModel jvmodel = new JournalVMasterViewModel();
-
-            if (vouchercount > 0)
+            try
             {
 
-                jvlist = db.JournalVoucherMaster.Where(m => m.VoucherTypeID == 5).ToList();
-                //var jvchildlist = db.JournalVoucherChild.ToList();
+
+                var vouchercount = db.JournalVoucherMaster.Where(x => x.VoucherTypeID == 5).Count();
+                List<JournalVoucherMaster> jvlist;
+                JournalVMasterViewModel jvmodel = new JournalVMasterViewModel();
+
+                if (vouchercount > 0)
+                {
+
+                    jvlist = db.JournalVoucherMaster.Where(m => m.VoucherTypeID == 5).ToList();
+                    //var jvchildlist = db.JournalVoucherChild.ToList();
 
 
-                jvmodel.Journalvouchermasterlist = jvlist;
-                //Journalvoucherchildlist = jvchildlist, 
-                jvmodel.vouchertype = 5;
+                    jvmodel.Journalvouchermasterlist = jvlist;
+                    //Journalvoucherchildlist = jvchildlist, 
+                    jvmodel.vouchertype = 5;
 
 
-            }
-            else
-            {
-                jvmodel.vouchertype = 5;
+                }
+                else
+                {
+                    jvmodel.vouchertype = 5;
 
-            }
+                }
 
-            //int accountid = 2043;
-            //float creditamount = 1588;
+                //int accountid = 2043;
+                //float creditamount = 1588;
 
-            //            //---------------------Update Account  credit----------------------------//
+                //            //---------------------Update Account  credit----------------------------//
 
-            //            var findaccountCr = ms.Getaccountbyid(accountid);
-            //            //---------------------Update Account  group credit----------------------------//
+                //            var findaccountCr = ms.Getaccountbyid(accountid);
+                //            //---------------------Update Account  group credit----------------------------//
 
-            //            var findaccgroupCrr = ms.Getaccgroupbyid(findaccountCr.Accgroupid);
-            //            var oldaccgrupcredit1 = db.AccGroup.Where(m => m.AccgroupID == findaccgroupCrr.AccgroupID).FirstOrDefault().CreditAmount;
-            //            var oldbalance = db.AccGroup.Where(m => m.AccgroupID == findaccgroupCrr.AccgroupID).FirstOrDefault().Accgroupbalance;
+                //            var findaccgroupCrr = ms.Getaccgroupbyid(findaccountCr.Accgroupid);
+                //            var oldaccgrupcredit1 = db.AccGroup.Where(m => m.AccgroupID == findaccgroupCrr.AccgroupID).FirstOrDefault().CreditAmount;
+                //            var oldbalance = db.AccGroup.Where(m => m.AccgroupID == findaccgroupCrr.AccgroupID).FirstOrDefault().Accgroupbalance;
 
 
 
-            return View(jvmodel);
+                return View(jvmodel);
             }
             catch (Exception e)
             {
@@ -1211,7 +1211,7 @@ namespace RMS.Web.Controllers
                             DrCrID = 2,
                             AccountID = JVmastermodel.paymentaccountid,
                             CreditAmount = (double)JVmastermodel.DebitTotal,
-                            
+
                             CurrencyID = 1,
                             DebitAmount = 0.00,
                             ShortNarration = "payment account credit",
@@ -1782,7 +1782,7 @@ namespace RMS.Web.Controllers
 
                     }
                 }
-                 if (JVmastermodel.newchild2 != null && JVmastermodel.newchild2.Count > 0)
+                if (JVmastermodel.newchild2 != null && JVmastermodel.newchild2.Count > 0)
                 {
                     for (int i = 0; i < JVmastermodel.newchild2.Count; i++)
                     {
@@ -1823,7 +1823,7 @@ namespace RMS.Web.Controllers
 
 
 
-                 }
+                }
                 return RedirectToAction("PaymentVoucher");
 
             }
@@ -2493,7 +2493,7 @@ namespace RMS.Web.Controllers
 
 
             }
-            else if ( JVmastermodel.jvchildid3.FirstOrDefault() == 1)
+            else if (JVmastermodel.jvchildid3.FirstOrDefault() == 1)
             {
                 var oldmasterfind = db.JournalVoucherMaster.Where(m => m.jvmasterid == JVmastermodel.JVMasterID).FirstOrDefault();
                 var oldchildfind = db.JournalVoucherChild.Where(m => m.JVMasterID == oldmasterfind.jvmasterid).ToList();
@@ -2537,7 +2537,7 @@ namespace RMS.Web.Controllers
 
                     }
                 }
-                 if (JVmastermodel.newchild2 != null && JVmastermodel.newchild2.Count > 0)
+                if (JVmastermodel.newchild2 != null && JVmastermodel.newchild2.Count > 0)
                 {
                     for (int i = 0; i < JVmastermodel.newchild2.Count; i++)
                     {
@@ -2615,6 +2615,6 @@ namespace RMS.Web.Controllers
             return File(stream, "application/pdf");
         }
 
-        
+
     }
 }

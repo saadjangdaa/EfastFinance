@@ -8,7 +8,8 @@
     <div class="card-header py-3" style="background-color:#5a5c69">
         <div class="row">
             <div class="col-5">
-                <p style="color:white;">Voucher No : @Model.VoucherMasterID</p>
+                <input  type="text" style="background: #5a5c69; color: white;" readonly disabled id="voucherno" value="@Model.VoucherMasterID" />
+               <input  type="text" style="background: #5a5c69; color: white;" readonly disabled id="vouchertypid" value="@Model.VoucherTypeID" />
                 <p style="color:white;">Party Name : @Model.VoucherMasterList.PartyName</p>
             </div>
             <div class="col-5">
@@ -22,7 +23,7 @@
                     </button>
                 </div>
                 <div class="pr-1">
-                    <a href="/Sales/ReportSaleVoucher" class="btn btn-success ">
+                    <a onclick="PrintVoucher()" class="btn btn-success ">
                         <i class="glyphicon glyphicon-print"></i> Print
                     </a>
                 </div>
@@ -104,6 +105,15 @@
     }
 
     $('#credittotal').text(numberWithCommas(credittotal));
+
+    function PrintVoucher() {
+        debugger;
+        var id = $('#voucherno').val();
+        var typeid = $('#vouchertypid').val();
+        var url = '@Url.Action("ReportSaleVoucher", "Sales")';
+            url += '?MasterID=' + id + '&TypeID=' + typeid;
+        window.open(url, '_blank');
+        };
 </script>
 
 

@@ -7,11 +7,11 @@
 <div class="container-fluid" id="divvoucher">
     <form id="SingleEntryForm" class="SingleEntryForm">
         @*<div class="card shadow mb-4">
-                <div class="card-header " style="background-color:#5a5c69; padding-bottom:40px; padding-top:01px; height:0px;">
-                </div>
-            </div>*@
+            <div class="card-header " style="background-color:#5a5c69; padding-bottom:40px; padding-top:01px; height:0px;">
+            </div>
+        </div>*@
 
-
+        <input type="text" id="vouchertype" value=@Model.vouchertype hidden readonly />
         <div class="card shadow mb-4">
             <div class="card-header py-3" style="background-color:#5a5c69">
                 @if (Model.vouchertype == 8)
@@ -26,6 +26,11 @@
                                 <div class="pr-1">
                                     <button type="button" onclick="history.back()" class="btn btn-success ">
                                         <i class="glyphicon glyphicon-arrow-left"></i> Back
+                                    </button>
+                                </div>
+                                <div class="pr-1">
+                                    <button type="button" onclick="PrintVoucher()" class="btn btn-success ">
+                                        <i class="glyphicon glyphicon-print"></i> Preview
                                     </button>
                                 </div>
                                 <div>
@@ -73,6 +78,11 @@
                                 <div class="pr-1">
                                     <button type="button" onclick="history.back()" class="btn btn-success ">
                                         <i class="glyphicon glyphicon-arrow-left"></i> Back
+                                    </button>
+                                </div>
+                                <div class="pr-1">
+                                    <button type="button" onclick="PrintVoucher()" class="btn btn-success ">
+                                        <i class="glyphicon glyphicon-print"></i> Preview
                                     </button>
                                 </div>
                                 <div>
@@ -137,16 +147,16 @@
                         </div>
 
                         @*<lablel class="col-md-2" style="color:black">Currency</lablel>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        @Html.DropDownList("curremcyname", (IEnumerable<SelectListItem>)ViewBag.currency, "---Select Currency---", htmlAttributes: new { @class = "form-control", @Id = "currencyID", @Name = "CurrencyID", @disabled = "true" })
-                                        <span><button type="button" data-target="#exampleModal" data-toggle="modal" class="btn btn-primary"><i class="fa fa-search"></i></button></span>
-                                    </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    @Html.DropDownList("curremcyname", (IEnumerable<SelectListItem>)ViewBag.currency, "---Select Currency---", htmlAttributes: new { @class = "form-control", @Id = "currencyID", @Name = "CurrencyID", @disabled = "true" })
+                                    <span><button type="button" data-target="#exampleModal" data-toggle="modal" class="btn btn-primary"><i class="fa fa-search"></i></button></span>
                                 </div>
                             </div>
-                            <br />
-                            <br />*@
+                        </div>
+                        <br />
+                        <br />*@
 
 
                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -211,15 +221,15 @@
                         </div>
 
                         @*<lablel class="col-md-2" style="color:black">Currency</lablel>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        @Html.DropDownList("curremcyname", (IEnumerable<SelectListItem>)ViewBag.currency, "---Select Currency---", htmlAttributes: new { @class = "form-control", @Id = "currencyID", @Name = "CurrencyID", @disabled = "true" })
-                                    </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    @Html.DropDownList("curremcyname", (IEnumerable<SelectListItem>)ViewBag.currency, "---Select Currency---", htmlAttributes: new { @class = "form-control", @Id = "currencyID", @Name = "CurrencyID", @disabled = "true" })
                                 </div>
                             </div>
-                            <br />
-                            <br />*@
+                        </div>
+                        <br />
+                        <br />*@
 
 
                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -362,15 +372,15 @@
                                                 <td hidden><input type="hidden" name="AccountID" value="@item.AccountID" /></td>
                                                 <td><input readonly class='form-control' name="Accountnameee" value="@item.Account.AccountName" /></td>
                                                 <td>
-                                                    @Html.DropDownList("CurrencyId", (IEnumerable<SelectListItem>)ViewBag.currency, "--Select Currency---", htmlAttributes: new { @value = item.CurrencyID, @class = " form-control", @Id = "currencyid", @disabled = "true" , @name= "CurrencyID" })
+                                                    @Html.DropDownList("CurrencyId", (IEnumerable<SelectListItem>)ViewBag.currency, "--Select Currency---", htmlAttributes: new { @value = item.CurrencyID, @class = " form-control", @Id = "currencyid", @disabled = "true", @name = "CurrencyID" })
 
                                                 </td>
-                                                <td><input readonly class='form-control'  name="FcRate" value="@item.FcRate" /></td>
+                                                <td><input readonly class='form-control' name="FcRate" value="@item.FcRate" /></td>
 
                                                 @if (Model.vouchertype == 8)
                                                 {
                                                     <td><input readonly class='form-control' name="CreditAmount" value="@item.CreditAmount" /></td>
-                                                    <td hidden><input type="hidden" readonly class='form-control' name="DebitAmount"  value="@item.DebitAmount" /></td>
+                                                    <td hidden><input type="hidden" readonly class='form-control' name="DebitAmount" value="@item.DebitAmount" /></td>
                                                 }
                                                 else if (Model.vouchertype == 6)
                                                 {
@@ -378,7 +388,7 @@
                                                     <td hidden><input type="hidden" readonly class='form-control' name="CreditAmount" value="@item.CreditAmount" /></td>
                                                 }
                                                 <td>
-                                                    <textarea readonly class='form-control' name="ShortNarration" >@item.ShortNarration</textarea>
+                                                    <textarea readonly class='form-control' name="ShortNarration">@item.ShortNarration</textarea>
                                                 </td>
                                                 <td>
                                                     <button type='button' id='btnremoveDr' class='btnremoveDr btn btn-danger' onclick="removeDr(@rowid)"><i class='glyphicon glyphicon-minus'></i></button>
@@ -525,7 +535,16 @@
 
 <link href="~/Scripts/chosen/select2-4.1.0-beta.1/dist/css/select2.css" rel="stylesheet" />
 
-
+<script>
+     function PrintVoucher() {
+        debugger;
+         var id = $('#JVMasterID').val();
+         var typeid = $('#vouchertype').val();
+        var url = '@Url.Action("ReportJVVoucher", "Vouchers")';
+            url += '?MasterID=' + id + '&TypeID=' + typeid;
+        window.open(url, '_blank');
+        };
+</script>
 @if (Model.vouchertype == 8)
 {
     <script>

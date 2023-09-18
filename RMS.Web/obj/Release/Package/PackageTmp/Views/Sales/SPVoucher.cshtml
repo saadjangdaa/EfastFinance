@@ -96,6 +96,11 @@
                                             <i class="glyphicon glyphicon-arrow-left"></i> Back
                                         </button>
                                     </div>
+                                    <div class="pr-1">
+                                        <button type="button" onclick="PrintVoucher()" class="btn btn-success ">
+                                            <i class="glyphicon glyphicon-print"></i> Preview
+                                        </button>
+                                    </div>
                                     <div>
                                         <button type="button" id="btnSaveVoucher" style="float:right;" class="btn btn-success ">
                                             <i class="glyphicon glyphicon-save-file"></i> Update Voucher
@@ -122,6 +127,25 @@
                                         <button type="button" id="btnSaveVoucher" class="btn btn-success">
                                             <i class="glyphicon glyphicon-save-file"></i> Save Voucher
                                         </button>
+                                        <div class="modal fade" id="printViewModal1" tabindex="-1" role="dialog" aria-labelledby="pintViewModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="printViewModal1Label">Preview Voucher</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Preview Voucher?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" onclick="PrintVoucher()" class="btn btn-secondary" data-dismiss="modal">Preview</button>
+                                                        <button type="button" onclick="reloadPage()" class="btn btn-primary">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -141,6 +165,11 @@
                                     <div class="pr-1">
                                         <button type="button" onclick="history.back()" class="btn btn-success ">
                                             <i class="glyphicon glyphicon-arrow-left"></i> Back
+                                        </button>
+                                    </div>
+                                    <div class="pr-1">
+                                        <button type="button" onclick="PrintVoucher()" class="btn btn-success ">
+                                            <i class="glyphicon glyphicon-print"></i> Preview
                                         </button>
                                     </div>
                                     <div>
@@ -169,6 +198,25 @@
                                         <button type="button" id="btnSaveVoucher" class="btn btn-success ">
                                             <i class="glyphicon glyphicon-save-file"></i> Save Voucher
                                         </button>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="printViewModal1" tabindex="-1" role="dialog" aria-labelledby="pintViewModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="printViewModal1Label">Preview Voucher</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Preview Voucher?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" onclick="PrintVoucher()" class="btn btn-secondary" data-dismiss="modal">Preview</button>
+                                                <button type="button" onclick="reloadPage()" class="btn btn-primary">Close</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -222,6 +270,25 @@
                                         <button type="button" id="btnSaveVoucher" class="btn btn-success ">
                                             <i class="glyphicon glyphicon-save-file"></i> Save Voucher
                                         </button>
+                                        <div class="modal fade" id="printViewModal1" tabindex="-1" role="dialog" aria-labelledby="pintViewModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="printViewModal1Label">Preview Voucher</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Preview Voucher?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" onclick="PrintVoucher()" class="btn btn-secondary" data-dismiss="modal">Preview</button>
+                                                        <button type="button" onclick="reloadPage()" class="btn btn-primary">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -548,7 +615,7 @@
 
 @if (Model.vouchertypeid == 1 || Model.vouchertypeid == 9)
 {
-<script>
+    <script>
 
     $('#Partyid_Accountid').change(function () {
 
@@ -1658,15 +1725,16 @@
         };
         function PrintVoucher() {
             var id = $('#VoucherNumber').val();
+            var typeid = $('#vouchertypeidddd').val();
             var url = '@Url.Action("PrintSaveVoucher", "Sales")';
-            url += '?MasterID=' + id;
+            url += '?MasterID=' + id + '&TypeID=' + typeid;
             window.location.href = url;
         };
-</script>
+    </script>
 }
 else if (Model.vouchertypeid == 2 || Model.vouchertypeid == 10)
 {
-    <script>
+<script>
 
 
     $('#Partyid_Accountid').change(function () {
@@ -2683,7 +2751,18 @@ function enableEnter(event) {
 
 
 
-
+        function Test() {
+            $('#printViewModal1').removeClass("fade");
+            $('#printViewModal1').modal('show');
+            $('#printViewModal1').fadeIn(1000);
+        };
+        function PrintVoucher() {
+            var id = $('#VoucherNumber').val();
+            var typeid = $('#vouchertypeidddd').val();
+            var url = '@Url.Action("PrintSaveVoucher", "Sales")';
+            url += '?MasterID=' + id + '&TypeID=' + typeid;
+            window.location.href = url;
+        };
 
         function btnSaveVoucher() {
             var form = $('#VoucherForm').serialize();
@@ -2711,18 +2790,14 @@ function enableEnter(event) {
                     data: form,
 
                     beforeSend: function () { $(".se-pre-con").fadeIn("slow"); },
-                    //complete: function () { $(".se-pre-con").fadeOut("slow"); },
+                    complete: function () { $(".se-pre-con").fadeOut("slow"); },
                     url: "@Url.Action("SavePVoucher", "Purchase")"
 
                 }).done(function (data) {
-                    location.reload();
-                    //alert("Voucher Save Successfully ");
-
+                    alert("Voucher Save Successfully ");
+                    Test();
                 }).fail(function (jqXHR, textStatus) {
-                    //$(".se-pre-con").hide();
                     alert("Your Voucher cant be save,Contact Admin");
-                    //$('#messagetext').text("Your Voucher cant be save,Contact Admin");
-                    //$('#messagemodal').modal().show();
                 });
 
             }
@@ -2734,7 +2809,7 @@ function enableEnter(event) {
             alert("Please Fill Details")
         }
     };
-    </script>
+</script>
 }
 
 

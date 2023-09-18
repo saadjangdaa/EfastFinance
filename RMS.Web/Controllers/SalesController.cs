@@ -266,7 +266,7 @@ namespace RMS.Web.Controllers
 
                 }
 
-
+            
                 ViewBag.Accountname = new SelectList(db.Account, "AccountID", "AccountName", vouchermaster.Partyid_Accountid);
                 ViewBag.Units = new SelectList(db.Units, "UnitID", "UnitName");
                 ViewBag.MaterialCentres = new SelectList(db.MaterialCentre, "MaterialcentreID", "MaterialCentreName", vouchermaster.LocationID);
@@ -304,8 +304,6 @@ namespace RMS.Web.Controllers
                     BillSundrychildlist = billsundrychild,
                     LocationID = vouchermaster.LocationID,
                     VoucherMasterID = vouchermaster.vouchermasterid
-
-
                 };
 
                 return View("~/Views/Sales/SPVoucher.cshtml", masterview);

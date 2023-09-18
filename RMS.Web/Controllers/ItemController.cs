@@ -7,8 +7,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-
-
 namespace RMS.Web.Controllers
 {
     public class ItemController : Controller
@@ -31,7 +29,6 @@ namespace RMS.Web.Controllers
             if (itemid > 0)
             {
                 Items items = new Items();
-
                 var item = services.Getitemid(itemid);
                 items.ItemID = item.ItemID;
                 items.ItemName = item.ItemName;
@@ -40,7 +37,6 @@ namespace RMS.Web.Controllers
                 items.ItemUnitID = item.ItemUnitID;
                 items.ItemMinDiscount = item.ItemMinDiscount;
                 items.ItemMaxDiscount = item.ItemMaxDiscount;
-
                 return Json(items, JsonRequestBehavior.AllowGet);
             }
             else
@@ -92,7 +88,6 @@ namespace RMS.Web.Controllers
                     addinstock.ItemID = itemform.ItemID;
                     addinstock.Quantity = 0;
                     services.Additeminstock(addinstock);
-
 
                     return RedirectToAction("Index");
                 }
@@ -174,11 +169,7 @@ namespace RMS.Web.Controllers
 
                 }
                 return RedirectToAction("ItemGroupIndex");
-
-
             }
-
-
         }
 
         public ActionResult Getitemgroup(int itemgid = 0)
@@ -200,8 +191,6 @@ namespace RMS.Web.Controllers
             {
                 return Json("");
             }
-
-
         }
 
         public ActionResult Deleteitemgroup(int itemgroupid )
@@ -214,8 +203,6 @@ namespace RMS.Web.Controllers
 
             }
             return RedirectToAction("ItemGroupIndex");
-
-
         }
 
 
@@ -224,9 +211,6 @@ namespace RMS.Web.Controllers
             //treeservice.Getitemstree
             DataSet ds = treeservice.Getitemstree();
             ViewBag.itemstreetable = ds.Tables[0];
-
-
-
             return View();
         }
 
@@ -258,8 +242,6 @@ namespace RMS.Web.Controllers
         //            itemid.ItemMaxDiscount = itemnewform.ItemMaxDiscount;
         //            itemid.ItemMinDiscount = itemnewform.ItemMinDiscount;
         //            itemid.ItemDescription = itemnewform.ItemDescription;
-
-
         //            services.UpdateItems(itemid);
 
 
