@@ -5,6 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\WSPC1\OneDrive\Desktop\Efast Release</_PublishTargetUrl>
+    <History>True|2023-09-19T11:49:58.3062485Z;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -113,10 +114,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/10/2023 16:08:46</publishTime>
     </File>
     <File Include="bin/RMS.Web.dll">
-      <publishTime>09/12/2023 17:28:22</publishTime>
+      <publishTime>09/19/2023 16:48:49</publishTime>
     </File>
     <File Include="bin/RMS.Web.pdb">
-      <publishTime>09/12/2023 17:28:22</publishTime>
+      <publishTime>09/19/2023 16:48:49</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>08/10/2023 16:08:46</publishTime>
@@ -8939,7 +8940,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/10/2023 16:08:35</publishTime>
     </File>
     <File Include="Views/Account/UserDetails.cshtml">
-      <publishTime>08/30/2023 19:09:37</publishTime>
+      <publishTime>09/14/2023 14:48:11</publishTime>
     </File>
     <File Include="Views/Account/UserPrivilege.cshtml">
       <publishTime>08/16/2023 16:13:16</publishTime>
@@ -9137,16 +9138,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/10/2023 16:08:35</publishTime>
     </File>
     <File Include="Views/Sales/ModifySvoucher.cshtml">
-      <publishTime>08/28/2023 18:52:35</publishTime>
+      <publishTime>09/18/2023 17:33:39</publishTime>
     </File>
     <File Include="Views/Sales/PrintSaveVoucher.cshtml">
-      <publishTime>09/06/2023 14:19:50</publishTime>
+      <publishTime>09/18/2023 14:05:10</publishTime>
     </File>
     <File Include="Views/Sales/salehistory.cshtml">
       <publishTime>08/10/2023 16:08:35</publishTime>
     </File>
     <File Include="Views/Sales/SPVoucher.cshtml">
-      <publishTime>09/05/2023 20:09:27</publishTime>
+      <publishTime>09/18/2023 14:36:14</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>08/10/2023 16:08:35</publishTime>

@@ -447,8 +447,9 @@
                                         <th><input class="form-control text-right" type="number" placeholder="item Price" id="ItemPrice" /></th>
                                         <th><input class="form-control text-right" type="number" placeholder="total Amount" id="txttotal" /></th>
                                         @*<th><button type="button" class="btn btn-success " id="btnadd"><i class="glyphicon glyphicon-plus"></i></button></th>*@
-                                        <th><button type="button" class="btn btn-success" id="btnadd" onclick="addOrUpdateRow()">Add</button></th>
-
+                                        <th>
+                                            <button type="button" class="btn btn-success" id="btnadd" onclick="addOrUpdateRow()"><i class="glyphicon glyphicon-plus"></i></button>
+                                        </th>
                                     </tr>
                                 </thead>
                             }
@@ -480,7 +481,10 @@
                                         <th>@Html.DropDownList("unitname", (IEnumerable<SelectListItem>)ViewBag.Units, "---Select Unit---", htmlAttributes: new { @class = "form-control", @Id = "unitname", @disabled = "true" })</th>
                                         <th><input class="form-control text-right" type="number" placeholder="item Price" id="ItemPrice" /></th>
                                         <th><input class="form-control text-right" placeholder="total Amount" type="number" id="txttotal" /></th>
-                                        <th><button type="button" class="btn btn-success" id="btnadd" onclick="addOrUpdateRow()">Add</button></th>
+                                        <th>
+                                            <button type="button" class="btn btn-success" id="btnadd" onclick="addOrUpdateRow()"><i class="glyphicon glyphicon-plus"></i></button>
+                                        </th>
+
 
 
 
@@ -510,7 +514,7 @@
                                             <td hidden>@item.TotalAmount</td>
                                             <td hidden>@rowid</td>
                                             <td hidden>@item.VoucherchildID</td>
-                                        </tr>*@
+                                    </tr>*@
                                     <tr id="tr">
                                         <td hidden><input type="hidden" name="ItemID" value="@item.ItemID" /></td>
                                         <td><input readonly class='form-control' name="itemname" value="@item.Items.ItemName" /></td>
@@ -1258,11 +1262,11 @@
         }
 
         else {
-            var removebtn = "<button type='button' class='btn btn-danger' id='btnremove' onclick='removeDr(`" + rowid + "` )'><i class='glyphicon glyphicon-minus'></i></button>'";
+            var removebtn = "<button type='button' class='btn btn-danger' id='btnremove' onclick='removeDr(`" + rowid + "` )'><i class='glyphicon glyphicon-trash'></i></button>'";
             //var editUpdatebtn = "<button type='button' class='btn btn-primary' id='btnedit' onclick ='editRow(this)'>Edit</button><button type='button' class='btn btn-success' id='btnupdate' style='display: none;' onclick='updateRow(this)'>Update</button>";
             // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
             if (modifychild == 1) {
-                var row = ` <tr id='tr' onclick='editRow(this)' >
+                var row = ` <tr id='tr' ondblclick='editRow(this)' >
                             <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
                             <td><input readonly class='form-control' name="itemname"   value="`+ itemname + `" /></td>
                             <td><input   readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
@@ -1280,7 +1284,7 @@
 
             }
             else if (modifychild == 0) {
-                var row = ` <tr id='tr' onclick='editRow(this)' >
+                var row = ` <tr id='tr' ondblclick='editRow(this)' >
                             <td hidden><input type="hidden" name="ItemID"  value="`+ itemid + `" /></td>
                             <td><input readonly class='form-control' name="itemname"  value="`+ itemname + `" /></td>
                             <td><input readonly class='form-control text-right'  value="`+ quantity + `" name="Quantity" /></td>
@@ -1381,8 +1385,7 @@
             $('#unitname').val(unitid);
             $('#ItemPrice').val(itemprice);
             $('#txttotal').val(totalamount);
-            $('#btnadd').text('Update');
-
+            $('#btnadd').html('<i class="glyphicon glyphicon-pencil"></i>');
             $(row).attr('data-editable', 'true');
             $(row).addClass('highlighted');
         }
@@ -1402,21 +1405,23 @@
                 $('.highlighted').remove();
                 btnadd()
             }
-            $('#btnadd').text('Add');
+            $('#btnadd').html('<i class="glyphicon glyphicon-plus"></i>');
+
             $('.highlighted').removeClass('highlighted').removeAttr('data-editable');
 
         }
 
         function addOrUpdateRow() {
-                debugger;
-            var btnLabel = $('#btnadd').text();
+            debugger;
+            var btnIcon = $('#btnadd i');
 
-            if (btnLabel === "Add") {
+            if (btnIcon.hasClass('glyphicon-plus')) {
                 btnadd();
-            } else if (btnLabel === "Update") {
+            } else if (btnIcon.hasClass('glyphicon-pencil')) {
                 updateRow();
             }
         }
+
 
         function remove() {
 
@@ -2431,7 +2436,7 @@ function enableEnter(event) {
             $('#unitname').val(unitid);
             $('#ItemPrice').val(itemprice);
             $('#txttotal').val(totalamount);
-            $('#btnadd').text('Update');
+            $('#btnadd').html('<i class="glyphicon glyphicon-pencil"></i>');
 
             $(row).attr('data-editable', 'true');
             $(row).addClass('highlighted');
@@ -2451,18 +2456,18 @@ function enableEnter(event) {
             } else {
                 $('.highlighted').remove();
                 btnadd();}
-            $('#btnadd').text('Add');
+            $('#btnadd').html('<i class="glyphicon glyphicon-plus"></i>');
             $('.highlighted').removeClass('highlighted').removeAttr('data-editable');
 
         }
 
         function addOrUpdateRow() {
             debugger;
-            var btnLabel = $('#btnadd').text();
+            var btnIcon = $('#btnadd i');
 
-            if (btnLabel === "Add") {
+            if (btnIcon.hasClass('glyphicon-plus')) {
                 btnadd();
-            } else if (btnLabel === "Update") {
+            } else if (btnIcon.hasClass('glyphicon-pencil')) {
                 updateRow();
             }
         }

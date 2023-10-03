@@ -16,7 +16,6 @@ using System.Web.Mvc;
 namespace RMS.Web.Controllers
 {
     [Authorize]
-
     public class SalesController : Controller
     {
         MVCDBLiveEntities db = new MVCDBLiveEntities();
@@ -120,8 +119,6 @@ namespace RMS.Web.Controllers
             {
                 ViewBag.message = e.ToString();
                 return Json(e.ToString(), JsonRequestBehavior.AllowGet);
-
-
             }
 
         }
@@ -129,10 +126,22 @@ namespace RMS.Web.Controllers
         {
             VoucherMasterViewModel sales = new VoucherMasterViewModel();
 
-            sales.Vouchermasterlist = db.VoucherMaster.Where(m => m.VoucherTypeID == 1 && m.Partyid_Accountid != 1060).ToList();
+            try
+            {
+                sales.Vouchermasterlist = db.VoucherMaster
+                    .Where(m => m.VoucherTypeID == 1 && m.Partyid_Accountid != 1060)
+                    .OrderByDescending(m => m.VoucherNum_BillNum)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                
+            }
+
             sales.vouchertypeid = 1;
             return View(sales);
         }
+
         public ActionResult detailSVoucher(int id)
         {
             if (id != 0)
@@ -266,7 +275,7 @@ namespace RMS.Web.Controllers
 
                 }
 
-            
+
                 ViewBag.Accountname = new SelectList(db.Account, "AccountID", "AccountName", vouchermaster.Partyid_Accountid);
                 ViewBag.Units = new SelectList(db.Units, "UnitID", "UnitName");
                 ViewBag.MaterialCentres = new SelectList(db.MaterialCentre, "MaterialcentreID", "MaterialCentreName", vouchermaster.LocationID);
@@ -304,6 +313,8 @@ namespace RMS.Web.Controllers
                     BillSundrychildlist = billsundrychild,
                     LocationID = vouchermaster.LocationID,
                     VoucherMasterID = vouchermaster.vouchermasterid
+
+
                 };
 
                 return View("~/Views/Sales/SPVoucher.cshtml", masterview);

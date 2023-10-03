@@ -728,7 +728,6 @@ namespace RMS.Web.Controllers
 
         #endregion AccountGroup
         //------------------Accounts------------------//
-
         #region Accounts
         public ActionResult Accounts()
         {
@@ -1457,9 +1456,7 @@ namespace RMS.Web.Controllers
             return Json(Accgroupid, JsonRequestBehavior.AllowGet);
         }
         #endregion Accounts
-
         //------------------Currency------------------//
-
         #region Currency
         public ActionResult Currency()
         {
@@ -1562,7 +1559,6 @@ namespace RMS.Web.Controllers
         }
 
         #endregion Currency
-
         //------------------Material Group Centre------------------//
         #region MaterialCentreGroup
         public ActionResult MaterialGroup()
@@ -1666,9 +1662,7 @@ namespace RMS.Web.Controllers
         }
 
         #endregion MaterialCentreGroup
-
         //------------------Material  Centre------------------//
-
         #region MaterialCentre
         public ActionResult MaterialCentre()
         {
@@ -1780,7 +1774,6 @@ namespace RMS.Web.Controllers
 
         #endregion MaterialCentre
         //------------------Reports ------------------// 
-
         #region Reports
         [HttpGet]
         public ActionResult ShowAccLedger()
@@ -2689,7 +2682,6 @@ namespace RMS.Web.Controllers
         }
 
         #endregion Reports
-
 
     }
 }

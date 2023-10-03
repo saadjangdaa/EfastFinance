@@ -514,7 +514,7 @@
                                             <td hidden>@item.TotalAmount</td>
                                             <td hidden>@rowid</td>
                                             <td hidden>@item.VoucherchildID</td>
-                                        </tr>*@
+                                    </tr>*@
                                     <tr id="tr">
                                         <td hidden><input type="hidden" name="ItemID" value="@item.ItemID" /></td>
                                         <td><input readonly class='form-control' name="itemname" value="@item.Items.ItemName" /></td>
@@ -1262,7 +1262,7 @@
         }
 
         else {
-            var removebtn = "<button type='button' class='btn btn-danger' id='btnremove' onclick='removeDr(`" + rowid + "` )'><i class='glyphicon glyphicon-minus'></i></button>'";
+            var removebtn = "<button type='button' class='btn btn-danger' id='btnremove' onclick='removeDr(`" + rowid + "` )'><i class='glyphicon glyphicon-trash'></i></button>'";
             //var editUpdatebtn = "<button type='button' class='btn btn-primary' id='btnedit' onclick ='editRow(this)'>Edit</button><button type='button' class='btn btn-success' id='btnupdate' style='display: none;' onclick='updateRow(this)'>Update</button>";
             // var row = "<tr><td hidden>" + itemid + "</td> <td>" + itemname + "</td><td>" + unitprice + "</td><td>" + quantity + "</td><td>" + discount + "</td><td>" + total + "</td><td>" + removebtn + "</td></tr>";
             if (modifychild == 1) {
