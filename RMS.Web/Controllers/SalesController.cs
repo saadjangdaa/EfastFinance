@@ -24,8 +24,7 @@ namespace RMS.Web.Controllers
         #region SalesVoucher
         // GET: Sales 
         public ActionResult salehistory()
-        {
-
+        
             try
             {
                 var vouchercount = db.VoucherMaster.Where(x => x.VoucherTypeID == 1 && x.Partyid_Accountid != 1060).Count();
@@ -85,6 +84,7 @@ namespace RMS.Web.Controllers
 
             return View("~/Views/Sales/SPVoucher.cshtml", vmmodel);
         }
+
         public JsonResult Getstockquantity(int ItemId)
         {
             try
@@ -95,7 +95,7 @@ namespace RMS.Web.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.message = e.ToString();
+                ViewBag.message = e.ToString();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
                 return Json(e.ToString(), JsonRequestBehavior.AllowGet);
 
 
